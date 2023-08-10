@@ -1,0 +1,14 @@
+export enum STATE {
+    APPLIED_DATA,
+    UNKNOWN,
+    READY,
+    PENDING,
+    LOADED,
+    INITIALIZED,
+    SHOW_APP,
+    HIDDEN_APP,
+    NOT_PRESENT,
+    PRESENT,
+    NO_REACTION,
+    DATA_SENT,
+}
