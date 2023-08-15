@@ -1,18 +1,17 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/AbstractHtmlElement";
+import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {ELEMENT_OPTIONS} from "../../../../../libs/elements/utils";
+import {RootElement} from "../../../../../libs/env/types";
+import {History} from "evg_event_history/src/outLib/history";
 
-const options: ELEMENT_OPTIONS<Event$> = {
-    htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.FOOTER),
-    startEvent: Event$.UNDEFINED
-}
+class Footer extends History<Event$> {
+    name: string;
+    root;
 
-export class FooterElement extends AbstractHtmlElement<Event$> {
-    name = this.tagName;
-
-    constructor() {
-        super(options);
+    constructor(root: RootElement, startEvent: Event$) {
+        super(startEvent);
+        this.root = root;
+        this.name = root.tagName;
     }
 
     onCreate(): void {
@@ -27,3 +26,11 @@ export class FooterElement extends AbstractHtmlElement<Event$> {
         this.state = Event$.DESTROY;
     }
 }
+
+export const FooterElement = getElement<Event$>(
+    {
+        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.FOOTER),
+        startEvent: Event$.UNDEFINED,
+        className: Footer,
+    }
+);

@@ -1,20 +1,19 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/AbstractHtmlElement";
+import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {ELEMENT_OPTIONS} from "../../../../../libs/elements/utils";
+import {RootElement} from "../../../../../libs/env/types";
+import {History} from "evg_event_history/src/outLib/history";
 
-const options: ELEMENT_OPTIONS<Event$> = {
-    htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN_1),
-    startEvent: Event$.UNDEFINED
-}
-
-export class Main_1_Element extends AbstractHtmlElement<Event$> {
-    name = this.tagName;
+class Main_1 extends History<Event$> {
+    name: string;
     isShowHello = false;
     showedTxt = "---HELLO WORLD !!!---";
+    root;
 
-    constructor() {
-        super(options);
+    constructor(root: RootElement, startEvent: Event$) {
+        super(startEvent);
+        this.root = root;
+        this.name = root.tagName;
     }
 
     onCreate(): void {
@@ -24,8 +23,8 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
     onInit(): void {
         this.state = Event$.INIT;
 
-        this.collect(
-            this.onChangesDetected$.subscribe(() => {
+        this.root.collect(
+            this.root.onChangesDetected$.subscribe(() => {
                 this.handleElement();
                 this.handleElementExtra();
             })
@@ -37,7 +36,7 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
         evt.stopPropagation();
 
         this.isShowHello = !this.isShowHello;
-        this.detectChanges();
+        this.root.detectChanges();
     }
 
     keyDownInput(evt: KeyboardEvent): void {
@@ -49,7 +48,7 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
     }
 
     handleElement() {
-        const elements = this.getElementsBoundToMethod(this.handleElement);
+        const elements = this.root.getElementsBoundToMethod(this.handleElement);
 
         for (const element of elements) {
             element.innerHTML += " handled";
@@ -57,7 +56,7 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
     }
 
     handleElementExtra() {
-        const elements = this.getElementsBoundToMethod(this.handleElementExtra);
+        const elements = this.root.getElementsBoundToMethod(this.handleElementExtra);
 
         for (const element of elements) {
             element.innerHTML += " handled extra";
@@ -68,3 +67,11 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
         this.state = Event$.DESTROY;
     }
 }
+
+export const Main_1_Element = getElement<Event$>(
+    {
+        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN_1),
+        startEvent: Event$.UNDEFINED,
+        className: Main_1,
+    }
+);

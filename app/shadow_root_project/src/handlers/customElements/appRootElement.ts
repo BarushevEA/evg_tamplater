@@ -1,5 +1,5 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/AbstractHtmlElement";
+import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {ELEMENT_OPTIONS} from "../../../../../libs/elements/utils";
 import {appendChild, getStyle} from "../../../../../libs/utils/utils";
 import {getRootStyles} from "../../../../../libs/elements/registrator";

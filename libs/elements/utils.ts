@@ -1,6 +1,7 @@
 export type ELEMENT_OPTIONS<T> = {
     htmlTemplate: string;
     startEvent: T;
+    className: any;
 };
 
 export enum E_DATA_MARKER {

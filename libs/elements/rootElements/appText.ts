@@ -1,26 +1,24 @@
-import {AbstractHtmlElement} from "./AbstractHtmlElement";
-import {Event$} from "evg_event_history/src/outLib/env";
-import {ELEMENT_OPTIONS} from "../utils";
+import {OnCreate, OnDestroy, OnInit} from "../../env/types";
+import {getElement} from "./RootHtmlElement";
 
-const options: ELEMENT_OPTIONS<Event$> = {
-    htmlTemplate: "",
-    startEvent: Event$.UNDEFINED
-}
-
-export class AppText extends AbstractHtmlElement<Event$> {
+class AppTxt implements OnCreate, OnInit, OnDestroy {
     constructor() {
-        super(options);
     }
 
     onCreate(): void {
-        this.state = Event$.BEFORE_INIT;
     }
 
     onInit(): void {
-        this.state = Event$.INIT;
     }
 
     onDestroy(): void {
-        this.state = Event$.DESTROY;
     }
 }
+
+export const AppText = getElement<any>(
+    {
+        htmlTemplate: "",
+        startEvent: 0,
+        className: AppTxt
+    }
+);

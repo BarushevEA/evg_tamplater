@@ -1,22 +1,20 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/AbstractHtmlElement";
+import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {ELEMENT_OPTIONS} from "../../../../../libs/elements/utils";
 import {NextMain$} from "../services/headerService";
+import {History} from "evg_event_history/src/outLib/history";
+import {RootElement} from "../../../../../libs/env/types";
 
-const options: ELEMENT_OPTIONS<Event$> = {
-    htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.HEADER),
-    startEvent: Event$.UNDEFINED
-}
-
-export class HeaderElement extends AbstractHtmlElement<Event$> {
+class Header extends History<Event$> {
     text = "SERG header start after:";
     name = this.text;
     buttonName = "NEXT MAIN";
     counter1 = 0;
+    root
 
-    constructor() {
-        super(options);
+    constructor(root: RootElement, startEvent: Event$) {
+        super(startEvent);
+        this.root = root;
     }
 
     clickHeader(evt: MouseEvent): void {
@@ -48,7 +46,7 @@ export class HeaderElement extends AbstractHtmlElement<Event$> {
 
         const timer = setInterval(() => {
             this.name = this.text + " " + counter + " ";
-            this.detectChanges();
+            this.root.detectChanges();
             counter++;
             if (counter > 5) {
                 clearInterval(timer);
@@ -60,3 +58,11 @@ export class HeaderElement extends AbstractHtmlElement<Event$> {
         this.state = Event$.DESTROY;
     }
 }
+
+export const HeaderElement = getElement<Event$>(
+    {
+        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.HEADER),
+        startEvent: Event$.UNDEFINED,
+        className: Header,
+    }
+);

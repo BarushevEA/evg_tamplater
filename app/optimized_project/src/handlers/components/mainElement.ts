@@ -1,16 +1,13 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/AbstractHtmlElement";
+import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {ELEMENT_OPTIONS} from "../../../../../libs/elements/utils";
 import {APP_INFO} from "../../APP_INFO";
+import {RootElement} from "../../../../../libs/env/types";
+import {History} from "evg_event_history/src/outLib/history";
 
-const options: ELEMENT_OPTIONS<Event$> = {
-    htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN),
-    startEvent: Event$.UNDEFINED
-}
-
-export class MainElement extends AbstractHtmlElement<Event$> {
-    name = this.tagName;
+export class Main extends History<Event$> {
+    name: string;
+    root;
     appInfo = APP_INFO.description;
     someText = "Hello world !!!";
     ag = "17";
@@ -52,8 +49,10 @@ our most popular chicken recipes of all time.
     receiptCounter = 0;
     currentReceipt = this.receipts[this.receiptCounter];
 
-    constructor() {
-        super(options);
+    constructor(root: RootElement, startEvent: Event$) {
+        super(startEvent);
+        this.root = root;
+        this.name = root.tagName;
     }
 
     onCreate(): void {
@@ -75,6 +74,14 @@ our most popular chicken recipes of all time.
         }
 
         this.currentReceipt = this.receipts[this.receiptCounter];
-        this.detectChanges();
+        this.root.detectChanges();
     }
 }
+
+export const MainElement = getElement<Event$>(
+    {
+        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN),
+        startEvent: Event$.UNDEFINED,
+        className: Main,
+    }
+);

@@ -1,16 +1,12 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {AbstractHtmlElement} from "../../../../../libs/elements/rootElements/AbstractHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {ELEMENT_OPTIONS} from "../../../../../libs/elements/utils";
 import {NextMain$} from "../services/headerService";
+import {History} from "evg_event_history/src/outLib/history";
+import {RootElement} from "../../../../../libs/env/types";
+import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 
-const options: ELEMENT_OPTIONS<Event$> = {
-    htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.CONTAINER),
-    startEvent: Event$.UNDEFINED
-}
-
-export class AppRootElement extends AbstractHtmlElement<Event$> {
-    name = this.tagName;
+class AppRoot extends History<Event$> {
+    name: string;
     isShow = true;
     mains: string[] = [
         "<app-main></app-main>",
@@ -18,9 +14,12 @@ export class AppRootElement extends AbstractHtmlElement<Event$> {
     ];
     mainsCounter = 0;
     currentMain = this.mains[this.mainsCounter];
+    root: RootElement;
 
-    constructor() {
-        super(options);
+    constructor(root: RootElement, startEvent: Event$) {
+        super(startEvent);
+        this.root = root;
+        this.name = root.tagName;
     }
 
     onCreate(): void {
@@ -30,7 +29,7 @@ export class AppRootElement extends AbstractHtmlElement<Event$> {
     onInit(): void {
         this.state = Event$.INIT;
 
-        this.collect(
+        this.root.collect(
             NextMain$.subscribe(() => {
                 this.mainsCounter++;
                 if (this.mainsCounter >= this.mains.length) {
@@ -38,7 +37,7 @@ export class AppRootElement extends AbstractHtmlElement<Event$> {
                 }
 
                 this.currentMain = this.mains[this.mainsCounter];
-                this.detectChanges();
+                this.root.detectChanges();
             })
         );
     }
@@ -47,3 +46,11 @@ export class AppRootElement extends AbstractHtmlElement<Event$> {
         this.state = Event$.DESTROY;
     }
 }
+
+export const AppRootElement = getElement<Event$>(
+    {
+        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.CONTAINER),
+        startEvent: Event$.UNDEFINED,
+        className: AppRoot,
+    }
+);
