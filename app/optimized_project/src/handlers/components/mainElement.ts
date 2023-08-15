@@ -4,7 +4,7 @@ import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {APP_INFO} from "../../APP_INFO";
 import {RootBehavior} from "../../../../../libs/env/types";
 
-export class Main {
+class Main {
     name: string;
     root;
     appInfo = APP_INFO.description;
