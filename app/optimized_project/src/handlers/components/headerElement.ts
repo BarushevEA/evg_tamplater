@@ -1,4 +1,3 @@
-import {Event$} from "evg_event_history/src/outLib/env";
 import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {NextMain$} from "../services/headerService";
@@ -43,10 +42,10 @@ class Header implements OnInit {
     }
 }
 
-export const HeaderElement = getCustomElement<Event$>(
+export const HeaderElement = getCustomElement<any>(
     {
         htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.HEADER),
-        startEvent: Event$.UNDEFINED,
+        startEvent: 0,
         className: Header,
     }
 );

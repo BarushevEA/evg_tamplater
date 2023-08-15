@@ -1,4 +1,3 @@
-import {Event$} from "evg_event_history/src/outLib/env";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {NextMain$} from "../services/headerService";
 import {OnInit, RootBehavior} from "../../../../../libs/env/types";
@@ -35,10 +34,10 @@ class AppRoot implements OnInit {
     }
 }
 
-export const AppRootElement = getCustomElement<Event$>(
+export const AppRootElement = getCustomElement<any>(
     {
         htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.CONTAINER),
-        startEvent: Event$.UNDEFINED,
+        startEvent: 0,
         className: AppRoot,
     }
 );

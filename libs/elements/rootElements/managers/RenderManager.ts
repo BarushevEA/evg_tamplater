@@ -1,5 +1,3 @@
-import {History} from "evg_event_history/src/outLib/history";
-import {Event$} from "evg_event_history/src/outLib/env";
 import {appendChild, getStyle, runWhenDocumentReady} from "../../../utils/utils";
 import {getRootStyles} from "../../registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
@@ -17,37 +15,28 @@ const templateMap: TemplateMap = {
 
 const baseTemplate = new TemplatesHandler(templateMap);
 
-export class RenderManager extends History<Event$> {
+export class RenderManager {
     private appElement: HTMLElement;
 
     constructor() {
-        super(Event$.UNDEFINED);
     }
 
     public run(): void {
-        this.state = Event$.BEFORE_PROCESS;
-
         runWhenDocumentReady(() => {
             this.process();
         });
     }
 
     private process(): void {
-        this.state = Event$.PROCESS;
-
         this.init();
         this.start();
     }
 
     private init(): void {
-        this.state = Event$.INIT;
-
         this.appElement = AppDocument.createElement(APP_TAG_NAME);
     }
 
     private start(): void {
-        this.state = Event$.START;
-
         const rootStyle = getStyle(getRootStyles());
         const mainStyle = getStyle(baseTemplate.get(E_BASE_TEMPLATE.STYLE));
 
