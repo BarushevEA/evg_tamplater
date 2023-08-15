@@ -1,28 +1,20 @@
 import {Event$} from "evg_event_history/src/outLib/env";
 import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {RootElement} from "../../../../../libs/env/types";
-import {History} from "evg_event_history/src/outLib/history";
+import {OnInit, RootBehavior} from "../../../../../libs/env/types";
 
-class Main_1 extends History<Event$> {
+class Main_1 implements OnInit {
     name: string;
     isShowHello = false;
     showedTxt = "---HELLO WORLD !!!---";
     root;
 
-    constructor(root: RootElement, startEvent: Event$) {
-        super(startEvent);
+    constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
     }
 
-    onCreate(): void {
-        this.state = Event$.BEFORE_INIT;
-    }
-
     onInit(): void {
-        this.state = Event$.INIT;
-
         this.root.collect(
             this.root.onChangesDetected$.subscribe(() => {
                 this.handleElement();
@@ -61,10 +53,6 @@ class Main_1 extends History<Event$> {
         for (const element of elements) {
             element.innerHTML += " handled extra";
         }
-    }
-
-    onDestroy(): void {
-        this.state = Event$.DESTROY;
     }
 }
 

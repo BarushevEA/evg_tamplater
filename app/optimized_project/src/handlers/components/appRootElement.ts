@@ -1,11 +1,10 @@
 import {Event$} from "evg_event_history/src/outLib/env";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {NextMain$} from "../services/headerService";
-import {History} from "evg_event_history/src/outLib/history";
-import {RootElement} from "../../../../../libs/env/types";
+import {OnInit, RootBehavior} from "../../../../../libs/env/types";
 import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 
-class AppRoot extends History<Event$> {
+class AppRoot implements OnInit {
     name: string;
     isShow = true;
     mains: string[] = [
@@ -14,21 +13,14 @@ class AppRoot extends History<Event$> {
     ];
     mainsCounter = 0;
     currentMain = this.mains[this.mainsCounter];
-    root: RootElement;
+    root;
 
-    constructor(root: RootElement, startEvent: Event$) {
-        super(startEvent);
+    constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
     }
 
-    onCreate(): void {
-        this.state = Event$.BEFORE_INIT;
-    }
-
     onInit(): void {
-        this.state = Event$.INIT;
-
         this.root.collect(
             NextMain$.subscribe(() => {
                 this.mainsCounter++;
@@ -40,10 +32,6 @@ class AppRoot extends History<Event$> {
                 this.root.detectChanges();
             })
         );
-    }
-
-    onDestroy(): void {
-        this.state = Event$.DESTROY;
     }
 }
 

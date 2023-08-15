@@ -9,11 +9,7 @@ export type GlobalDocument = Document & {};
 export type OnCreate = { onCreate: () => void };
 export type OnInit = { onInit: () => void };
 export type OnDestroy = { onDestroy: () => void };
-export type RootElement = {
-    ahe_number: number;
-    ahe_nValues: NestedValue[];
-    ahe_IfList: OnIf[];
-    ahe_component: any;
+export type RootBehavior = {
     onAdopted$: Observable<boolean>;
     attributeChanged$: Observable<AttributeChanged | undefined>;
     beforeDetectChanges$: Observable<boolean>;
@@ -22,3 +18,9 @@ export type RootElement = {
     collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
 } & HTMLElement;
+export type RootElement = {
+    ahe_number: number;
+    ahe_nValues: NestedValue[];
+    ahe_IfList: OnIf[];
+    ahe_component: any;
+} & RootBehavior;

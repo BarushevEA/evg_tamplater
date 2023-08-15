@@ -2,10 +2,9 @@ import {Event$} from "evg_event_history/src/outLib/env";
 import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {APP_INFO} from "../../APP_INFO";
-import {RootElement} from "../../../../../libs/env/types";
-import {History} from "evg_event_history/src/outLib/history";
+import {RootBehavior} from "../../../../../libs/env/types";
 
-export class Main extends History<Event$> {
+export class Main {
     name: string;
     root;
     appInfo = APP_INFO.description;
@@ -49,22 +48,9 @@ our most popular chicken recipes of all time.
     receiptCounter = 0;
     currentReceipt = this.receipts[this.receiptCounter];
 
-    constructor(root: RootElement, startEvent: Event$) {
-        super(startEvent);
+    constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
-    }
-
-    onCreate(): void {
-        this.state = Event$.BEFORE_INIT;
-    }
-
-    onInit(): void {
-        this.state = Event$.INIT;
-    }
-
-    onDestroy(): void {
-        this.state = Event$.DESTROY;
     }
 
     nestReceipt(): void {

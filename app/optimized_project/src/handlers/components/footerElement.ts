@@ -1,30 +1,17 @@
 import {Event$} from "evg_event_history/src/outLib/env";
 import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {RootElement} from "../../../../../libs/env/types";
-import {History} from "evg_event_history/src/outLib/history";
+import {RootBehavior} from "../../../../../libs/env/types";
 
-class Footer extends History<Event$> {
+class Footer {
     name: string;
     root;
 
-    constructor(root: RootElement, startEvent: Event$) {
-        super(startEvent);
+    constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
     }
 
-    onCreate(): void {
-        this.state = Event$.BEFORE_INIT;
-    }
-
-    onInit(): void {
-        this.state = Event$.INIT;
-    }
-
-    onDestroy(): void {
-        this.state = Event$.DESTROY;
-    }
 }
 
 export const FooterElement = getElement<Event$>(
