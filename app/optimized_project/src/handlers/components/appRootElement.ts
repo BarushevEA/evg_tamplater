@@ -2,7 +2,7 @@ import {Event$} from "evg_event_history/src/outLib/env";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {NextMain$} from "../services/headerService";
 import {OnInit, RootBehavior} from "../../../../../libs/env/types";
-import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
+import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 
 class AppRoot implements OnInit {
     name: string;
@@ -35,7 +35,7 @@ class AppRoot implements OnInit {
     }
 }
 
-export const AppRootElement = getElement<Event$>(
+export const AppRootElement = getCustomElement<Event$>(
     {
         htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.CONTAINER),
         startEvent: Event$.UNDEFINED,

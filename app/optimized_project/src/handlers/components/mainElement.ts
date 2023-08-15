@@ -1,5 +1,5 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
+import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {APP_INFO} from "../../APP_INFO";
 import {RootBehavior} from "../../../../../libs/env/types";
@@ -64,7 +64,7 @@ our most popular chicken recipes of all time.
     }
 }
 
-export const MainElement = getElement<Event$>(
+export const MainElement = getCustomElement<Event$>(
     {
         htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN),
         startEvent: Event$.UNDEFINED,

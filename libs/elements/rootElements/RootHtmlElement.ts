@@ -17,7 +17,7 @@ import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
 import {RootElement} from "../../env/types";
 
-export function getElement<T>(options: ELEMENT_OPTIONS<T>): CustomElementConstructor {
+export function getCustomElement<T>(options: ELEMENT_OPTIONS<T>): CustomElementConstructor {
     class RootHtmlElement extends HTMLElement implements RootElement {
         static ahe_Counter = 0;
         ahe_number = 0;

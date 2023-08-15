@@ -1,5 +1,5 @@
 import {Event$} from "evg_event_history/src/outLib/env";
-import {getElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
+import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {RootBehavior} from "../../../../../libs/env/types";
 
@@ -14,7 +14,7 @@ class Footer {
 
 }
 
-export const FooterElement = getElement<Event$>(
+export const FooterElement = getCustomElement<Event$>(
     {
         htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.FOOTER),
         startEvent: Event$.UNDEFINED,

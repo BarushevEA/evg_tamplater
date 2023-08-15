@@ -1,5 +1,5 @@
 import {OnCreate, OnDestroy, OnInit} from "../../env/types";
-import {getElement} from "./RootHtmlElement";
+import {getCustomElement} from "./RootHtmlElement";
 
 class AppTxt implements OnCreate, OnInit, OnDestroy {
     constructor() {
@@ -15,7 +15,7 @@ class AppTxt implements OnCreate, OnInit, OnDestroy {
     }
 }
 
-export const AppText = getElement<any>(
+export const AppText = getCustomElement<any>(
     {
         htmlTemplate: "",
         startEvent: 0,
