@@ -1,5 +1,5 @@
 import {appendChild, getStyle, runWhenDocumentReady} from "../../../utils/utils";
-import {getRootStyles} from "../../registrator";
+import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
 import {TemplateMap, TemplatesHandler} from "../../../utils/Templater";
 import {RegisterRootElements} from "../../registerRootElements";
@@ -19,6 +19,10 @@ export class RenderManager {
     private appElement: HTMLElement;
 
     constructor() {
+    }
+
+    public register(options: REG_OPTIONS): void {
+        registerElements(options);
     }
 
     public run(): void {

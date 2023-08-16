@@ -1,10 +1,10 @@
 import {APP_INFO} from "./APP_INFO";
 import {APP_LOCALE} from "../../../libs/elements/AppLocalization/LocationManager";
 import {LOCATION} from "../../../libs/elements/AppLocalization/location";
-import {registerModules} from "./handlers/componentsRegistrator";
+import {MODULES} from "./appModules";
 import {RENDER_MANAGER} from "../../../libs/elements/rootElements/managers/RenderManager";
 
 APP_INFO.init();
 APP_LOCALE.set(LOCATION.EN);
-registerModules();
+RENDER_MANAGER.register(MODULES);
 RENDER_MANAGER.run();
