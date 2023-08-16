@@ -1,4 +1,6 @@
 import {runWhenDocumentReady} from "../utils/utils";
+import {getCustomElement} from "./rootElements/RootHtmlElement";
+import {customTemplate, E_SUBS_TEMPLATE} from "../../app/optimized_project/src/settings/templates";
 
 export type ELEMENT_REG_OPTION = {
     tagName: string;
@@ -24,4 +26,14 @@ export function registerElements(options: REG_OPTIONS): void {
 
 export function getRootStyles(): string {
     return ROOT_STYLES.join("");
+}
+
+export function getOption(element: any, tagName: string, template: E_SUBS_TEMPLATE): ELEMENT_REG_OPTION {
+    return {
+        tagName: tagName,
+        targetElement: getCustomElement({
+            template: customTemplate.get(template),
+            element: element,
+        })
+    };
 }
