@@ -1,9 +1,7 @@
-import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
-import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
-import {APP_INFO} from "../../APP_INFO";
+import {APP_INFO} from "../../settings/info";
 import {RootBehavior} from "../../../../../libs/env/types";
 
-class Main {
+export class Main {
     name: string;
     root;
     appInfo = APP_INFO.description;
@@ -62,11 +60,3 @@ our most popular chicken recipes of all time.
         this.root.detectChanges();
     }
 }
-
-export const MainElement = getCustomElement<any>(
-    {
-        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN),
-        startEvent: 0,
-        className: Main,
-    }
-);

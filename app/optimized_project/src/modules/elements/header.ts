@@ -1,9 +1,7 @@
-import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
-import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {NextMain$} from "../services/headerService";
 import {OnInit, RootBehavior} from "../../../../../libs/env/types";
 
-class Header implements OnInit {
+export class Header implements OnInit {
     text = "SERG header start after:";
     name = this.text;
     buttonName = "NEXT MAIN";
@@ -41,11 +39,3 @@ class Header implements OnInit {
         }, 1000);
     }
 }
-
-export const HeaderElement = getCustomElement<any>(
-    {
-        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.HEADER),
-        startEvent: 0,
-        className: Header,
-    }
-);

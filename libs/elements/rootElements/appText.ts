@@ -1,24 +1,11 @@
-import {OnCreate, OnDestroy, OnInit} from "../../env/types";
 import {getCustomElement} from "./RootHtmlElement";
 
-class AppTxt implements OnCreate, OnInit, OnDestroy {
-    constructor() {
-    }
-
-    onCreate(): void {
-    }
-
-    onInit(): void {
-    }
-
-    onDestroy(): void {
-    }
+class AppTxt {
 }
 
-export const AppText = getCustomElement<any>(
+export const AppText = getCustomElement(
     {
-        htmlTemplate: "",
-        startEvent: 0,
-        className: AppTxt
+        template: "",
+        element: AppTxt
     }
 );

@@ -1,8 +1,6 @@
-import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
-import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {OnInit, RootBehavior} from "../../../../../libs/env/types";
 
-class Main_1 implements OnInit {
+export class Main_1 implements OnInit {
     name: string;
     isShowHello = false;
     showedTxt = "---HELLO WORLD !!!---";
@@ -54,11 +52,3 @@ class Main_1 implements OnInit {
         }
     }
 }
-
-export const Main_1_Element = getCustomElement<any>(
-    {
-        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.MAIN_1),
-        startEvent: 0,
-        className: Main_1,
-    }
-);

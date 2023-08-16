@@ -17,11 +17,11 @@ import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
 import {RootElement} from "../../env/types";
 
-export function getCustomElement<T>(options: ELEMENT_OPTIONS<T>): CustomElementConstructor {
+export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstructor {
     class RootHtmlElement extends HTMLElement implements RootElement {
         static ahe_Counter = 0;
         ahe_number = 0;
-        private ahe_opts: ELEMENT_OPTIONS<T>;
+        private ahe_opts: ELEMENT_OPTIONS;
         ahe_nValues: NestedValue[];
         ahe_IfList: OnIf[];
         ahe_clr: Collector;
@@ -47,7 +47,7 @@ export function getCustomElement<T>(options: ELEMENT_OPTIONS<T>): CustomElementC
             this.ahe_IfList = [];
 
             this.ahe_opts = options;
-            this.ahe_component = new options.className(this, options.startEvent);
+            this.ahe_component = new options.element(this);
 
             if (this.ahe_component.onCreate) this.ahe_component.onCreate();
         }
@@ -56,8 +56,8 @@ export function getCustomElement<T>(options: ELEMENT_OPTIONS<T>): CustomElementC
             // браузер вызывает этот метод при добавлении элемента в документ
             // (может вызываться много раз, если элемент многократно добавляется/удаляется)
 
-            if (this.ahe_opts.htmlTemplate) {
-                this.innerHTML = this.ahe_opts.htmlTemplate;
+            if (this.ahe_opts.template) {
+                this.innerHTML = this.ahe_opts.template;
             }
 
             initCustomAttributes(this);

@@ -1,7 +1,7 @@
-import {APP_INFO} from "./APP_INFO";
+import {APP_INFO} from "./settings/info";
 import {APP_LOCALE} from "../../../libs/elements/AppLocalization/LocationManager";
 import {LOCATION} from "../../../libs/elements/AppLocalization/location";
-import {MODULES} from "./appModules";
+import {MODULES} from "./settings/modules";
 import {RENDER_MANAGER} from "../../../libs/elements/rootElements/managers/RenderManager";
 
 APP_INFO.init();

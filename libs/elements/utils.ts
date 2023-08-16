@@ -1,7 +1,6 @@
-export type ELEMENT_OPTIONS<T> = {
-    htmlTemplate: string;
-    startEvent: T;
-    className: any;
+export type ELEMENT_OPTIONS = {
+    template: string;
+    element: any;
 };
 
 export enum E_DATA_MARKER {
@@ -24,7 +23,6 @@ export enum E_DATA_MARKER {
 
 export enum E_ROOT_TAG {
     TEXT_VALUE = "text-value",
-    SHADOW_ROOT = "shadow-root",
 }
 
 export function getAttrName(marker: E_DATA_MARKER): string {

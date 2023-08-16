@@ -1,9 +1,7 @@
-import {customTemplate, E_SUBS_TEMPLATE} from "../../templates/templateMarkers";
 import {NextMain$} from "../services/headerService";
 import {OnInit, RootBehavior} from "../../../../../libs/env/types";
-import {getCustomElement} from "../../../../../libs/elements/rootElements/RootHtmlElement";
 
-class AppRoot implements OnInit {
+export class AppRoot implements OnInit {
     name: string;
     isShow = true;
     mains: string[] = [
@@ -33,11 +31,3 @@ class AppRoot implements OnInit {
         );
     }
 }
-
-export const AppRootElement = getCustomElement<any>(
-    {
-        htmlTemplate: customTemplate.get(E_SUBS_TEMPLATE.CONTAINER),
-        startEvent: 0,
-        className: AppRoot,
-    }
-);
