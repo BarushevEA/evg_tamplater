@@ -8,5 +8,4 @@ export class Footer {
         this.root = root;
         this.name = root.tagName;
     }
-
 }
