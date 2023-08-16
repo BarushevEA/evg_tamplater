@@ -23,6 +23,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_number = 0;
         private ahe_opts: ELEMENT_OPTIONS;
         ahe_nValues: NestedValue[];
+        ahe_nFunctions: NestedValue[];
         ahe_IfList: OnIf[];
         ahe_clr: Collector;
         ahe_component: any;
@@ -43,6 +44,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.beforeDetectChanges$ = new Observable(false);
             this.onChangesDetected$ = new Observable(false);
             this.ahe_clr = new Collector();
+            this.ahe_nFunctions = [];
             this.ahe_nValues = [];
             this.ahe_IfList = [];
 
@@ -103,6 +105,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.beforeDetectChanges$.next(true);
             changeIfConditions(this);
             changeNestedValues(this);
+            changeNestedFunctions(this);
             this.onChangesDetected$.next(true);
         }
 
@@ -149,7 +152,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement) {
     const valueName = getAttr(element, E_DATA_MARKER.ON_IF);
     if (!valueName) return;
 
-    const ifParent = AppDocument.createElement("text-value");
+    const ifParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
     rootElement.ahe_IfList.push({
@@ -170,12 +173,26 @@ function getFreeChildren(parent: HTMLElement): Element[] {
 
 function initCustomAttributes(rootElement: RootElement): void {
     if (rootElement.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+
     setAttr(rootElement, E_DATA_MARKER.ROLE, "root");
 }
 
 function detectVariables(rootElement: RootElement, element: Element): void {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) {
         if (element.innerHTML) {
+            const value = element.innerHTML;
+
+            if (!rootElement.ahe_component[value]) return;
+
+            if (typeof rootElement.ahe_component[value] === "function") {
+                rootElement.ahe_nFunctions.push({
+                    textElement: <HTMLElement>element,
+                    valueName: element.innerHTML
+                });
+
+                return;
+            }
+
             rootElement.ahe_nValues.push({
                 textElement: <HTMLElement>element,
                 valueName: element.innerHTML
@@ -286,7 +303,19 @@ function changeNestedValues(rootElement: RootElement): void {
 
     for (const nestedValue of rootElement.ahe_nValues) {
 
-        const nestedData = "" + <any>rootElement.ahe_component[nestedValue.valueName];
+        const nestedData = "" + rootElement.ahe_component[nestedValue.valueName];
+        if (nestedValue.textElement.innerHTML === nestedData) continue;
+
+        nestedValue.textElement.innerHTML = nestedData;
+    }
+}
+
+function changeNestedFunctions(rootElement: RootElement): void {
+    if (!rootElement) return;
+
+    for (const nestedValue of rootElement.ahe_nFunctions) {
+
+        const nestedData = "" + rootElement.ahe_component[nestedValue.valueName]();
         if (nestedValue.textElement.innerHTML === nestedData) continue;
 
         nestedValue.textElement.innerHTML = nestedData;

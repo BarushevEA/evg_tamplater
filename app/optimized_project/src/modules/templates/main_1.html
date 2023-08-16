@@ -1,16 +1,35 @@
 <main class="app_main">
-    <text-value>name</text-value>
-    <button data-click="clickHandler">Show HELLO</button>
+    <txt-val>name</txt-val>
+    <button data-click="clickHandler">
+        Show HELLO
+        <txt-val>counter</txt-val>
+    </button>
     <div data-if="isShowHello">
-        <text-value>showedTxt</text-value>
+        <txt-val>showedTxt</txt-val>
     </div>
     <div data-handle="handleElement">1</div>
     <div data-handle="handleElement">2</div>
     <div data-handle="handleElementExtra">3</div>
     <div data-handle="handleElementExtra">
-        <text-value>name</text-value>
+        <txt-val>name</txt-val>
+    </div>
+    <div>
+        <txt-val>name</txt-val>
+        <span data-handle="handleElementExtra"></span>
     </div>
     <label>
         <input data-keydown="keyDownInput" data-change="changeInput">
     </label>
+    <div>
+        input key:
+        <txt-val>inputKey</txt-val>
+    </div>
+    <div>
+        input change:
+        <txt-val>inputChange</txt-val>
+    </div>
+    <div>
+        test function:
+        <txt-val>test</txt-val>
+    </div>
 </main>
