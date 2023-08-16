@@ -182,8 +182,6 @@ function detectVariables(rootElement: RootElement, element: Element): void {
         if (element.innerHTML) {
             const value = element.innerHTML;
 
-            if (!rootElement.ahe_component[value]) return;
-
             if (typeof rootElement.ahe_component[value] === "function") {
                 rootElement.ahe_nFunctions.push({
                     textElement: <HTMLElement>element,
