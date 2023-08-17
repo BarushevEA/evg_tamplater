@@ -1,11 +1,11 @@
 import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
-import {Header} from "../modules/elements/header";
-import {Footer} from "../modules/elements/footer";
+import {Header} from "../modules/elements/header/header";
+import {Footer} from "../modules/elements/footer/footer";
 import {APP_TAG_NAME} from "../../../../libs/elements/rootElements/managers/APP_TAG_NAME";
-import {Main_1} from "../modules/elements/main_1";
-import {Main} from "../modules/elements/main";
-import {Test} from "../modules/elements/test";
+import {Main_1} from "../modules/elements/main/main_1";
+import {Main} from "../modules/elements/main/main";
+import {Test} from "../modules/elements/test/test";
 
 export const MODULES: REG_OPTIONS = [
     getOption(AppRoot, APP_TAG_NAME, "APP_EXAMPLE_____ROOT"),

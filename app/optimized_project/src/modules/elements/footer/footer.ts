@@ -1,4 +1,4 @@
-import {RootBehavior} from "../../../../../libs/env/types";
+import {RootBehavior} from "../../../../../../libs/env/types";
 
 export class Footer {
     name: string;

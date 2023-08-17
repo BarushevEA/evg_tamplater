@@ -1,5 +1,5 @@
-import {APP_INFO} from "../../settings/info";
-import {RootBehavior} from "../../../../../libs/env/types";
+import {APP_INFO} from "../../../settings/info";
+import {RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main {
     name: string;

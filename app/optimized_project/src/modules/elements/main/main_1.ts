@@ -1,4 +1,4 @@
-import {OnInit, RootBehavior} from "../../../../../libs/env/types";
+import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main_1 implements OnInit {
     name: string;

@@ -1,5 +1,5 @@
-import {NextMain$} from "../services/headerService";
-import {OnInit, RootBehavior} from "../../../../../libs/env/types";
+import {NextMain$} from "../../services/headerService";
+import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Header implements OnInit {
     text = "SERG header start after:";
