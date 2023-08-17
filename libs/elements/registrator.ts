@@ -1,11 +1,12 @@
 import {runWhenDocumentReady} from "../utils/utils";
 import {getCustomElement} from "./rootElements/RootHtmlElement";
-import {customTemplate, E_SUBS_TEMPLATE} from "../../app/optimized_project/src/settings/templates";
 
 export type ELEMENT_REG_OPTION = {
     tagName: string;
     targetElement: CustomElementConstructor;
 }
+
+export type TEMPLATE = string;
 
 export type REG_OPTIONS = ELEMENT_REG_OPTION[];
 
@@ -28,11 +29,11 @@ export function getRootStyles(): string {
     return ROOT_STYLES.join("");
 }
 
-export function getOption(element: any, tagName: string, template: E_SUBS_TEMPLATE): ELEMENT_REG_OPTION {
+export function getOption(element: any, tagName: string, template: TEMPLATE): ELEMENT_REG_OPTION {
     return {
         tagName: tagName,
         targetElement: getCustomElement({
-            template: customTemplate.get(template),
+            template: template,
             element: element,
         })
     };

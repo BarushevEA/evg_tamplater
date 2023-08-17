@@ -1,19 +1,12 @@
 import {appendChild, getStyle, runWhenDocumentReady} from "../../../utils/utils";
 import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
-import {TemplateMap, TemplatesHandler} from "../../../utils/Templater";
 import {RegisterRootElements} from "../../registerRootElements";
 import {AppDocument} from "../../../env/browserVariables";
 
 export enum E_BASE_TEMPLATE {
-    STYLE,
+    STYLE = "APP_EXAMPLE__STYLE",
 }
-
-const templateMap: TemplateMap = {
-    [E_BASE_TEMPLATE.STYLE]: "APP_EXAMPLE__STYLE",
-}
-
-const baseTemplate = new TemplatesHandler(templateMap);
 
 export class RenderManager {
     private appElement: HTMLElement;
@@ -42,7 +35,7 @@ export class RenderManager {
 
     private start(): void {
         const rootStyle = getStyle(getRootStyles());
-        const mainStyle = getStyle(baseTemplate.get(E_BASE_TEMPLATE.STYLE));
+        const mainStyle = getStyle(E_BASE_TEMPLATE.STYLE);
 
         appendChild(AppDocument.head, rootStyle);
         appendChild(AppDocument.head, mainStyle);
