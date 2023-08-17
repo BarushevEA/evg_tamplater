@@ -1,11 +1,11 @@
 // CSS marker
-exports.CSS_Marker = "APP_EXAMPLE__STYLE";
+exports.CSS_Marker = "APP_EXAMPLE_____STYLE";
 
 // Template markers with they file names
 exports.htmlTemplates = {
-    "APP_EXAMPLE__CONTAINER": "container.html",
-    "APP_EXAMPLE__HEADER": "header.html",
-    "APP_EXAMPLE__MAIN": "main.html",
-    "APP_EXAMPLE__MAIN_1": "main_1.html",
-    "APP_EXAMPLE__FOOTER": "footer.html",
+    "APP_EXAMPLE_____CONTAINER": "container.html",
+    "APP_EXAMPLE_____HEADER": "header.html",
+    "APP_EXAMPLE_____MAIN": "main.html",
+    "APP_EXAMPLE_____MAIN_1": "main_1.html",
+    "APP_EXAMPLE_____FOOTER": "footer.html",
 };

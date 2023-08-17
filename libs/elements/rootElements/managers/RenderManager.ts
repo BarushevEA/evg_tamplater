@@ -4,10 +4,6 @@ import {APP_TAG_NAME} from "./APP_TAG_NAME";
 import {RegisterRootElements} from "../../registerRootElements";
 import {AppDocument} from "../../../env/browserVariables";
 
-export enum E_BASE_TEMPLATE {
-    STYLE = "APP_EXAMPLE__STYLE",
-}
-
 export class RenderManager {
     private appElement: HTMLElement;
 
@@ -35,7 +31,7 @@ export class RenderManager {
 
     private start(): void {
         const rootStyle = getStyle(getRootStyles());
-        const mainStyle = getStyle(E_BASE_TEMPLATE.STYLE);
+        const mainStyle = getStyle("APP_EXAMPLE_____STYLE");
 
         appendChild(AppDocument.head, rootStyle);
         appendChild(AppDocument.head, mainStyle);
