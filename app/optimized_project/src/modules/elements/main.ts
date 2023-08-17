@@ -7,6 +7,7 @@ export class Main {
     appInfo = APP_INFO.description;
     someText = "Hello world !!!";
     ag = "17";
+    test = "<app-test></app-test>";
     receipts: string[] = [
         ` 
 How to cook perfect Bagels
