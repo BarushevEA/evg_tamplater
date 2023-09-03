@@ -1,6 +1,7 @@
 const fs = require('fs');
 const env = require('./utils');
 const options = require('../buildOptions/templateOptions');
+const encrypt = require('../buildOptions/cssEncryptExcludeList');
 const flags = require('../buildOptions/flags');
 
 const cssPath = env.getCSSPath();
@@ -57,7 +58,14 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
 
             clsStr.split(" ").forEach(cls => {
                 if (cls && classes.indexOf(cls) === -1) {
-                    classes.push(cls);
+                    let isExcluded = false;
+                    for (const excludeCls of encrypt.cssExcludeList) {
+                        if (cls === excludeCls) {
+                            isExcluded = true;
+                            break;
+                        }
+                    }
+                    !isExcluded && classes.push(cls);
                 }
             });
         }
@@ -67,6 +75,8 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
         if (a.length > b.length) return -1;
         return 1;
     });
+
+    console.log("=================> Encrypted classes:", classes);
 
     classes.forEach((cls, index) => {
         classStrListModified.forEach((clsStr, i) => {
