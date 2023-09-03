@@ -80,7 +80,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
 
     classes.forEach((cls, index) => {
         classStrListModified.forEach((clsStr, i) => {
-            classStrListModified[i] = clsStr.replaceAll(cls, "" + getClassName(index));
+            classStrListModified[i] = clsStr.replaceAll(cls, getClassName(index));
         });
         cssFileStr = cssFileStr.replaceAll(`.${cls} `, `.${getClassName(index)} `);
     });
