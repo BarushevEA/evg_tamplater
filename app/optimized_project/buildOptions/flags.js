@@ -1,0 +1,3 @@
+exports.flag = {
+    isCssEncrypt: true,
+};

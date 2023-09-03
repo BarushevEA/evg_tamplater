@@ -45,6 +45,10 @@ html-block {
     @include setMinWidthHeight(100%, 40px);
   }
 
+  .colored {
+    background: #69b2e4;
+  }
+
   .app_main {
     @include setWidthHeight(100%, 100%);
     flex-grow: 1;

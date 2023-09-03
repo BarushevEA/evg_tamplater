@@ -5,6 +5,6 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "webpack --mode=production",
     "build:ts": "npm run build:types && npm run build:js",
-    "build:optimized_project": "npm run build:js && node buildTemplateHandler/cssHandler.js && node buildTemplateHandler/tamplateHandler.js"
+    "build:optimized_project": "npm run build:js && node buildTemplateHandler/tamplateHandler.js && node buildTemplateHandler/cssHandler.js"
   }
 }
