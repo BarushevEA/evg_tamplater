@@ -5,6 +5,7 @@ export type ELEMENT_OPTIONS = {
 
 export enum E_DATA_MARKER {
     ROLE = "0",
+    INJECT_TO = "inject_to",
     ON_CLICK = "click",
     ON_CHANGE = "change",
     ON_KEY_DOWN = "keydown",

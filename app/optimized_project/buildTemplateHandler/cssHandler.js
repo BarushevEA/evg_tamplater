@@ -19,13 +19,22 @@ fs.readFile(cssPath, (error, data) => {
 
     fs.readFile(buildFilePath, (error, data) => {
         handleError(error);
+        console.log();
+        console.log("=> CSS INJECTION START");
+        const start = Date.now();
 
         let jsFileStr = data.toString();
 
         if (flags.flag.isCssEncrypt) {
+            console.log("==> CSS ENCRYPTION START");
+            console.log("cssExcludeList", encrypt.cssExcludeList);
+            console.log("cssIncludeList", encrypt.cssIncludeList);
+            console.log("isJsCssProcess", flags.flag.isJsCssProcess);
+            const startTime = Date.now();
             const encryptedObj = getEncryptedObject(jsFileStr, cssFileStr);
             jsFileStr = encryptedObj.js;
             cssFileStr = encryptedObj.css;
+            console.log("==> CSS ENCRYPTION FINISH", `${Date.now() - startTime} ms.`);
         }
 
         jsFileStr = jsFileStr.replace(options.CSS_Marker, cssFileStr);
@@ -33,6 +42,8 @@ fs.readFile(cssPath, (error, data) => {
         fs.writeFile(buildFilePath, jsFileStr, function (error) {
             handleError(error);
         });
+
+        console.log("=> CSS INJECTION FINISH", `${Date.now() - start} ms.`);
     });
 });
 
@@ -81,7 +92,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
             classStrListModified[i] = clsStr.replaceAll(cls, getClassName(index));
         });
         cssFileStr = cssFileStr.replaceAll(`.${cls} `, `.${getClassName(index)} `);
-        console.log("=================> Encrypted classes:", `.${cls} `, `.${getClassName(index)} `);
+        console.log(`[.${cls}]`, `encrypt to => [.${getClassName(index)}]`);
         if (flags.flag.isJsCssProcess) {
             jsFileStr = jsFileStr.replaceAll(`"${cls}"`, `"${getClassName(index)}"`);
             jsFileStr = jsFileStr.replaceAll(`".${cls}"`, `".${getClassName(index)}"`);

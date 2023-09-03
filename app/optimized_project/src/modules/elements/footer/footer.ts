@@ -1,11 +1,16 @@
-import {RootBehavior} from "../../../../../../libs/env/types";
+import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
-export class Footer {
+export class Footer implements OnInit{
     name: string;
-    root;
+    readonly root;
+    readonly span: HTMLElement;
 
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
+    }
+
+    onInit(): void {
+        this.span.innerHTML = "Test injection ";
     }
 }

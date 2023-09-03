@@ -129,6 +129,7 @@ function detectNestedData(rootElement: RootElement): void {
     for (const child of children) {
         setAttr(child, E_DATA_MARKER.ROLE, rootElement.tagName.toLowerCase());
         detectVariables(rootElement, child);
+        detectInjections(rootElement, <HTMLElement>child);
         detectClickHandlers(rootElement, <HTMLElement>child);
         detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
         detectMouseEnterHandlers(rootElement, <HTMLElement>child);
@@ -203,6 +204,11 @@ function execute(rootElement: RootElement, functionName: string, evt: MouseEvent
     rootElement.ahe_component[functionName](evt);
 }
 
+function detectInjections(rootElement: RootElement, element: HTMLElement): void {
+    const injectionName = getInjectionName(rootElement, element, E_DATA_MARKER.INJECT_TO);
+    rootElement.ahe_component[injectionName] = element;
+}
+
 function detectClickHandlers(rootElement: RootElement, element: HTMLElement): void {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_CLICK);
     if (functionName) element.onclick = (evt) => execute(rootElement, functionName, evt);
@@ -272,6 +278,16 @@ function getFunctionName(rootElement: RootElement, element: HTMLElement, marker:
     removeAttr(element, marker);
 
     return functionName;
+}
+
+function getInjectionName(rootElement: RootElement, element: HTMLElement, marker: E_DATA_MARKER): string {
+    const injectionName = getAttr(element, marker);
+    if (!injectionName) return "";
+    if (!rootElement) return "";
+
+    removeAttr(element, marker);
+
+    return injectionName;
 }
 
 function detectElementHandlers(rootElement: RootElement, element: HTMLElement) {

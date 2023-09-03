@@ -21,6 +21,11 @@ function getStringFromFile(filePath) {
 
 fs.readFile(buildFilePath, (error, data) => {
     handleError(error);
+    console.log();
+    console.log("=> TEMPLATE INJECTION START");
+    console.log(htmlTemplates);
+    const start = Date.now();
+
     let jsFileStr = data.toString();
 
     for (const templateMarker in htmlTemplates) {
@@ -31,6 +36,7 @@ fs.readFile(buildFilePath, (error, data) => {
     }
 
     fs.writeFile(buildFilePath, jsFileStr, (error) => handleError(error));
+    console.log("=> TEMPLATE INJECTION FINISH", `${Date.now() - start} ms.`);
 });
 
 function handleError(error) {
