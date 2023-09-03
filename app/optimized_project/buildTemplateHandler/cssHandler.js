@@ -35,67 +35,39 @@ fs.readFile(cssPath, (error, data) => {
     });
 });
 
-function getEncryptedObject(jsFileStr, cssFileStr) {
-    let index = 0;
-    const classMarker = `class='`;
-    const classStrList = [];
-    const classStrListModified = [];
-    const classes = [];
+function getEncryptedObject(js, css) {
+    let i = 0;
+    const marker = `class='`, arr = [], mod = [], cls_s = [];
 
-    while ((index = jsFileStr.indexOf(classMarker, index)) > -1) {
-        index += classMarker.length;
-        let clsStr = "";
-        let sym = "";
-        while ((sym = jsFileStr[index]) !== "'") {
-            clsStr += sym;
-            index++;
-        }
+    while ((i = js.indexOf(marker, i)) > -1) {
+        i += marker.length;
+        let str = "", sym = "";
+        while ((sym = js[i]) !== "'") i++ && (str += sym);
 
-        if (classStrList.indexOf(clsStr) === -1) {
-            classStrList.push(clsStr);
-            classStrListModified.push(clsStr)
-
-            clsStr.split(" ").forEach(cls => {
-                if (cls && classes.indexOf(cls) === -1) {
-                    classes.push(cls);
-                }
-            });
-        }
+        if (arr.includes(str)) continue;
+        arr.push(str) && mod.push(str);
+        str.split(" ").forEach(cls => (cls && !cls_s.includes(cls)) && cls_s.push(cls));
     }
 
-    classes.sort((a, b) => {
-        if (a.length > b.length) return -1;
-        return 1;
+    cls_s.sort((a, b) => (a.length > b.length) ? -1 : 1);
+
+    cls_s.forEach((cls, i) => {
+        mod.forEach((clsStr, k) => mod[k] = clsStr.replaceAll(cls, "" + getClassName(i)));
+        css = css.replaceAll(`.${cls} `, `.${getClassName(i)} `);
     });
 
-    classes.forEach((cls, index) => {
-        classStrListModified.forEach((clsStr, i) => {
-            classStrListModified[i] = clsStr.replaceAll(cls, "" + getClassName(index));
-        });
-        cssFileStr = cssFileStr.replaceAll(`.${cls} `, `.${getClassName(index)} `);
-    });
+    arr.forEach((clsStr, i) => js = js.replaceAll(`${marker}${clsStr}'`, `${marker}${mod[i]}'`));
 
-    classStrList.forEach((clsStr, index) => {
-        jsFileStr = jsFileStr.replaceAll(`${classMarker}${clsStr}'`, `${classMarker}${classStrListModified[index]}'`);
-    });
-
-    return {
-        js: jsFileStr,
-        css: cssFileStr,
-    };
+    return {js: js, css: css};
 }
 
-function getClassName(index) {
-    let cssClass = "";
-    const symbols = "qwertyuiop";
-    const smbIndex = "" + index;
+function getClassName(ind) {
+    let name = "";
+    const symbols = "qwertyuiop", strInd = "" + ind;
 
-    for (let i = 0; i < smbIndex.length; i++) {
-        const ind = +smbIndex[i];
-        cssClass += symbols[ind];
-    }
+    for (let i = 0; i < strInd.length; i++) name += symbols[+strInd[i]];
 
-    return cssClass;
+    return name;
 }
 
 function handleError(error) {
