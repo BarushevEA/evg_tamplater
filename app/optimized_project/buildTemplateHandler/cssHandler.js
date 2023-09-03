@@ -53,7 +53,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
 
         if (classStrList.indexOf(clsStr) === -1) {
             classStrList.push(clsStr);
-            classStrListModified.push(clsStr)
+            classStrListModified.push(clsStr);
 
             clsStr.split(" ").forEach(cls => {
                 if (cls && classes.indexOf(cls) === -1) {
