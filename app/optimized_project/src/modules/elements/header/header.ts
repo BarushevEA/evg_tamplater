@@ -6,7 +6,9 @@ export class Header implements OnInit {
     name = this.text;
     buttonName = "NEXT MAIN";
     counter1 = 0;
-    root
+    root;
+    btnRed = "red_css";
+    btnBlue = "blue_css";
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -22,6 +24,12 @@ export class Header implements OnInit {
     nextMain(evt: MouseEvent): void {
         evt.stopPropagation();
         evt.preventDefault();
+
+        const elements = this.root.getElementsBoundToMethod(this.nextMain);
+        for (const element of elements) {
+            element.classList.toggle(this.btnBlue);
+            element.classList.toggle(this.btnRed);
+        }
 
         NextMain$.next(true);
     }

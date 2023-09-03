@@ -1,7 +1,7 @@
 const fs = require('fs');
 const env = require('./utils');
 const options = require('../buildOptions/templateOptions');
-const encrypt = require('../buildOptions/cssEncryptExcludeList');
+const encrypt = require('../buildOptions/cssEncryptList');
 const flags = require('../buildOptions/flags');
 
 const cssPath = env.getCSSPath();
@@ -41,7 +41,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
     const classMarker = `class='`;
     const classStrList = [];
     const classStrListModified = [];
-    const classes = [];
+    const classes = encrypt.cssIncludeList;
 
     while ((index = jsFileStr.indexOf(classMarker, index)) > -1) {
         index += classMarker.length;
@@ -76,13 +76,16 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
         return 1;
     });
 
-    console.log("=================> Encrypted classes:", classes);
-
     classes.forEach((cls, index) => {
         classStrListModified.forEach((clsStr, i) => {
             classStrListModified[i] = clsStr.replaceAll(cls, getClassName(index));
         });
         cssFileStr = cssFileStr.replaceAll(`.${cls} `, `.${getClassName(index)} `);
+        console.log("=================> Encrypted classes:", `.${cls} `, `.${getClassName(index)} `);
+        if (flags.flag.isJsCssProcess) {
+            jsFileStr = jsFileStr.replaceAll(`"${cls}"`, `"${getClassName(index)}"`);
+            jsFileStr = jsFileStr.replaceAll(`".${cls}"`, `".${getClassName(index)}"`);
+        }
     });
 
     classStrList.forEach((clsStr, index) => {

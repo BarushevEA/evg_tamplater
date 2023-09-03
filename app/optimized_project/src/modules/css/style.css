@@ -55,5 +55,11 @@ html-block {
 .app .cursor_pointer {
   cursor: pointer;
 }
+.app .red_css {
+  background: #e469a0;
+}
+.app .blue_css {
+  background: #69b2e4;
+}
 
 /*# sourceMappingURL=style.css.map */
