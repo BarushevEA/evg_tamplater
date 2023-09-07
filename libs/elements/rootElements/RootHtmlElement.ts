@@ -118,7 +118,7 @@ function detectInjectedData(rootElement: RootElement): void {
 
     for (const child of children) {
         setAttr(child, E_DATA_MARKER.ROLE, rootElement.tagName.toLowerCase());
-        detectVariables(rootElement, child);
+        if (detectVariables(rootElement, child)) continue;
         detectInjections(rootElement, <HTMLElement>child);
         detectClickHandlers(rootElement, <HTMLElement>child);
         detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
@@ -162,26 +162,29 @@ function getFreeChildren(parent: HTMLElement): Element[] {
     return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.ROLE)}])`));
 }
 
-function detectVariables(rootElement: RootElement, element: Element): void {
+function detectVariables(rootElement: RootElement, element: Element): boolean {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) {
-        if (element.innerHTML) {
-            const value = element.innerHTML;
+        if (!element.innerHTML) return false;
 
-            if (typeof rootElement.ahe_component[value] === "function") {
-                rootElement.ahe_nFunctions.push({
-                    textElement: <HTMLElement>element,
-                    valueName: element.innerHTML
-                });
+        const value = element.innerHTML;
 
-                return;
-            }
-
-            rootElement.ahe_nValues.push({
+        if (typeof rootElement.ahe_component[value] === "function") {
+            rootElement.ahe_nFunctions.push({
                 textElement: <HTMLElement>element,
                 valueName: element.innerHTML
             });
+
+            return true;
         }
+
+        rootElement.ahe_nValues.push({
+            textElement: <HTMLElement>element,
+            valueName: element.innerHTML
+        });
+
+        return true;
     }
+    return false;
 }
 
 function execute(rootElement: RootElement, functionName: string, evt: MouseEvent | KeyboardEvent | Event) {
