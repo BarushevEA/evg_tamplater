@@ -12,7 +12,7 @@ Also template has children with data attributes:
 - attribute that contains field name, if value of field equals true element will be show
 ### data-handle 
 - attribute contains function name of this component. When function is calling, you can get related elements and process them
-### data-data-inject_to
+### data-inject_to
 ### data-change
 ### data-keydown
 ### data-keyup
