@@ -4,6 +4,7 @@ export class Footer implements OnInit{
     name: string;
     readonly root;
     readonly span: HTMLElement;
+    myDiv: HTMLElement;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -12,5 +13,6 @@ export class Footer implements OnInit{
 
     onInit(): void {
         this.span.innerHTML = "Test injection ";
+        this.myDiv.innerHTML = "Test injection div";
     }
 }
