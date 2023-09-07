@@ -55,9 +55,6 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         connectedCallback() {
-            // браузер вызывает этот метод при добавлении элемента в документ
-            // (может вызываться много раз, если элемент многократно добавляется/удаляется)
-
             if (this.ahe_opts.template) {
                 this.innerHTML = this.ahe_opts.template;
             }
@@ -70,16 +67,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         disconnectedCallback() {
-            // браузер вызывает этот метод при удалении элемента из документа
-            // (может вызываться много раз, если элемент многократно добавляется/удаляется)
-
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
             this.ahe_clr.unsubscribeAll();
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-            // вызывается при изменении одного из перечисленных выше атрибутов
-
             this.attributeChanged$.next({
                 name,
                 oldValue,
@@ -88,9 +80,6 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         adoptedCallback() {
-            // вызывается, когда элемент перемещается в новый документ
-            // (происходит в document.adoptNode, используется очень редко)
-
             this.onAdopted$.next(true);
         }
 
