@@ -190,7 +190,7 @@ function execute(rootElement: RootElement, functionName: string, evt: MouseEvent
 
 function detectInjections(rootElement: RootElement, element: HTMLElement): void {
     const injectionName = getInjectionName(rootElement, element, E_DATA_MARKER.INJECT_TO);
-    rootElement.ahe_component[injectionName] = element;
+    if (injectionName) rootElement.ahe_component[injectionName] = element;
 }
 
 function detectClickHandlers(rootElement: RootElement, element: HTMLElement): void {
