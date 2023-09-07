@@ -62,6 +62,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
 
             detectInjectedData(this);
+            this.detectChanges();
 
             if (this.ahe_component.onInit) this.ahe_component.onInit();
         }
@@ -135,8 +136,6 @@ function detectInjectedData(rootElement: RootElement): void {
         detectElementHandlers(rootElement, <HTMLElement>child);
         detectIfConditions(rootElement, <HTMLElement>child);
     }
-
-    rootElement.detectChanges();
 }
 
 function detectIfConditions(rootElement: RootElement, element: HTMLElement) {
