@@ -62,8 +62,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 this.innerHTML = this.ahe_opts.template;
             }
 
-            initCustomAttributes(this);
-            detectNestedData(this);
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+
+            detectInjectedData(this);
 
             if (this.ahe_component.onInit) this.ahe_component.onInit();
         }
@@ -123,7 +124,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
     return RootHtmlElement;
 }
 
-function detectNestedData(rootElement: RootElement): void {
+function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
 
     for (const child of children) {
@@ -170,12 +171,6 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement) {
 
 function getFreeChildren(parent: HTMLElement): Element[] {
     return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.ROLE)}])`));
-}
-
-function initCustomAttributes(rootElement: RootElement): void {
-    if (rootElement.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-
-    setAttr(rootElement, E_DATA_MARKER.ROLE, "root");
 }
 
 function detectVariables(rootElement: RootElement, element: Element): void {
