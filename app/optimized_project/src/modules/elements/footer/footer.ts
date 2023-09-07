@@ -1,10 +1,10 @@
 import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Footer implements OnInit{
-    name: string;
     readonly root;
     readonly span: HTMLElement;
     readonly myDiv: HTMLElement;
+    name: string;
 
     constructor(root: RootBehavior) {
         this.root = root;

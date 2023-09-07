@@ -1,10 +1,10 @@
 import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main_1 implements OnInit {
+    readonly root;
     name: string;
     isShowHello = false;
     showedTxt = "---HELLO WORLD !!!---";
-    root;
     counter = 0;
     inputKey = "";
     inputChange = "";

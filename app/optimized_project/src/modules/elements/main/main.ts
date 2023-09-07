@@ -2,8 +2,8 @@ import {APP_INFO} from "../../../settings/info";
 import {RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main {
+    readonly root;
     name: string;
-    root;
     appInfo = APP_INFO.description;
     someText = "Hello world !!!";
     ag = "17";

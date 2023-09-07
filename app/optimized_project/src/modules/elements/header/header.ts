@@ -2,11 +2,11 @@ import {NextMain$} from "../../services/headerService";
 import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Header implements OnInit {
+    readonly root;
     text = "SERG header start after:";
     name = this.text;
     buttonName = "NEXT MAIN";
     counter1 = 0;
-    root;
     btnRed = "red_css";
     btnBlue = "blue_css";
 
