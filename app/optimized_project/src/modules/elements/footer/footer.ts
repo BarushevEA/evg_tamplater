@@ -4,7 +4,7 @@ export class Footer implements OnInit{
     name: string;
     readonly root;
     readonly span: HTMLElement;
-    myDiv: HTMLElement;
+    readonly myDiv: HTMLElement;
 
     constructor(root: RootBehavior) {
         this.root = root;
