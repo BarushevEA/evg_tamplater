@@ -10,18 +10,15 @@ export type TEMPLATE = string;
 
 export type REG_OPTIONS = ELEMENT_REG_OPTION[];
 
+const ignoreElement = "{display: contents !important;}";
 export const HTML_BLOCK = "html-block";
-export const ROOT_STYLES: string[] = [`${HTML_BLOCK} {display: contents !important;}`];
+export const ROOT_STYLES: string[] = [`${HTML_BLOCK} ${ignoreElement}`];
 
 export function registerElements(options: REG_OPTIONS): void {
-    for (const option of options) {
-        ROOT_STYLES.push(`${option.tagName} {display: contents !important;}`);
-    }
+    for (const option of options) ROOT_STYLES.push(`${option.tagName} ${ignoreElement}`);
 
     runWhenDocumentReady(() => {
-        for (const option of options) {
-            customElements.define(option.tagName, option.targetElement);
-        }
+        for (const option of options) customElements.define(option.tagName, option.targetElement);
     });
 }
 

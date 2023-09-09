@@ -10,7 +10,7 @@ export function utilsInfoInit(info: AppInfo): void {
     appInfo = info;
 }
 
-export function getAppInfo(): AppInfo{
+export function getAppInfo(): AppInfo {
     return appInfo;
 }
 
@@ -96,10 +96,10 @@ export function removeChild(parent: HTMLElement, child: HTMLElement): void {
     if (parent && child) parent.removeChild(child);
 }
 
-export function getElementsByClass(parent: HTMLElement, token: string): HTMLCollectionOf<Element> {
-    if (!parent) return <HTMLCollectionOf<Element>><any>[];
+export function getElementsByClass(parent: HTMLElement, token: string): Element[] {
+    if (!parent) return [];
 
-    return parent.getElementsByClassName(token);
+    return Array.from(parent.getElementsByClassName(token));
 }
 
 export const documentReady$ = new Observable(false);

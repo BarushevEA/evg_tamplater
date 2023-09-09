@@ -24,7 +24,6 @@ export enum E_DATA_MARKER {
 
 export enum E_ROOT_TAG {
     TEXT_VALUE = "txt-val",
-    TEXT_FUNCTION = "txt-func",
 }
 
 export function getAttrName(marker: E_DATA_MARKER): string {
