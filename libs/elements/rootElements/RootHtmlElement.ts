@@ -29,6 +29,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_component: any;
 
         onAdopted$: Observable<boolean>;
+        onInit$: Observable<boolean>;
+        onDestroy$: Observable<boolean>;
         attributeChanged$: Observable<AttributeChanged | undefined>;
         beforeDetectChanges$: Observable<boolean>;
         onChangesDetected$: Observable<boolean>;
@@ -40,6 +42,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             RootHtmlElement.ahe_Counter++;
 
             this.onAdopted$ = new Observable(false);
+            this.onInit$ = new Observable(false);
+            this.onDestroy$ = new Observable(false);
             this.attributeChanged$ = new Observable(undefined);
             this.beforeDetectChanges$ = new Observable(false);
             this.onChangesDetected$ = new Observable(false);
@@ -58,16 +62,22 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
 
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-
             detectInjectedData(this);
-            this.detectChanges();
 
+            this.detectChanges();
+            // console.log(this.tagName, this.ahe_nFunctions.length, this.ahe_nValues.length, this.ahe_IfList.length);
+
+            this.onInit$.next(true);
             if (this.ahe_component.onInit) this.ahe_component.onInit();
         }
 
         disconnectedCallback() {
+            this.onDestroy$.next(true);
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
             this.ahe_clr.unsubscribeAll();
+            this.ahe_nFunctions.length = 0;
+            this.ahe_nValues.length = 0;
+            this.ahe_IfList.length = 0;
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -266,13 +276,17 @@ function detectElementHandlers(rootElement: RootElement, element: HTMLElement) {
     removeAttr(element, E_DATA_MARKER.ON_HANDLE);
 }
 
-function bindElementToMethod(rootElement: any, functionName: string, element: HTMLElement) {
+function bindElementToMethod(rootElement: RootElement, functionName: string, element: HTMLElement) {
     const method = rootElement.ahe_component[functionName];
     if (!method) return;
 
     if (!method.htmlElements) method.htmlElements = {};
 
     if (!method.htmlElements[rootElement.ahe_number]) method.htmlElements[rootElement.ahe_number] = [];
+
+    rootElement.ahe_clr.collect(
+        rootElement.onDestroy$.subscribe(isDestroy => isDestroy && (method.htmlElements = {}))
+    );
 
     method.htmlElements[rootElement.ahe_number].push(element);
 }
