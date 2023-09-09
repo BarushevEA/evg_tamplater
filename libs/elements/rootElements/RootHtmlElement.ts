@@ -55,9 +55,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         connectedCallback() {
-            if (this.ahe_opts.template) {
-                this.innerHTML = this.ahe_opts.template;
-            }
+            if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
 
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
 
@@ -73,11 +71,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-            this.attributeChanged$.next({
-                name,
-                oldValue,
-                newValue
-            })
+            this.attributeChanged$.next({name, oldValue, newValue});
         }
 
         adoptedCallback() {
@@ -89,7 +83,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (!method.htmlElements) return [];
             if (!method.htmlElements[this.ahe_number]) return [];
 
-            return <HTMLElement[]>(method.htmlElements[this.ahe_number])
+            return <HTMLElement[]>(method.htmlElements[this.ahe_number]);
         }
 
         detectChanges(): void {
@@ -145,12 +139,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement) {
     const ifParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
-    rootElement.ahe_IfList.push({
-        ifElement: element,
-        valueName: valueName,
-        ifParent: ifParent,
-        oldCondition: false,
-    });
+    rootElement.ahe_IfList.push({ifElement: element, valueName: valueName, ifParent: ifParent, oldCondition: false,});
 
     htmlParent.insertBefore(ifParent, element);
     removeChild(htmlParent, element);
@@ -168,19 +157,11 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
         const value = element.innerHTML;
 
         if (typeof rootElement.ahe_component[value] === "function") {
-            rootElement.ahe_nFunctions.push({
-                textElement: <HTMLElement>element,
-                valueName: element.innerHTML
-            });
-
+            rootElement.ahe_nFunctions.push({textElement: <HTMLElement>element, valueName: element.innerHTML});
             return true;
         }
 
-        rootElement.ahe_nValues.push({
-            textElement: <HTMLElement>element,
-            valueName: element.innerHTML
-        });
-
+        rootElement.ahe_nValues.push({textElement: <HTMLElement>element, valueName: element.innerHTML});
         return true;
     }
     return false;
@@ -289,12 +270,10 @@ function bindElementToMethod(rootElement: any, functionName: string, element: HT
     const method = rootElement.ahe_component[functionName];
     if (!method) return;
 
-    if (!method.htmlElements) {
-        method.htmlElements = {};
-    }
-    if (!method.htmlElements[rootElement.ahe_number]) {
-        method.htmlElements[rootElement.ahe_number] = [];
-    }
+    if (!method.htmlElements) method.htmlElements = {};
+
+    if (!method.htmlElements[rootElement.ahe_number]) method.htmlElements[rootElement.ahe_number] = [];
+
     method.htmlElements[rootElement.ahe_number].push(element);
 }
 
