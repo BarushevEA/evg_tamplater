@@ -62,22 +62,26 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
 
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-            detectInjectedData(this);
 
+            detectInjectedData(this);
             this.detectChanges();
-            // console.log(this.tagName, this.ahe_nFunctions.length, this.ahe_nValues.length, this.ahe_IfList.length);
 
             this.onInit$.next(true);
             if (this.ahe_component.onInit) this.ahe_component.onInit();
         }
 
         disconnectedCallback() {
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+
             this.onDestroy$.next(true);
+
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
+
             this.ahe_clr.unsubscribeAll();
             this.ahe_nFunctions.length = 0;
             this.ahe_nValues.length = 0;
             this.ahe_IfList.length = 0;
+            this.innerHTML = "";
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {

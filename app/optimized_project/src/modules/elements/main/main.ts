@@ -8,6 +8,7 @@ export class Main {
     someText = "Hello world !!!";
     ag = "17";
     test = "<app-test></app-test>";
+    isTest = true;
     receipts: string[] = [
         ` 
 How to cook perfect Bagels
