@@ -86,7 +86,6 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
 
             this.onDestroy$.next(true);
-
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
 
             this.ahe_clr.unsubscribeAll();

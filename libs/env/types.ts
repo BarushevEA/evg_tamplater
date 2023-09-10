@@ -20,6 +20,7 @@ export type RootBehavior = {
     detectChanges(): void;
     collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
+    destroy(): void;
 } & HTMLElement;
 export type RootElement = {
     ahe_number: number;
