@@ -17,6 +17,8 @@ import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
 import {RootElement} from "../../env/types";
 
+const ifDoubleInitVar = "_______$$bool";
+
 export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstructor {
     class RootHtmlElement extends HTMLElement implements RootElement {
         static ahe_Counter = 0;
@@ -59,6 +61,12 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         connectedCallback() {
+            if (getAttr(this, E_DATA_MARKER.ON_IF)) {
+                if (!this.ahe_component[ifDoubleInitVar]) {
+                    return;
+                }
+            }
+
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
 
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
@@ -71,6 +79,13 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         disconnectedCallback() {
+            if (getAttr(this, E_DATA_MARKER.ON_IF)) {
+                if (!this.ahe_component[ifDoubleInitVar]) {
+                    this.ahe_component[ifDoubleInitVar] = true;
+                    return;
+                }
+            }
+
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
 
             this.onDestroy$.next(true);

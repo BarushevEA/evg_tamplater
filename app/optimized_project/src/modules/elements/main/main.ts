@@ -1,7 +1,7 @@
 import {APP_INFO} from "../../../settings/info";
-import {RootBehavior} from "../../../../../../libs/env/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
-export class Main {
+export class Main implements OnCreate, OnInit, OnDestroy {
     readonly root;
     name: string;
     appInfo = APP_INFO.description;
@@ -50,6 +50,18 @@ our most popular chicken recipes of all time.
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
+    }
+
+    onCreate(): void {
+        console.log("TEST MAIN CREATE");
+    }
+
+    onInit(): void {
+        console.log("TEST MAIN INIT");
+    }
+
+    onDestroy(): void {
+        console.log("TEST MAIN DESTROY");
     }
 
     nestReceipt(): void {
