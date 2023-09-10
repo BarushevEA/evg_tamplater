@@ -62,13 +62,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         connectedCallback() {
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
-                if (!this.ahe_component[ifDoubleInitVar]) {
-                    return;
-                }
+                if (!this.ahe_component[ifDoubleInitVar]) return;
             }
 
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
-
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
 
             detectInjectedData(this);
@@ -297,10 +294,9 @@ function detectElementHandlers(rootElement: RootElement, element: HTMLElement) {
 
 function bindElementToMethod(rootElement: RootElement, functionName: string, element: HTMLElement) {
     const method = rootElement.ahe_component[functionName];
+
     if (!method) return;
-
     if (!method.htmlElements) method.htmlElements = {};
-
     if (!method.htmlElements[rootElement.ahe_number]) method.htmlElements[rootElement.ahe_number] = [];
 
     rootElement.ahe_clr.collect(
@@ -314,8 +310,8 @@ function changeNestedValues(rootElement: RootElement): void {
     if (!rootElement) return;
 
     for (const nestedValue of rootElement.ahe_nValues) {
-
         const nestedData = "" + rootElement.ahe_component[nestedValue.valueName];
+
         if (nestedValue.textElement.innerHTML === nestedData) continue;
 
         nestedValue.textElement.innerHTML = nestedData;
@@ -326,8 +322,8 @@ function changeNestedFunctions(rootElement: RootElement): void {
     if (!rootElement) return;
 
     for (const nestedValue of rootElement.ahe_nFunctions) {
-
         const nestedData = "" + rootElement.ahe_component[nestedValue.valueName]();
+
         if (nestedValue.textElement.innerHTML === nestedData) continue;
 
         nestedValue.textElement.innerHTML = nestedData;
@@ -339,6 +335,7 @@ function changeIfConditions(rootElement: RootElement) {
 
     for (const onIf of rootElement.ahe_IfList) {
         const conditionData = !!(<any>rootElement.ahe_component)[onIf.valueName];
+
         if (conditionData === onIf.oldCondition) continue;
 
         const isContains = onIf.ifParent.contains(onIf.ifElement);
