@@ -1,6 +1,6 @@
-import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
+import {OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
-export class Main_1 implements OnInit {
+export class Main_1 implements OnInit, OnDestroy {
     readonly root;
     name: string;
     isShowHello = false;
@@ -18,7 +18,7 @@ export class Main_1 implements OnInit {
         this.counter = 0;
 
         this.root.collect(
-            this.root.beforeDetectChanges$.subscribe(()=>{
+            this.root.beforeDetectChanges$.subscribe(() => {
                 this.counter++;
             }),
             this.root.onChangesDetected$.subscribe(() => {
@@ -66,5 +66,10 @@ export class Main_1 implements OnInit {
 
     test(): string {
         return `TEST ${this.counter}`;
+    }
+
+    onDestroy(): void {
+        this.inputChange = "";
+        this.counter = 0;
     }
 }
