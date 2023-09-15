@@ -154,21 +154,30 @@ function detectInjectedData(rootElement: RootElement): void {
             actions += detectChangeHandlers(rootElement, <HTMLElement>child);
             actions += detectElementHandlers(rootElement, <HTMLElement>child);
             actions += detectIfConditions(rootElement, <HTMLElement>child);
-            setAttr(child, E_DATA_MARKER.ROLE, actions.trim()+"]");
+            setAttr(child, E_DATA_MARKER.ROLE, actions.trim() + "]");
         } else {
             setAttr(child, E_DATA_MARKER.ROLE, actions + "var]");
         }
     }
 }
 
-function detectIfConditions(rootElement: RootElement, element: HTMLElement):string {
-    const valueName = getAttr(element, E_DATA_MARKER.ON_IF);
+function detectIfConditions(rootElement: RootElement, element: HTMLElement): string {
+    let valueName = getAttr(element, E_DATA_MARKER.ON_IF);
     if (!valueName) return "";
 
     const ifParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
-    rootElement.ahe_IfList.push({ifElement: element, valueName: valueName, ifParent: ifParent, oldCondition: false,});
+    const isInversion = valueName[0] === "!";
+    if (isInversion) valueName = valueName.substring(1);
+
+    rootElement.ahe_IfList.push({
+        ifElement: element,
+        valueName: valueName,
+        ifParent: ifParent,
+        oldCondition: false,
+        isInversion: isInversion,
+    });
 
     htmlParent.insertBefore(ifParent, element);
     removeChild(htmlParent, element);
@@ -394,7 +403,8 @@ function changeIfConditions(rootElement: RootElement) {
     if (!rootElement) return;
 
     for (const onIf of rootElement.ahe_IfList) {
-        const conditionData = !!(<any>rootElement.ahe_component)[onIf.valueName];
+        let conditionData = !!(<any>rootElement.ahe_component)[onIf.valueName];
+        if(onIf.isInversion) conditionData = !conditionData;
 
         if (conditionData === onIf.oldCondition) continue;
 

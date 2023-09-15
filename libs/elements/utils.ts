@@ -61,4 +61,5 @@ export type OnIf = {
     valueName: string;
     ifParent: HTMLElement;
     oldCondition: boolean;
+    isInversion: boolean;
 };

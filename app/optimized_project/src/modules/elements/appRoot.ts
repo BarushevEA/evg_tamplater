@@ -5,7 +5,6 @@ export class AppRoot implements OnInit {
     readonly root;
     name: string;
     isShowMain = true;
-    isShowMain1 = false;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -16,7 +15,6 @@ export class AppRoot implements OnInit {
         this.root.collect(
             NextMain$.subscribe(() => {
                 this.isShowMain = !this.isShowMain;
-                this.isShowMain1 = !this.isShowMain1;
                 this.root.detectChanges();
             })
         );
