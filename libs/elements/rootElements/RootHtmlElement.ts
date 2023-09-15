@@ -177,6 +177,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
         ifParent: ifParent,
         oldCondition: false,
         isInversion: isInversion,
+        isFunction: typeof (<any>rootElement.ahe_component)[valueName] === "function",
     });
 
     htmlParent.insertBefore(ifParent, element);
@@ -403,8 +404,10 @@ function changeIfConditions(rootElement: RootElement) {
     if (!rootElement) return;
 
     for (const onIf of rootElement.ahe_IfList) {
-        let conditionData = !!(<any>rootElement.ahe_component)[onIf.valueName];
-        if(onIf.isInversion) conditionData = !conditionData;
+        let conditionData = onIf.isFunction ?
+            !!(<any>rootElement.ahe_component)[onIf.valueName]() :
+            !!(<any>rootElement.ahe_component)[onIf.valueName];
+        if (onIf.isInversion) conditionData = !conditionData;
 
         if (conditionData === onIf.oldCondition) continue;
 

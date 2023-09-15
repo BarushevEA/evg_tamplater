@@ -19,4 +19,8 @@ export class AppRoot implements OnInit {
             })
         );
     }
+
+    isShowFooter(): boolean {
+        return this.isShowMain;
+    }
 }
