@@ -86,6 +86,7 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
 }
 ```
 ### data-cls
+### !!! IMPORTANT !!! if you want to use css encryption - className != conditionName
 ```js
 <div data-cls="class1"> === div.classList.add("class1")
 <div data-cls="class1:true"> === div.classList.add("class1")

@@ -18,6 +18,7 @@ export enum E_DATA_MARKER {
     ON_MOUSE_MOVE = "mousemove",
     ON_HANDLE = "handle",
     ON_IF = "if",
+    CLASS_IF = "cls"
 }
 ```
 HTML app components
