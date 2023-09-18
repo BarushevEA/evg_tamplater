@@ -47,12 +47,63 @@ fs.readFile(cssPath, (error, data) => {
     });
 });
 
+function pushToClasses(cls, classes) {
+    if (cls && classes.indexOf(cls) === -1) {
+        let isExcluded = false;
+        for (const excludeCls of encrypt.cssExcludeList) {
+            if (cls === excludeCls) {
+                isExcluded = true;
+                break;
+            }
+        }
+        !isExcluded && classes.push(cls);
+    }
+}
+
 function getEncryptedObject(jsFileStr, cssFileStr) {
     let index = 0;
     const classMarker = `class='`;
     const classStrList = [];
     const classStrListModified = [];
     const classes = encrypt.cssIncludeList;
+
+    const dataMarker = `data-cls='`;
+    const dataStrList = [];
+    const dataStrListModified = [];
+
+    while ((index = jsFileStr.indexOf(dataMarker, index)) > -1) {
+        index += dataMarker.length;
+        let dataStr = "";
+        let sym = "";
+        while ((sym = jsFileStr[index]) !== "'") {
+            dataStr += sym;
+            index++;
+        }
+
+        if (dataStrList.indexOf(dataStr) === -1) {
+            dataStrList.push(dataStr);
+            dataStrListModified.push(dataStr);
+            dataStr.split(" ").forEach(dataBlock => {
+                if (!dataBlock) return;
+
+                if (dataBlock.includes("?")) {
+                    const clsStr = dataBlock.split("?")[1];
+                    clsStr.split(":").forEach(cls => {
+                        pushToClasses(cls, classes);
+                    });
+                    return;
+                }
+
+                if (dataBlock.includes(":")) {
+                    const cls = dataBlock.split(":")[0];
+                    pushToClasses(cls, classes);
+                    return;
+                }
+
+                pushToClasses(dataBlock, classes);
+            })
+        }
+    }
 
     while ((index = jsFileStr.indexOf(classMarker, index)) > -1) {
         index += classMarker.length;
@@ -68,16 +119,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
             classStrListModified.push(clsStr);
 
             clsStr.split(" ").forEach(cls => {
-                if (cls && classes.indexOf(cls) === -1) {
-                    let isExcluded = false;
-                    for (const excludeCls of encrypt.cssExcludeList) {
-                        if (cls === excludeCls) {
-                            isExcluded = true;
-                            break;
-                        }
-                    }
-                    !isExcluded && classes.push(cls);
-                }
+                pushToClasses(cls, classes);
             });
         }
     }
@@ -91,6 +133,11 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
         classStrListModified.forEach((clsStr, i) => {
             classStrListModified[i] = clsStr.replaceAll(cls, getClassName(index));
         });
+
+        dataStrListModified.forEach((clsStr, i) => {
+            dataStrListModified[i] = clsStr.replaceAll(cls, getClassName(index));
+        });
+
         cssFileStr = cssFileStr.replaceAll(`.${cls} `, `.${getClassName(index)} `);
         console.log(`[.${cls}]`, `encrypt to => [.${getClassName(index)}]`);
         if (flags.flag.isJsCssProcess) {
@@ -102,6 +149,10 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
     classStrList.forEach((clsStr, index) => {
         jsFileStr = jsFileStr.replaceAll(`${classMarker}${clsStr}'`, `${classMarker}${classStrListModified[index]}'`);
     });
+
+    dataStrList.forEach((dataStr, index) => {
+        jsFileStr = jsFileStr.replaceAll(`${dataMarker}${dataStr}'`, `${dataMarker}${dataStrListModified[index]}'`);
+    })
 
     return {
         js: jsFileStr,

@@ -1,2 +1,2 @@
 exports.cssExcludeList = [];
-exports.cssIncludeList = ["red_css","app_blur"];
+exports.cssIncludeList = ["app_blur"];

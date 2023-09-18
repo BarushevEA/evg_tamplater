@@ -85,18 +85,18 @@ export class Main_1_Element extends AbstractHtmlElement<Event$> {
     }
 }
 ```
-### data-class
+### data-cls
 ```js
-<div data-class="class1"> === div.classList.add("class1")
-<div data-class="class1:true"> === div.classList.add("class1")
-<div data-class="class1:false"> === div.classList.remove("class1")
-<div data-class="true?class1:class2"> === div.classList.add("class1") & div.classList.remove("class2")
-<div data-class="false?class1:class2"> === div.classList.add("class2") & div.classList.remove("class1")
+<div data-cls="class1"> === div.classList.add("class1")
+<div data-cls="class1:true"> === div.classList.add("class1")
+<div data-cls="class1:false"> === div.classList.remove("class1")
+<div data-cls="true?class1:class2"> === div.classList.add("class1") & div.classList.remove("class2")
+<div data-cls="false?class1:class2"> === div.classList.add("class2") & div.classList.remove("class1")
 ```
 ```html
-<div data-class="class1"></div>
-<div data-class="class1:condition class2:condition class3:condition"></div>
-<div data-class="class1:condition1 class2:condition2 class3:condition3"></div>
-<div class="class0" data-class="class1:condition1 class2:condition2 class3:condition3"></div>
-<div data-class="condition?class1:class2"></div>
+<div data-cls="class1"></div>
+<div data-cls="class1:condition class2:condition class3:condition"></div>
+<div data-cls="class1:condition1 class2:condition2 class3:condition3"></div>
+<div class="class0" data-cls="class1:condition1 class2:condition2 class3:condition3"></div>
+<div data-cls="condition?class1:class2"></div>
 ```

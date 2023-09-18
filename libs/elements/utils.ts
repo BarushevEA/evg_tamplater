@@ -15,7 +15,7 @@ export enum E_DATA_MARKER {
     ON_MOUSE_MOVE = "mousemove",
     ON_HANDLE = "handle",
     ON_IF = "if",
-    CLASS_IF = "class"
+    CLASS_IF = "cls"
 }
 
 export enum E_ROOT_TAG {
