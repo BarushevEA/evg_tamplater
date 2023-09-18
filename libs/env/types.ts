@@ -1,7 +1,7 @@
-import {AttributeChanged, NestedValue, OnIf} from "../elements/utils";
 import {ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
 import {Collector} from "evg_observable/src/outLib/Collector";
+import {CONDITION} from "../elements/utils";
 
 export type Base64 = string;
 export type JsonStr = string;
@@ -10,6 +10,40 @@ export type GlobalDocument = Document & {};
 export type OnCreate = { onCreate: () => void };
 export type OnInit = { onInit: () => void };
 export type OnDestroy = { onDestroy: () => void };
+export type ELEMENT_OPTIONS = {
+    template: string;
+    element: any;
+};
+export type AttributeChanged = {
+    name: string,
+    oldValue: any,
+    newValue: any
+};
+export type NestedValue = {
+    textElement: HTMLElement;
+    valueName: string;
+};
+export type OnIf = {
+    ifElement: HTMLElement;
+    valueName: string;
+    ifParent: HTMLElement;
+    oldCondition: boolean;
+    isInversion: boolean;
+    isFunction: boolean;
+};
+export type ClassCondition = {
+    firstClassName: string;
+    secondClassName: string;
+    conditionName: string;
+    oldCondition: CONDITION;
+    isInversion: boolean;
+    isFunction: boolean;
+    isConditionDisabled: boolean;
+};
+export type ClassIf = {
+    element: HTMLElement;
+    classConditions: ClassCondition[];
+};
 export type RootBehavior = {
     onAdopted$: Observable<boolean>;
     onInit$: Observable<boolean>;
@@ -27,6 +61,12 @@ export type RootElement = {
     ahe_nValues: NestedValue[];
     ahe_nFunctions: NestedValue[];
     ahe_IfList: OnIf[];
+    ahe_ClsIfList: ClassIf[];
     ahe_component: any;
     ahe_clr: Collector;
 } & RootBehavior;
+export type ValDetails = {
+    isInversion: boolean;
+    valueName: string;
+    isFunction: boolean;
+}

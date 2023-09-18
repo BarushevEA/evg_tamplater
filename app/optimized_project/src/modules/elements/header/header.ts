@@ -6,19 +6,12 @@ export class Header implements OnInit {
     text = "SERG header start after:";
     name = this.text;
     buttonName = "NEXT MAIN";
-    counter1 = 0;
+    isRed = true;
     btnRed = "red_css";
     btnBlue = "blue_css";
 
     constructor(root: RootBehavior) {
         this.root = root;
-    }
-
-    clickHeader(evt: MouseEvent): void {
-        this.counter1++;
-        console.log("clickHeader(evt: MouseEvent): void " + this.counter1);
-        evt.stopPropagation();
-        evt.preventDefault();
     }
 
     nextMain(evt: MouseEvent): void {
@@ -31,7 +24,10 @@ export class Header implements OnInit {
             element.classList.toggle(this.btnRed);
         }
 
+        this.isRed = !this.isRed;
+
         NextMain$.next(true);
+        this.root.detectChanges();
     }
 
     onInit(): void {

@@ -53,15 +53,12 @@ our most popular chicken recipes of all time.
     }
 
     onCreate(): void {
-        console.log("TEST MAIN CREATE");
     }
 
     onInit(): void {
-        console.log("TEST MAIN INIT");
     }
 
     onDestroy(): void {
-        console.log("TEST MAIN DESTROY");
     }
 
     nestReceipt(): void {

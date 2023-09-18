@@ -3,6 +3,7 @@ import {AppWindow} from "./browserVariables";
 const mobileTestExp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile/i;
 export const isMobile = isMobileDevice();
 export const isIframe = AppWindow.top !== AppWindow;
+export const clsSeparator = ":";
 
 function isMobileDevice(): boolean {
     const userAgentData = (<any>navigator).userAgentData;

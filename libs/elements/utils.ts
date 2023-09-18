@@ -1,8 +1,3 @@
-export type ELEMENT_OPTIONS = {
-    template: string;
-    element: any;
-};
-
 export enum E_DATA_MARKER {
     ROLE = "0",
     INJECT_TO = "inject_to",
@@ -20,6 +15,7 @@ export enum E_DATA_MARKER {
     ON_MOUSE_MOVE = "mousemove",
     ON_HANDLE = "handle",
     ON_IF = "if",
+    CLASS_IF = "class"
 }
 
 export enum E_ROOT_TAG {
@@ -45,22 +41,8 @@ export function removeAttr(element: HTMLElement | Element, marker: E_DATA_MARKER
     element.removeAttribute(getAttrName(marker))
 }
 
-export type AttributeChanged = {
-    name: string,
-    oldValue: any,
-    newValue: any
-};
-
-export type NestedValue = {
-    textElement: HTMLElement;
-    valueName: string;
-};
-
-export type OnIf = {
-    ifElement: HTMLElement;
-    valueName: string;
-    ifParent: HTMLElement;
-    oldCondition: boolean;
-    isInversion: boolean;
-    isFunction: boolean;
-};
+export enum CONDITION {
+    UNDEFINED = "",
+    TRUE = "TRUE",
+    FALSE = "FALSE",
+}

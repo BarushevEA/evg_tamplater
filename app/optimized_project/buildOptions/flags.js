@@ -1,4 +1,4 @@
 exports.flag = {
-    isCssEncrypt: true,
-    isJsCssProcess: true,
+    isCssEncrypt: false,
+    isJsCssProcess: false,
 };

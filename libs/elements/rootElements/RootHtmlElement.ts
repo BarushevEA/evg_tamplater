@@ -1,21 +1,20 @@
 import {ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
-import {
-    AttributeChanged,
-    E_DATA_MARKER,
-    E_ROOT_TAG,
-    ELEMENT_OPTIONS,
-    getAttr,
-    getAttrName,
-    NestedValue,
-    OnIf,
-    removeAttr,
-    setAttr
-} from "../utils";
+import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
-import {RootElement} from "../../env/types";
+import {
+    AttributeChanged,
+    ClassCondition,
+    ClassIf,
+    ELEMENT_OPTIONS,
+    NestedValue,
+    OnIf,
+    RootElement,
+    ValDetails
+} from "../../env/types";
+import {clsSeparator} from "../../env/env";
 
 const ifDoubleInitVar = "_______$$bool";
 
@@ -27,6 +26,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_nValues: NestedValue[];
         ahe_nFunctions: NestedValue[];
         ahe_IfList: OnIf[];
+        ahe_ClsIfList: ClassIf[];
         ahe_clr: Collector;
         ahe_component: any;
 
@@ -53,6 +53,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_nFunctions = [];
             this.ahe_nValues = [];
             this.ahe_IfList = [];
+            this.ahe_ClsIfList = [];
 
             this.ahe_opts = options;
             this.ahe_component = new options.element(this);
@@ -92,6 +93,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_nFunctions.length = 0;
             this.ahe_nValues.length = 0;
             this.ahe_IfList.length = 0;
+            this.ahe_ClsIfList.length = 0;
             this.innerHTML = "";
         }
 
@@ -114,6 +116,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         detectChanges(): void {
             this.beforeDetectChanges$.next(true);
             changeIfConditions(this);
+            changeClsConditions(this);
             changeNestedValues(this);
             changeNestedFunctions(this);
             this.onChangesDetected$.next(true);
@@ -154,11 +157,72 @@ function detectInjectedData(rootElement: RootElement): void {
             actions += detectChangeHandlers(rootElement, <HTMLElement>child);
             actions += detectElementHandlers(rootElement, <HTMLElement>child);
             actions += detectIfConditions(rootElement, <HTMLElement>child);
+            actions += detectClsConditions(rootElement, <HTMLElement>child);
             setAttr(child, E_DATA_MARKER.ROLE, actions.trim() + "]");
         } else {
             setAttr(child, E_DATA_MARKER.ROLE, actions + "var]");
         }
     }
+}
+
+function detectClsConditions(rootElement: RootElement, element: HTMLElement): string {
+    let classData = getAttr(element, E_DATA_MARKER.CLASS_IF);
+    if (!classData) return "";
+
+    const strConditions = classData.split(" ");
+    const clsConditions: ClassCondition[] = [];
+    const clsIf: ClassIf = {
+        element: element,
+        classConditions: clsConditions,
+    };
+
+    for (const strCondition of strConditions) {
+        if (strCondition.includes("?")) {
+            const args = strCondition.split("?");
+            const details = getDetails(rootElement, args[0]);
+            const classes = args[1].split(clsSeparator);
+            clsConditions.push({
+                conditionName: details.valueName,
+                isFunction: details.isFunction,
+                isInversion: details.isInversion,
+                isConditionDisabled: false,
+                oldCondition: CONDITION.UNDEFINED,
+                firstClassName: classes[0],
+                secondClassName: classes[1],
+            });
+            continue;
+        }
+
+        if (strCondition.includes(clsSeparator)) {
+            const args = strCondition.split(clsSeparator);
+            const details = getDetails(rootElement, args[1]);
+            clsConditions.push({
+                conditionName: details.valueName,
+                isFunction: details.isFunction,
+                isInversion: details.isInversion,
+                isConditionDisabled: false,
+                oldCondition: CONDITION.UNDEFINED,
+                firstClassName: args[0],
+                secondClassName: "",
+            });
+            continue;
+        }
+
+        clsConditions.push({
+            conditionName: "",
+            isFunction: false,
+            isInversion: false,
+            isConditionDisabled: true,
+            oldCondition: CONDITION.UNDEFINED,
+            firstClassName: strCondition,
+            secondClassName: "",
+        });
+    }
+
+    rootElement.ahe_ClsIfList.push(clsIf);
+    removeAttr(element, E_DATA_MARKER.CLASS_IF);
+
+    return "cls ";
 }
 
 function detectIfConditions(rootElement: RootElement, element: HTMLElement): string {
@@ -168,16 +232,15 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     const ifParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
-    const isInversion = valueName[0] === "!";
-    if (isInversion) valueName = valueName.substring(1);
+    const details = getDetails(rootElement, valueName);
 
     rootElement.ahe_IfList.push({
         ifElement: element,
-        valueName: valueName,
+        valueName: details.valueName,
         ifParent: ifParent,
         oldCondition: false,
-        isInversion: isInversion,
-        isFunction: typeof (<any>rootElement.ahe_component)[valueName] === "function",
+        isInversion: details.isInversion,
+        isFunction: details.isFunction,
     });
 
     htmlParent.insertBefore(ifParent, element);
@@ -189,6 +252,16 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     return "ifc ";
 }
 
+function getDetails(rootElement: RootElement, value: string): ValDetails {
+    const isInversion = value[0] === "!";
+    const name = isInversion ? value.substring(1) : value;
+    return {
+        isInversion: isInversion,
+        valueName: name,
+        isFunction: typeof rootElement.ahe_component[name] === "function"
+    }
+}
+
 function getFreeChildren(parent: HTMLElement): Element[] {
     return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.ROLE)}])`));
 }
@@ -197,14 +270,14 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) {
         if (!element.innerHTML) return false;
 
-        const value = element.innerHTML;
+        const details = getDetails(rootElement, element.innerHTML);
 
-        if (typeof rootElement.ahe_component[value] === "function") {
-            rootElement.ahe_nFunctions.push({textElement: <HTMLElement>element, valueName: element.innerHTML});
+        if (details.isFunction) {
+            rootElement.ahe_nFunctions.push({textElement: <HTMLElement>element, valueName: details.valueName});
             return true;
         }
 
-        rootElement.ahe_nValues.push({textElement: <HTMLElement>element, valueName: element.innerHTML});
+        rootElement.ahe_nValues.push({textElement: <HTMLElement>element, valueName: details.valueName});
         return true;
     }
     return false;
@@ -420,5 +493,52 @@ function changeIfConditions(rootElement: RootElement) {
         }
 
         onIf.oldCondition = conditionData;
+    }
+}
+
+function changeClsConditions(rootElement: RootElement) {
+    if (!rootElement) return;
+
+    for (const classIf of rootElement.ahe_ClsIfList) {
+        const conditions = classIf.classConditions;
+        const element = classIf.element;
+        const handler = rootElement.ahe_component;
+        for (const condition of conditions) {
+            let conditionData: CONDITION;
+            if (condition.isConditionDisabled) {
+                conditionData = CONDITION.TRUE;
+            } else {
+                let isCondition = condition.isFunction ?
+                    !!(<any>handler)[condition.conditionName]() :
+                    !!(<any>handler)[condition.conditionName];
+                if (condition.isInversion) isCondition = !isCondition;
+                conditionData = isCondition ? CONDITION.TRUE : CONDITION.FALSE;
+            }
+
+            if (conditionData === condition.oldCondition) continue;
+            condition.oldCondition = conditionData;
+
+            if (condition.secondClassName) {
+                if (conditionData === CONDITION.TRUE) {
+                    element.classList.add(condition.firstClassName);
+                    element.classList.remove(condition.secondClassName);
+                } else {
+                    element.classList.add(condition.secondClassName);
+                    element.classList.remove(condition.firstClassName);
+                }
+                continue;
+            }
+
+            if (!condition.isConditionDisabled) {
+                if (conditionData === CONDITION.TRUE) {
+                    element.classList.add(condition.firstClassName);
+                } else {
+                    element.classList.remove(condition.firstClassName);
+                }
+                continue;
+            }
+
+            element.classList.add(condition.firstClassName);
+        }
     }
 }

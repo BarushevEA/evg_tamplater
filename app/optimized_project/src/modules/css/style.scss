@@ -41,10 +41,6 @@
     @include setMinWidthHeight(100%, 40px);
   }
 
-  .colored {
-    background: #69b2e4;
-  }
-
   .app_main {
     @include setWidthHeight(100%, 100%);
     flex-grow: 1;
@@ -65,5 +61,15 @@
 
   .blue_css {
     background: #69b2e4;
+  }
+
+  .color_blue{
+    color: #29475c;
+  }
+  .color_red{
+    color: #802b51;
+  }
+  .bold{
+    font-weight: bold;
   }
 }

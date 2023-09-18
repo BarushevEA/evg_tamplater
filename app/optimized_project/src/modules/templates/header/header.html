@@ -1,9 +1,10 @@
-<header class="app_header colored" data-click="clickHeader">
+<header class="app_header" data-class="isRed?red_css:blue_css !isRed?color_red:color_blue">
     <txt-val>name</txt-val>
     <br>
-    <button class="cursor_pointer blue_css" style="
-        width: 200px;
-        height: 20px;" data-click="nextMain">
+    <button class="cursor_pointer blue_css"
+            style="width: 200px; height: 20px;"
+            data-class="bold color_red:isRed"
+            data-click="nextMain">
         <txt-val>buttonName</txt-val>
     </button>
 </header>
