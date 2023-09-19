@@ -158,9 +158,9 @@ function detectInjectedData(rootElement: RootElement): void {
             actions += detectElementHandlers(rootElement, <HTMLElement>child);
             actions += detectIfConditions(rootElement, <HTMLElement>child);
             actions += detectClsConditions(rootElement, <HTMLElement>child);
-            setAttr(child, E_DATA_MARKER.ROLE, actions.trim() + "]");
+            setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
         } else {
-            setAttr(child, E_DATA_MARKER.ROLE, actions + "var]");
+            setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
         }
     }
 }
@@ -247,7 +247,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     removeChild(htmlParent, element);
     removeAttr(element, E_DATA_MARKER.ON_IF);
 
-    setAttr(ifParent, E_DATA_MARKER.ROLE, "[ifp]");
+    setAttr(ifParent, E_DATA_MARKER.INFO, "[ifp]");
 
     return "ifc ";
 }
@@ -263,7 +263,7 @@ function getDetails(rootElement: RootElement, value: string): ValDetails {
 }
 
 function getFreeChildren(parent: HTMLElement): Element[] {
-    return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.ROLE)}])`));
+    return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.INFO)}])`));
 }
 
 function detectVariables(rootElement: RootElement, element: Element): boolean {
