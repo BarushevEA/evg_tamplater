@@ -20,9 +20,9 @@ export class AppRoot implements OnInit {
             })
         );
 
-        const child = this.root.getChildAppElement(this.main);
-        if (child) {
-            child.sendData<string>("Message by AppRoot");
+        const chanel = this.root.getChanel(this.main);
+        if (chanel) {
+            chanel.sendData<string>("Message by AppRoot");
         }
     }
 

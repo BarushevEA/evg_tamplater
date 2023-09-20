@@ -43,7 +43,7 @@ export type ClassIf = {
     element: HTMLElement;
     classConditions: ClassCondition[];
 };
-export type ChildAppElement = {
+export type IChanel = {
     sendData<T>(data: T): void;
 } & HTMLElement;
 export type RootBehavior = {
@@ -58,7 +58,7 @@ export type RootBehavior = {
     collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
-    getChildAppElement(element: HTMLElement): ChildAppElement | undefined;
+    getChanel(element: HTMLElement): IChanel | undefined;
 } & HTMLElement;
 export type RootElement = {
     ahe_number: number;

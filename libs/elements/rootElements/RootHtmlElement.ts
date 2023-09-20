@@ -6,7 +6,7 @@ import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
 import {
     AttributeChanged,
-    ChildAppElement,
+    IChanel,
     ClassCondition,
     ClassIf,
     ELEMENT_OPTIONS,
@@ -30,6 +30,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_ClsIfList: ClassIf[];
         ahe_clr: Collector;
         ahe_component: any;
+        ahe_parent_chanel: IChanel | undefined;
 
         onAdopted$: Observable<boolean>;
         onInit$: Observable<boolean>;
@@ -164,9 +165,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onDataCatch$.next(data);
         }
 
-        getChildAppElement(element: HTMLElement): ChildAppElement | undefined {
+        getChanel(element: HTMLElement): IChanel | undefined {
             if (!(<RootElement><any>element).ahe_component) return undefined;
-            if (!(<ChildAppElement><any>element).sendData) return undefined;
+            if (!(<IChanel><any>element).sendData) return undefined;
 
             return <any>element;
         }
