@@ -1,7 +1,7 @@
 import {NextMain$} from "../services/headerService";
-import {OnInit, RootBehavior} from "../../../../../libs/env/types";
+import {OnCreate, OnInit, RootBehavior} from "../../../../../libs/env/types";
 
-export class AppRoot implements OnInit {
+export class AppRoot implements OnInit, OnCreate {
     readonly root;
     name: string;
     isShowMain = true;
@@ -12,12 +12,20 @@ export class AppRoot implements OnInit {
         this.name = root.tagName;
     }
 
+    onCreate(): void {
+        this.root.collect(
+            this.root.dataCatch$<string>().subscribe(data => {
+                console.log("AppRoot dataCatch$:", data);
+            }),
+        );
+    }
+
     onInit(): void {
         this.root.collect(
             NextMain$.subscribe(() => {
                 this.isShowMain = !this.isShowMain;
                 this.root.detectChanges();
-            })
+            }),
         );
 
         const chanel = this.root.getChanel(this.main);

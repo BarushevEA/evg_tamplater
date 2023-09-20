@@ -53,14 +53,24 @@ our most popular chicken recipes of all time.
     }
 
     onCreate(): void {
+        // this.root.collect(
+        //     this.root.parentChanelReady$().subscribe(chanel => {
+        //         console.log("Main registered:", (<HTMLElement><any>chanel).tagName);
+        //     })
+        // );
     }
 
     onInit(): void {
         console.log("dataCatch$.value:", this.root.dataCatch$().getValue());
+        const chanel = this.root.parentChanelReady$().getValue();
+        if (chanel) {
+            chanel.sendData("Main sendData");
+        }
+
         this.root.collect(
             this.root.dataCatch$<string>().subscribe(data => {
-                console.log("data catch:", data);
-            })
+                console.log("Main data catch:", data);
+            }),
         );
     }
 

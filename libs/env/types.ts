@@ -45,7 +45,7 @@ export type ClassIf = {
 };
 export type IChanel = {
     sendData<T>(data: T): void;
-} & HTMLElement;
+};
 export type RootBehavior = {
     adopted$(): ISubscriber<boolean> & IObservablePipe<boolean>;
     init$(): ISubscriber<boolean> & IObservablePipe<boolean>;
@@ -53,12 +53,13 @@ export type RootBehavior = {
     attributeChange$(): ISubscriber<AttributeChanged | undefined> & IObservablePipe<AttributeChanged | undefined>;
     beforeChanges$(): ISubscriber<boolean> & IObservablePipe<boolean>;
     changesDetected$(): ISubscriber<boolean> & IObservablePipe<boolean>;
+    parentChanelReady$(): ISubscriber<IChanel> & IObservablePipe<IChanel>;
     dataCatch$<T>(): ISubscriber<T> & IObservablePipe<T>;
     detectChanges(): void;
     collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
-    getChanel(element: HTMLElement): IChanel | undefined;
+    getChanel(element: any): IChanel | undefined;
 } & HTMLElement;
 export type RootElement = {
     ahe_number: number;
@@ -68,6 +69,7 @@ export type RootElement = {
     ahe_ClsIfList: ClassIf[];
     ahe_component: any;
     ahe_clr: Collector;
+    ahe_parent_chanel: IChanel;
 } & RootBehavior;
 export type ValDetails = {
     isInversion: boolean;

@@ -6,10 +6,10 @@ import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
 import {
     AttributeChanged,
-    IChanel,
     ClassCondition,
     ClassIf,
     ELEMENT_OPTIONS,
+    IChanel,
     NestedValue,
     OnIf,
     RootElement,
@@ -30,7 +30,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_ClsIfList: ClassIf[];
         ahe_clr: Collector;
         ahe_component: any;
-        ahe_parent_chanel: IChanel | undefined;
+        ahe_parent_chanel: IChanel;
 
         onAdopted$: Observable<boolean>;
         onInit$: Observable<boolean>;
@@ -39,6 +39,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         beforeDetectChanges$: Observable<boolean>;
         onChangesDetected$: Observable<boolean>;
         onDataCatch$: Observable<any>;
+        onParentChanelReady$: Observable<IChanel>;
 
         constructor() {
             super();
@@ -53,6 +54,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.beforeDetectChanges$ = new Observable(false);
             this.onChangesDetected$ = new Observable(false);
             this.onDataCatch$ = new Observable(undefined);
+            this.onParentChanelReady$ = new Observable(undefined);
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
             this.ahe_nValues = [];
@@ -63,6 +65,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_component = new options.element(this);
 
             if (this.ahe_component.onCreate) this.ahe_component.onCreate();
+        }
+
+        parentChanelReady$(): ISubscriber<IChanel> & IObservablePipe<IChanel>{
+            return this.onParentChanelReady$;
         }
 
         adopted$(): ISubscriber<boolean> & IObservablePipe<boolean> {
@@ -134,6 +140,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.beforeDetectChanges$.unsubscribeAll();
             this.onChangesDetected$.unsubscribeAll();
             this.onDataCatch$.unsubscribeAll();
+            this.onParentChanelReady$.unsubscribeAll();
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -165,9 +172,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onDataCatch$.next(data);
         }
 
-        getChanel(element: HTMLElement): IChanel | undefined {
-            if (!(<RootElement><any>element).ahe_component) return undefined;
-            if (!(<IChanel><any>element).sendData) return undefined;
+        getChanel(element: any): IChanel | undefined {
+            if (!(<RootElement>element).ahe_component) return undefined;
+            if (!(<IChanel>element).sendData) return undefined;
 
             return <any>element;
         }
@@ -211,6 +218,11 @@ function detectInjectedData(rootElement: RootElement): void {
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
         } else {
             setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
+        }
+
+        if (rootElement.getChanel(child)) {
+            (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
+            (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
         }
     }
 }
