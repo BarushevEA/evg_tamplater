@@ -18,13 +18,15 @@ export class Main_1 implements OnInit, OnDestroy {
         this.counter = 0;
 
         this.root.collect(
-            this.root.beforeDetectChanges$.subscribe(() => {
-                this.counter++;
-            }),
-            this.root.onChangesDetected$.subscribe(() => {
-                this.handleElement();
-                this.handleElementExtra();
-            })
+            this.root.beforeChanges$()
+                .subscribe(() => {
+                    this.counter++;
+                }),
+            this.root.changesDetected$()
+                .subscribe(() => {
+                    this.handleElement();
+                    this.handleElementExtra();
+                })
         );
     }
 

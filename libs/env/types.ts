@@ -1,5 +1,4 @@
-import {ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {CONDITION} from "../elements/utils";
 
@@ -44,17 +43,22 @@ export type ClassIf = {
     element: HTMLElement;
     classConditions: ClassCondition[];
 };
+export type ChildAppElement = {
+    sendData<T>(data: T): void;
+} & HTMLElement;
 export type RootBehavior = {
-    onAdopted$: Observable<boolean>;
-    onInit$: Observable<boolean>;
-    onDestroy$: Observable<boolean>;
-    attributeChanged$: Observable<AttributeChanged | undefined>;
-    beforeDetectChanges$: Observable<boolean>;
-    onChangesDetected$: Observable<boolean>;
+    adopted$(): ISubscriber<boolean> & IObservablePipe<boolean>;
+    init$(): ISubscriber<boolean> & IObservablePipe<boolean>;
+    destroy$(): ISubscriber<boolean> & IObservablePipe<boolean>;
+    attributeChange$(): ISubscriber<AttributeChanged | undefined> & IObservablePipe<AttributeChanged | undefined>;
+    beforeChanges$(): ISubscriber<boolean> & IObservablePipe<boolean>;
+    changesDetected$(): ISubscriber<boolean> & IObservablePipe<boolean>;
+    dataCatch$<T>(): ISubscriber<T> & IObservablePipe<T>;
     detectChanges(): void;
     collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
+    getChildAppElement(element: HTMLElement): ChildAppElement | undefined;
 } & HTMLElement;
 export type RootElement = {
     ahe_number: number;

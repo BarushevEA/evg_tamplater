@@ -5,6 +5,7 @@ export class AppRoot implements OnInit {
     readonly root;
     name: string;
     isShowMain = true;
+    main: HTMLElement;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -18,6 +19,11 @@ export class AppRoot implements OnInit {
                 this.root.detectChanges();
             })
         );
+
+        const child = this.root.getChildAppElement(this.main);
+        if (child) {
+            child.sendData<string>("Message by AppRoot");
+        }
     }
 
     isShowFooter(): boolean {

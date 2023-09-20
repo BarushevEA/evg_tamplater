@@ -56,6 +56,12 @@ our most popular chicken recipes of all time.
     }
 
     onInit(): void {
+        console.log("dataCatch$.value:", this.root.dataCatch$().getValue());
+        this.root.collect(
+            this.root.dataCatch$<string>().subscribe(data => {
+                console.log("data catch:", data);
+            })
+        );
     }
 
     onDestroy(): void {

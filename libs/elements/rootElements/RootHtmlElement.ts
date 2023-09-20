@@ -1,4 +1,4 @@
-import {ISubscriptionLike} from "evg_observable/src/outLib/Types";
+import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
 import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
@@ -6,6 +6,7 @@ import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
 import {
     AttributeChanged,
+    ChildAppElement,
     ClassCondition,
     ClassIf,
     ELEMENT_OPTIONS,
@@ -36,6 +37,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         attributeChanged$: Observable<AttributeChanged | undefined>;
         beforeDetectChanges$: Observable<boolean>;
         onChangesDetected$: Observable<boolean>;
+        onDataCatch$: Observable<any>;
 
         constructor() {
             super();
@@ -49,6 +51,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.attributeChanged$ = new Observable(undefined);
             this.beforeDetectChanges$ = new Observable(false);
             this.onChangesDetected$ = new Observable(false);
+            this.onDataCatch$ = new Observable(undefined);
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
             this.ahe_nValues = [];
@@ -59,6 +62,34 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_component = new options.element(this);
 
             if (this.ahe_component.onCreate) this.ahe_component.onCreate();
+        }
+
+        adopted$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.onAdopted$;
+        }
+
+        init$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.onInit$;
+        }
+
+        destroy$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.onDestroy$;
+        }
+
+        attributeChange$(): ISubscriber<AttributeChanged | undefined> & IObservablePipe<AttributeChanged | undefined> {
+            return this.attributeChanged$;
+        }
+
+        beforeChanges$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.beforeDetectChanges$;
+        }
+
+        changesDetected$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.onChangesDetected$;
+        }
+
+        dataCatch$<T>(): ISubscriber<T> & IObservablePipe<T> {
+            return <any>this.onDataCatch$;
         }
 
         connectedCallback() {
@@ -95,6 +126,13 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_IfList.length = 0;
             this.ahe_ClsIfList.length = 0;
             this.innerHTML = "";
+            this.onAdopted$.unsubscribeAll();
+            this.onInit$.unsubscribeAll();
+            this.onDestroy$.unsubscribeAll();
+            this.attributeChanged$.unsubscribeAll();
+            this.beforeDetectChanges$.unsubscribeAll();
+            this.onChangesDetected$.unsubscribeAll();
+            this.onDataCatch$.unsubscribeAll();
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -120,6 +158,17 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             changeNestedValues(this);
             changeNestedFunctions(this);
             this.onChangesDetected$.next(true);
+        }
+
+        sendData<T>(data: T): void {
+            this.onDataCatch$.next(data);
+        }
+
+        getChildAppElement(element: HTMLElement): ChildAppElement | undefined {
+            if (!(<RootElement><any>element).ahe_component) return undefined;
+            if (!(<ChildAppElement><any>element).sendData) return undefined;
+
+            return <any>element;
         }
 
         collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void {
@@ -443,7 +492,7 @@ function bindElementToMethod(rootElement: RootElement, functionName: string, ele
     if (!method.htmlElements[rootElement.ahe_number]) method.htmlElements[rootElement.ahe_number] = [];
 
     rootElement.ahe_clr.collect(
-        rootElement.onDestroy$.subscribe(isDestroy => isDestroy && (method.htmlElements = {}))
+        rootElement.destroy$().subscribe(isDestroy => isDestroy && (method.htmlElements = {}))
     );
 
     method.htmlElements[rootElement.ahe_number].push(element);
