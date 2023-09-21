@@ -15,8 +15,11 @@ export enum E_DATA_MARKER {
     ON_MOUSE_MOVE = "mousemove",
     ON_HANDLE = "handle",
     ON_IF = "if",
-    CLASS_IF = "cls"
+    CLASS_IF = "cls",
+    FOR = "for",
 }
+
+export const E_DATA_MARKER_KEYS = Object.keys(E_DATA_MARKER);
 
 export enum E_ROOT_TAG {
     TEXT_VALUE = "txt-val",

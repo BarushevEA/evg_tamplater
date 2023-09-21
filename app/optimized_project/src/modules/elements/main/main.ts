@@ -9,6 +9,8 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     ag = "17";
     test = "<app-test></app-test>";
     isTest = true;
+    isFor = false;
+    testArr = [1, 2, 3, 4, 5];
     receipts: string[] = [
         ` 
 How to cook perfect Bagels
@@ -53,11 +55,9 @@ our most popular chicken recipes of all time.
     }
 
     onCreate(): void {
-        // this.root.collect(
         //     this.root.parentChanelReady$().subscribe(chanel => {
         //         console.log("Main registered:", (<HTMLElement><any>chanel).tagName);
         //     })
-        // );
     }
 
     onInit(): void {
@@ -72,6 +72,12 @@ our most popular chicken recipes of all time.
                 console.log("Main data catch:", data);
             }),
         );
+
+        setTimeout(() => {
+            this.isFor = true;
+            this.root.detectChanges();
+            this.isFor = false;
+        }, 5000);
     }
 
     onDestroy(): void {

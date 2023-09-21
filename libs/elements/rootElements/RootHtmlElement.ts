@@ -1,6 +1,15 @@
 import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
-import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
+import {
+    CONDITION,
+    E_DATA_MARKER,
+    E_DATA_MARKER_KEYS,
+    E_ROOT_TAG,
+    getAttr,
+    getAttrName,
+    removeAttr,
+    setAttr
+} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {appendChild, removeChild} from "../../utils/utils";
 import {AppDocument} from "../../env/browserVariables";
@@ -67,7 +76,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.ahe_component.onCreate) this.ahe_component.onCreate();
         }
 
-        parentChanelReady$(): ISubscriber<IChanel> & IObservablePipe<IChanel>{
+        parentChanelReady$(): ISubscriber<IChanel> & IObservablePipe<IChanel> {
             return this.onParentChanelReady$;
         }
 
@@ -196,33 +205,36 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
 
-    for (const child of children) {
-        let actions = "[";
-        if (!detectVariables(rootElement, child)) {
-            actions += detectInjections(rootElement, <HTMLElement>child);
-            actions += detectClickHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
-            actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
-            actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
-            actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
-            actions += detectScrollHandlers(rootElement, <HTMLElement>child);
-            actions += detectWheelHandlers(rootElement, <HTMLElement>child);
-            actions += detectChangeHandlers(rootElement, <HTMLElement>child);
-            actions += detectElementHandlers(rootElement, <HTMLElement>child);
-            actions += detectIfConditions(rootElement, <HTMLElement>child);
-            actions += detectClsConditions(rootElement, <HTMLElement>child);
-            setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
-        } else {
-            setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
-        }
+    for (const element of children) {
+        const children = detectForCycle(rootElement, <HTMLElement>element);
+        for (const child of children) {
+            let actions = "[";
+            if (!detectVariables(rootElement, child)) {
+                actions += detectInjections(rootElement, <HTMLElement>child);
+                actions += detectClickHandlers(rootElement, <HTMLElement>child);
+                actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
+                actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
+                actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
+                actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
+                actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
+                actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
+                actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
+                actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
+                actions += detectScrollHandlers(rootElement, <HTMLElement>child);
+                actions += detectWheelHandlers(rootElement, <HTMLElement>child);
+                actions += detectChangeHandlers(rootElement, <HTMLElement>child);
+                actions += detectElementHandlers(rootElement, <HTMLElement>child);
+                actions += detectIfConditions(rootElement, <HTMLElement>child);
+                actions += detectClsConditions(rootElement, <HTMLElement>child);
+                setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
+            } else {
+                setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
+            }
 
-        if (rootElement.getChanel(child)) {
-            (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
-            (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
+            if (rootElement.getChanel(child)) {
+                (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
+                (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
+            }
         }
     }
 }
@@ -312,6 +324,51 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     setAttr(ifParent, E_DATA_MARKER.INFO, "[ifp]");
 
     return "ifc ";
+}
+
+function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLElement[] {
+    const elements: HTMLElement[] = [];
+    elements.push(element);
+    const arrName = getAttr(element, E_DATA_MARKER.FOR);
+    if (!arrName) return elements;
+    const arr = rootElement.ahe_component[arrName];
+    if (!arr) return elements;
+    const countNum = arr.length;
+    if (countNum === 0) return [];
+    if (countNum === 1) return elements;
+
+    const cycleParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
+    const htmlParent = element.parentElement;
+
+    htmlParent.insertBefore(cycleParent, element);
+    removeChild(htmlParent, element);
+    removeAttr(element, E_DATA_MARKER.FOR);
+    elements.length = 0;
+    const isAppElement = !!rootElement.getChanel(element);
+
+    for (const arrElement of arr) {
+        const newElement = (<HTMLElement><any>element.cloneNode());
+        elements.push(newElement);
+        if (isAppElement) {
+            const value = getAttr(element, E_DATA_MARKER.ON_IF);
+            value && setAttr(newElement, E_DATA_MARKER.ON_IF, value);
+            const chanel = rootElement.getChanel(newElement);
+            if (chanel) {
+                chanel.sendData(arrElement);
+            }
+        } else {
+            for (const markerKey of E_DATA_MARKER_KEYS) {
+                if (markerKey === E_DATA_MARKER.FOR) continue;
+                const value = getAttr(element, <any>markerKey);
+                value && setAttr(newElement, <any>markerKey, getAttr(element, <any>markerKey));
+            }
+        }
+        appendChild(cycleParent, newElement);
+    }
+
+    setAttr(cycleParent, E_DATA_MARKER.INFO, `[for-${countNum}]`);
+
+    return elements;
 }
 
 function getDetails(rootElement: RootElement, value: string): ValDetails {
