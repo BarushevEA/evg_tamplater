@@ -76,7 +76,6 @@ our most popular chicken recipes of all time.
         setTimeout(() => {
             this.isFor = true;
             this.root.detectChanges();
-            this.isFor = false;
         }, 5000);
     }
 

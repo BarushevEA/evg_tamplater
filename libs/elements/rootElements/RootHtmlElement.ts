@@ -1,18 +1,8 @@
 import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
-import {
-    CONDITION,
-    E_DATA_MARKER,
-    E_DATA_MARKER_KEYS,
-    E_ROOT_TAG,
-    getAttr,
-    getAttrName,
-    removeAttr,
-    setAttr
-} from "../utils";
+import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
-import {appendChild, removeChild} from "../../utils/utils";
-import {AppDocument} from "../../env/browserVariables";
+import {appendChild, createElement, removeChild} from "../../utils/utils";
 import {
     AttributeChanged,
     ClassCondition,
@@ -188,6 +178,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             return <any>element;
         }
 
+        isAppElement(element: any): boolean {
+            return !!this.getChanel(element);
+        }
+
         collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void {
             this.ahe_clr.collect(...subscriptionLikeList);
         }
@@ -207,6 +201,7 @@ function detectInjectedData(rootElement: RootElement): void {
 
     for (const element of children) {
         const children = detectForCycle(rootElement, <HTMLElement>element);
+
         for (const child of children) {
             let actions = "[";
             if (!detectVariables(rootElement, child)) {
@@ -231,7 +226,7 @@ function detectInjectedData(rootElement: RootElement): void {
                 setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
             }
 
-            if (rootElement.getChanel(child)) {
+            if (rootElement.isAppElement(child)) {
                 (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
                 (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
             }
@@ -303,7 +298,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     let valueName = getAttr(element, E_DATA_MARKER.ON_IF);
     if (!valueName) return "";
 
-    const ifParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
+    const ifParent = createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
     const details = getDetails(rootElement, valueName);
@@ -329,40 +324,38 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLElement[] {
     const elements: HTMLElement[] = [];
     elements.push(element);
+
+    if (!rootElement.isAppElement(element)) return elements;
+
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
     if (!arrName) return elements;
+
     const arr = rootElement.ahe_component[arrName];
     if (!arr) return elements;
+
     const countNum = arr.length;
     if (countNum === 0) return [];
     if (countNum === 1) return elements;
 
-    const cycleParent = AppDocument.createElement(E_ROOT_TAG.TEXT_VALUE);
+    const cycleParent = createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
     htmlParent.insertBefore(cycleParent, element);
     removeChild(htmlParent, element);
     removeAttr(element, E_DATA_MARKER.FOR);
     elements.length = 0;
-    const isAppElement = !!rootElement.getChanel(element);
 
     for (const arrElement of arr) {
         const newElement = (<HTMLElement><any>element.cloneNode());
         elements.push(newElement);
-        if (isAppElement) {
-            const value = getAttr(element, E_DATA_MARKER.ON_IF);
-            value && setAttr(newElement, E_DATA_MARKER.ON_IF, value);
-            const chanel = rootElement.getChanel(newElement);
-            if (chanel) {
-                chanel.sendData(arrElement);
-            }
-        } else {
-            for (const markerKey of E_DATA_MARKER_KEYS) {
-                if (markerKey === E_DATA_MARKER.FOR) continue;
-                const value = getAttr(element, <any>markerKey);
-                value && setAttr(newElement, <any>markerKey, getAttr(element, <any>markerKey));
-            }
+
+        const value = getAttr(element, E_DATA_MARKER.ON_IF);
+        value && setAttr(newElement, E_DATA_MARKER.ON_IF, value);
+        const chanel = rootElement.getChanel(newElement);
+        if (chanel) {
+            chanel.sendData(arrElement);
         }
+
         appendChild(cycleParent, newElement);
     }
 

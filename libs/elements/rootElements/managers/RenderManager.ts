@@ -1,4 +1,4 @@
-import {appendChild, getStyle, runWhenDocumentReady} from "../../../utils/utils";
+import {appendChild, createElement, getStyle, runWhenDocumentReady} from "../../../utils/utils";
 import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
 import {RegisterRootElements} from "../../registerRootElements";
@@ -26,7 +26,7 @@ export class RenderManager {
     }
 
     private init(): void {
-        this.appElement = AppDocument.createElement(APP_TAG_NAME);
+        this.appElement = createElement(APP_TAG_NAME);
     }
 
     private start(): void {

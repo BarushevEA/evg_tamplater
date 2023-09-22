@@ -34,34 +34,38 @@ export function setInnerHtml(element: HTMLElement, HTMLText: string): void {
     if (element && element.innerHTML) element.innerHTML = HTMLText;
 }
 
+export function createElement(tagName: string): HTMLElement {
+    return AppDocument.createElement(tagName);
+}
+
 export function getDiv(): HTMLElement {
-    return AppDocument.createElement("div");
+    return createElement("div");
 }
 
 export function getStyle(style: string): HTMLElement {
-    const element = AppDocument.createElement("style")
+    const element = createElement("style")
     element.innerHTML = style;
     return element;
 }
 
 export function getWrapper(): HTMLElement {
-    return AppDocument.createElement(HTML_BLOCK);
+    return createElement(HTML_BLOCK);
 }
 
 export function getMain(): HTMLElement {
-    return AppDocument.createElement("main");
+    return createElement("main");
 }
 
 export function getSection(): HTMLElement {
-    return AppDocument.createElement("section");
+    return createElement("section");
 }
 
 export function getHeader(): HTMLElement {
-    return AppDocument.createElement("header");
+    return createElement("header");
 }
 
 export function getFooter(): HTMLElement {
-    return AppDocument.createElement("footer");
+    return createElement("footer");
 }
 
 export function removeClasses(element: HTMLElement, classes: string[]): void {

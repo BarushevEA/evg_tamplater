@@ -60,6 +60,7 @@ export type RootBehavior = {
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
     getChanel(element: any): IChanel | undefined;
+    isAppElement(element: any): boolean;
 } & HTMLElement;
 export type RootElement = {
     ahe_number: number;
