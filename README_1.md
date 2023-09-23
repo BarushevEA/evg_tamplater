@@ -1,26 +1,5 @@
 # evg_tamplater
 ## simple html page templater
-data attributes markers: "data-" + marker
-```ts
-export enum E_DATA_MARKER {
-    INJECT_TO = "inject_to",
-    ON_CLICK = "click",
-    ON_CHANGE = "change",
-    ON_KEY_DOWN = "keydown",
-    ON_KEY_UP = "keyup",
-    ON_KEY_DBL_CLICK = "dblclick",
-    ON_SCROLL = "scroll",
-    ON_WHEEL = "wheel",
-    ON_MOUSE_LEAVE = "mouseleave",
-    ON_MOUSE_ENTER = "mouseenter",
-    ON_MOUSE_UP = "mouseup",
-    ON_MOUSE_DOWN = "mousedown",
-    ON_MOUSE_MOVE = "mousemove",
-    ON_HANDLE = "handle",
-    ON_IF = "if",
-    CLASS_IF = "cls"
-}
-```
 HTML app components
 ```html
 <txt-val>componentVariable</txt-val>
