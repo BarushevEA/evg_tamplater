@@ -9,8 +9,8 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     ag = "17";
     test = "<app-test></app-test>";
     isTest = true;
-    isFor = false;
-    testArr = [1, 2, 3, 4, 5];
+    isFor = true;
+    testArr = [1, 2, 3, 4, 5, 6, 7];
     receipts: string[] = [
         ` 
 How to cook perfect Bagels
@@ -74,8 +74,16 @@ our most popular chicken recipes of all time.
         );
 
         setTimeout(() => {
-            this.isFor = true;
+            this.testArr.push(-1);
+            this.testArr.push(-2);
+            this.testArr.push(-3);
             this.root.detectChanges();
+            setTimeout(() => {
+                this.testArr.shift();
+                this.testArr.shift();
+                this.testArr.shift();
+                this.root.detectChanges();
+            }, 5000);
         }, 5000);
     }
 

@@ -16,7 +16,7 @@
 
   font-weight: bold;
 
-  @include setWidthHeight(100%, 66vh);
+  @include setWidthHeight(100%, 100vh);
 
   @include flexColumnNowrap();
   justify-content: flex-start;
@@ -63,13 +63,19 @@
     background: #69b2e4;
   }
 
-  .color_blue{
-    color: #29475c;
+  .color_blue {
+    color: #0294f9;
   }
-  .color_red{
+
+  .color_green {
+    color: #108b55;
+  }
+
+  .color_red {
     color: #802b51;
   }
-  .bold{
+
+  .bold {
     font-weight: bold;
   }
 }

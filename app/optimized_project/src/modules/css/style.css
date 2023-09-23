@@ -12,7 +12,7 @@
   left: 0;
   font-weight: bold;
   width: 100%;
-  height: 66vh;
+  height: 100vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -55,7 +55,10 @@
   background: #69b2e4;
 }
 .app .color_blue {
-  color: #29475c;
+  color: #0294f9;
+}
+.app .color_green {
+  color: #108b55;
 }
 .app .color_red {
   color: #802b51;

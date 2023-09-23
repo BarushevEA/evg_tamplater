@@ -43,6 +43,12 @@ export type ClassIf = {
     element: HTMLElement;
     classConditions: ClassCondition[];
 };
+export type ForOf = {
+    parent: HTMLElement;
+    template: HTMLElement;
+    children: HTMLElement[];
+    valueName: string;
+};
 export type IChanel = {
     sendData<T>(data: T): void;
 };
@@ -68,6 +74,7 @@ export type RootElement = {
     ahe_nFunctions: NestedValue[];
     ahe_IfList: OnIf[];
     ahe_ClsIfList: ClassIf[];
+    ahe_ForOfList: ForOf[];
     ahe_component: any;
     ahe_clr: Collector;
     ahe_parent_chanel: IChanel;

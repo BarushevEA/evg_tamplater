@@ -8,6 +8,7 @@ import {
     ClassCondition,
     ClassIf,
     ELEMENT_OPTIONS,
+    ForOf,
     IChanel,
     NestedValue,
     OnIf,
@@ -15,6 +16,7 @@ import {
     ValDetails
 } from "../../env/types";
 import {clsSeparator} from "../../env/env";
+import {deleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
 
 const ifDoubleInitVar = "_______$$bool";
 
@@ -27,6 +29,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_nFunctions: NestedValue[];
         ahe_IfList: OnIf[];
         ahe_ClsIfList: ClassIf[];
+        ahe_ForOfList: ForOf[];
         ahe_clr: Collector;
         ahe_component: any;
         ahe_parent_chanel: IChanel;
@@ -59,6 +62,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_nValues = [];
             this.ahe_IfList = [];
             this.ahe_ClsIfList = [];
+            this.ahe_ForOfList = [];
 
             this.ahe_opts = options;
             this.ahe_component = new options.element(this);
@@ -131,6 +135,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_nValues.length = 0;
             this.ahe_IfList.length = 0;
             this.ahe_ClsIfList.length = 0;
+            this.ahe_ForOfList.length = 0;
             this.innerHTML = "";
             this.onAdopted$.unsubscribeAll();
             this.onInit$.unsubscribeAll();
@@ -160,6 +165,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         detectChanges(): void {
             this.beforeDetectChanges$.next(true);
+            changeForOf(this);
             changeIfConditions(this);
             changeClsConditions(this);
             changeNestedValues(this);
@@ -200,36 +206,38 @@ function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
 
     for (const element of children) {
-        const children = detectForCycle(rootElement, <HTMLElement>element);
+        handleInjections(rootElement, detectForCycle(rootElement, <HTMLElement>element));
+    }
+}
 
-        for (const child of children) {
-            let actions = "[";
-            if (!detectVariables(rootElement, child)) {
-                actions += detectInjections(rootElement, <HTMLElement>child);
-                actions += detectClickHandlers(rootElement, <HTMLElement>child);
-                actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
-                actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
-                actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
-                actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
-                actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
-                actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
-                actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
-                actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
-                actions += detectScrollHandlers(rootElement, <HTMLElement>child);
-                actions += detectWheelHandlers(rootElement, <HTMLElement>child);
-                actions += detectChangeHandlers(rootElement, <HTMLElement>child);
-                actions += detectElementHandlers(rootElement, <HTMLElement>child);
-                actions += detectIfConditions(rootElement, <HTMLElement>child);
-                actions += detectClsConditions(rootElement, <HTMLElement>child);
-                setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
-            } else {
-                setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
-            }
+function handleInjections(rootElement: RootElement, children: HTMLElement[]) {
+    for (const child of children) {
+        let actions = "[";
+        if (!detectVariables(rootElement, child)) {
+            actions += detectInjections(rootElement, <HTMLElement>child);
+            actions += detectClickHandlers(rootElement, <HTMLElement>child);
+            actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
+            actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
+            actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
+            actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
+            actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
+            actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
+            actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
+            actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
+            actions += detectScrollHandlers(rootElement, <HTMLElement>child);
+            actions += detectWheelHandlers(rootElement, <HTMLElement>child);
+            actions += detectChangeHandlers(rootElement, <HTMLElement>child);
+            actions += detectElementHandlers(rootElement, <HTMLElement>child);
+            actions += detectIfConditions(rootElement, <HTMLElement>child);
+            actions += detectClsConditions(rootElement, <HTMLElement>child);
+            setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
+        } else {
+            setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
+        }
 
-            if (rootElement.isAppElement(child)) {
-                (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
-                (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
-            }
+        if (rootElement.isAppElement(child)) {
+            (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
+            (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
         }
     }
 }
@@ -322,20 +330,18 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 }
 
 function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLElement[] {
-    const elements: HTMLElement[] = [];
-    elements.push(element);
 
-    if (!rootElement.isAppElement(element)) return elements;
+    if (!rootElement.isAppElement(element)) return [element];
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
-    if (!arrName) return elements;
+    if (!arrName) return [element];
 
     const arr = rootElement.ahe_component[arrName];
-    if (!arr) return elements;
+    if (!arr) return [element];
 
     const countNum = arr.length;
     if (countNum === 0) return [];
-    if (countNum === 1) return elements;
+    if (countNum === 1) return [element];
 
     const cycleParent = createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
@@ -343,25 +349,77 @@ function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLEle
     htmlParent.insertBefore(cycleParent, element);
     removeChild(htmlParent, element);
     removeAttr(element, E_DATA_MARKER.FOR);
-    elements.length = 0;
+    setAttr(cycleParent, E_DATA_MARKER.INFO, `[for-of]`);
 
-    for (const arrElement of arr) {
-        const newElement = (<HTMLElement><any>element.cloneNode());
-        elements.push(newElement);
+    const newElements = updateForOfChildren(
+        rootElement,
+        [],
+        arr,
+        cycleParent,
+        element);
 
-        const value = getAttr(element, E_DATA_MARKER.ON_IF);
-        value && setAttr(newElement, E_DATA_MARKER.ON_IF, value);
-        const chanel = rootElement.getChanel(newElement);
-        if (chanel) {
-            chanel.sendData(arrElement);
+    rootElement.ahe_ForOfList.push({
+        parent: cycleParent,
+        template: element,
+        children: newElements,
+        valueName: arrName,
+    });
+
+    return newElements;
+}
+
+function updateForOfChildren(
+    rootElement: RootElement,
+    childrenForUpdate: HTMLElement[],
+    injectedArr: [],
+    cycleParent: HTMLElement,
+    template: HTMLElement): HTMLElement[] {
+    const newChildren: HTMLElement[] = [];
+    const lenOldChildren = childrenForUpdate.length;
+    const lenInjectedArr = injectedArr.length;
+    let delta = lenInjectedArr - lenOldChildren;
+
+    if (delta > 0) {
+        for (let i = 0; i < delta; i++) {
+            const newElement = createElement(template.tagName);
+            childrenForUpdate.push(newElement);
+            newChildren.push(newElement);
+
+            const value = getAttr(template, E_DATA_MARKER.ON_IF);
+            value && setAttr(newElement, E_DATA_MARKER.ON_IF, value);
+            appendChild(cycleParent, newElement);
         }
+    } else {
+        delta *= -1;
+        for (let i = 0; i < delta; i++) {
+            const child = childrenForUpdate.pop();
+            const ifList = rootElement.ahe_IfList;
+            let ifComponent: OnIf;
 
-        appendChild(cycleParent, newElement);
+            for (const onIf of ifList) {
+                if (onIf.ifElement === child) {
+                    ifComponent = onIf;
+                    break;
+                }
+            }
+
+            if (ifComponent) {
+                deleteFromArray(ifList, ifComponent);
+                removeChild(cycleParent, ifComponent.ifParent);
+            } else {
+                removeChild(cycleParent, childrenForUpdate.pop());
+            }
+        }
     }
 
-    setAttr(cycleParent, E_DATA_MARKER.INFO, `[for-${countNum}]`);
+    for (let i = 0; i < lenInjectedArr; i++) {
+        const data = injectedArr[i];
+        const child = childrenForUpdate[i];
+        const chanel = rootElement.getChanel(child);
+        chanel.sendData(data);
+    }
 
-    return elements;
+    return newChildren;
 }
 
 function getDetails(rootElement: RootElement, value: string): ValDetails {
@@ -652,5 +710,18 @@ function changeClsConditions(rootElement: RootElement) {
 
             element.classList.add(condition.firstClassName);
         }
+    }
+}
+
+function changeForOf(rootElement: RootElement) {
+    const list = rootElement.ahe_ForOfList;
+    for (const forOf of list) {
+        const elements = updateForOfChildren(
+            rootElement,
+            forOf.children,
+            rootElement.ahe_component[forOf.valueName],
+            forOf.parent,
+            forOf.template);
+        handleInjections(rootElement, elements);
     }
 }
