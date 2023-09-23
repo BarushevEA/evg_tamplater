@@ -2,7 +2,7 @@ import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/sr
 import {Observable} from "evg_observable/src/outLib/Observable";
 import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
-import {appendChild, createElement, removeChild} from "../../utils/utils";
+import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../../utils/utils";
 import {
     AttributeChanged,
     ClassCondition,
@@ -687,28 +687,29 @@ function changeClsConditions(rootElement: RootElement) {
 
             if (conditionData === condition.oldCondition) continue;
             condition.oldCondition = conditionData;
+            const firstClassName = condition.firstClassName;
+            const secondClassName = condition.secondClassName;
 
-            if (condition.secondClassName) {
+            if (secondClassName) {
                 if (conditionData === CONDITION.TRUE) {
-                    element.classList.add(condition.firstClassName);
-                    element.classList.remove(condition.secondClassName);
+                    addClasses(element, [firstClassName]);
+                    removeClasses(element, [secondClassName]);
                 } else {
-                    element.classList.add(condition.secondClassName);
-                    element.classList.remove(condition.firstClassName);
+                    addClasses(element, [secondClassName]);
+                    removeClasses(element, [firstClassName]);
                 }
                 continue;
             }
 
             if (!condition.isConditionDisabled) {
                 if (conditionData === CONDITION.TRUE) {
-                    element.classList.add(condition.firstClassName);
+                    addClasses(element, [firstClassName]);
                 } else {
-                    element.classList.remove(condition.firstClassName);
+                    removeClasses(element, [firstClassName]);
                 }
                 continue;
             }
-
-            element.classList.add(condition.firstClassName);
+            addClasses(element, [firstClassName]);
         }
     }
 }
