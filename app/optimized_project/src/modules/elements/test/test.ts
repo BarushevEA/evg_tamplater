@@ -24,12 +24,7 @@ export class Test implements OnInit, OnDestroy, OnCreate {
     }
 
     onInit(): void {
-        // const data = this.root.dataCatch$<number>().getValue();
-        // data && (this.num = data);
-        //
-        // this.isRed = this.num > 0 && this.num < 4;
-        // this.isBlue = this.num > 3;
-        // this.root.detectChanges();
+
     }
 
     onDestroy(): void {
