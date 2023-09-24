@@ -211,34 +211,48 @@ function detectInjectedData(rootElement: RootElement): void {
 }
 
 function handleInjections(rootElement: RootElement, children: HTMLElement[]) {
-    for (const child of children) {
-        let actions = "[";
-        if (!detectVariables(rootElement, child)) {
-            actions += detectInjections(rootElement, <HTMLElement>child);
-            actions += detectClickHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
-            actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
-            actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
-            actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
-            actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
-            actions += detectScrollHandlers(rootElement, <HTMLElement>child);
-            actions += detectWheelHandlers(rootElement, <HTMLElement>child);
-            actions += detectChangeHandlers(rootElement, <HTMLElement>child);
-            actions += detectElementHandlers(rootElement, <HTMLElement>child);
-            actions += detectIfConditions(rootElement, <HTMLElement>child);
-            actions += detectClsConditions(rootElement, <HTMLElement>child);
-            setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
-        } else {
-            setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
-        }
+    if (!children.length) return;
 
-        if (rootElement.isAppElement(child)) {
+    let actions = "[";
+
+    if (children.length > 1) {
+        for (const child of children) {
+            actions += detectIfConditions(rootElement, <HTMLElement>child);
+            setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
+
             (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
             (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
         }
+        return;
+    }
+
+    const child = children[0];
+
+    if (!detectVariables(rootElement, child)) {
+        actions += detectInjections(rootElement, <HTMLElement>child);
+        actions += detectClickHandlers(rootElement, <HTMLElement>child);
+        actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
+        actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
+        actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
+        actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
+        actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
+        actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
+        actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
+        actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
+        actions += detectScrollHandlers(rootElement, <HTMLElement>child);
+        actions += detectWheelHandlers(rootElement, <HTMLElement>child);
+        actions += detectChangeHandlers(rootElement, <HTMLElement>child);
+        actions += detectElementHandlers(rootElement, <HTMLElement>child);
+        actions += detectIfConditions(rootElement, <HTMLElement>child);
+        actions += detectClsConditions(rootElement, <HTMLElement>child);
+        setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
+    } else {
+        setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
+    }
+
+    if (rootElement.isAppElement(child)) {
+        (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
+        (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
     }
 }
 
@@ -330,7 +344,6 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 }
 
 function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLElement[] {
-
     if (!rootElement.isAppElement(element)) return [element];
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
@@ -340,6 +353,7 @@ function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLEle
     if (!arr) return [element];
 
     const countNum = arr.length;
+
     if (countNum === 0) return [];
     if (countNum === 1) return [element];
 
