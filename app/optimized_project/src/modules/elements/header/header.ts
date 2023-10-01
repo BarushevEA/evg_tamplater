@@ -1,5 +1,6 @@
 import {NextMain$} from "../../services/headerService";
-import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
+
+import {OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 
 export class Header implements OnInit {
     readonly root;

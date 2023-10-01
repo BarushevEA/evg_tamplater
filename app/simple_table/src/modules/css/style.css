@@ -1,0 +1,66 @@
+.app {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.app * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  background: rgba(0, 250, 250, 0.1);
+}
+.app .header {
+  width: 100%;
+  height: 80px;
+  font-weight: bold;
+  border-top: solid 1px;
+}
+.app .body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.app .footer {
+  width: 100%;
+  height: 80px;
+}
+.app .row {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-flow: row nowrap;
+  border-left: solid 1px;
+  border-bottom: solid 1px;
+}
+.app .cell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  border-right: solid 1px;
+  padding: 5px;
+}
+.app .text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.app .dark {
+  background: rgba(0, 0, 0, 0.1);
+}
+.app .v-center {
+  justify-content: center;
+}
+.app .h-center {
+  align-items: center;
+}
+
+/*# sourceMappingURL=style.css.map */

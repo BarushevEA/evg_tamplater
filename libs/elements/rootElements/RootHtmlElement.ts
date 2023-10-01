@@ -3,6 +3,7 @@ import {Observable} from "evg_observable/src/outLib/Observable";
 import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../../utils/utils";
+import {deleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
 import {
     AttributeChanged,
     ClassCondition,
@@ -14,9 +15,8 @@ import {
     OnIf,
     RootElement,
     ValDetails
-} from "../../env/types";
-import {clsSeparator} from "../../env/env";
-import {deleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
+} from "../types";
+import {clsSeparator} from "../env";
 
 const ifDoubleInitVar = "_______$$bool";
 
@@ -351,11 +351,6 @@ function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLEle
 
     const arr = rootElement.ahe_component[arrName];
     if (!arr) return [element];
-
-    const countNum = arr.length;
-
-    if (countNum === 0) return [];
-    if (countNum === 1) return [element];
 
     const cycleParent = createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;

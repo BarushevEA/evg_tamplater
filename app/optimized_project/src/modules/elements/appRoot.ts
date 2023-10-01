@@ -1,5 +1,6 @@
 import {NextMain$} from "../services/headerService";
-import {OnCreate, OnInit, RootBehavior} from "../../../../../libs/env/types";
+
+import {OnCreate, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 
 export class AppRoot implements OnInit, OnCreate {
     readonly root;

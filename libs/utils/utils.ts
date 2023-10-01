@@ -96,7 +96,7 @@ export function appendChild(parent: HTMLElement | ShadowRoot, child: HTMLElement
     if (parent && child) parent.appendChild(child);
 }
 
-export function removeChild(parent: HTMLElement, child: HTMLElement): void {
+export function removeChild(parent: HTMLElement, child: HTMLElement | Element): void {
     if (parent && child) parent.removeChild(child);
 }
 

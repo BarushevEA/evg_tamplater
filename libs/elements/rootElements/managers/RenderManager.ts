@@ -6,6 +6,7 @@ import {AppDocument} from "../../../env/browserVariables";
 
 export class RenderManager {
     private appElement: HTMLElement;
+    isComponentMode = false;
 
     constructor() {
     }
@@ -14,7 +15,8 @@ export class RenderManager {
         registerElements(options);
     }
 
-    public run(): void {
+    public run(isComponentMode?: boolean): void {
+        this.isComponentMode = !!isComponentMode;
         runWhenDocumentReady(() => {
             this.process();
         });
@@ -35,7 +37,7 @@ export class RenderManager {
 
         appendChild(AppDocument.head, rootStyle);
         appendChild(AppDocument.head, mainStyle);
-        appendChild(AppDocument.body, this.appElement);
+        !this.isComponentMode && appendChild(AppDocument.body, this.appElement);
     }
 }
 

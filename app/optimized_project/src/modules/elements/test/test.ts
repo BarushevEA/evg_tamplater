@@ -1,4 +1,4 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 
 export class Test implements OnInit, OnDestroy, OnCreate {
     test1 = "TEST1";
