@@ -1,5 +1,13 @@
-<div class="cell v-center h-center">
+<div class="cell v-center h-center"
+     data-dblclick="onDblClick"
+     data-cls="cursor_pointer:!isEdit">
     <div class="text">
-        <txt-val>data</txt-val>
+        <label data-if="isEdit">
+            <input class="input"
+                   data-inject_to="input"
+                   data-keydown="onKeyDown"
+                   data-change="onChange">
+        </label>
+        <txt-val data-if="!isEdit">data</txt-val>
     </div>
 </div>

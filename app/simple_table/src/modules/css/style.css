@@ -48,6 +48,10 @@
   border-right: solid 1px;
   padding: 5px;
 }
+.app .input {
+  width: 100%;
+  height: 100%;
+}
 .app .text {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -61,6 +65,9 @@
 }
 .app .h-center {
   align-items: center;
+}
+.app .cursor_pointer {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */
