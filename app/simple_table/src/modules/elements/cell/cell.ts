@@ -38,9 +38,7 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     }
 
     onKeyDown(evt: KeyboardEvent): void {
-        if (!this.isEdit) return;
-
-        if (evt.key.toLowerCase()==="enter") {
+        if (evt.key.toLowerCase() === "enter") {
             this.isEdit = false;
             // @ts-ignore
             this.data = this.input.value;
@@ -49,8 +47,6 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     }
 
     onChange(): void {
-        if (!this.isEdit) return;
-
         this.isEdit = false;
         // @ts-ignore
         this.data = this.input.value;

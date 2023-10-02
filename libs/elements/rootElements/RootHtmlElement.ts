@@ -662,6 +662,7 @@ function changeIfConditions(rootElement: RootElement) {
         if (onIf.isInversion) conditionData = !conditionData;
 
         if (conditionData === onIf.oldCondition) continue;
+        onIf.oldCondition = conditionData;
 
         const isContains = onIf.ifParent.contains(onIf.ifElement);
 
@@ -670,8 +671,6 @@ function changeIfConditions(rootElement: RootElement) {
         } else {
             if (isContains) removeChild(onIf.ifParent, onIf.ifElement);
         }
-
-        onIf.oldCondition = conditionData;
     }
 }
 
