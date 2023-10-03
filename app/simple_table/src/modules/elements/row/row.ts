@@ -1,9 +1,11 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {CELL, ROW} from "../../env/types";
 
 export class Row implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
-    cells: string[];
+    cells: CELL[];
+    id: number;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -12,9 +14,17 @@ export class Row implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<string[]>()
-            .subscribe(data => {
-                this.cells = data;
+        this.root.dataCatch$<ROW>()
+            .subscribe(row => {
+                this.cells.length = 0;
+                this.id = row.id;
+                for (let i = 0; i < row.arr.length; i++) {
+                    const value = row.arr[i];
+                    this.cells.push({
+                        id: {x: i, y: this.id},
+                        value: value,
+                    })
+                }
                 this.root.detectChanges();
             });
     }

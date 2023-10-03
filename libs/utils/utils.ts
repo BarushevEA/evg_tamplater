@@ -106,6 +106,17 @@ export function getElementsByClass(parent: HTMLElement, token: string): Element[
     return Array.from(parent.getElementsByClassName(token));
 }
 
+export function getValue<T>(element: HTMLElement | Element): T {
+    if (!element) return undefined;
+    if (!(<any>element).value) return undefined;
+    return (<any>element).value
+}
+
+export function setValue<T>(element: HTMLElement | Element, value: T): void {
+    if (!element) return;
+    (<any>element).value = value;
+}
+
 export const documentReady$ = new Observable(false);
 let isDOMContentLoadedListen = false;
 
