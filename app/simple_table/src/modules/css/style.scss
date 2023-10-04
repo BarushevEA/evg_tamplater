@@ -17,6 +17,7 @@
     @include setWidthHeight(100%, 80px);
     font-weight: bold;
     border-top: solid 1px;
+    user-select: none;
   }
 
   .body {
