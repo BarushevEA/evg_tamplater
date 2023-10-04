@@ -1,5 +1,6 @@
 export type ROW = {
     id: number;
+    isEditDisabled?: boolean;
     arr: string[];
 };
 
@@ -10,5 +11,6 @@ export type CellId = {
 
 export type CELL = {
     id: CellId;
+    isEditDisabled?: boolean;
     value: string;
 }

@@ -9,6 +9,7 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     input: HTMLElement;
     isEdit: boolean;
     id: CellId;
+    isEditDisabled: boolean;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -20,6 +21,7 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     onCreate(): void {
         this.root.dataCatch$<CELL>()
             .subscribe(cell => {
+                this.isEditDisabled = !!cell.isEditDisabled;
                 this.data = cell.value;
                 this.id = cell.id;
                 setValue(this.input, this.data);
@@ -36,9 +38,12 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     }
 
     onDblClick(): void {
+        if (this.isEditDisabled) return;
+
         this.isEdit = true;
         setValue(this.input, this.data);
         this.root.detectChanges();
+        this.input.focus()
     }
 
     onKeyDown(evt: KeyboardEvent): void {
@@ -66,6 +71,7 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
 
     setData(): void {
         this.data = getValue(this.input);
+        this.data = this.data ? this.data : "";
         this.root.title = this.data;
     }
 }

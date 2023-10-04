@@ -12,6 +12,7 @@ export class Header implements OnCreate, OnInit, OnDestroy {
         this.rows = [
             {
                 id: 0,
+                isEditDisabled: true,
                 arr: ["one", "two", "three", "four", "five"]
             }];
     }

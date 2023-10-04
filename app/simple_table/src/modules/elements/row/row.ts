@@ -22,6 +22,7 @@ export class Row implements OnInit, OnCreate, OnDestroy {
                     const value = row.arr[i];
                     this.cells.push({
                         id: {x: i, y: this.id},
+                        isEditDisabled: !!row.isEditDisabled,
                         value: value,
                     })
                 }
