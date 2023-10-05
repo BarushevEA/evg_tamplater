@@ -18,6 +18,7 @@ export class Row implements OnInit, OnCreate, OnDestroy {
             .subscribe(row => {
                 this.cells.length = 0;
                 this.id = row.id;
+
                 for (let i = 0; i < row.arr.length; i++) {
                     const value = row.arr[i];
                     this.cells.push({
@@ -26,6 +27,7 @@ export class Row implements OnInit, OnCreate, OnDestroy {
                         value: value,
                     })
                 }
+
                 this.root.detectChanges();
             });
     }

@@ -10,30 +10,19 @@ export class Body implements OnInit, OnCreate, OnDestroy {
         this.root = root;
         this.name = root.tagName;
         this.rows = [];
-        for (let i = 0; i < 10; i++) {
-            this.rows.push(
-                {
-                    id: i,
-                    arr: ["1", "2", "3", "4", "12312341231234123412341234123412341234"],
-                }
-            );
-        }
     }
 
     onCreate(): void {
-
+        this.root.dataCatch$<ROW[]>()
+            .subscribe(rows => {
+                this.rows.length = 0;
+                this.rows.push(...rows);
+                this.root.detectChanges();
+            });
     }
 
     onInit(): void {
-        setTimeout(() => {
-            this.rows.push(
-                {
-                    id: this.rows.length,
-                    arr:["test-1", "test-2", "test-3", "test-4", "test-5"],
-                }
-            );
-            this.root.detectChanges();
-        }, 5000);
+
     }
 
     onDestroy(): void {

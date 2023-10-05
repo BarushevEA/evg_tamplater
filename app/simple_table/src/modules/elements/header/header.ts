@@ -9,16 +9,16 @@ export class Header implements OnCreate, OnInit, OnDestroy {
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
-        this.rows = [
-            {
-                id: 0,
-                isEditDisabled: true,
-                arr: ["one", "two", "three", "four", "five"]
-            }];
+        this.rows = [];
     }
 
     onCreate(): void {
-
+        this.root.dataCatch$<ROW[]>()
+            .subscribe(rows => {
+                this.rows.length = 0;
+                this.rows.push(...rows);
+                this.root.detectChanges();
+            });
     }
 
     onInit(): void {
