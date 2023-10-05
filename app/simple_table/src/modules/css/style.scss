@@ -13,6 +13,8 @@
   @include setWidthHeight(100%, 100%);
   @include flexColumnNowrap();
 
+  border: solid 1px;
+
   .header {
     @include setWidthHeight(100%, 80px);
     font-weight: bold;
