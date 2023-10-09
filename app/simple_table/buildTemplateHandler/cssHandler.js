@@ -3,6 +3,7 @@ const env = require('./utils');
 const options = require('../buildOptions/templateOptions');
 const encrypt = require('../buildOptions/cssEncryptList');
 const flags = require('../buildOptions/flags');
+const {cssPrefix} = require("../buildOptions/flags");
 
 const cssPath = env.getCSSPath();
 const buildFilePath = env.getBuildFilePath();
@@ -170,7 +171,7 @@ function getClassName(index) {
         cssClass += symbols[ind];
     }
 
-    return cssClass;
+    return cssPrefix + cssClass;
 }
 
 function handleError(error) {
