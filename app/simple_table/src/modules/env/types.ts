@@ -14,3 +14,9 @@ export type CELL = {
     isEditDisabled?: boolean;
     value: string;
 }
+
+export type TableOptions = {
+    header: string[];
+    body: string[][];
+    footer: string;
+}

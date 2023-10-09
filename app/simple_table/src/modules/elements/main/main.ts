@@ -1,5 +1,6 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {ROW} from "../../env/types";
+import {IsTableReady$, TableData$} from "../../services/tableServices";
 
 export class Main implements OnCreate, OnInit, OnDestroy {
     readonly root;
@@ -7,6 +8,10 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     header: HTMLElement;
     body: HTMLElement;
     footer: HTMLElement;
+
+    headerChanel: IChanel;
+    bodyChanel: IChanel;
+    footerChanel: IChanel;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -21,47 +26,44 @@ export class Main implements OnCreate, OnInit, OnDestroy {
         this.handleHeaderChanel();
         this.handleBodyChanel();
         this.handleFooterChanel();
+
+        this.root.collect(
+            TableData$
+                .pipe()
+                .emitByPositive(() => {
+                    return this.headerChanel && this.bodyChanel && this.footerChanel
+                })
+                .subscribe((data) => {
+                    this.headerChanel.sendData<ROW[]>(
+                        [{id: 0, isEditDisabled: true, arr: data.header}]
+                    );
+
+                    const rows: ROW[] = [];
+
+                    for (let i = 0; i < data.body.length; i++) {
+                        const row = data.body[i];
+                        rows.push({id: i + 1, arr: row});
+                    }
+
+                    this.bodyChanel.sendData<ROW[]>(rows);
+
+                    this.footerChanel.sendData<string>(data.footer);
+                })
+        );
+
+        IsTableReady$.next(true);
     }
 
     private handleHeaderChanel() {
-        const headerChanel = this.root.getChanel(this.header);
-        if (!headerChanel) return;
-
-        const rows: ROW[] = [{id: 0, isEditDisabled: true, arr: ["one-1", "two-2", "three-3", "four-4", "five-5"]}];
-        headerChanel.sendData<ROW[]>(rows);
+        this.headerChanel = this.root.getChanel(this.header);
     }
 
     private handleBodyChanel() {
-        const bodyChanel = this.root.getChanel(this.body);
-        if (!bodyChanel) return;
-
-        const rows: ROW[] = [];
-        let longField = "";
-
-        for (let i = 0; i < 10; i++) {
-            longField += " long text";
-            rows.push({id: i + 1, arr: ["1", "2", "3", "4", longField]});
-        }
-
-        bodyChanel.sendData<ROW[]>(rows);
-
-        setTimeout(() => {
-            rows.length = 0;
-
-            for (let i = 0; i < 11; i++) {
-                longField += " long text";
-                rows.push({id: i + 1, arr: ["5", "6", "7", "8", longField]});
-            }
-
-            bodyChanel.sendData<ROW[]>(rows);
-        }, 5000);
+        this.bodyChanel = this.root.getChanel(this.body);
     }
 
     private handleFooterChanel() {
-        const footerChanel = this.root.getChanel(this.footer);
-        if (!footerChanel) return;
-
-        footerChanel.sendData<string>("TEST FOOTER");
+        this.footerChanel = this.root.getChanel(this.footer);
     }
 
     onDestroy(): void {

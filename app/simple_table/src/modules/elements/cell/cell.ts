@@ -14,7 +14,7 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
-        this.data = "test";
+        this.data = "";
         this.isEdit = false;
     }
 
@@ -73,5 +73,9 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
         this.data = getValue(this.input);
         this.data = this.data ? this.data : "";
         this.root.title = this.data;
+    }
+
+    isPointer():boolean{
+        return !this.isEdit && !this.isEditDisabled;
     }
 }

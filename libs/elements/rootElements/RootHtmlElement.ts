@@ -178,6 +178,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         getChanel(element: any): IChanel | undefined {
+            if (!element) return undefined;
             if (!(<RootElement>element).ahe_component) return undefined;
             if (!(<IChanel>element).sendData) return undefined;
 
@@ -416,7 +417,7 @@ function updateForOfChildren(
                 deleteFromArray(ifList, ifComponent);
                 removeChild(cycleParent, ifComponent.ifParent);
             } else {
-                removeChild(cycleParent, childrenForUpdate.pop());
+                removeChild(cycleParent, child);
             }
         }
     }
@@ -425,7 +426,7 @@ function updateForOfChildren(
         const data = injectedArr[i];
         const child = childrenForUpdate[i];
         const chanel = rootElement.getChanel(child);
-        chanel.sendData(data);
+        chanel && chanel.sendData(data);
     }
 
     return newChildren;
