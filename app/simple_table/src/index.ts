@@ -97,10 +97,8 @@ const Tables: TableOptions[] = [
 function fillTable() {
     IsTableReady$
         .pipe()
-        .setOnce()
-        .subscribe((isReady) => {
-            if (!isReady) return;
-
+        .emitByPositive((isReady) => isReady)
+        .subscribe(() => {
             let index = 0;
             const counter = setInterval(
                 () => {
