@@ -33,6 +33,8 @@
 
   .row {
     @include setWidthHeight(100%, 60px);
+    min-height: 40px;
+
     @include flexRowNowrap();
     border-left: solid 1px;
     border-bottom: solid 1px;
