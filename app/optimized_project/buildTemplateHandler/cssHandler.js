@@ -3,7 +3,8 @@ const env = require('./utils');
 const options = require('../buildOptions/templateOptions');
 const encrypt = require('../buildOptions/cssEncryptList');
 const flags = require('../buildOptions/flags');
-const {cssPrefix} = require("../buildOptions/flags");
+const {cssPrefixLength} = require("../buildOptions/flags");
+const {getSymbols} = require("./utils");
 
 const cssPath = env.getCSSPath();
 const buildFilePath = env.getBuildFilePath();
@@ -161,7 +162,12 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
     };
 }
 
+const classes = [];
+
 function getClassName(index) {
+    let className = classes[index];
+    if (className) return className;
+
     let cssClass = "";
     const symbols = "qwertyuiop";
     const smbIndex = "" + index;
@@ -171,7 +177,10 @@ function getClassName(index) {
         cssClass += symbols[ind];
     }
 
-    return cssPrefix + cssClass;
+    className = getSymbols(cssPrefixLength) + cssClass;
+    classes.push(className);
+
+    return className;
 }
 
 function handleError(error) {

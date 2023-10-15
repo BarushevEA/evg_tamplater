@@ -3,4 +3,4 @@ exports.flag = {
     isJsCssProcess: true,
 };
 
-exports.cssPrefix = "smpl-";
+exports.cssPrefixLength = 8;

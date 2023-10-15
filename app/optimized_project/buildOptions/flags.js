@@ -3,4 +3,4 @@ exports.flag = {
     isJsCssProcess: true,
 };
 
-exports.cssPrefix = "opt-";
+exports.cssPrefixLength = 8;
