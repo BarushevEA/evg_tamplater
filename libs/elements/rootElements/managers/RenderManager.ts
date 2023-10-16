@@ -28,6 +28,7 @@ export class RenderManager {
     }
 
     private init(): void {
+        if (this.isComponentMode) return;
         this.appElement = createElement(APP_TAG_NAME);
     }
 
