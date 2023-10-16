@@ -34,6 +34,11 @@ export function getAttr(element: HTMLElement | Element, marker: E_DATA_MARKER): 
     return element.getAttribute(getAttrName(marker))
 }
 
+export function getAttrNative(element: HTMLElement | Element, marker: string): string {
+    if (!element) return "";
+    return element.getAttribute(marker)
+}
+
 export function setAttr(element: HTMLElement | Element, marker: E_DATA_MARKER, value: string) {
     if (!element) return;
     element.setAttribute(getAttrName(marker), value);

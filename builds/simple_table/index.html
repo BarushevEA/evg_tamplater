@@ -6,12 +6,14 @@
     <script src="simple_table.js"></script>
 </head>
 <body>
-<div id="123" style="width: 700px; height: 500px">
-</div>
+<div id="123" style="width: 700px; height: 500px"></div>
+<div id="234" style="width: 700px; height: 500px"></div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const el = document.getElementById("123");
-        el.innerHTML = "<app-simple-table></app-simple-table>";
+        el.innerHTML = "<app-simple-table table-name='NAME1'></app-simple-table>";
+        const el1 = document.getElementById("234");
+        el1.innerHTML = "<app-simple-table table-name='NAME2'></app-simple-table>";
     });
 </script>
 </body>

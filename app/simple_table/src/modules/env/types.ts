@@ -20,3 +20,8 @@ export type TableOptions = {
     body: string[][];
     footer: string;
 }
+
+export type OptionsCollector = {
+    getTableName(): string;
+    setOptions(options: TableOptions): void;
+}

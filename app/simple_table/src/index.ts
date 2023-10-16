@@ -3,14 +3,14 @@ import {APP_LOCALE} from "../../../libs/elements/AppLocalization/LocationManager
 import {LOCATION} from "../../../libs/elements/AppLocalization/location";
 import {MODULES} from "./settings/modules";
 import {RENDER_MANAGER} from "../../../libs/elements/rootElements/managers/RenderManager";
-import {IsTableReady$, TableData$} from "./modules/services/tableServices";
-import {TableOptions} from "./modules/env/types";
+import {IsTableReady$} from "./modules/services/tableServices";
+import {OptionsCollector, TableOptions} from "./modules/env/types";
 
-fillTable();
 APP_INFO.init();
 APP_LOCALE.set(LOCATION.EN);
 RENDER_MANAGER.register(MODULES);
 RENDER_MANAGER.run(true);
+fillTable();
 
 const Tables: TableOptions[] = [
     {
@@ -121,12 +121,15 @@ const Tables: TableOptions[] = [
 function fillTable() {
     IsTableReady$
         .pipe()
-        .emitByPositive((isReady) => isReady)
-        .subscribe(() => {
+        .emitByPositive((table: OptionsCollector) => {
+            if (!table) return false;
+            return table.getTableName() === "NAME1";
+        })
+        .subscribe(table => {
             let index = 0;
             const counter = setInterval(
                 () => {
-                    TableData$.next(Tables[index]);
+                    table.setOptions(Tables[index]);
 
                     index++;
                     if (index === Tables.length || index > Tables.length) {
@@ -135,5 +138,15 @@ function fillTable() {
                 },
                 5000
             );
+        });
+
+    IsTableReady$
+        .pipe()
+        .emitByPositive((table: OptionsCollector) => {
+            if (!table) return false;
+            return table.getTableName() === "NAME2";
+        })
+        .subscribe(table => {
+            table.setOptions(Tables[0]);
         });
 }

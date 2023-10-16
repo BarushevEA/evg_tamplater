@@ -1,5 +1,4 @@
 import {Observable} from "evg_observable/src/outLib/Observable";
-import {TableOptions} from "../env/types";
+import {OptionsCollector} from "../env/types";
 
-export const TableData$: Observable<TableOptions> = new Observable<TableOptions>(undefined);
-export const IsTableReady$: Observable<boolean> = new Observable<boolean>(false);
+export const IsTableReady$: Observable<OptionsCollector> = new Observable<OptionsCollector>(<any>0);
