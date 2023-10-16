@@ -344,14 +344,17 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     return "ifc ";
 }
 
+const emptyArr: HTMLElement[] = <any>[0];
+
 function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLElement[] {
-    if (!rootElement.isAppElement(element)) return [element];
+    if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
+    if (!rootElement.isAppElement(element)) return (emptyArr[0] = element) && emptyArr;
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
-    if (!arrName) return [element];
+    if (!arrName) return (emptyArr[0] = element) && emptyArr;
 
     const arr = rootElement.ahe_component[arrName];
-    if (!arr) return [element];
+    if (!arr) return (emptyArr[0] = element) && emptyArr;
 
     const cycleParent = createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
