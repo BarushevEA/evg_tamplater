@@ -22,7 +22,7 @@ export class Row implements OnInit, OnCreate, OnDestroy {
                 for (let i = 0; i < row.arr.length; i++) {
                     const value = row.arr[i];
                     this.cells.push({
-                        id: {x: i, y: this.id},
+                        id: {x: i, y: this.id, tableName: row.tableName},
                         isEditDisabled: !!row.isEditDisabled,
                         value: value,
                     })

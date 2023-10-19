@@ -30,7 +30,7 @@ export class Main implements OnCreate, OnInit, OnDestroy {
 
                 for (let i = 0; i < data.body.length; i++) {
                     const row = data.body[i];
-                    rows.push({id: i + 1, arr: row});
+                    rows.push({id: i + 1, arr: row, tableName: data.tableName});
                 }
 
                 this.bodyChanel.sendData<ROW[]>(rows);

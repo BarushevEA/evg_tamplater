@@ -18,7 +18,6 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OptionsCollector {
     }
 
     onCreate(): void {
-
     }
 
     onInit(): void {
@@ -34,7 +33,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OptionsCollector {
     }
 
     setOptions(options: TableOptions): void {
-        options.footer = this.tableName;
+        options.tableName = this.tableName;
         this.mainChanel && this.mainChanel.sendData<TableOptions>(options);
     }
 

@@ -1,6 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {getValue, setValue} from "../../../../../../libs/utils/utils";
 import {CELL, CellId} from "../../env/types";
+import {CellChange$} from "../../services/tableServices";
 
 export class Cell implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -22,8 +23,9 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
         this.root.dataCatch$<CELL>()
             .subscribe(cell => {
                 this.isEditDisabled = !!cell.isEditDisabled;
-                this.data = cell.value;
                 this.id = cell.id;
+                this.id.data = cell.value;
+                this.data = cell.value;
                 setValue(this.input, this.data);
                 this.root.title = this.data;
                 this.root.detectChanges();
@@ -72,7 +74,10 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     setData(): void {
         this.data = getValue(this.input);
         this.data = this.data ? this.data : "";
+        if (this.id.data === this.data) return;
         this.root.title = this.data;
+        this.id.data = this.data;
+        CellChange$.next(this.id);
     }
 
     isPointer():boolean{
