@@ -17,6 +17,10 @@ exports.getCSSPath = () => {
     return path.join(__dirname, appPath.CSSDirPath, "style.css");
 };
 
+exports.getModulesPath = () => {
+    return path.join(__dirname, appPath.ModulesPath);
+};
+
 const symbols1 = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 const symbols2 = "01234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
 const symbols3 = "_-";
