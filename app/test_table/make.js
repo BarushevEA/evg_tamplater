@@ -124,13 +124,21 @@ handleArguments();
 function handleArguments() {
     if (cmdCommand !== COMMAND.CREATE_COMPONENT) return;
     if (!newComponentName) return;
+    console.log("START");
+    console.log();
 
     console.log(`cmdCommand: ${cmdCommand}`);
     console.log(`newComponentName: ${newComponentName}`);
+    console.log(`modulesPath: ${modulesPath}`);
     console.log(`templateOptionsPath: ${templateOptionsPath}`);
+
+    console.log();
 
     const maker = new Maker();
     console.log(`variables: \n${(JSON.stringify(maker)).replaceAll(",", ",\n")}`);
+
+    console.log();
+    console.log("FINISH");
 }
 
 function handleError(error) {
