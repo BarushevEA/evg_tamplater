@@ -1,3 +1,14 @@
+## Short project instruction
+### for create project:
+- open terminal
+- go to *pm.js* directory
+- run the command: *node pm.js p yourProjectName* 
+### for create component:
+- open terminal
+- select the project
+- go to *cm.js* directory
+- run the command: *node cm.js c yourComponentName*
+
 ## Short actions instruction
 
 ### data-click="functionName"
