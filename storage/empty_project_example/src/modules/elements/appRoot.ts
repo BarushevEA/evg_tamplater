@@ -3,7 +3,6 @@ import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/ele
 export class AppRoot implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
-    main: HTMLElement;
     tableName: string;
 
     constructor(root: RootBehavior) {
