@@ -2,6 +2,6 @@
 
 @mixin body {
   .body {
-
+    @include setWidthHeight(100%, 100%);
   }
 }

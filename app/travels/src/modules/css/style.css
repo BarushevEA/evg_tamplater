@@ -38,5 +38,17 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
 }
+.app .header {
+  width: 100%;
+  height: 60px;
+}
+.app .body {
+  width: 100%;
+  height: 100%;
+}
+.app .footer {
+  width: 100%;
+  height: 60px;
+}
 
 /*# sourceMappingURL=style.css.map */

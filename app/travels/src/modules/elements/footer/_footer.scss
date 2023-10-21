@@ -2,6 +2,6 @@
 
 @mixin footer {
   .footer {
-
+    @include setWidthHeight(100%, 60px);
   }
 }
