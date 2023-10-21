@@ -1,0 +1,17 @@
+@import "../header/header";
+@import "../body/body";
+@import "../footer/footer";
+@import "../../css/mixins";
+
+@mixin main() {
+  .main {
+    @include setWidthHeight(100%, 100%);
+    @include setMinWidthHeight(100%, 100%);
+    @include flexColumnNowrap();
+    @include flexStart();
+  }
+
+  @include header();
+  @include body();
+  @include footer();
+}

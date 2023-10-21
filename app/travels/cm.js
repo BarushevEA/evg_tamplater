@@ -21,17 +21,13 @@ class Maker {
     absoluteDirPath
     tsFileName
     htmlFileName
-    scssMixinFileName
     componentTsPath
     componentHtmlPath
-    componentScssMixinPath
     absoluteComponentTsPath
     absoluteComponentHtmlPath
-    absoluteComponentScssMixinPath
     htmlTemplate
-    tsTemplate
-    scssMixinTemplate
     componentClassName
+    tsTemplate
 
     modulesImportString
     modulesImportStringDecorated
@@ -43,14 +39,11 @@ class Maker {
         this.dir = this.pathPart;
         this.tsFileName = `${this.pathPart}.ts`;
         this.htmlFileName = `${this.pathPart}.html`;
-        this.scssMixinFileName = `_${this.pathPart}.scss`;
         this.componentTsPath = path.join(this.dir, this.tsFileName);
         this.componentHtmlPath = path.join(this.dir, this.htmlFileName);
-        this.componentScssMixinPath = path.join(this.dir, this.scssMixinFileName);
         this.absoluteDirPath = getTemplatePath(this.dir);
         this.absoluteComponentTsPath = getTemplatePath(this.componentTsPath);
         this.absoluteComponentHtmlPath = getTemplatePath(this.componentHtmlPath);
-        this.absoluteComponentScssMixinPath = getTemplatePath(this.componentScssMixinPath);
         this.componentClassName = `${this.pathPart[0].toUpperCase()}${this.pathPart.substring(1)}`
         this.modulesImportString = `import {${this.componentClassName}} from "../modules/elements/${this.pathPart}/${this.pathPart}";`;
         this.modulesImportStringDecorated = `${this.modulesImportString}\n`;
@@ -81,14 +74,9 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy {
     onDestroy(): void {
     }
 }`;
-        this.scssMixinTemplate = `
-@mixin ${this.pathPart}() {
-}
-        `;
         fs.mkdirSync(this.absoluteDirPath);
         fs.writeFile(this.absoluteComponentTsPath, this.tsTemplate, (error) => handleError(error));
         fs.writeFile(this.absoluteComponentHtmlPath, this.htmlTemplate, (error) => handleError(error));
-        fs.writeFile(this.absoluteComponentScssMixinPath, this.scssMixinTemplate, (error) => handleError(error));
     }
 
     registerOnTemplateOptions() {

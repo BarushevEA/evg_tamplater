@@ -1,0 +1,72 @@
+@mixin flexColumnNowrap() {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+@mixin flexStart() {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+@mixin flexCenter() {
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexEnd() {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+@mixin flexRowNowrap() {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+@mixin setWidthHeight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setMaxWidthHeight($width, $height) {
+  max-width: $width;
+  max-height: $height;
+}
+
+@mixin setMinWidthHeight($width, $height) {
+  min-width: $width;
+  min-height: $height;
+}
+
+@mixin clean() {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+@mixin devHighlighting {
+  * {
+    background: rgba(0, 250, 250, 0.2);
+  }
+}
+
+@mixin normalizeSpace {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+@mixin globalRules() {
+  * {
+    @include normalizeSpace();
+  }
+  @include normalizeSpace();
+
+  @include setWidthHeight(100vw, 100vh);
+  @include setMinWidthHeight(100vw, 100vh);
+
+  @include flexColumnNowrap();
+  @include flexStart();
+}
