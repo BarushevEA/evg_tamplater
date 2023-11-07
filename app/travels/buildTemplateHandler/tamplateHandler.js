@@ -1,9 +1,15 @@
 const fs = require('fs');
 const env = require('./utils');
 const options = require('../buildOptions/templateOptions');
+const {cpSync} = require("fs");
 
 const buildFilePath = env.getBuildFilePath();
 const htmlTemplates = options.htmlTemplates;
+const assetsPath = env.getAssetsPath();
+
+fs.rmSync(assetsPath, {recursive: true, force: true});
+fs.mkdirSync(assetsPath);
+cpSync(env.getAssetsDirPath(), assetsPath, {recursive: true, force: true});
 
 console.log(buildFilePath);
 

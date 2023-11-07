@@ -17,6 +17,14 @@ exports.getCSSPath = () => {
     return path.join(__dirname, appPath.CSSDirPath, "style.css");
 };
 
+exports.getAssetsPath = () => {
+    return path.join(exports.getBuildDirPath(), "assets");
+};
+
+exports.getAssetsDirPath = () => {
+    return path.join(__dirname, appPath.AssetsDirPath);
+};
+
 exports.getModulesPath = () => {
     return path.join(__dirname, appPath.ModulesPath);
 };
