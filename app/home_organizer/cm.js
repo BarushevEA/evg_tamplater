@@ -58,7 +58,7 @@ class Maker {
         this.absoluteComponentHtmlPath = getTemplatePath(this.componentHtmlPath);
         this.absoluteComponentScssMixinPath = getTemplatePath(this.componentScssMixinPath);
         this.componentClassName = `${this.pathPart[0].toUpperCase()}${this.pathPart.substring(1)}`
-        this.modulesImportString = `import {${this.componentClassName}} from "../modules/elements/${this.pathPart}/${this.pathPart}";`;
+        this.modulesImportString = `import {${this.componentClassName}} from "../modules/elements/${this.dir}/${this.pathPart}";`;
         this.modulesImportStringDecorated = `${this.modulesImportString}\n`;
 
         this.registerOnTemplateOptions();

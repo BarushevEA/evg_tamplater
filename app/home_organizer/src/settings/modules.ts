@@ -1,3 +1,4 @@
+import {Menu} from "../modules/elements/header/menu/menu";
 import {Footer} from "../modules/elements/footer/footer";
 import {Main} from "../modules/elements/main/main";
 import {Header} from "../modules/elements/header/header";
@@ -10,4 +11,5 @@ export const MODULES: REG_OPTIONS = [
     getOption(Header, "app-header", "APP_EXAMPLE_____MARKER_HEADER"),
     getOption(Main, "app-main", "APP_EXAMPLE_____MARKER_MAIN"),
     getOption(Footer, "app-footer", "APP_EXAMPLE_____MARKER_FOOTER"),
+    getOption(Menu, "app-menu", "APP_EXAMPLE_____MARKER_MENU"),
 ];
