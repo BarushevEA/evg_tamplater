@@ -3,8 +3,11 @@
 @import "../elements/main/main";
 @import "../elements/footer/footer";
 
+@include globalNormalize();
+
 .app {
   @include globalRules();
+  @include devHighlighting();
   @include header();
   @include main();
   @include footer();

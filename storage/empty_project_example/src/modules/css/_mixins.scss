@@ -51,12 +51,16 @@
   overflow: auto;
 }
 
-@mixin globalRules() {
+@mixin globalNormalize() {
   * {
     @include normalizeSpace();
   }
-  @include normalizeSpace();
+  body {
+    overflow: hidden;
+  }
+}
 
+@mixin globalRules() {
   @include setWidthHeight(100vw, 100vh);
   @include setMinWidthHeight(100vw, 100vh);
 

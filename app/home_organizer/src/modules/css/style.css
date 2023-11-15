@@ -1,8 +1,15 @@
-.app {
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   overflow: auto;
+}
+
+body {
+  overflow: hidden;
+}
+
+.app {
   width: 100vw;
   height: 100vh;
   min-width: 100vw;
@@ -13,10 +20,7 @@
   justify-content: flex-start;
 }
 .app * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  overflow: auto;
+  background: rgba(0, 250, 250, 0.2);
 }
 .app .header {
   width: 100%;
