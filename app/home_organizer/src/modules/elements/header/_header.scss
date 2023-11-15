@@ -1,12 +1,16 @@
 @import "menu/menu";
+@import "choice/choice";
+@import "account/account";
 @import "../../css/mixins";
 
 @mixin header() {
   .header {
     @include setWidthHeight(100%, 60px);
-    @include flexColumnNowrap();
+    @include flexRowNowrap();
     border: 1px solid;
   }
 
   @include menu();
+  @include choice();
+  @include account();
 }
