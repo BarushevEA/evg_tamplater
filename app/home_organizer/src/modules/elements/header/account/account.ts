@@ -1,7 +1,7 @@
 
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 
-export class Menu implements OnInit, OnCreate, OnDestroy {
+export class Account implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
 

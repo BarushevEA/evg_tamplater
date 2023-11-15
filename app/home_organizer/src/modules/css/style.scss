@@ -1,5 +1,11 @@
 @import "mixins";
+@import "../elements/header/header";
+@import "../elements/main/main";
+@import "../elements/footer/footer";
 
 .app {
   @include globalRules();
+  @include header();
+  @include main();
+  @include footer();
 }

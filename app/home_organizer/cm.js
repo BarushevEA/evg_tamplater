@@ -65,9 +65,19 @@ class Maker {
     }
 
     createTemplates() {
+        const additionalLevel = "../";
+        let levels = "";
+
+        for (let i = 0; i < this.dir.length; i++) {
+            const smb = this.dir[i];
+            if (smb === "/") {
+                levels += additionalLevel;
+            }
+        }
+
         this.htmlTemplate = `<div>Hello ${this.htmlFileName}</div>`;
         this.tsTemplate = `
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../${levels}libs/elements/types";
 
 export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy {
     readonly root;

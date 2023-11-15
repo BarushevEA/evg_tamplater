@@ -1,4 +1,12 @@
+@import "menu/menu";
+@import "../../css/mixins";
 
 @mixin header() {
+  .header {
+    @include setWidthHeight(100%, 60px);
+    @include flexColumnNowrap();
+    border: 1px solid;
+  }
+
+  @include menu();
 }
-        

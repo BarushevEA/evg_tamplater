@@ -8,4 +8,5 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_MAIN": "main/main.html",
     "APP_EXAMPLE_____MARKER_FOOTER": "footer/footer.html",
     "APP_EXAMPLE_____MARKER_MENU": "header/menu/menu.html",
+    "APP_EXAMPLE_____MARKER_ACCOUNT": "header/account/account.html",
 };
