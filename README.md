@@ -7,7 +7,9 @@
 - open terminal
 - select the project
 - go to *cm.js* directory
-- run the command: *node cm.js c yourComponentName*
+- run the command: *node cm.js c yourComponentName [d componentDir]***
+
+** optionally
 
 ## Short actions instruction
 
