@@ -6,8 +6,9 @@
 @include globalNormalize();
 
 .app {
-  @include globalRules();
   @include devHighlighting();
+
+  @include globalRules();
   @include header();
   @include main();
   @include footer();
