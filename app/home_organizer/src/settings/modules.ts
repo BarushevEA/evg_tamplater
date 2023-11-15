@@ -1,3 +1,5 @@
+import {Current_date} from "../modules/elements/footer/current_date/current_date";
+import {Author} from "../modules/elements/footer/author/author";
 import {Choice} from "../modules/elements/header/choice/choice";
 import {Account} from "../modules/elements/header/account/account";
 import {Menu} from "../modules/elements/header/menu/menu";
@@ -16,4 +18,6 @@ export const MODULES: REG_OPTIONS = [
     getOption(Menu, "app-menu", "APP_EXAMPLE_____MARKER_MENU"),
     getOption(Account, "app-account", "APP_EXAMPLE_____MARKER_ACCOUNT"),
     getOption(Choice, "app-choice", "APP_EXAMPLE_____MARKER_CHOICE"),
+    getOption(Author, "app-author", "APP_EXAMPLE_____MARKER_AUTHOR"),
+    getOption(Current_date, "app-current_date", "APP_EXAMPLE_____MARKER_CURRENT_DATE"),
 ];

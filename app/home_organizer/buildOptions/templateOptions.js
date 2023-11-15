@@ -10,4 +10,6 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_MENU": "header/menu/menu.html",
     "APP_EXAMPLE_____MARKER_ACCOUNT": "header/account/account.html",
     "APP_EXAMPLE_____MARKER_CHOICE": "header/choice/choice.html",
+    "APP_EXAMPLE_____MARKER_AUTHOR": "footer/author/author.html",
+    "APP_EXAMPLE_____MARKER_CURRENT_DATE": "footer/current_date/current_date.html",
 };
