@@ -12,4 +12,7 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_CHOICE": "header/choice/choice.html",
     "APP_EXAMPLE_____MARKER_AUTHOR": "footer/author/author.html",
     "APP_EXAMPLE_____MARKER_CURRENT_DATE": "footer/current_date/current_date.html",
+    "APP_EXAMPLE_____MARKER_BANER": "main/baner/baner.html",
+    "APP_EXAMPLE_____MARKER_TASK_LIST": "main/task_list/task_list.html",
+    "APP_EXAMPLE_____MARKER_TASK": "main/task/task.html",
 };

@@ -1,3 +1,6 @@
+import {Task} from "../modules/elements/main/task/task";
+import {Task_list} from "../modules/elements/main/task_list/task_list";
+import {Baner} from "../modules/elements/main/baner/baner";
 import {Current_date} from "../modules/elements/footer/current_date/current_date";
 import {Author} from "../modules/elements/footer/author/author";
 import {Choice} from "../modules/elements/header/choice/choice";
@@ -20,4 +23,7 @@ export const MODULES: REG_OPTIONS = [
     getOption(Choice, "app-choice", "APP_EXAMPLE_____MARKER_CHOICE"),
     getOption(Author, "app-author", "APP_EXAMPLE_____MARKER_AUTHOR"),
     getOption(Current_date, "app-current_date", "APP_EXAMPLE_____MARKER_CURRENT_DATE"),
+    getOption(Baner, "app-baner", "APP_EXAMPLE_____MARKER_BANER"),
+    getOption(Task_list, "app-task_list", "APP_EXAMPLE_____MARKER_TASK_LIST"),
+    getOption(Task, "app-task", "APP_EXAMPLE_____MARKER_TASK"),
 ];

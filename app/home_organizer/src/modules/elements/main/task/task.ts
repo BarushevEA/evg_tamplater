@@ -1,10 +1,9 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 
-export class AppRoot implements OnInit, OnCreate, OnDestroy {
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
+
+export class Task implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
-    main: HTMLElement;
-    tableName: string;
 
     constructor(root: RootBehavior) {
         this.root = root;

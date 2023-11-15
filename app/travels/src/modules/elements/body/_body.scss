@@ -1,7 +1,0 @@
-@import "../../css/mixins";
-
-@mixin body {
-  .body {
-    @include setWidthHeight(100%, 100%);
-  }
-}

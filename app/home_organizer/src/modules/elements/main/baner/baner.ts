@@ -1,7 +1,7 @@
 
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 
-export class Body implements OnInit, OnCreate, OnDestroy {
+export class Baner implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
 
