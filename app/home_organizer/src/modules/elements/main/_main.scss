@@ -1,4 +1,9 @@
 @import "../../css/mixins";
 
 @mixin main() {
+  .main {
+    @include centered_rectangle($main-width, $main-height);
+
+    flex-grow: 1;
+  }
 }

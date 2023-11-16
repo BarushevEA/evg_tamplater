@@ -1,4 +1,9 @@
+@import "../../../css/mixins";
 
 @mixin current_date() {
+  &-current_date {
+    @include centered_rectangle($footer-date-width, $footer-date-height);
+
+    overflow: hidden;
+  }
 }
-        

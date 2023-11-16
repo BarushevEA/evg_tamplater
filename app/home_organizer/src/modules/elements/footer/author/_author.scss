@@ -1,4 +1,10 @@
+@import "../../../css/mixins";
 
 @mixin author() {
+  &-author {
+    @include centered_rectangle($footer-author-width, $footer-author-height);
+    @include setMinWidthHeight($footer-author-width, $footer-author-height);
+
+    overflow: hidden;
+  }
 }
-        

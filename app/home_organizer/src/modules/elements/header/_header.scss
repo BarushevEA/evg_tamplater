@@ -6,6 +6,7 @@
 @mixin header() {
   .header {
     @include setWidthHeight($header-width, $header-height);
+    @include setMinWidthHeight($header-width, $header-height);
     padding: $header-padding;
 
     @include flexRowNowrap();

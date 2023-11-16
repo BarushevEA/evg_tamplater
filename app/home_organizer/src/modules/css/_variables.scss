@@ -17,8 +17,8 @@ $app-min-height: 100%;
 // app header
 $header-width: 100%;
 $header-height: 100px;
-$header-padding: 10px;
 $header-delta: 5px;
+$header-padding: $header-delta*2;
 
 // header menu
 $header-menu-width: $header-height - $header-padding - $header-delta;
@@ -32,3 +32,21 @@ $header-choice-margin: $header-delta*2;
 // header account
 $header-account-width: $header-menu-width;
 $header-account-height: $header-menu-width;
+
+// app main
+$main-width: 100%;
+$main-height: 100%;
+
+// app footer
+$footer-width: 100%;
+$footer-height: 100px;
+$footer-delta: 5px;
+$footer-padding: $footer-delta*2;
+
+// footer author
+$footer-author-width: 100%;
+$footer-author-height: 30px;
+
+// footer date
+$footer-date-width: 100%;
+$footer-date-height: 100%;
