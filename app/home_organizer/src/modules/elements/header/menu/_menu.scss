@@ -4,5 +4,10 @@
   &-menu {
     @include button($header-menu-width, $header-menu-height);
     @include setMinWidthHeight($header-menu-width, $header-menu-height);
+
+    &_icon{
+      background: url($header-menu-icon) no-repeat;
+      background-size: cover;
+    }
   }
 }

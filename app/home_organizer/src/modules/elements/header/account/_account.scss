@@ -4,5 +4,10 @@
   &-account {
     @include button($header-account-width, $header-account-height);
     @include setMinWidthHeight($header-account-width, $header-account-height);
+
+    &_icon{
+      background: url($header-account-icon) no-repeat;
+      background-size: cover;
+    }
   }
 }

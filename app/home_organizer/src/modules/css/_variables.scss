@@ -5,8 +5,9 @@ $dev-border-color: rgba(0, 250, 250, 0.5);
 // global rules
 @font-face {
   font-family: Tahoma;
-  src: url("assets/tahoma.ttf") format("truetype");
+  src: url("assets/fonts/tahoma.ttf") format("truetype");
 }
+
 $global-width: 100vw;
 $global-height: 100vh;
 $global-font-family: Tahoma, serif;
@@ -27,6 +28,7 @@ $header-padding: $header-delta*2;
 // header menu
 $header-menu-width: $header-height - $header-padding - $header-delta;
 $header-menu-height: $header-menu-width;
+$header-menu-icon: "assets/images/menu.png";
 
 // header choice
 $header-choice-width: 100%;
@@ -36,6 +38,7 @@ $header-choice-margin: $header-delta*2;
 // header account
 $header-account-width: $header-menu-width;
 $header-account-height: $header-menu-width;
+$header-account-icon: "assets/images/account.png";
 
 // app main
 $main-width: 100%;
