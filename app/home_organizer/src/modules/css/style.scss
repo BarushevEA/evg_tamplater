@@ -16,8 +16,7 @@
 
   &-wrapper {
     @include setWidthHeight($app-width, $app-height);
-    @include setMaxWidthHeight($app-width, $app-height);
-    @include setMinWidthHeight($app-min-width, $app-min-height);
+    @include setMaxWidthHeight($app-max-width, $app-max-height);
 
     @include flexColumnNowrap();
     @include flexStart();

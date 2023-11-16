@@ -14,10 +14,12 @@ $global-font-family: Tahoma, serif;
 $global-font-size: 24px;
 
 // app area
-$app-width: 800px;
+$app-width: 100%;
 $app-height: 100%;
-$app-min-width: 800px;
+$app-min-width: 100%;
 $app-min-height: 100%;
+$app-max-width: 800px;
+$app-max-height: 100%;
 
 // app header
 $header-width: 100%;
