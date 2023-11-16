@@ -92,8 +92,6 @@ body {
   height: 100px;
   min-width: 100%;
   min-height: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;

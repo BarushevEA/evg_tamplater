@@ -7,9 +7,6 @@
     @include setWidthHeight($footer-width, $footer-height);
     @include setMinWidthHeight($footer-width, $footer-height);
 
-    padding-left: $footer-padding;
-    padding-right: $footer-padding;
-
     @include flexColumnNowrap();
     justify-content: space-between;
     align-items: center;
