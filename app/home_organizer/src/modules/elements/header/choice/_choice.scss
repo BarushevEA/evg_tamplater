@@ -1,4 +1,10 @@
+@import "../../../css/mixins";
 
 @mixin choice() {
+  &-choice {
+    @include button($header-choice-width, $header-choice-height);
+
+    margin-right: $header-choice-margin;
+    margin-left: $header-choice-margin;
+  }
 }
-        

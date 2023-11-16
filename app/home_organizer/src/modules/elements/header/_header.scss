@@ -5,12 +5,17 @@
 
 @mixin header() {
   .header {
-    @include setWidthHeight(100%, 60px);
-    @include flexRowNowrap();
-    border: 1px solid;
-  }
+    @include setWidthHeight($header-width, $header-height);
+    padding: $header-padding;
 
-  @include menu();
-  @include choice();
-  @include account();
+    @include flexRowNowrap();
+    justify-content: space-between;
+    align-items: center;
+
+    overflow: hidden;
+
+    @include menu();
+    @include choice();
+    @include account();
+  }
 }

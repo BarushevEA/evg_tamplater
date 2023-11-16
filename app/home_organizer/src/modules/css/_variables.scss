@@ -1,0 +1,34 @@
+// dev variables
+$dev-highlight-color: rgba(0, 250, 250, 0.2);
+$dev-border-color: rgba(0, 250, 250, 0.5);
+
+// global rules
+$global-width: 100vw;
+$global-height: 100vh;
+$global-font-family: Tahoma, serif;
+$global-font-size: 24px;
+
+// app area
+$app-width: 800px;
+$app-height: 100%;
+$app-min-width: 800px;
+$app-min-height: 100%;
+
+// app header
+$header-width: 100%;
+$header-height: 100px;
+$header-padding: 10px;
+$header-delta: 5px;
+
+// header menu
+$header-menu-width: $header-height - $header-padding - $header-delta;
+$header-menu-height: $header-menu-width;
+
+// header choice
+$header-choice-width: 100%;
+$header-choice-height: $header-menu-width;
+$header-choice-margin: $header-delta*2;
+
+// header account
+$header-account-width: $header-menu-width;
+$header-account-height: $header-menu-width;

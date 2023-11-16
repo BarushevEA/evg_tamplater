@@ -1,4 +1,8 @@
+@import "../../../css/mixins";
 
 @mixin account() {
+  &-account {
+    @include button($header-account-width, $header-account-height);
+    @include setMinWidthHeight($header-account-width, $header-account-height);
+  }
 }
-        
