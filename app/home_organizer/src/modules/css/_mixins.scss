@@ -90,4 +90,8 @@
 
   cursor: pointer;
   overflow: hidden;
+
+  &:hover {
+    opacity: 0.5;
+  }
 }

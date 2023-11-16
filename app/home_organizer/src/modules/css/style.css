@@ -2,38 +2,6 @@
   font-family: Tahoma;
   src: url("assets/fonts/tahoma.ttf") format("truetype");
 }
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
-@font-face {
-  font-family: Tahoma;
-  src: url("assets/fonts/tahoma.ttf") format("truetype");
-}
 * {
   padding: 0;
   margin: 0;
@@ -88,6 +56,9 @@ body {
   min-width: 85px;
   min-height: 85px;
 }
+.app .header-menu:hover {
+  opacity: 0.5;
+}
 .app .header-menu_icon {
   background: url("assets/images/menu.png") no-repeat;
   background-size: cover;
@@ -105,6 +76,9 @@ body {
   margin-right: 10px;
   margin-left: 10px;
 }
+.app .header-choice:hover {
+  opacity: 0.5;
+}
 .app .header-account {
   width: 85px;
   height: 85px;
@@ -117,6 +91,9 @@ body {
   overflow: hidden;
   min-width: 85px;
   min-height: 85px;
+}
+.app .header-account:hover {
+  opacity: 0.5;
 }
 .app .header-account_icon {
   background: url("assets/images/account.png") no-repeat;
