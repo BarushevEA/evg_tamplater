@@ -3,6 +3,10 @@ $dev-highlight-color: rgba(0, 250, 250, 0.2);
 $dev-border-color: rgba(0, 250, 250, 0.5);
 
 // global rules
+@font-face {
+  font-family: Tahoma;
+  src: url("assets/tahoma.ttf") format("truetype");
+}
 $global-width: 100vw;
 $global-height: 100vh;
 $global-font-family: Tahoma, serif;
