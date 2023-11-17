@@ -1,4 +1,11 @@
+@import "../../../css/mixins";
 
 @mixin task_list() {
+  &-tasklist {
+    @include setWidthHeight($main-task_list-width, $main-task_list-height);
+    @include setMaxWidthHeight($main-task_list-width, $main-task_list-height);
+
+    @include flexColumnNowrap();
+    @include flexStart();
+  }
 }
-        

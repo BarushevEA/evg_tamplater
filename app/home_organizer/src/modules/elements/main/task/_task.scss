@@ -1,4 +1,9 @@
+@import "../../../css/mixins";
 
 @mixin task() {
+  &-task {
+    @include centered_rectangle($main-task-width, $main-task-height);
+
+    overflow: hidden;
+  }
 }
-        

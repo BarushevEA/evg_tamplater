@@ -1,8 +1,11 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
+import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
+
+    main: HTMLElement;
+    mainChanel: IChanel;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -13,8 +16,14 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy {
     }
 
     onInit(): void {
+        this.initMainChanel();
+        this.mainChanel.sendData("TEST APP CHANEL");
     }
 
     onDestroy(): void {
+    }
+
+    private initMainChanel(): void {
+        this.mainChanel = this.root.getChanel(this.main);
     }
 }

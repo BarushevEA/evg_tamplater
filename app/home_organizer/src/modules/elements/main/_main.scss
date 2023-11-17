@@ -1,9 +1,22 @@
 @import "../../css/mixins";
+@import "baner/baner";
+@import "task_list/task_list";
+@import "task/task";
 
 @mixin main() {
   .main {
     @include centered_rectangle($main-width, $main-height);
 
     flex-grow: 1;
+
+    &-wrapper {
+      @include centered_rectangle($main-wrapper-width, $main-wrapper-height);
+
+      flex-grow: 1;
+    }
+
+    @include baner();
+    @include task_list();
+    @include task();
   }
 }

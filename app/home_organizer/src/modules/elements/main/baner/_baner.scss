@@ -1,4 +1,9 @@
+@import "../../../css/mixins";
 
 @mixin baner() {
+  &-banner {
+    @include centered_rectangle($main-banner-width, $main-banner-height);
+
+    overflow: hidden;
+  }
 }
-        
