@@ -111,7 +111,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
 
             detectInjectedData(this);
-            this.detectChanges();
+            this.detectChanges(true);
 
             this.onInit$.next(true);
             if (this.ahe_component.onInit) this.ahe_component.onInit();
@@ -163,9 +163,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             return <HTMLElement[]>(method.htmlElements[this.ahe_number]);
         }
 
-        detectChanges(): void {
+        detectChanges(isForLost?:boolean): void {
             this.beforeDetectChanges$.next(true);
-            changeForOf(this);
+            !isForLost && changeForOf(this);
             changeIfConditions(this);
             changeClsConditions(this);
             changeNestedValues(this);

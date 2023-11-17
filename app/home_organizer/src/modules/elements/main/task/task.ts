@@ -24,6 +24,7 @@ export class Task implements OnInit, OnCreate, OnDestroy {
     }
 
     onInit(): void {
+        console.log("============>",this.text)
     }
 
     onDestroy(): void {
