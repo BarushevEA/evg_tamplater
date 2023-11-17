@@ -1,4 +1,3 @@
-
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 
 export class Task implements OnInit, OnCreate, OnDestroy {
@@ -10,21 +9,19 @@ export class Task implements OnInit, OnCreate, OnDestroy {
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
-        this.text = "TASK ";
+        this.text = "";
     }
 
     onCreate(): void {
         this.root
             .dataCatch$()
             .subscribe(data => {
-                console.log(data);
-                this.text += data;
+                this.text = "TASK " + data;
                 this.root.detectChanges();
             });
     }
 
     onInit(): void {
-        console.log("============>",this.text)
     }
 
     onDestroy(): void {
