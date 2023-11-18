@@ -12,16 +12,10 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root
-            .dataCatch$()
-            .pipe()
-            .emitByPositive(() => this.taskListChanel)
-            .subscribe(data => {
-                this.taskListChanel
-                    .sendData(
-                        data
-                    );
-            });
+        this.root.transferToChanel<any, any>(
+            () => this.taskListChanel,
+            data => data
+        );
     }
 
     onInit(): void {

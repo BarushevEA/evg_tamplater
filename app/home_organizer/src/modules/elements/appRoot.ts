@@ -17,7 +17,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy {
 
     onInit(): void {
         this.initMainChanel();
-        this.mainChanel.sendData("TEST APP CHANEL");
+        this.root.sendToChanel(this.mainChanel, "TEST APP CHANEL");
     }
 
     onDestroy(): void {

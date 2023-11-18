@@ -34,7 +34,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OptionsCollector {
 
     setOptions(options: TableOptions): void {
         options.tableName = this.tableName;
-        this.mainChanel && this.mainChanel.sendData<TableOptions>(options);
+        this.root.sendToChanel(this.mainChanel, options);
     }
 
     getTableName(): string {

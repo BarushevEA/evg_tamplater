@@ -163,7 +163,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             return <HTMLElement[]>(method.htmlElements[this.ahe_number]);
         }
 
-        detectChanges(isForLost?:boolean): void {
+        detectChanges(isForLost?: boolean): void {
             this.beforeDetectChanges$.next(true);
             !isForLost && changeForOf(this);
             changeIfConditions(this);
@@ -183,6 +183,21 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (!(<IChanel>element).sendData) return undefined;
 
             return <any>element;
+        }
+
+        transferToChanel<T, V>(chanelCb: () => IChanel, dataCb: (data: T) => V): void {
+            this.dataCatch$<T>()
+                .pipe()
+                .emitByPositive(() => chanelCb())
+                .subscribe((data: T) => {
+                    chanelCb().sendData<V>(
+                        dataCb(data)
+                    )
+                })
+        }
+
+        sendToChanel<T>(chanel: IChanel, data: T): void {
+            chanel && chanel.sendData<T>(data);
         }
 
         isAppElement(element: any): boolean {

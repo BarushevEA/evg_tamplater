@@ -18,14 +18,13 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<TableOptions>()
-            .pipe()
-            .emitByPositive(() => this.headerChanel && this.bodyChanel && this.footerChanel)
-            .subscribe(data => {
-                this.headerChanel.sendData<ROW[]>(
-                    [{id: 0, isEditDisabled: true, arr: data.header}]
-                );
+        this.root.transferToChanel<TableOptions, ROW[]>(
+            () => this.headerChanel,
+            data => [{id: 0, isEditDisabled: true, arr: data.header}]);
 
+        this.root.transferToChanel<TableOptions, ROW[]>(
+            () => this.bodyChanel,
+            data => {
                 const rows: ROW[] = [];
 
                 for (let i = 0; i < data.body.length; i++) {
@@ -33,27 +32,29 @@ export class Main implements OnCreate, OnInit, OnDestroy {
                     rows.push({id: i + 1, arr: row, tableName: data.tableName});
                 }
 
-                this.bodyChanel.sendData<ROW[]>(rows);
-
-                this.footerChanel.sendData<string>(data.footer);
+                return rows;
             });
+
+        this.root.transferToChanel<TableOptions, string>(
+            () => this.footerChanel,
+            data => data.footer);
     }
 
     onInit(): void {
-        this.handleHeaderChanel();
-        this.handleBodyChanel();
-        this.handleFooterChanel();
+        this.initHeaderChanel();
+        this.initBodyChanel();
+        this.initFooterChanel();
     }
 
-    private handleHeaderChanel() {
+    private initHeaderChanel() {
         this.headerChanel = this.root.getChanel(this.header);
     }
 
-    private handleBodyChanel() {
+    private initBodyChanel() {
         this.bodyChanel = this.root.getChanel(this.body);
     }
 
-    private handleFooterChanel() {
+    private initFooterChanel() {
         this.footerChanel = this.root.getChanel(this.footer);
     }
 
