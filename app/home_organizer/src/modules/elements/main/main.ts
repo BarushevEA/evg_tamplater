@@ -1,10 +1,13 @@
 import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {menuService$} from "../../services/service";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
     taskList: HTMLElement;
     taskListChanel: IChanel;
+
+    isMenuShow: boolean = menuService$.getValue().isShow;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -15,6 +18,14 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.root.transferToChanel<any, any>(
             () => this.taskListChanel,
             data => data
+        );
+
+        this.root.collect(
+            menuService$.subscribe(menu => {
+                this.isMenuShow = menu.isShow;
+                console.log("menu.isShow", menu.isShow);
+                this.root.detectChanges();
+            }),
         );
     }
 
