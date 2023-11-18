@@ -1,10 +1,12 @@
 @import "../../css/mixins";
 @import "baner/baner";
+@import "menu_list/menu_list";
 @import "task_list/task_list";
 @import "task/task";
 
 @mixin main() {
   .main {
+    position: relative;
     @include centered_rectangle($main-width, $main-height);
 
     flex-grow: 1;
@@ -16,6 +18,7 @@
     }
 
     @include baner();
+    @include menu_list();
     @include task_list();
     @include task();
   }

@@ -1,0 +1,16 @@
+@import "../../../css/mixins";
+
+@mixin menu_list() {
+  &-menu_list {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include setWidthHeight($main-menu_list-width, $main-menu_list-height);
+
+    @include flexColumnNowrap();
+    @include flexStart();
+
+    background: #69b2e4;
+  }
+}

@@ -23,7 +23,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.root.collect(
             menuService$.subscribe(menu => {
                 this.isMenuShow = menu.isShow;
-                console.log("menu.isShow", menu.isShow);
                 this.root.detectChanges();
             }),
         );

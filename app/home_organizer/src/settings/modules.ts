@@ -1,3 +1,4 @@
+import {Menu_list} from "../modules/elements/main/menu_list/menu_list";
 import {Task} from "../modules/elements/main/task/task";
 import {Task_list} from "../modules/elements/main/task_list/task_list";
 import {Baner} from "../modules/elements/main/baner/baner";
@@ -26,4 +27,5 @@ export const MODULES: REG_OPTIONS = [
     getOption(Baner, "app-baner", "APP_EXAMPLE_____MARKER_BANER"),
     getOption(Task_list, "app-task_list", "APP_EXAMPLE_____MARKER_TASK_LIST"),
     getOption(Task, "app-task", "APP_EXAMPLE_____MARKER_TASK"),
+    getOption(Menu_list, "app-menu_list", "APP_EXAMPLE_____MARKER_MENU_LIST"),
 ];
