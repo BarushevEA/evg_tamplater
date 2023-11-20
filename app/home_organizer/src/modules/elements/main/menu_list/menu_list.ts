@@ -1,9 +1,12 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/service";
+import {E_MENU_OWNER} from "../../../env/enums";
 
 export class Menu_list implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
+    owner: E_MENU_OWNER;
+    ownerName: string;
 
     isMenuShow: boolean = false;
     isDisplayNone: boolean = true;
@@ -28,7 +31,11 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
         this.root.collect(
             menuService$.subscribe(menu => {
                 clearTimeout(showTimer);
+
+                this.owner = menu.owner;
+                this.ownerName = E_MENU_OWNER[this.owner];
                 this.isMenuShow = menu.isShow;
+
                 if (this.isMenuShow) {
                     this.isDisplayNone = false;
                 } else {
@@ -37,6 +44,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
                         this.root.detectChanges();
                     }, 1000);
                 }
+
                 this.root.detectChanges();
             }),
         );
