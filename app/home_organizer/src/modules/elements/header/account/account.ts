@@ -1,6 +1,6 @@
-
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
-import {menuService$} from "../../../services/service";
+import {openMenu} from "../../../env/utils";
+import {E_MENU_OWNER} from "../../../env/enums";
 
 export class Account implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -21,9 +21,6 @@ export class Account implements OnInit, OnCreate, OnDestroy {
     }
 
     onClick(): void {
-        const event = menuService$.getValue();
-
-        event.isShow = !event.isShow;
-        menuService$.next(event);
+        openMenu(E_MENU_OWNER.ACCOUNT);
     }
 }
