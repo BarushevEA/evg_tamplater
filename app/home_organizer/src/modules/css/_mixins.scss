@@ -95,3 +95,9 @@
     opacity: 0.5;
   }
 }
+
+@mixin add_display_none() {
+  .display_none {
+    display: none;
+  }
+}

@@ -6,11 +6,56 @@
     top: 0;
     left: 0;
 
-    @include setWidthHeight($main-menu_list-width, $main-menu_list-height);
+    height: $main-menu_list-height;
 
     @include flexColumnNowrap();
     @include flexStart();
 
     background: #69b2e4;
+  }
+
+  .menu_list {
+    &-show {
+      overflow: hidden;
+      animation: menu_list_animation_show $main-menu_list-animation-delay forwards;
+    }
+
+    &-hidden {
+      overflow: hidden;
+      animation: menu_list_animation_hidden $main-menu_list-animation-delay forwards;
+    }
+
+    &-block {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      @include setWidthHeight($main-menu_list-block-width, $main-menu_list-block-height);
+      @include setMinWidthHeight($main-menu_list-block-min-width, $main-menu_list-block-height);
+    }
+  }
+
+  @include add_display_none();
+}
+
+@keyframes menu_list_animation_show {
+  0% {
+    display: none;
+    width: 0;
+  }
+  100% {
+    display: flex;
+    width: $main-menu_list-width;
+  }
+}
+
+@keyframes menu_list_animation_hidden {
+  0% {
+    display: flex;
+    width: $main-menu_list-width;
+  }
+  100% {
+    width: 0;
+    display: none;
   }
 }
