@@ -6,13 +6,13 @@
     @include setMinWidthHeight($header-menu-width, $header-menu-height);
 
     &_icon{
-      background: url($header-menu-icon) no-repeat;
-      background-size: cover;
+      background: url($header-menu-icon) no-repeat center;
+      background-size: 50%;
     }
 
     &-arrow_back {
       background: url($header-menu-arrow) no-repeat center;
-      background-size: 60%;
+      background-size: 30%;
     }
   }
 }

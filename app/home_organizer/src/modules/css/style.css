@@ -91,12 +91,12 @@ body {
   animation: button-animation 0.5s;
 }
 .app .header-menu_icon {
-  background: url("assets/images/menu.png") no-repeat;
-  background-size: cover;
+  background: url("assets/images/menu.png") no-repeat center;
+  background-size: 50%;
 }
 .app .header-menu-arrow_back {
   background: url("assets/images/arrow_back.png") no-repeat center;
-  background-size: 60%;
+  background-size: 30%;
 }
 .app .header-choice {
   width: 100%;
