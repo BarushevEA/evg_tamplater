@@ -96,7 +96,7 @@ body {
 }
 .app .header-menu-arrow_back {
   background: url("assets/images/arrow_back.png") no-repeat center;
-  background-size: 80%;
+  background-size: 60%;
 }
 .app .header-choice {
   width: 100%;
