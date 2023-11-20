@@ -92,12 +92,24 @@
   overflow: hidden;
 
   &:hover {
-    opacity: 0.5;
+    animation: button-animation 0.5s;
   }
 }
 
 @mixin add_display_none() {
   .display_none {
     display: none;
+  }
+}
+
+@keyframes button-animation {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.02);
+  }
+  100%{
+    transform: scale(1);
   }
 }

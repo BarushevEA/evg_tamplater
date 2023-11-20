@@ -5,6 +5,8 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
 
+    isArrowBackShow: boolean;
+
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
@@ -14,6 +16,7 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     }
 
     onInit(): void {
+        this.isArrowBackShow = true;
     }
 
     onDestroy(): void {
@@ -22,6 +25,10 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     onClick(): void {
         const event = menuService$.getValue();
         event.isShow = !event.isShow;
+
+        this.isArrowBackShow = event.isShow;
+        this.root.detectChanges();
+
         menuService$.next(event);
     }
 }
