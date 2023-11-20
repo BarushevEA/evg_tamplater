@@ -2,17 +2,7 @@
   font-family: Tahoma;
   src: url("assets/fonts/tahoma.ttf") format("truetype");
 }
-@keyframes button-animation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+@keyframes button-animation {}
 @keyframes menu_list_animation_show {
   0% {
     display: none;
@@ -88,7 +78,7 @@ body {
   min-height: 85px;
 }
 .app .header-menu:hover {
-  animation: button-animation 0.5s;
+  animation: button-animation 1s;
 }
 .app .header-menu_icon {
   background: url("assets/images/menu.png") no-repeat center;
@@ -112,7 +102,7 @@ body {
   margin-left: 10px;
 }
 .app .header-choice:hover {
-  animation: button-animation 0.5s;
+  animation: button-animation 1s;
 }
 .app .header-account {
   width: 85px;
@@ -128,7 +118,7 @@ body {
   min-height: 85px;
 }
 .app .header-account:hover {
-  animation: button-animation 0.5s;
+  animation: button-animation 1s;
 }
 .app .header-account_icon {
   background: url("assets/images/account.png") no-repeat;
