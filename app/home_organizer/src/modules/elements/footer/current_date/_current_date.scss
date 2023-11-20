@@ -2,8 +2,19 @@
 
 @mixin current_date() {
   &-current_date {
-    @include centered_rectangle($footer-date-width, $footer-date-height);
+    @include setWidthHeight($footer-date-width, $footer-date-height);
+    @include flexRowNowrap();
+    @include flexCenter();
 
     overflow: hidden;
+
+    span {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+  }
+
+  .hidden {
+    visibility: hidden;
   }
 }

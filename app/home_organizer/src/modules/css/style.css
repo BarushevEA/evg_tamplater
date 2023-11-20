@@ -232,10 +232,17 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+.app .footer-current_date span {
+  margin-left: 10px;
+  font-weight: bold;
+}
+.app .footer .hidden {
+  visibility: hidden;
 }
 .app-wrapper {
   width: 100%;
