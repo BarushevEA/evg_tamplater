@@ -5,6 +5,9 @@
     @include button($header-menu-width, $header-menu-height);
     @include setMinWidthHeight($header-menu-width, $header-menu-height);
 
+    margin-right: $header-menu-margin;
+    margin-left: $header-menu-margin;
+
     &_icon{
       background: url($header-menu-icon) no-repeat center;
       background-size: 50%;

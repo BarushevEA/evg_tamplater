@@ -76,6 +76,8 @@ body {
   overflow: hidden;
   min-width: 85px;
   min-height: 85px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 .app .header-menu:hover {
   animation: button-animation 1s;
@@ -98,8 +100,8 @@ body {
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 .app .header-choice:hover {
   animation: button-animation 1s;
@@ -116,6 +118,8 @@ body {
   overflow: hidden;
   min-width: 85px;
   min-height: 85px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 .app .header-account:hover {
   animation: button-animation 1s;

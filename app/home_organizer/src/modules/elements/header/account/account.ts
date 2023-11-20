@@ -1,5 +1,6 @@
 
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
+import {menuService$} from "../../../services/service";
 
 export class Account implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -17,5 +18,12 @@ export class Account implements OnInit, OnCreate, OnDestroy {
     }
 
     onDestroy(): void {
+    }
+
+    onClick(): void {
+        const event = menuService$.getValue();
+
+        event.isShow = !event.isShow;
+        menuService$.next(event);
     }
 }

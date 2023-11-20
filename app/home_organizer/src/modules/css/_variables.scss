@@ -27,16 +27,18 @@ $header-menu-width: $header-height - $header-padding - $header-delta;
 $header-menu-height: $header-menu-width;
 $header-menu-icon: "assets/images/menu.png";
 $header-menu-arrow: "assets/images/arrow_back.png";
+$header-menu-margin: $header-delta;
 
 // header choice
 $header-choice-width: 100%;
 $header-choice-height: $header-menu-width;
-$header-choice-margin: $header-delta*2;
+$header-choice-margin: $header-delta;
 
 // header account
 $header-account-width: $header-menu-width;
 $header-account-height: $header-menu-width;
 $header-account-icon: "assets/images/account.png";
+$header-account-margin: $header-delta;
 
 // app main
 $main-width: 100%;

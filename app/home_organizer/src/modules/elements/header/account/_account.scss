@@ -5,6 +5,9 @@
     @include button($header-account-width, $header-account-height);
     @include setMinWidthHeight($header-account-width, $header-account-height);
 
+    margin-right: $header-account-margin;
+    margin-left: $header-account-margin;
+
     &_icon{
       background: url($header-account-icon) no-repeat;
       background-size: cover;

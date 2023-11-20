@@ -1,5 +1,6 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/service";
+import {MenuEvent} from "../../../env/types";
 
 export class Menu implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -10,13 +11,27 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
+        this.isArrowBackShow = false;
     }
 
     onCreate(): void {
+        this.root
+            .collect(
+                menuService$
+                    .pipe()
+                    .emitByPositive(
+                        (event: MenuEvent) => this.isArrowBackShow !== event.isShow
+                    )
+                    .subscribe(
+                        event => {
+                            this.isArrowBackShow = event.isShow;
+                            this.root.detectChanges();
+                        }
+                    )
+            );
     }
 
     onInit(): void {
-        this.isArrowBackShow = true;
     }
 
     onDestroy(): void {
@@ -25,10 +40,6 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     onClick(): void {
         const event = menuService$.getValue();
         event.isShow = !event.isShow;
-
-        this.isArrowBackShow = event.isShow;
-        this.root.detectChanges();
-
         menuService$.next(event);
     }
 }
