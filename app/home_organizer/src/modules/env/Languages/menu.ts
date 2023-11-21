@@ -1,7 +1,7 @@
-import {AppTxt} from "../types";
+import {MenuAccountTxt, MenuChoiceTxt, MenuSettingsTxt, MenuTitleTxt} from "../types";
 import {LOCATION} from "../../../../../../libs/elements/AppLocalization/location";
 
-export const menuSettingsTxt: AppTxt = {
+export const menuSettingsTxt: MenuSettingsTxt = {
     language: {
         [LOCATION.EN]: "Language",
         [LOCATION.RU]: "Язык",
@@ -19,13 +19,13 @@ export const menuSettingsTxt: AppTxt = {
     },
 }
 
-export const menuChoiceTxt: AppTxt ={
+export const menuChoiceTxt: MenuChoiceTxt = {
     tasks: {
         [LOCATION.EN]: "Current tasks",
         [LOCATION.RU]: "Текущие задачи",
         [LOCATION.UA]: "Поточні завдання",
     },
-    favorite:{
+    favorite: {
         [LOCATION.EN]: "Favorite",
         [LOCATION.RU]: "Избранное",
         [LOCATION.UA]: "Обране",
@@ -35,15 +35,15 @@ export const menuChoiceTxt: AppTxt ={
         [LOCATION.RU]: "Продукты питания",
         [LOCATION.UA]: "Продукти харчування",
     },
-    goods:{
+    goods: {
         [LOCATION.EN]: "Goods",
         [LOCATION.RU]: "Непродовольственные товары",
         [LOCATION.UA]: "Непродовольчі товари",
     },
 }
 
-export const menuAccountTxt: AppTxt = {
-    signIn:{
+export const menuAccountTxt: MenuAccountTxt = {
+    signIn: {
         [LOCATION.EN]: "Sign in",
         [LOCATION.RU]: "Войти",
         [LOCATION.UA]: "Увійти",
@@ -58,7 +58,7 @@ export const menuAccountTxt: AppTxt = {
         [LOCATION.RU]: "Редактировать",
         [LOCATION.UA]: "Редагувати",
     },
-    signOut:{
+    signOut: {
         [LOCATION.EN]: "Sign out",
         [LOCATION.RU]: "Выйти",
         [LOCATION.UA]: "Вийти",
@@ -70,7 +70,7 @@ export const menuAccountTxt: AppTxt = {
     },
 }
 
-export const menuTitleTxt: AppTxt = {
+export const menuTitleTxt: MenuTitleTxt = {
     choice: {
         [LOCATION.EN]: "User tasks",
         [LOCATION.RU]: "Пользовательские задачи",

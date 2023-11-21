@@ -1,14 +1,36 @@
 export enum E_MENU_OWNER {
-    NULL,
-    SETTINGS,
-    ACCOUNT,
-    CHOICE
+    NULL = "NULL",
+    SETTINGS = "SETTINGS",
+    ACCOUNT = "ACCOUNT",
+    CHOICE = "CHOICE"
 }
- export enum E_THEME {
-     LIGHT,
-     DARK,
- }
 
- export enum E_DATE{
-     DEFAULT,
- }
+export enum E_THEME {
+    LIGHT = "LIGHT",
+    DARK = "DARK",
+}
+
+export enum E_DATE {
+    DEFAULT = "DEFAULT",
+}
+
+export enum E_SETTINGS {
+    LANGUAGE = "LANGUAGE",
+    THEME = "THEME",
+    TIME_OPTION = "TIME_OPTION",
+}
+
+export enum E_CHOICE {
+    TASKS = "TASKS",
+    FAVORITE = "FAVORITE",
+    FOOD = "FOOD",
+    GOODS = "GOODS",
+}
+
+export enum E_ACCOUNT {
+    SIGN_IN = "SIGN_IN",
+    REGISTER = "REGISTER",
+    EDIT = "EDIT",
+    SIGN_OUT = "SIGN_OUT",
+    DELETE = "DELETE",
+}

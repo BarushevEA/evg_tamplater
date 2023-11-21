@@ -1,6 +1,8 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/observables";
 import {E_MENU_OWNER} from "../../../env/enums";
+import {menuTitleLocale} from "../../../env/variables";
+import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 
 export class Menu_list implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -18,6 +20,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
 
     onCreate(): void {
         this.showHandler();
+        this.changeLanguage();
     }
 
     onInit(): void {
@@ -33,7 +36,10 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
                 clearTimeout(showTimer);
 
                 this.owner = menu.owner;
-                this.ownerName = E_MENU_OWNER[this.owner];
+                if (this.owner !== E_MENU_OWNER.NULL) {
+                    this.ownerName = APP_LOCALE.getCurrentText(menuTitleLocale[this.owner]);
+                }
+
                 this.isMenuShow = menu.isShow;
 
                 if (this.isMenuShow) {
@@ -47,6 +53,18 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
 
                 this.root.detectChanges();
             }),
+        );
+    }
+
+    private changeLanguage() {
+        this.root.collect(
+            APP_LOCALE.onChange((locale) => {
+                if (this.owner !== E_MENU_OWNER.NULL) {
+                    this.ownerName = APP_LOCALE.getText(menuTitleLocale[this.owner], locale);
+                }
+
+                this.root.detectChanges();
+            })
         );
     }
 }
