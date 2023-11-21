@@ -1,5 +1,5 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
-import {menuService$} from "../../../services/service";
+import {menuService$} from "../../../services/observables";
 import {E_MENU_OWNER} from "../../../env/enums";
 
 export class Menu_list implements OnInit, OnCreate, OnDestroy {

@@ -4,12 +4,11 @@ import {ICallback} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
 import {LOCATION} from "./location";
 
-let location$: Observable<LOCATION>;
+export const location$: Observable<LOCATION>=new Observable<LOCATION>(LOCATION.EN);
 
 class AppLocale extends Collector {
-    constructor(locale: LOCATION) {
+    constructor() {
         super();
-        location$ = new Observable<LOCATION>(locale)
     }
 
     get current(): LOCATION {
@@ -20,8 +19,12 @@ class AppLocale extends Collector {
         return textBlock[location];
     }
 
+    getCurrentText(textBlock: ILocalizedText): string{
+        return textBlock[location$.getValue()];
+    }
+
     onChange(callback: ICallback<LOCATION>) {
-        this.collect(location$.subscribe(callback));
+        return location$.subscribe(callback);
     }
 
     set(locale: LOCATION) {
@@ -34,4 +37,4 @@ class AppLocale extends Collector {
     }
 }
 
-export const APP_LOCALE = new AppLocale(LOCATION.EN);
+export const APP_LOCALE = new AppLocale();

@@ -1,6 +1,6 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
-import {openMenu} from "../../../env/utils";
 import {E_MENU_OWNER} from "../../../env/enums";
+import {openMenu} from "../../../services/menu/utils";
 
 export class Choice implements OnInit, OnCreate, OnDestroy {
     readonly root;
