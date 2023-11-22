@@ -188,6 +188,34 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
 }
+.app .main .menu_list-header {
+  width: 100%;
+  height: 40px;
+  padding: 4px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.app .main .menu_list-button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+.app .main .menu_list-button:hover {
+  animation: button-animation 1s;
+}
+.app .main .menu_list-button-icon {
+  background: url("assets/images/arrow_back.png") no-repeat center;
+  background-size: 80%;
+}
 .app .main .display_none {
   display: none;
 }

@@ -1,7 +1,11 @@
 <div class="main-menu_list"
      data-cls="display_none:isDisplayNone isMenuShow?menu_list-show:menu_list-hidden">
     <div class="menu_list-block">
-        <txt-val>ownerName</txt-val>
+        <div class="menu_list-header"
+             data-click="btnClick">
+            <txt-val>ownerName</txt-val>
+            <div class="menu_list-button menu_list-button-icon"></div>
+        </div>
         <app-menu_item data-for="items"></app-menu_item>
     </div>
 </div>

@@ -5,6 +5,7 @@ import {menuAccountLocale, menuChoiceLocale, menuSettingsLocale, menuTitleLocale
 import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {AppTxt, MenuEvent, MenuItem} from "../../../env/types";
 import {LOCATION} from "../../../../../../../libs/elements/AppLocalization/location";
+import {closeMenu} from "../../../services/menu/utils";
 
 export class Menu_list implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -33,6 +34,10 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
     }
 
     onDestroy(): void {
+    }
+
+    btnClick(): void {
+        closeMenu();
     }
 
     private showHandler() {

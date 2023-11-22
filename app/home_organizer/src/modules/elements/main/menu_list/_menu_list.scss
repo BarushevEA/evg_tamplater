@@ -36,6 +36,27 @@
       @include flexColumnNowrap();
       @include flexStart();
     }
+
+    &-header {
+      @include setWidthHeight($main-menu_list-header-width, $main-menu_list-header-height);
+
+      padding: $main-menu_list-header-padding;
+
+      @include flexRowNowrap();
+      align-items: center;
+      justify-content: space-between;
+
+      overflow: hidden;
+    }
+
+    &-button {
+      @include button($main-menu_list-button-width, $main-menu_list-button-height);
+
+      &-icon{
+        background: url($main-menu_list-button-icon) no-repeat center;
+        background-size: 80%;
+      }
+    }
   }
 
   @include add_display_none();
