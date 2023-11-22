@@ -21,20 +21,7 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     onCreate(): void {
         this.root
             .collect(
-                menuService$
-                    .pipe()
-                    .emitByPositive(
-                        (event: MenuEvent) => this.isArrowBackShow !== event.isShow
-                    )
-                    .subscribe(
-                        event => {
-                            this.isArrowBackShow = event.isShow;
-
-                            if(!event.isShow) this.isMenuOpened = false;
-
-                            this.root.detectChanges();
-                        }
-                    )
+                this.menuEventsHandle()
             );
     }
 
@@ -54,5 +41,22 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
 
         this.isMenuOpened = false;
         closeMenu();
+    }
+
+    private menuEventsHandle() {
+        return menuService$
+            .pipe()
+            .emitByPositive(
+                (event: MenuEvent) => this.isArrowBackShow !== event.isShow
+            )
+            .subscribe(
+                event => {
+                    this.isArrowBackShow = event.isShow;
+
+                    if (!event.isShow) this.isMenuOpened = false;
+
+                    this.root.detectChanges();
+                }
+            );
     }
 }
