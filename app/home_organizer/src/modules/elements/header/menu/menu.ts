@@ -29,6 +29,9 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
                     .subscribe(
                         event => {
                             this.isArrowBackShow = event.isShow;
+
+                            if(!event.isShow) this.isMenuOpened = false;
+
                             this.root.detectChanges();
                         }
                     )
