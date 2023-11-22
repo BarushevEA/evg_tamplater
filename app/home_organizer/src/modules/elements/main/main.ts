@@ -18,13 +18,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
             () => this.taskListChanel,
             data => data
         );
-
-        // this.root.collect(
-        //     menuService$.subscribe(menu => {
-        //         this.isMenuShow = menu.isShow;
-        //         this.root.detectChanges();
-        //     }),
-        // );
     }
 
     onInit(): void {

@@ -16,4 +16,5 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_TASK_LIST": "main/task_list/task_list.html",
     "APP_EXAMPLE_____MARKER_TASK": "main/task/task.html",
     "APP_EXAMPLE_____MARKER_MENU_LIST": "main/menu_list/menu_list.html",
+    "APP_EXAMPLE_____MARKER_MENU_ITEM": "main/menu_list/menu_item/menu_item.html",
 };

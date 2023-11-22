@@ -32,6 +32,9 @@
 
       @include setWidthHeight($main-menu_list-block-width, $main-menu_list-block-height);
       @include setMinWidthHeight($main-menu_list-block-min-width, $main-menu_list-block-height);
+
+      @include flexColumnNowrap();
+      @include flexStart();
     }
   }
 

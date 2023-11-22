@@ -1,4 +1,4 @@
-import {MenuEvent} from "./types";
+import {AppTxt, MenuEvent} from "./types";
 import {E_ACCOUNT, E_CHOICE, E_MENU_OWNER, E_SETTINGS} from "./enums";
 import {menuAccountTxt, menuChoiceTxt, menuSettingsTxt, menuTitleTxt} from "./Languages/menu";
 
@@ -7,26 +7,26 @@ export const menuObject: MenuEvent = {
     owner: E_MENU_OWNER.NULL,
 };
 
-export const menuTitleLocale = {
+export const menuTitleLocale: AppTxt = {
     [E_MENU_OWNER.SETTINGS]: menuTitleTxt.settings,
     [E_MENU_OWNER.ACCOUNT]: menuTitleTxt.account,
     [E_MENU_OWNER.CHOICE]: menuTitleTxt.choice,
 };
 
-export const menuSettingsLocale = {
+export const menuSettingsLocale: AppTxt = {
     [E_SETTINGS.LANGUAGE]: menuSettingsTxt.language,
     [E_SETTINGS.THEME]: menuSettingsTxt.theme,
     [E_SETTINGS.TIME_OPTION]: menuSettingsTxt.timeOption,
 };
 
-export const menuChoiceLocale = {
+export const menuChoiceLocale: AppTxt = {
     [E_CHOICE.FAVORITE]: menuChoiceTxt.favorite,
     [E_CHOICE.FOOD]: menuChoiceTxt.food,
     [E_CHOICE.GOODS]: menuChoiceTxt.goods,
     [E_CHOICE.TASKS]: menuChoiceTxt.tasks,
 };
 
-export const menuAccountLocale = {
+export const menuAccountLocale: AppTxt = {
     [E_ACCOUNT.SIGN_IN]: menuAccountTxt.signIn,
     [E_ACCOUNT.SIGN_OUT]: menuAccountTxt.signOut,
     [E_ACCOUNT.REGISTER]: menuAccountTxt.register,

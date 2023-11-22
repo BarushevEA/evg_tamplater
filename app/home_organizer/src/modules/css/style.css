@@ -183,6 +183,10 @@ body {
   height: 100%;
   min-width: 360px;
   min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .app .main .display_none {
   display: none;
