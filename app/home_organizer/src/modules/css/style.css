@@ -219,6 +219,21 @@ body {
 .app .main .display_none {
   display: none;
 }
+.app .main-menu_item {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.app .main-menu_item:hover {
+  animation: button-animation 1s;
+}
 .app .main-tasklist {
   width: 100%;
   height: 100%;

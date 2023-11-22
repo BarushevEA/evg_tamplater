@@ -1,6 +1,7 @@
 @import "../../css/mixins";
 @import "baner/baner";
 @import "menu_list/menu_list";
+@import "menu_list/menu_item/menu_item";
 @import "task_list/task_list";
 @import "task/task";
 
@@ -19,6 +20,7 @@
 
     @include baner();
     @include menu_list();
+    @include menu_item();
     @include task_list();
     @include task();
   }
