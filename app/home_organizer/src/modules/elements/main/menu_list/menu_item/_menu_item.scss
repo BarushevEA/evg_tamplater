@@ -5,5 +5,18 @@
     @include button($main-menu_item-width, $main-menu_item-height);
 
     margin-top: $main-menu_item-margin-top;
+
+    * {
+      overflow: visible;
+    }
+
+    overflow: visible;
+  }
+
+  &-lang_view {
+    position: absolute;
+    right: $main-lang_view-right;
+
+    @include centered_rectangle($main-lang_view-width, $main-lang_view-height);
   }
 }

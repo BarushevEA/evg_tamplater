@@ -1,6 +1,6 @@
 export enum LOCATION {
-    EN,
-    UA,
-    HE,
-    RU
+    EN = "EN",
+    UA = "UA",
+    HE = "HE",
+    RU = "RU"
 }

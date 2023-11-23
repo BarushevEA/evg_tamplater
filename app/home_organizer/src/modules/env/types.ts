@@ -7,7 +7,7 @@ export type MenuEvent = {
 };
 export type MenuItem = {
     owner: E_MENU_OWNER;
-    locale: string;
+    type: string;
     text: string;
 }
 export type AppTxt = {

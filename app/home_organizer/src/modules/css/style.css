@@ -230,9 +230,23 @@ body {
   cursor: pointer;
   overflow: hidden;
   margin-top: 10px;
+  overflow: visible;
 }
 .app .main-menu_item:hover {
   animation: button-animation 1s;
+}
+.app .main-menu_item * {
+  overflow: visible;
+}
+.app .main-lang_view {
+  position: absolute;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
 }
 .app .main-tasklist {
   width: 100%;

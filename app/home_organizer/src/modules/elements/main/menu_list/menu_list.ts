@@ -109,7 +109,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
         for (const key in appTxt) {
             const item: MenuItem = {
                 owner: this.owner,
-                locale: key,
+                type: key,
                 text: APP_LOCALE.getCurrentText(appTxt[key]),
             };
             this.items.push(item);
@@ -120,13 +120,13 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
         for (const item of this.items) {
             switch (item.owner) {
                 case E_MENU_OWNER.SETTINGS:
-                    item.text = APP_LOCALE.getText(menuSettingsLocale[item.locale], locale);
+                    item.text = APP_LOCALE.getText(menuSettingsLocale[item.type], locale);
                     break;
                 case E_MENU_OWNER.ACCOUNT:
-                    item.text = APP_LOCALE.getText(menuAccountLocale[item.locale], locale);
+                    item.text = APP_LOCALE.getText(menuAccountLocale[item.type], locale);
                     break;
                 case E_MENU_OWNER.CHOICE:
-                    item.text = APP_LOCALE.getText(menuChoiceLocale[item.locale], locale);
+                    item.text = APP_LOCALE.getText(menuChoiceLocale[item.type], locale);
                     break;
             }
         }
