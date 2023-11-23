@@ -1,6 +1,7 @@
 import {AppTxt, MenuEvent} from "./types";
 import {E_ACCOUNT, E_CHOICE, E_MENU_OWNER, E_SETTINGS} from "./enums";
 import {menuAccountTxt, menuChoiceTxt, menuSettingsTxt, menuTitleTxt} from "./Languages/menu";
+import {LOCATION} from "../../../../../libs/elements/AppLocalization/location";
 
 export const menuObject: MenuEvent = {
     isShow: false,
@@ -33,3 +34,5 @@ export const menuAccountLocale: AppTxt = {
     [E_ACCOUNT.EDIT]: menuAccountTxt.edit,
     [E_ACCOUNT.DELETE]: menuAccountTxt.delete,
 };
+
+export const LANG_LIST: string[] = [LOCATION.EN, LOCATION.UA, LOCATION.RU];

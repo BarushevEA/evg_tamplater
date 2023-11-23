@@ -1,0 +1,11 @@
+@import "../../../../../css/mixins";
+
+@mixin settings_lang() {
+  .lang_item {
+    @include button($lang_item-width, $lang_item-height);
+
+    margin: $lang_item-margin;
+
+    background: $lang_item-bgColor;
+  }
+}

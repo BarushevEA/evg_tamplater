@@ -1,9 +1,12 @@
 <div class="main-menu_item">
     <txt-val>text</txt-val>
     <div class="main-lang_view"
+         data-click="langClick"
          data-if="isSettingLang">
         <txt-val>currentLang</txt-val>
-        <div>
+        <div class="main-lang_view_box"
+             data-if="isShowLangViewBox">
+            <app-settings_lang data-for="langList"></app-settings_lang>
         </div>
     </div>
 </div>

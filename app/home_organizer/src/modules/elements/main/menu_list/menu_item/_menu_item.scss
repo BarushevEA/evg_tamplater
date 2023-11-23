@@ -1,4 +1,5 @@
 @import "../../../../css/mixins";
+@import "settings_lang/settings_lang";
 
 @mixin menu_item() {
   &-menu_item {
@@ -18,5 +19,20 @@
     right: $main-lang_view-right;
 
     @include centered_rectangle($main-lang_view-width, $main-lang_view-height);
+
+    &_box {
+      position: absolute;
+      top: $lang_box-top;
+      cursor: default;
+
+      @include centered_rectangle($lang_box-width, $lang_box-height);
+      @include setMinWidthHeight($lang_box-width, $lang_box-height);
+
+      background: $lang_box-bgColor;
+
+      z-index: $lang_box-zIndex;
+    }
   }
+
+  @include settings_lang();
 }

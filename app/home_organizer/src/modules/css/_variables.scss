@@ -71,6 +71,15 @@ $main-menu_item-margin-top: 10px;
 $main-lang_view-width: 50px;
 $main-lang_view-height: 50px;
 $main-lang_view-right: 10px;
+$lang_box-width:$main-lang_view-width;
+$lang_box-height:fit-content;
+$lang_box-zIndex:10;
+$lang_box-top:0;
+$lang_box-bgColor: #c1e3ef;
+$lang_item-width: $main-lang_view-width - 10px;
+$lang_item-height: $main-lang_view-height;
+$lang_item-margin: 5px;
+$lang_item-bgColor: #69b2e4;
 
 // main task_list
 $main-task_list-width: 100%;

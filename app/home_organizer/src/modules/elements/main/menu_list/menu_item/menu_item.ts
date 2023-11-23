@@ -2,6 +2,7 @@ import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../..
 import {location$} from "../../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {E_MENU_OWNER, E_SETTINGS} from "../../../../env/enums";
 import {MenuItem} from "../../../../env/types";
+import {LANG_LIST} from "../../../../env/variables";
 
 export class Menu_item implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -10,6 +11,8 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
     currentLang: string;
     owner: E_MENU_OWNER;
     setting: string;
+    langList: string[];
+    isShowLangViewBox: boolean;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -17,6 +20,8 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
         this.currentLang = location$.getValue();
         this.owner = E_MENU_OWNER.NULL;
         this.setting = "";
+        this.langList = LANG_LIST;
+        this.isShowLangViewBox = false;
     }
 
     onCreate(): void {
@@ -41,6 +46,11 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
     onDestroy(): void {
     }
 
+    langClick(){
+        this.isShowLangViewBox = true;
+        this.root.detectChanges();
+    }
+
     isSettingLang(): boolean {
         return (this.owner === E_MENU_OWNER.SETTINGS) && (this.setting === E_SETTINGS.LANGUAGE);
     }
@@ -48,6 +58,7 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
     private handleLocationChange() {
         return location$
             .subscribe(location => {
+                this.isShowLangViewBox = false;
                 this.currentLang = location;
 
                 this.root.detectChanges();
