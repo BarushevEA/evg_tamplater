@@ -46,13 +46,43 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
     onDestroy(): void {
     }
 
-    langClick(){
-        this.isShowLangViewBox = true;
-        this.root.detectChanges();
+    onClick(event: MouseEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        console.log("============> Menu_item click:", this.owner, this.setting);
+
+        switch (this.owner) {
+            case E_MENU_OWNER.SETTINGS:
+                this.handleSettingsClick();
+                break;
+            case E_MENU_OWNER.CHOICE:
+                break;
+            case E_MENU_OWNER.ACCOUNT:
+                break;
+        }
     }
 
     isSettingLang(): boolean {
         return (this.owner === E_MENU_OWNER.SETTINGS) && (this.setting === E_SETTINGS.LANGUAGE);
+    }
+
+    private handleSettingsClick() {
+        switch (this.setting) {
+            case E_SETTINGS.LANGUAGE:
+                this.settingLangClick();
+                break;
+            case E_SETTINGS.THEME:
+                break;
+            case E_SETTINGS.TIME_OPTION:
+                break;
+        }
+    }
+
+    private settingLangClick() {
+
+        this.isShowLangViewBox = !this.isShowLangViewBox;
+        this.root.detectChanges();
     }
 
     private handleLocationChange() {
