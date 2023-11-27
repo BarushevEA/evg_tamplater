@@ -3,6 +3,7 @@ import {location$} from "../../../../../../../../libs/elements/AppLocalization/L
 import {E_MENU_OWNER, E_SETTINGS} from "../../../../env/enums";
 import {MenuItem} from "../../../../env/types";
 import {LANG_LIST} from "../../../../env/variables";
+import {clickMenuItem} from "../../../../services/menu/utils";
 
 export class Menu_item implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -50,7 +51,7 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
         event.preventDefault();
         event.stopPropagation();
 
-        console.log("============> Menu_item click:", this.owner, this.setting);
+        clickMenuItem(this.owner, this.setting);
 
         switch (this.owner) {
             case E_MENU_OWNER.SETTINGS:
@@ -80,7 +81,6 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
     }
 
     private settingLangClick() {
-
         this.isShowLangViewBox = !this.isShowLangViewBox;
         this.root.detectChanges();
     }

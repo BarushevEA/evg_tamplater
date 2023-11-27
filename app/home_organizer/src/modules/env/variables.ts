@@ -1,11 +1,13 @@
 import {AppTxt, MenuEvent} from "./types";
-import {E_ACCOUNT, E_CHOICE, E_MENU_OWNER, E_SETTINGS} from "./enums";
+import {E_ACCOUNT, E_CHOICE, E_MENU_ACTION, E_MENU_OWNER, E_SETTINGS} from "./enums";
 import {menuAccountTxt, menuChoiceTxt, menuSettingsTxt, menuTitleTxt} from "./Languages/menu";
 import {LOCATION} from "../../../../../libs/elements/AppLocalization/location";
 
 export const menuObject: MenuEvent = {
     isShow: false,
     owner: E_MENU_OWNER.NULL,
+    menuAction: E_MENU_ACTION.NULL,
+    item: "",
 };
 
 export const menuTitleLocale: AppTxt = {

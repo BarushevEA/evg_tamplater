@@ -1,6 +1,6 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/observables";
-import {E_MENU_OWNER} from "../../../env/enums";
+import {E_MENU_ACTION, E_MENU_OWNER} from "../../../env/enums";
 import {menuAccountLocale, menuChoiceLocale, menuSettingsLocale, menuTitleLocale} from "../../../env/variables";
 import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {AppTxt, MenuEvent, MenuItem} from "../../../env/types";
@@ -42,13 +42,16 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
 
     private showHandler() {
         this.root.collect(
-            menuService$.subscribe(menu => {
-                this.initOwnerData(menu);
-                this.initItems();
-                this.handleAnimation();
+            menuService$
+                .pipe()
+                .emitByPositive((event: MenuEvent) => event.menuAction === E_MENU_ACTION.SHOW)
+                .subscribe(menu => {
+                    this.initOwnerData(menu);
+                    this.initItems();
+                    this.handleAnimation();
 
-                this.root.detectChanges();
-            }),
+                    this.root.detectChanges();
+                }),
         );
     }
 

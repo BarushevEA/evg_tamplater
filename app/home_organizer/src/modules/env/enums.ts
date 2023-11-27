@@ -5,6 +5,12 @@ export enum E_MENU_OWNER {
     CHOICE = "CHOICE"
 }
 
+export enum E_MENU_ACTION {
+    NULL = "NULL",
+    SHOW = "SHOW",
+    ITEM_CLICK = "ITEM_CLICK",
+}
+
 export enum E_THEME {
     LIGHT = "LIGHT",
     DARK = "DARK",

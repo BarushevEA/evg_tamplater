@@ -1,9 +1,11 @@
-import {E_MENU_OWNER} from "./enums";
+import {E_MENU_ACTION, E_MENU_OWNER} from "./enums";
 import {ILocalizedText} from "../../../../../libs/elements/AppLocalization/types";
 
 export type MenuEvent = {
     isShow: boolean;
+    menuAction: E_MENU_ACTION;
     owner: E_MENU_OWNER;
+    item: string;
 };
 export type MenuItem = {
     owner: E_MENU_OWNER;

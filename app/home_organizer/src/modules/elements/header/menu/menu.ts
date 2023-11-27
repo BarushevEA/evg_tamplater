@@ -1,7 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/observables";
 import {MenuEvent} from "../../../env/types";
-import {E_MENU_OWNER} from "../../../env/enums";
+import {E_MENU_ACTION, E_MENU_OWNER} from "../../../env/enums";
 import {closeMenu, openMenu} from "../../../services/menu/utils";
 
 export class Menu implements OnInit, OnCreate, OnDestroy {
@@ -47,8 +47,13 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
         return menuService$
             .pipe()
             .emitByPositive(
-                (event: MenuEvent) => this.isArrowBackShow !== event.isShow
-            )
+                (event: MenuEvent) => {
+                    if (event.menuAction !== E_MENU_ACTION.SHOW) {
+                        this.isMenuOpened = false;
+                        return false;
+                    }
+                    return this.isArrowBackShow !== event.isShow
+                })
             .subscribe(
                 event => {
                     this.isArrowBackShow = event.isShow;
