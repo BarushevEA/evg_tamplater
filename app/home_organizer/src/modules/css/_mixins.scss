@@ -81,6 +81,8 @@
 
   font-family: $global-font-family;
   font-size: $global-font-size;
+
+  letter-spacing: $global-letter-spacing;
 }
 
 @mixin button($width, $height) {
@@ -93,6 +95,18 @@
 
   &:hover {
     animation: button-animation 1s;
+  }
+
+  &-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include setWidthHeight(100%, 100%);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
   }
 }
 

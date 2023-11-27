@@ -45,12 +45,10 @@ body {
   min-height: 100vh;
   font-family: Tahoma, serif;
   font-size: 24px;
+  letter-spacing: 1px;
 }
 .app * {
   background: rgba(0, 250, 250, 0.2);
-}
-.app * {
-  border: 1px solid rgba(0, 250, 250, 0.5);
 }
 .app .header {
   width: 100%;
@@ -82,6 +80,16 @@ body {
 .app .header-menu:hover {
   animation: button-animation 1s;
 }
+.app .header-menu-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app .header-menu-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 .app .header-menu_icon {
   background: url("assets/images/menu.png") no-repeat center;
   background-size: 50%;
@@ -106,6 +114,16 @@ body {
 .app .header-choice:hover {
   animation: button-animation 1s;
 }
+.app .header-choice-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app .header-choice-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 .app .header-account {
   width: 85px;
   height: 85px;
@@ -123,6 +141,16 @@ body {
 }
 .app .header-account:hover {
   animation: button-animation 1s;
+}
+.app .header-account-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app .header-account-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 .app .header-account_icon {
   background: url("assets/images/account.png") no-repeat;
@@ -191,12 +219,13 @@ body {
 .app .main .menu_list-header {
   width: 100%;
   height: 40px;
-  padding: 4px;
+  padding: 4px 10px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .app .main .menu_list-button {
   width: 30px;
@@ -212,9 +241,29 @@ body {
 .app .main .menu_list-button:hover {
   animation: button-animation 1s;
 }
+.app .main .menu_list-button-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app .main .menu_list-button-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 .app .main .menu_list-button-icon {
   background: url("assets/images/arrow_back.png") no-repeat center;
   background-size: 80%;
+}
+.app .main .menu_list-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 .app .main .display_none {
   display: none;
@@ -229,11 +278,24 @@ body {
   position: relative;
   cursor: pointer;
   overflow: hidden;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 10px;
   margin-top: 10px;
   overflow: visible;
 }
 .app .main-menu_item:hover {
   animation: button-animation 1s;
+}
+.app .main-menu_item-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app .main-menu_item-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 .app .main-menu_item * {
   overflow: visible;
@@ -278,6 +340,16 @@ body {
 }
 .app .main .lang_item:hover {
   animation: button-animation 1s;
+}
+.app .main .lang_item-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.app .main .lang_item-hover:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 .app .main-tasklist {
   width: 100%;

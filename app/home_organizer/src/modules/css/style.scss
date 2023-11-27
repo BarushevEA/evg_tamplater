@@ -9,7 +9,7 @@
 
 .app {
   @include devHighlighting();
-  @include devBorder();
+  //@include devBorder();
 
   @include globalRules();
   @include header();

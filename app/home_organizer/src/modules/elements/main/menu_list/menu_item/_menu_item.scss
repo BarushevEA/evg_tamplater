@@ -4,6 +4,10 @@
 @mixin menu_item() {
   &-menu_item {
     @include button($main-menu_item-width, $main-menu_item-height);
+    align-items: flex-start;
+    justify-content: center;
+
+    padding-left: $main-menu_item-padding-left;
 
     margin-top: $main-menu_item-margin-top;
 

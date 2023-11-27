@@ -47,15 +47,26 @@
       justify-content: space-between;
 
       overflow: hidden;
+      border-bottom: 1px solid $list-header-divider_color;
     }
 
     &-button {
       @include button($main-menu_list-button-width, $main-menu_list-button-height);
 
-      &-icon{
+      &-icon {
         background: url($main-menu_list-button-icon) no-repeat center;
         background-size: 80%;
       }
+    }
+
+    &-container {
+      @include setWidthHeight(100%, 100%);
+
+      @include flexColumnNowrap();
+      @include flexStart();
+
+      padding-right: $main-menu_list-container-padding-right;
+      padding-left: $main-menu_list-container-padding-left;
     }
   }
 
