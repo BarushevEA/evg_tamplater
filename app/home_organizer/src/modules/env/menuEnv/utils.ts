@@ -1,6 +1,7 @@
-import {E_MENU_ACTION, E_MENU_OWNER, E_SETTINGS} from "../../env/enums";
-import {menuService$} from "../observables";
-import {MenuEvent} from "../../env/types";
+import {E_MENU_ACTION, E_MENU_OWNER, E_SETTINGS} from "./enums";
+import {menuService$} from "../../services/observables";
+
+import {MenuEvent} from "./types";
 
 export function IsMenuFree(event: MenuEvent, owner: E_MENU_OWNER): boolean {
     if(event.menuAction !== E_MENU_ACTION.SHOW) return true;
@@ -33,7 +34,6 @@ export function openMenu(owner: E_MENU_OWNER): boolean {
 }
 
 export function clickMenuItem(owner: E_MENU_OWNER, itemName: string): void {
-    console.log("============> Menu_item click:", owner, itemName);
     if (owner === E_MENU_OWNER.SETTINGS && itemName === E_SETTINGS.LANGUAGE) return;
     closeMenu();
 

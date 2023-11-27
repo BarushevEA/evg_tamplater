@@ -1,11 +1,12 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/observables";
-import {E_MENU_ACTION, E_MENU_OWNER} from "../../../env/enums";
-import {menuAccountLocale, menuChoiceLocale, menuSettingsLocale, menuTitleLocale} from "../../../env/variables";
+import {E_MENU_ACTION, E_MENU_OWNER} from "../../../env/menuEnv/enums";
 import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
-import {AppTxt, MenuEvent, MenuItem} from "../../../env/types";
+import {AppTxt} from "../../../env/types";
 import {LOCATION} from "../../../../../../../libs/elements/AppLocalization/location";
-import {closeMenu} from "../../../services/menu/utils";
+import {closeMenu} from "../../../env/menuEnv/utils";
+import {MenuEvent, MenuItem} from "../../../env/menuEnv/types";
+import {menuAccountLocale, menuChoiceLocale, menuSettingsLocale, menuTitleLocale} from "../../../env/menuEnv/variables";
 
 export class Menu_list implements OnInit, OnCreate, OnDestroy {
     readonly root;

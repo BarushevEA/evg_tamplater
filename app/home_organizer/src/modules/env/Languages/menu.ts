@@ -1,5 +1,5 @@
-import {MenuAccountTxt, MenuChoiceTxt, MenuSettingsTxt, MenuTitleTxt} from "../types";
 import {LOCATION} from "../../../../../../libs/elements/AppLocalization/location";
+import {MenuAccountTxt, MenuChoiceTxt, MenuSettingsTxt, MenuTitleTxt} from "../menuEnv/types";
 
 export const menuSettingsTxt: MenuSettingsTxt = {
     language: {
