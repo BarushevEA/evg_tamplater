@@ -73,7 +73,7 @@ export const menuAccountTxt: MenuAccountTxt = {
 export const menuTitleTxt: MenuTitleTxt = {
     choice: {
         [LOCATION.EN]: "User tasks",
-        [LOCATION.RU]: "Пользовательские задачи",
+        [LOCATION.RU]: "Задачи пользователя",
         [LOCATION.UA]: "Завдання користувача",
     },
     account: {
