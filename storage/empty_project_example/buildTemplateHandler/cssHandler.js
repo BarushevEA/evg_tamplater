@@ -141,6 +141,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
         });
 
         cssFileStr = cssFileStr.replaceAll(`.${cls} `, `.${getClassName(index)} `);
+        cssFileStr = cssFileStr.replaceAll(`.${cls}:`, `.${getClassName(index)}:`);
         console.log(`[.${cls}]`, `encrypt to => [.${getClassName(index)}]`);
         if (flags.flag.isJsCssProcess) {
             jsFileStr = jsFileStr.replaceAll(`"${cls}"`, `"${getClassName(index)}"`);
