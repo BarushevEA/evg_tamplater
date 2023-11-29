@@ -4,6 +4,10 @@
   &-banner {
     @include centered_rectangle($main-banner-width, $main-banner-height);
 
+    background: $app-bgColor2;
+    border-top: $app-border;
+    border-bottom: $app-border;
+
     overflow: hidden;
   }
 }

@@ -16,6 +16,11 @@ $app-min-width: 100%;
 $app-min-height: 100%;
 $app-max-width: 800px;
 $app-max-height: 100%;
+$app-bgColor: #fbfbfb;
+$app-bgColor2: #f5f5f5;
+$app-bgColor3: #fff;
+$app-borderColor: rgba(0, 0, 0, 0.2);
+$app-border: 1px solid $app-borderColor;
 
 // app header
 $header-width: 100%;
@@ -61,7 +66,8 @@ $main-menu_list-animation-delay: 0.5s;
 $main-menu_list-header-width: 100%;
 $main-menu_list-header-height: 40px;
 $main-menu_list-header-padding: 4px 10px;
-$list-header-divider_color: rgba(0, 0, 0, 0.2);
+$main-menu_list-bgColor: $app-bgColor3;
+$list-header-divider_color: $app-borderColor;
 $main-menu_list-button-width: 30px;
 $main-menu_list-button-height: 30px;
 $main-menu_list-button-icon: "assets/images/arrow_back.png";
@@ -71,7 +77,7 @@ $main-menu_list-container-padding-right: 10px;
 // menu item
 $main-menu_item-width: 100%;
 $main-menu_item-height: 60px;
-$main-menu_item-margin-top: 10px;
+$main-menu_item-margin-top: 0px;
 $main-menu_item-padding-left: 10px;
 $main-lang_view-width: 50px;
 $main-lang_view-height: 50px;
@@ -80,11 +86,12 @@ $lang_box-width: $main-lang_view-width;
 $lang_box-height: fit-content;
 $lang_box-zIndex: 10;
 $lang_box-top: 0;
-$lang_box-bgColor: #c1e3ef;
+$lang_box-bgColor: $app-bgColor2;
 $lang_item-width: $main-lang_view-width - 10px;
 $lang_item-height: $main-lang_view-height;
 $lang_item-margin: 5px;
-$lang_item-bgColor: #69b2e4;
+$lang_item-bgColor: $app-bgColor;
+$lang_item-boxShadow: 0 1px 1px rgba(0, 0, 0, 0.07);
 
 // main task_list
 $main-task_list-width: 100%;

@@ -2,8 +2,9 @@
 
 @mixin task() {
   &-task {
-    @include centered_rectangle($main-task-width, $main-task-height);
+    @include button($main-task-width, $main-task-height);
 
+    box-shadow: $lang_item-boxShadow;
     overflow: hidden;
   }
 }

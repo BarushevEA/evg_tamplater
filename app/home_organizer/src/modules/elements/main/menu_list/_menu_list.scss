@@ -11,7 +11,7 @@
     @include flexColumnNowrap();
     @include flexStart();
 
-    background: #69b2e4;
+    background: $main-menu_list-bgColor;
   }
 
   .menu_list {
@@ -30,6 +30,8 @@
       top: 0;
       right: 0;
 
+      border: $app-border;
+
       @include setWidthHeight($main-menu_list-block-width, $main-menu_list-block-height);
       @include setMinWidthHeight($main-menu_list-block-min-width, $main-menu_list-block-height);
 
@@ -38,16 +40,15 @@
     }
 
     &-header {
-      @include setWidthHeight($main-menu_list-header-width, $main-menu_list-header-height);
-
-      padding: $main-menu_list-header-padding;
-
+      @include button($main-menu_list-header-width, $main-menu_list-header-height);
       @include flexRowNowrap();
-      align-items: center;
       justify-content: space-between;
 
-      overflow: hidden;
+      padding: $main-menu_list-header-padding;
       border-bottom: 1px solid $list-header-divider_color;
+      user-select: none;
+      cursor: pointer;
+      overflow: hidden;
     }
 
     &-button {

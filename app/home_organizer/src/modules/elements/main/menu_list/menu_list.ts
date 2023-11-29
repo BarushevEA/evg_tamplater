@@ -24,6 +24,8 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
         this.name = root.tagName;
         this.showTimer = 0;
         this.items = [];
+        this.owner = E_MENU_OWNER.NULL;
+        this.ownerName = E_MENU_OWNER.NULL;
     }
 
     onCreate(): void {

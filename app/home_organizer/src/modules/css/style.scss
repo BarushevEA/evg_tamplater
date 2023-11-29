@@ -8,7 +8,7 @@
 @include globalNormalize();
 
 .app {
-  @include devHighlighting();
+  //@include devHighlighting();
   //@include devBorder();
 
   @include globalRules();
@@ -19,6 +19,9 @@
   &-wrapper {
     @include setWidthHeight($app-width, $app-height);
     @include setMaxWidthHeight($app-max-width, $app-max-height);
+
+    background: $app-bgColor;
+    border: $app-border;
 
     @include flexColumnNowrap();
     @include flexStart();
