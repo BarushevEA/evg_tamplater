@@ -1,14 +1,16 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
+import {ITask} from "../../../env/taskEnv/types";
+import {MOCK_TASKS} from "../../../env/taskEnv/mockData";
 
 export class Task_list implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
-    tasks: any[];
+    tasks: ITask[];
 
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
-        this.tasks = [1, 2, 3, 4, 5];
+        this.tasks = MOCK_TASKS;
     }
 
     onCreate(): void {

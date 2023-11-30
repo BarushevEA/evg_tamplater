@@ -7,6 +7,7 @@ export type ITask = {
     description: string;
     isFavorite: boolean;
     isFail: boolean;
+    id: string;
     count: number;
     price: number;
     cost: number;

@@ -6,7 +6,7 @@ export enum E_TASK_LIST {
 }
 
 export enum E_TASK_TYPE {
-    NULL = "",
-    FOOD = "",
-    GOODS = "",
+    NULL = "NULL",
+    FOOD = "FOOD",
+    GOODS = "GOODS",
 }
