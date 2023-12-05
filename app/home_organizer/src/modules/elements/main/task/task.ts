@@ -1,6 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {ITask} from "../../../env/taskEnv/types";
 import {E_TASK_TYPE} from "../../../env/taskEnv/enums";
+import {TASK_SERVICE} from "../../../services/taskService";
 
 export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     readonly root;
@@ -15,6 +16,7 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     id: string;
     isFail: boolean;
     isFavorite: boolean;
+    isSelected: boolean;
     name: string;
     price: number;
     startDate: number;
@@ -50,6 +52,17 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     onDestroy(): void {
     }
 
+    favoriteClick(event: MouseEvent): void {
+        event.stopPropagation();
+        event.preventDefault();
+
+        this.isFavorite = !this.isFavorite;
+
+        console.log("favoriteClick(event: MouseEvent)", this.id, this.isFavorite);
+        TASK_SERVICE.changeFavorite(this.id, this.isFavorite);
+        this.root.detectChanges();
+    }
+
     private defaultInit() {
         this.comment = "";
         this.cost = 0;
@@ -59,6 +72,7 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
         this.id = "";
         this.isFail = false;
         this.isFavorite = false;
+        this.isSelected = false;
         this.name = "";
         this.price = 0;
         this.startDate = 0;

@@ -1,3 +1,5 @@
+@import "images";
+
 // dev variables
 $dev-highlight-color: rgba(0, 250, 250, 0.2);
 $dev-border-color: rgba(0, 250, 250, 0.5);
@@ -31,8 +33,6 @@ $header-padding: $header-delta*2;
 // header menu
 $header-menu-width: $header-height - $header-padding - $header-delta;
 $header-menu-height: $header-menu-width;
-$header-menu-icon: "assets/images/menu.png";
-$header-menu-arrow: "assets/images/arrow_back.png";
 $header-menu-margin: $header-delta;
 
 // header choice
@@ -43,7 +43,7 @@ $header-choice-margin: $header-delta;
 // header account
 $header-account-width: $header-menu-width;
 $header-account-height: $header-menu-width;
-$header-account-icon: "assets/images/account.png";
+
 $header-account-margin: $header-delta;
 
 // app main
@@ -57,7 +57,7 @@ $main-banner-width: 100%;
 $main-banner-height: 40px;
 
 // main menu_list
-$main-menu_list-width: 360px;
+$main-menu_list-width: 358px;
 $main-menu_list-height: 100%;
 $main-menu_list-block-width: 360px;
 $main-menu_list-block-min-width: 360px;
@@ -70,7 +70,6 @@ $main-menu_list-bgColor: $app-bgColor3;
 $list-header-divider_color: $app-borderColor;
 $main-menu_list-button-width: 30px;
 $main-menu_list-button-height: 30px;
-$main-menu_list-button-icon: "assets/images/arrow_back.png";
 $main-menu_list-container-padding-left: 10px;
 $main-menu_list-container-padding-right: 10px;
 
@@ -100,6 +99,9 @@ $main-task_list-height: 100%;
 // main task
 $main-task-width: 100%;
 $main-task-height: 100px;
+$task-favorite_height: $main-task-height - 20px;
+$task-favorite_width: $main-task-height - 20px;
+$task-padding: 10px;
 
 // app footer
 $footer-width: 100%;

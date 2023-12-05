@@ -3,8 +3,24 @@
 @mixin task() {
   &-task {
     @include button($main-task-width, $main-task-height);
+    @include flexRowNowrap();
+    justify-content: flex-start;
 
     box-shadow: $lang_item-boxShadow;
     overflow: hidden;
+
+    padding: $task-padding;
+
+    &-favorite {
+      @include centered_rectangle($task-favorite_width, $task-favorite_height);
+
+      &_icon {
+        background: url($task-favorite_icon) no-repeat center;
+        background-size: 70%;
+      }
+
+      &_empty {
+      }
+    }
   }
 }

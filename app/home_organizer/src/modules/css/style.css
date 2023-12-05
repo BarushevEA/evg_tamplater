@@ -10,13 +10,13 @@
   }
   100% {
     display: flex;
-    width: 360px;
+    width: 358px;
   }
 }
 @keyframes menu_list_animation_hidden {
   0% {
     display: flex;
-    width: 360px;
+    width: 358px;
   }
   100% {
     width: 0;
@@ -82,6 +82,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -122,6 +123,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -151,6 +153,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -252,6 +255,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -277,6 +281,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -325,6 +330,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -356,6 +362,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -398,6 +405,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -425,8 +433,12 @@ body {
   cursor: pointer;
   user-select: none;
   overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
   overflow: hidden;
+  padding: 10px;
 }
 .app .main-task:hover {
   animation: button-animation 1s;
@@ -435,11 +447,24 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -10;
   width: 100%;
   height: 100%;
 }
 .app .main-task-hover:hover {
   background: rgba(0, 0, 0, 0.05);
+}
+.app .main-task-favorite {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.app .main-task-favorite_icon {
+  background: url("assets/images/favorite32.png") no-repeat center;
+  background-size: 70%;
 }
 .app .footer {
   width: 100%;
