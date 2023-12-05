@@ -82,7 +82,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -123,7 +122,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -153,7 +151,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -255,7 +252,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -281,7 +277,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -330,7 +325,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -362,7 +356,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -405,7 +398,6 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -10;
   width: 100%;
   height: 100%;
 }
@@ -429,29 +421,17 @@ body {
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  overflow: hidden;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
-  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
   padding: 10px;
 }
-.app .main-task:hover {
-  animation: button-animation 1s;
-}
-.app .main-task-hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -10;
-  width: 100%;
-  height: 100%;
-}
-.app .main-task-hover:hover {
+
+.app .main-task_hover:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 .app .main-task-favorite {

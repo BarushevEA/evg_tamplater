@@ -2,14 +2,22 @@
 
 @mixin task() {
   &-task {
-    @include button($main-task-width, $main-task-height);
+    @include centered_rectangle($main-task-width, $main-task-height);
     @include flexRowNowrap();
     justify-content: flex-start;
 
     box-shadow: $lang_item-boxShadow;
-    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
 
     padding: $task-padding;
+
+    &_hover {
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
 
     &-favorite {
       @include centered_rectangle($task-favorite_width, $task-favorite_height);
