@@ -30,5 +30,12 @@
       &_empty {
       }
     }
+
+    &_info {
+      @include setWidthHeight(100%, 100%);
+      @include flexColumnNowrap();
+      justify-content: center;
+      align-items: flex-start;
+    }
   }
 }

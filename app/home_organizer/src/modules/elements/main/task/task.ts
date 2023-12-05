@@ -7,6 +7,7 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     readonly root;
     readonly tagName: string;
     readonly hover: HTMLElement;
+    isEditMode: boolean;
 
     comment: string;
     cost: number;
