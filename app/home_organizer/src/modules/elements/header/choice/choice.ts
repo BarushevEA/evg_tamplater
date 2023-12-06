@@ -1,6 +1,6 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {E_CHOICE, E_MENU_ACTION, E_MENU_OWNER} from "../../../env/menuEnv/enums";
-import {openMenu} from "../../../env/menuEnv/utils";
+import {closeMenu, IsMenuShowing, openMenu} from "../../../env/menuEnv/utils";
 import {APP_LOCALE, location$} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {menuChoiceLocale} from "../../../env/menuEnv/variables";
 import {ILocalizedText} from "../../../../../../../libs/elements/AppLocalization/types";
@@ -34,6 +34,11 @@ export class Choice implements OnInit, OnCreate, OnDestroy {
     }
 
     onClick(): void {
+        if (IsMenuShowing()) {
+            closeMenu();
+            return;
+        }
+
         openMenu(E_MENU_OWNER.CHOICE);
     }
 

@@ -9,6 +9,10 @@ export function IsMenuFree(event: MenuEvent, owner: E_MENU_OWNER): boolean {
     return event.owner === owner;
 }
 
+export function IsMenuShowing(): boolean {
+    return menuService$.getValue().isShow;
+}
+
 export function closeMenu() {
     const event = menuService$.getValue();
     if (!event.isShow) return;
