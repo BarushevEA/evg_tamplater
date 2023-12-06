@@ -1,10 +1,11 @@
 import {E_TASK_TYPE} from "./enums";
+import {ILocalizedText} from "../../../../../../libs/elements/AppLocalization/types";
 
 export type ITask = {
     type: E_TASK_TYPE;
-    name: string;
-    comment: string;
-    description: string;
+    name: ILocalizedText;
+    comment: ILocalizedText;
+    description: ILocalizedText;
     isFavorite: boolean;
     isFail: boolean;
     isSelected: boolean;

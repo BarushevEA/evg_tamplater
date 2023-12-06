@@ -30,8 +30,7 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
         );
         this.root
             .dataCatch$()
-            .subscribe(data => {
-                console.log("====>", this.currentView, data);
+            .subscribe(() => {
                 this.handleCurrentView();
                 this.root.detectChanges();
             });
@@ -45,28 +44,24 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
 
     private handleCurrentView(): void {
         const tasks = taskList$.getValue();
+        const fillViewListByCondition = (callback: (task: ITask) => boolean) => {
+            for (const task of tasks) if (callback(task)) this.viewList.push(task);
+        };
+
         this.viewList.length = 0;
-        console.log(this);
+
         switch (this.currentView) {
             case E_TASK_LIST.FAVORITE:
-                for (const task of tasks) {
-                    if (task.isFavorite) this.viewList.push(task);
-                }
+                fillViewListByCondition(task => task.isFavorite);
                 break;
             case E_TASK_LIST.FOOD:
-                for (const task of tasks) {
-                    if (task.type === E_TASK_TYPE.FOOD) this.viewList.push(task);
-                }
+                fillViewListByCondition(task => task.type === E_TASK_TYPE.FOOD);
                 break;
             case E_TASK_LIST.GOODS:
-                for (const task of tasks) {
-                    if (task.type === E_TASK_TYPE.GOODS) this.viewList.push(task);
-                }
+                fillViewListByCondition(task => task.type === E_TASK_TYPE.GOODS);
                 break;
             case E_TASK_LIST.TASKS:
-                for (const task of tasks) {
-                    if (task.isSelected) this.viewList.push(task);
-                }
+                fillViewListByCondition(task => task.isSelected);
                 break;
         }
     }
