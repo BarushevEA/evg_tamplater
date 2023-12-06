@@ -2,18 +2,21 @@ import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../li
 import {ITask} from "../../../env/taskEnv/types";
 import {currentTaskList$, taskList$} from "../../../services/observables";
 import {E_TASK_LIST, E_TASK_TYPE} from "../../../env/taskEnv/enums";
+import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 
 export class Task_list implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
     viewList: ITask[];
     currentView: E_TASK_LIST;
+    searchText: string;
 
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
         this.currentView = E_TASK_LIST.TASKS;
         this.viewList = [];
+        this.searchText = "";
     }
 
     onCreate(): void {
@@ -45,7 +48,14 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
     private handleCurrentView(): void {
         const tasks = taskList$.getValue();
         const fillViewListByCondition = (callback: (task: ITask) => boolean) => {
-            for (const task of tasks) if (callback(task)) this.viewList.push(task);
+            for (const task of tasks) {
+                if (this.searchText) {
+                    const taskName = APP_LOCALE.getCurrentText(task.name);
+                    if (!(taskName.toLowerCase())
+                        .includes(this.searchText.toLowerCase())) continue;
+                }
+                if (callback(task)) this.viewList.push(task);
+            }
         };
 
         this.viewList.length = 0;
