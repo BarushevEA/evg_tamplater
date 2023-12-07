@@ -16,3 +16,5 @@ export type ITask = {
     startDate: number;
     endDate: number;
 };
+
+export type TaskFilter = (task: ITask) => boolean;

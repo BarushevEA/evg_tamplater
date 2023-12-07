@@ -35,6 +35,13 @@
   max-height: $height;
 }
 
+@mixin setDimensionsMax($width, $height) {
+  width: $width;
+  height: $height;
+  max-width: $width;
+  max-height: $height;
+}
+
 @mixin setMinWidthHeight($width, $height) {
   min-width: $width;
   min-height: $height;
