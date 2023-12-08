@@ -8,22 +8,20 @@ import {menuService$} from "../../../services/observables";
 import {MenuEvent} from "../../../env/menuEnv/types";
 
 export class Choice implements OnInit, OnCreate, OnDestroy {
-    readonly root;
+    readonly root: RootBehavior;
     name: string;
     taskName: string;
     currentLocalizedText: ILocalizedText;
 
     constructor(root: RootBehavior) {
         this.root = root;
-        this.name = root.tagName;
-        this.currentLocalizedText = menuChoiceLocale[E_CHOICE.TASKS];
-        this.taskName = APP_LOCALE.getLocalizedTextByLocation(this.currentLocalizedText);
+        this.initializeAttributes();
     }
 
     onCreate(): void {
         this.root.collect(
-            this.locationChange(),
-            this.taskChange()
+            this.subscribeToLocaleChange(),
+            this.subscribeToMenuSelectionChange()
         );
     }
 
@@ -38,11 +36,16 @@ export class Choice implements OnInit, OnCreate, OnDestroy {
             closeMenu();
             return;
         }
-
         openMenu(E_MENU_OWNER.CHOICE);
     }
 
-    private taskChange() {
+    private initializeAttributes(): void {
+        this.name = this.root.tagName;
+        this.currentLocalizedText = menuChoiceLocale[E_CHOICE.TASKS];
+        this.taskName = APP_LOCALE.getLocalizedTextByLocation(this.currentLocalizedText);
+    }
+
+    private subscribeToMenuSelectionChange() {
         return menuService$
             .pipe()
             .emitByPositive((event: MenuEvent) => {
@@ -55,7 +58,7 @@ export class Choice implements OnInit, OnCreate, OnDestroy {
             });
     }
 
-    private locationChange() {
+    private subscribeToLocaleChange() {
         return location$.subscribe(locale => {
             this.taskName = APP_LOCALE.getLocalizedText(this.currentLocalizedText, locale);
             this.root.detectChanges();
