@@ -16,6 +16,22 @@ import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
 import {APP_TAG_NAME} from "../../../../libs/elements/rootElements/managers/APP_TAG_NAME";
 
+/**
+ * The MODULES variable contains an array of options for various modules in the application.
+ * Each option is obtained using the getOption function, which takes three parameters:
+ * - Class: The class/component name of the module.
+ * - Tag: The tag/marker name associated with the module.
+ * - Default: The default value to be used if the option is not available.
+ *
+ * Example usage:
+ *
+ * const options = MODULES.REG_OPTIONS;
+ *
+ * options.forEach((option) => {
+ *   // Use the module option here
+ *   console.log(option);
+ * });
+ */
 export const MODULES: REG_OPTIONS = [
     getOption(AppRoot, APP_TAG_NAME, "APP_EXAMPLE_____ROOT"),
     getOption(Header, "app-header", "APP_EXAMPLE_____MARKER_HEADER"),
