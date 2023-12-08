@@ -1,38 +1,32 @@
 import {ILocalizedText} from "./types";
-import {Collector} from "evg_observable/src/outLib/Collector";
 import {ICallback} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
 import {LOCATION} from "./location";
 
-export const location$: Observable<LOCATION>=new Observable<LOCATION>(LOCATION.EN);
+export const location$: Observable<LOCATION> = new Observable<LOCATION>(LOCATION.EN);
 
-class AppLocale extends Collector {
-    constructor() {
-        super();
-    }
-
-    get current(): LOCATION {
+class AppLocale {
+    get currentLocation(): LOCATION {
         return location$.getValue();
     }
 
-    getText(textBlock: ILocalizedText, location: LOCATION): string {
+    getLocalizedText(textBlock: ILocalizedText, location: LOCATION): string {
         return textBlock[location];
     }
 
-    getCurrentText(textBlock: ILocalizedText): string{
-        return textBlock[location$.getValue()];
+    getLocalizedTextByLocation(textBlock: ILocalizedText): string {
+        return textBlock[this.currentLocation];
     }
 
-    onChange(callback: ICallback<LOCATION>) {
+    onLocationChange(callback: ICallback<LOCATION>) {
         return location$.subscribe(callback);
     }
 
-    set(locale: LOCATION) {
+    setLocation(locale: LOCATION) {
         location$.next(locale);
     }
 
     destroy() {
-        super.destroy();
         location$.destroy();
     }
 }

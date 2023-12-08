@@ -17,7 +17,7 @@ export class Choice implements OnInit, OnCreate, OnDestroy {
         this.root = root;
         this.name = root.tagName;
         this.currentLocalizedText = menuChoiceLocale[E_CHOICE.TASKS];
-        this.taskName = APP_LOCALE.getCurrentText(this.currentLocalizedText);
+        this.taskName = APP_LOCALE.getLocalizedTextByLocation(this.currentLocalizedText);
     }
 
     onCreate(): void {
@@ -50,14 +50,14 @@ export class Choice implements OnInit, OnCreate, OnDestroy {
             })
             .subscribe(event => {
                 this.currentLocalizedText = menuChoiceLocale[event.item];
-                this.taskName = APP_LOCALE.getCurrentText(this.currentLocalizedText);
+                this.taskName = APP_LOCALE.getLocalizedTextByLocation(this.currentLocalizedText);
                 this.root.detectChanges();
             });
     }
 
     private locationChange() {
         return location$.subscribe(locale => {
-            this.taskName = APP_LOCALE.getText(this.currentLocalizedText, locale);
+            this.taskName = APP_LOCALE.getLocalizedText(this.currentLocalizedText, locale);
             this.root.detectChanges();
         });
     }

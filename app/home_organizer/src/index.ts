@@ -5,6 +5,6 @@ import {MODULES} from "./settings/modules";
 import {RENDER_MANAGER} from "../../../libs/elements/rootElements/managers/RenderManager";
 
 APP_INFO.init();
-APP_LOCALE.set(LOCATION.EN);
+APP_LOCALE.setLocation(LOCATION.EN);
 RENDER_MANAGER.register(MODULES);
 RENDER_MANAGER.run();

@@ -59,7 +59,7 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
     private applySearchFilter(task: ITask): boolean {
         if (!this.searchText) return true;
 
-        const taskName = APP_LOCALE.getCurrentText(task.name);
+        const taskName = APP_LOCALE.getLocalizedTextByLocation(task.name);
         return taskName.toLowerCase().includes(this.searchText.toLowerCase());
     }
 

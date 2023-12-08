@@ -74,9 +74,9 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     }
 
     private setTexts(): void {
-        this.nameTxt = APP_LOCALE.getCurrentText(this.name);
-        this.descriptionTxt = APP_LOCALE.getCurrentText(this.description);
-        this.commentTxt = APP_LOCALE.getCurrentText(this.comment);
+        this.nameTxt = APP_LOCALE.getLocalizedTextByLocation(this.name);
+        this.descriptionTxt = APP_LOCALE.getLocalizedTextByLocation(this.description);
+        this.commentTxt = APP_LOCALE.getLocalizedTextByLocation(this.comment);
 
         this.setTitle();
     }

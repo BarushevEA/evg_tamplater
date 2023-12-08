@@ -61,7 +61,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
     private initOwnerData(menu: MenuEvent) {
         this.owner = menu.owner;
         if (this.owner !== E_MENU_OWNER.NULL) {
-            this.ownerName = APP_LOCALE.getCurrentText(menuTitleLocale[this.owner]);
+            this.ownerName = APP_LOCALE.getLocalizedTextByLocation(menuTitleLocale[this.owner]);
         }
         this.isMenuShow = menu.isShow;
     }
@@ -81,7 +81,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
 
     private changeLanguage() {
         this.root.collect(
-            APP_LOCALE.onChange((locale) => {
+            APP_LOCALE.onLocationChange((locale) => {
                 this.handleTitleLocale(locale);
                 this.handleItemsLocale(locale);
                 this.root.detectChanges();
@@ -91,7 +91,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
 
     private handleTitleLocale(locale: LOCATION) {
         if (this.owner !== E_MENU_OWNER.NULL) {
-            this.ownerName = APP_LOCALE.getText(menuTitleLocale[this.owner], locale);
+            this.ownerName = APP_LOCALE.getLocalizedText(menuTitleLocale[this.owner], locale);
         }
     }
 
@@ -116,7 +116,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
             const item: MenuItem = {
                 owner: this.owner,
                 type: key,
-                text: APP_LOCALE.getCurrentText(appTxt[key]),
+                text: APP_LOCALE.getLocalizedTextByLocation(appTxt[key]),
             };
             this.items.push(item);
         }
@@ -126,13 +126,13 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
         for (const item of this.items) {
             switch (item.owner) {
                 case E_MENU_OWNER.SETTINGS:
-                    item.text = APP_LOCALE.getText(menuSettingsLocale[item.type], locale);
+                    item.text = APP_LOCALE.getLocalizedText(menuSettingsLocale[item.type], locale);
                     break;
                 case E_MENU_OWNER.ACCOUNT:
-                    item.text = APP_LOCALE.getText(menuAccountLocale[item.type], locale);
+                    item.text = APP_LOCALE.getLocalizedText(menuAccountLocale[item.type], locale);
                     break;
                 case E_MENU_OWNER.CHOICE:
-                    item.text = APP_LOCALE.getText(menuChoiceLocale[item.type], locale);
+                    item.text = APP_LOCALE.getLocalizedText(menuChoiceLocale[item.type], locale);
                     break;
             }
         }
