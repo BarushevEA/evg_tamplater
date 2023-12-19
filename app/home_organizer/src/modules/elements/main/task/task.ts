@@ -4,6 +4,7 @@ import {E_TASK_TYPE} from "../../../env/taskEnv/enums";
 import {TASK_SERVICE} from "../../../services/taskService";
 import {ILocalizedText} from "../../../../../../../libs/elements/AppLocalization/types";
 import {APP_LOCALE, location$} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
+import {taskFieldTxt} from "../../../env/Languages/task";
 
 export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     readonly root;
@@ -13,20 +14,35 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
 
     comment: ILocalizedText;
     commentTxt: string;
+    commentFieldTxt: string;
+
     cost: number;
+    costFieldTxt: string;
+
     count: number;
+    countFieldTxt: string;
+
     description: ILocalizedText;
     descriptionTxt: string;
-    endDate: number;
+    descriptionFieldTxt: string;
+
+    name: ILocalizedText;
+    nameTxt: string;
+    nameFieldTxt: string;
+
+    price: number;
+    priceFieldTxt: string;
+
+    type: E_TASK_TYPE;
+    typeFieldTxt: string;
+
     id: string;
     isFail: boolean;
     isFavorite: boolean;
     isSelected: boolean;
-    name: ILocalizedText;
-    nameTxt: string;
-    price: number;
+
     startDate: number;
-    type: E_TASK_TYPE;
+    endDate: number;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -77,6 +93,14 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
         this.nameTxt = APP_LOCALE.getLocalizedTextByLocation(this.name);
         this.descriptionTxt = APP_LOCALE.getLocalizedTextByLocation(this.description);
         this.commentTxt = APP_LOCALE.getLocalizedTextByLocation(this.comment);
+
+        this.nameFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.name);
+        this.descriptionFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.description);
+        this.commentFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.comment);
+        this.costFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.cost);
+        this.countFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.count);
+        this.priceFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.price);
+        this.typeFieldTxt = APP_LOCALE.getLocalizedTextByLocation(taskFieldTxt.type);
 
         this.setTitle();
     }

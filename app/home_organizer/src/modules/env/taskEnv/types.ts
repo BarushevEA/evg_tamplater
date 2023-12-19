@@ -17,4 +17,14 @@ export type ITask = {
     endDate: number;
 };
 
+export type ITaskFieldTxt = {
+    type: ILocalizedText;
+    name: ILocalizedText;
+    comment: ILocalizedText;
+    description: ILocalizedText;
+    count: ILocalizedText;
+    price: ILocalizedText;
+    cost: ILocalizedText;
+};
+
 export type TaskFilter = (task: ITask) => boolean;
