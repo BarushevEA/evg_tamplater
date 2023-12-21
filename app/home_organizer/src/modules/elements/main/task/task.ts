@@ -1,6 +1,6 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {ITask} from "../../../env/taskEnv/types";
-import {E_TASK_TYPE} from "../../../env/taskEnv/enums";
+import {E_TASK_ACTION, E_TASK_TYPE} from "../../../env/taskEnv/enums";
 import {TASK_SERVICE} from "../../../services/taskService";
 import {ILocalizedText} from "../../../../../../../libs/elements/AppLocalization/types";
 import {APP_LOCALE, location$} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
@@ -80,13 +80,7 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     }
 
     favoriteClick(event: MouseEvent): void {
-        event.stopPropagation();
-        event.preventDefault();
-
-        this.isFavorite = !this.isFavorite;
-
-        TASK_SERVICE.changeFavorite(this.id, this.isFavorite);
-        this.root.detectChanges();
+        TASK_SERVICE.clickHandler(event, this.id, E_TASK_ACTION.FAVORITE_CLICK);
     }
 
     private setTexts(): void {

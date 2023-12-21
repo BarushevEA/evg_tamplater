@@ -10,3 +10,7 @@ export enum E_TASK_TYPE {
     FOOD = "FOOD",
     GOODS = "GOODS",
 }
+
+export enum E_TASK_ACTION {
+    FAVORITE_CLICK = "FAVORITE_CLICK",
+}

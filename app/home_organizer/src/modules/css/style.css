@@ -455,6 +455,10 @@ body {
   padding: 5px;
 }
 .app .main-task_description {
+    font-size: 14px;
+}
+
+.app .main-task_amount {
   font-size: 15px;
 }
 .app .footer {
