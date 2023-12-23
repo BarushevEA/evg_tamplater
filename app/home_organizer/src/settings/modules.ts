@@ -1,3 +1,4 @@
+import {Task_controls} from "../modules/elements/main/task_controls/task_controls";
 import {Settings_lang} from "../modules/elements/main/menu_list/menu_item/settings_lang/settings_lang";
 import {Menu_item} from "../modules/elements/main/menu_list/menu_item/menu_item";
 import {Menu_list} from "../modules/elements/main/menu_list/menu_list";
@@ -48,4 +49,5 @@ export const MODULES: REG_OPTIONS = [
     getOption(Menu_list, "app-menu_list", "APP_EXAMPLE_____MARKER_MENU_LIST"),
     getOption(Menu_item, "app-menu_item", "APP_EXAMPLE_____MARKER_MENU_ITEM"),
     getOption(Settings_lang, "app-settings_lang", "APP_EXAMPLE_____MARKER_SETTINGS_LANG"),
+    getOption(Task_controls, "app-task_controls", "APP_EXAMPLE_____MARKER_TASK_CONTROLS"),
 ];

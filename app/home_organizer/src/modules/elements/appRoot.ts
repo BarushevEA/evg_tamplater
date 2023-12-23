@@ -4,6 +4,7 @@ import {E_MENU_ACTION, E_MENU_OWNER} from "../env/menuEnv/enums";
 import {E_TASK_LIST} from "../env/taskEnv/enums";
 import {TASK_SERVICE} from "../services/taskService";
 import {MenuEvent} from "../env/menuEnv/types";
+import {MOCK_TASKS} from "../env/taskEnv/mockData";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -15,6 +16,8 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy {
     constructor(root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
+
+        this.init();
     }
 
     onCreate(): void {
@@ -29,6 +32,10 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy {
     }
 
     onDestroy(): void {
+    }
+
+    private init() {
+        TASK_SERVICE.update(MOCK_TASKS);
     }
 
     private initMainChanel(): void {

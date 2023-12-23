@@ -4,6 +4,7 @@
 @import "menu_list/menu_item/menu_item";
 @import "task_list/task_list";
 @import "task/task";
+@import "task_controls/task_controls";
 
 @mixin main() {
   .main {
@@ -23,5 +24,6 @@
     @include menu_item();
     @include task_list();
     @include task();
+    @include task_controls();
   }
 }

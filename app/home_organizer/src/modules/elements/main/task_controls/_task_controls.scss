@@ -1,0 +1,14 @@
+@import "../../../css/mixins";
+
+@mixin task_controls() {
+  &-task_controls {
+    &_wrapper {
+      @include setDevColor();
+
+      @include setDimensionsMin(120px, 100%);
+      @include flexRowNowrap();
+      @include flexStart();
+
+    }
+  }
+}

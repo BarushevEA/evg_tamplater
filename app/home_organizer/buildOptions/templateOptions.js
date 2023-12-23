@@ -18,4 +18,5 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_MENU_LIST": "main/menu_list/menu_list.html",
     "APP_EXAMPLE_____MARKER_MENU_ITEM": "main/menu_list/menu_item/menu_item.html",
     "APP_EXAMPLE_____MARKER_SETTINGS_LANG": "main/menu_list/menu_item/settings_lang/settings_lang.html",
+    "APP_EXAMPLE_____MARKER_TASK_CONTROLS": "main/task_controls/task_controls.html",
 };

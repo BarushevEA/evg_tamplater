@@ -42,14 +42,25 @@
   max-height: $height;
 }
 
+@mixin setDimensionsMin($width, $height) {
+  width: $width;
+  height: $height;
+  min-width: $width;
+  min-height: $height;
+}
+
 @mixin setMinWidthHeight($width, $height) {
   min-width: $width;
   min-height: $height;
 }
 
+@mixin setDevColor {
+  background: $dev-highlight-color;
+}
+
 @mixin devHighlighting {
   * {
-    background: $dev-highlight-color;
+    @include setDevColor();
   }
 }
 

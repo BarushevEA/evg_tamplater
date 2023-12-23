@@ -75,13 +75,14 @@ class TaskService {
         }
     }
 
-    private update(tasks?: ITask[]): void {
-        if (tasks) {
-            taskList$.next(tasks);
-            return;
+    public update(tasks?: ITask[]): void {
+        let updatedTasks = tasks ? tasks : taskList$.getValue();
+
+        for (const updatedTask of updatedTasks) {
+            updatedTask.cost = updatedTask.count * +updatedTask.price;
         }
 
-        taskList$.next(taskList$.getValue());
+        taskList$.next(updatedTasks);
     }
 
     private getTask(id: string): ITask | undefined {

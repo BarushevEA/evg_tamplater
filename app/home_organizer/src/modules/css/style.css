@@ -44,7 +44,7 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   font-family: Tahoma, serif;
-  font-size: 24px;
+  font-size: 23px;
   letter-spacing: 1px;
 }
 .app .header {
@@ -436,10 +436,8 @@ body {
 .app .main-task-favorite {
   width: 50px;
   height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
+  min-width: 50px;
+  min-height: 100%;
 }
 .app .main-task-favorite_icon {
   background: url("assets/images/favorite32.png") no-repeat center;
@@ -455,14 +453,27 @@ body {
   padding: 5px;
 }
 .app .main-task_description {
-    font-size: 14px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
 }
 .app .main-task_amount {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-  font-size: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 14px;
+}
+
+.app .main-task_controls_wrapper {
+  background: rgba(0, 250, 250, 0.2);
+  width: 120px;
+  height: 100%;
+  min-width: 120px;
+  min-height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .app .footer {
   width: 100%;

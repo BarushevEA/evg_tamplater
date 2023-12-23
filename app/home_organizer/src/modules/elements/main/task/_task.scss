@@ -20,7 +20,7 @@
     }
 
     &-favorite {
-      @include centered_rectangle($task-favorite_width, 100%);
+      @include setDimensionsMin($task-favorite_width, 100%);
 
       &_icon {
         background: url($task-favorite_icon) no-repeat center;
@@ -39,13 +39,14 @@
 
     &_description {
       font-size: 14px;
+      color: rgba(0, 0, 0, 0.4);
     }
 
     &_amount {
       @include flexColumnNowrap();
       @include flexStart();
 
-      font-size: 15px;
+      font-size: 14px;
     }
   }
 }
