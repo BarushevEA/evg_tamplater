@@ -42,6 +42,9 @@
     }
 
     &_amount {
+      @include flexColumnNowrap();
+      @include flexStart();
+
       font-size: 15px;
     }
   }

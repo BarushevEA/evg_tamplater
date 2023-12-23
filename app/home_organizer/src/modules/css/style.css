@@ -457,8 +457,11 @@ body {
 .app .main-task_description {
     font-size: 14px;
 }
-
 .app .main-task_amount {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
   font-size: 15px;
 }
 .app .footer {

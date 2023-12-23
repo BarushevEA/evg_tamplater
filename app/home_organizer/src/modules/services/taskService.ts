@@ -31,7 +31,7 @@ class TaskService {
     }
 
     private setFavoriteViewAction(taskId: string, action: E_TASK_ACTION): void {
-        console.log("setFavoriteViewAction", taskId);
+        console.log("setFavoriteViewAction", action, taskId);
 
         switch (action) {
             case E_TASK_ACTION.FAVORITE_CLICK:
@@ -41,14 +41,14 @@ class TaskService {
     }
 
     private setTasksViewAction(taskId: string, action: E_TASK_ACTION): void {
-        console.log("setTasksViewAction", taskId);
+        console.log("setTasksViewAction", action, taskId);
 
         switch (action) {
         }
     }
 
     private setFoodViewAction(taskId: string, action: E_TASK_ACTION): void {
-        console.log("setFoodViewAction", taskId);
+        console.log("setFoodViewAction", action, taskId);
 
         switch (action) {
             case E_TASK_ACTION.FAVORITE_CLICK:
@@ -58,7 +58,7 @@ class TaskService {
     }
 
     private setGoodsViewAction(taskId: string, action: E_TASK_ACTION): void {
-        console.log("setGoodsViewAction", taskId);
+        console.log("setGoodsViewAction", action, taskId);
 
         switch (action) {
             case E_TASK_ACTION.FAVORITE_CLICK:
