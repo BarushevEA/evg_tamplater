@@ -7,8 +7,39 @@
 </head>
 <body>
 <div id="123" style="width: 700px; height: 500px"></div>
+<div id="123click"
+     onclick="addRowToTable1()"
+     style="width: 100px; height: 100px; background: #69b2e4; display: flex; align-items: center; justify-content: center; padding: 10px; cursor: pointer;">
+    TABLE1 ADD ROW
+</div>
 <div id="234" style="width: 700px; height: 500px"></div>
 <script>
+    const table1Data = {
+        header: ["field1", "field2", "field3",],
+        body: [
+            ["1", "2", "3"],
+            ["4", "5", "6"],
+            ["7", "8", "9"],
+        ],
+        footer: "TABLE1",
+    };
+    let table1;
+
+    function addRowToTable1() {
+        if (!table1) return;
+
+        const body = table1Data.body;
+        const newRow = [];
+
+        for (let i = 0; i < table1Data.header.length; i++) {
+            newRow.push("");
+        }
+
+        body.push(newRow);
+
+        table1.setData(table1Data);
+    }
+
     TableController
         .createTable("TestTable")
         .injectToId("123")
@@ -17,15 +48,8 @@
             table.setListener(cell => {
                 console.log(cell);
             });
-            table.setData({
-                header: ["field1", "field2", "field3",],
-                body: [
-                    ["1", "2", "3"],
-                    ["4", "5", "6"],
-                    ["7", "8", "9"],
-                ],
-                footer: "TABLE1",
-            });
+            table.setData(table1Data);
+            table1 = table;
         });
 
     TableController
