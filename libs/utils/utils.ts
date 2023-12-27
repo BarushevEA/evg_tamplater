@@ -71,19 +71,19 @@ export function getFooter(): HTMLElement {
 export function removeClasses(element: HTMLElement, classes: string[]): void {
     if (!element) return;
 
-    for (const token of classes) element.classList.remove(token);
+    for (let i = 0; i < classes.length; i++) element.classList.remove(classes[i]);
 }
 
 export function addClasses(element: HTMLElement, classes: string[]): void {
     if (!element) return;
 
-    for (const token of classes) element.classList.add(token);
+    for (let i = 0; i < classes.length; i++) element.classList.add(classes[i]);
 }
 
 export function toggleClasses(element: HTMLElement, classes: string[]): void {
     if (!element) return;
 
-    for (const token of classes) element.classList.toggle(token);
+    for (let i = 0; i < classes.length; i++) element.classList.toggle(classes[i]);
 }
 
 export function isClassPresent(element: HTMLElement, token: string): boolean {

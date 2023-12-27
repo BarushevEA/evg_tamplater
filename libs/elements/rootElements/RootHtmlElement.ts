@@ -221,8 +221,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
 
-    for (const element of children) {
-        handleInjections(rootElement, detectForCycle(rootElement, <HTMLElement>element));
+    for (let i = 0; i < children.length; i++) {
+        handleInjections(rootElement, detectForCycle(rootElement, <HTMLElement>children[i]));
     }
 }
 
@@ -232,7 +232,9 @@ function handleInjections(rootElement: RootElement, children: HTMLElement[]) {
     let actions = "[";
 
     if (children.length > 1) {
-        for (const child of children) {
+        for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+
             actions += detectIfConditions(rootElement, <HTMLElement>child);
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
@@ -283,7 +285,9 @@ function detectClsConditions(rootElement: RootElement, element: HTMLElement): st
         classConditions: clsConditions,
     };
 
-    for (const strCondition of strConditions) {
+    for (let i = 0; i < strConditions.length; i++) {
+        const strCondition = strConditions[i];
+
         if (strCondition.includes("?")) {
             const args = strCondition.split("?");
             const details = getDetails(rootElement, args[0]);
@@ -424,7 +428,9 @@ function updateForOfChildren(
             const ifList = rootElement.ahe_IfList;
             let ifComponent: OnIf;
 
-            for (const onIf of ifList) {
+            for (let j = 0; j < ifList.length; j++) {
+                const onIf = ifList[j];
+
                 if (onIf.ifElement === child) {
                     ifComponent = onIf;
                     break;
@@ -650,7 +656,8 @@ function bindElementToMethod(rootElement: RootElement, functionName: string, ele
 function changeNestedValues(rootElement: RootElement): void {
     if (!rootElement) return;
 
-    for (const nestedValue of rootElement.ahe_nValues) {
+    for (let i = 0; i < rootElement.ahe_nValues.length; i++) {
+        const nestedValue = rootElement.ahe_nValues[i];
         const nestedData = "" + rootElement.ahe_component[nestedValue.valueName];
 
         if (nestedValue.textElement.innerHTML === nestedData) continue;
@@ -662,7 +669,8 @@ function changeNestedValues(rootElement: RootElement): void {
 function changeNestedFunctions(rootElement: RootElement): void {
     if (!rootElement) return;
 
-    for (const nestedValue of rootElement.ahe_nFunctions) {
+    for (let i = 0; i < rootElement.ahe_nFunctions.length; i++) {
+        const nestedValue = rootElement.ahe_nFunctions[i];
         const nestedData = "" + rootElement.ahe_component[nestedValue.valueName]();
 
         if (nestedValue.textElement.innerHTML === nestedData) continue;
@@ -674,7 +682,8 @@ function changeNestedFunctions(rootElement: RootElement): void {
 function changeIfConditions(rootElement: RootElement) {
     if (!rootElement) return;
 
-    for (const onIf of rootElement.ahe_IfList) {
+    for (let i = 0; i < rootElement.ahe_IfList.length; i++) {
+        const onIf = rootElement.ahe_IfList[i];
         let conditionData = onIf.isFunction ?
             !!(<any>rootElement.ahe_component)[onIf.valueName]() :
             !!(<any>rootElement.ahe_component)[onIf.valueName];
@@ -696,11 +705,14 @@ function changeIfConditions(rootElement: RootElement) {
 function changeClsConditions(rootElement: RootElement) {
     if (!rootElement) return;
 
-    for (const classIf of rootElement.ahe_ClsIfList) {
+    for (let i = 0; i < rootElement.ahe_ClsIfList.length; i++) {
+        const classIf = rootElement.ahe_ClsIfList[i];
         const conditions = classIf.classConditions;
         const element = classIf.element;
         const handler = rootElement.ahe_component;
-        for (const condition of conditions) {
+
+        for (let j = 0; j < conditions.length; j++) {
+            const condition = conditions[j];
             let conditionData: CONDITION;
             if (condition.isConditionDisabled) {
                 conditionData = CONDITION.TRUE;
@@ -743,7 +755,9 @@ function changeClsConditions(rootElement: RootElement) {
 
 function changeForOf(rootElement: RootElement) {
     const list = rootElement.ahe_ForOfList;
-    for (const forOf of list) {
+
+    for (let i = 0; i < list.length; i++) {
+        const forOf = list[i];
         const elements = updateForOfChildren(
             rootElement,
             forOf.children,
