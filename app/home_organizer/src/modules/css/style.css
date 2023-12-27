@@ -203,6 +203,14 @@ body {
   justify-content: flex-start;
   background: #fff;
 }
+
+.app .main .menu_list-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .app .main .menu_list-show {
   overflow: hidden;
   animation: menu_list_animation_show 0.5s forwards;
@@ -417,10 +425,8 @@ body {
 .app .main-task {
   width: 100%;
   height: 100px;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
+    min-width: 100%;
+    min-height: 100px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -463,7 +469,6 @@ body {
   justify-content: flex-start;
   font-size: 14px;
 }
-
 .app .main-task_controls_wrapper {
   background: rgba(0, 250, 250, 0.2);
   width: 120px;

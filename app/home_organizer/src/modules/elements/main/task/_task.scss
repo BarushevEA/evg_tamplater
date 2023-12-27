@@ -2,7 +2,7 @@
 
 @mixin task() {
   &-task {
-    @include centered_rectangle($main-task-width, $main-task-height);
+    @include setDimensionsMin($main-task-width, $main-task-height);
     @include flexRowNowrap();
     justify-content: flex-start;
 

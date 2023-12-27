@@ -15,6 +15,14 @@
   }
 
   .menu_list {
+    &-background {
+      @include setWidthHeight(100%, 100%);
+
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
     &-show {
       overflow: hidden;
       animation: menu_list_animation_show $main-menu_list-animation-delay forwards;
