@@ -14,11 +14,11 @@ const ignoreElement = "{display: contents !important;}";
 export const HTML_BLOCK = "html-block";
 export const ROOT_STYLES: string[] = [`${HTML_BLOCK} ${ignoreElement}`];
 
-export function registerElements(options: REG_OPTIONS): void {
-    for (const option of options) ROOT_STYLES.push(`${option.tagName} ${ignoreElement}`);
+export function registerElements(opts: REG_OPTIONS): void {
+    for (let i = 0; i < opts.length; i++) ROOT_STYLES.push(`${opts[i].tagName} ${ignoreElement}`);
 
     runWhenDocumentReady(() => {
-        for (const option of options) customElements.define(option.tagName, option.targetElement);
+        for (let i = 0; i < opts.length; i++) customElements.define(opts[i].tagName, opts[i].targetElement);
     });
 }
 
