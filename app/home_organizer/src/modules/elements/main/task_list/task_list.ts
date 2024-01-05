@@ -1,9 +1,9 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
-import {ITask, TaskFilter} from "../../../env/taskEnv/types";
+import {ITask} from "../../../env/taskEnv/types";
 import {currentTaskList$, taskList$} from "../../../services/observables";
 import {E_TASK_LIST} from "../../../env/taskEnv/enums";
 import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
-import {TASK_FILTERS} from "../../../env/taskEnv/variables";
+import {TASK_SERVICE} from "../../../services/taskService";
 
 export class Task_list implements OnInit, OnCreate, OnDestroy {
     readonly root;
@@ -50,10 +50,8 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
     }
 
     private refreshTaskList(): void {
-        const tasks = taskList$.getValue();
-        const taskFilter = this.getTaskFilter();
-
-        this.viewList = tasks.filter(task => this.applySearchFilter(task) && taskFilter(task));
+        const tasks = TASK_SERVICE.getTasksByList(this.currentView);
+        this.viewList = tasks.filter(task => this.applySearchFilter(task));
     }
 
     private applySearchFilter(task: ITask): boolean {
@@ -61,9 +59,5 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
 
         const taskName = APP_LOCALE.getLocalizedTextByLocation(task.name);
         return taskName.toLowerCase().includes(this.searchText.toLowerCase());
-    }
-
-    private getTaskFilter(): TaskFilter {
-        return TASK_FILTERS[this.currentView];
     }
 }

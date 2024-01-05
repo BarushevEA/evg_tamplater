@@ -1,17 +1,46 @@
 import {currentTaskList$, taskList$} from "./observables";
 import {ITask} from "../env/taskEnv/types";
 import {E_TASK_ACTION, E_TASK_LIST} from "../env/taskEnv/enums";
+import {TASK_FILTERS} from "../env/taskEnv/variables";
 
 class TaskService {
     setTaskList(list: E_TASK_LIST): void {
         currentTaskList$.next(list);
     }
 
+    getCurrentTaskList(): E_TASK_LIST {
+        return currentTaskList$.getValue();
+    }
+
+    getTasks(): ITask[] {
+        return taskList$.getValue();
+    }
+
+    getTasksByList(list: E_TASK_LIST): ITask[] {
+        const tasks = this.getTasks();
+        const taskFilter = TASK_FILTERS[list];
+        return tasks.filter(task => taskFilter(task));
+    }
+
+    getSelectedTasks(): ITask[] {
+        return this.getTasksByList(E_TASK_LIST.TASKS);
+    }
+
+    getSelectedTasksSum(): number {
+        const selectedTasks = this.getSelectedTasks();
+        if (selectedTasks.length === 0) return 0;
+
+        return selectedTasks.reduce(
+            (accumulator, task) => accumulator + task.count * task.price
+            , 0
+        );
+    }
+
     clickHandler(event: MouseEvent, taskId: string, action: E_TASK_ACTION): void {
         event.stopPropagation();
         event.preventDefault();
 
-        const currentTaskList = currentTaskList$.getValue();
+        const currentTaskList = this.getCurrentTaskList();
 
         switch (currentTaskList) {
             case E_TASK_LIST.FAVORITE:
@@ -76,17 +105,17 @@ class TaskService {
     }
 
     public update(tasks?: ITask[]): void {
-        let updatedTasks = tasks ? tasks : taskList$.getValue();
+        let updatedTasks = tasks ? tasks : this.getTasks();
 
         for (const updatedTask of updatedTasks) {
-            updatedTask.cost = updatedTask.count * +updatedTask.price;
+            updatedTask.cost = updatedTask.count * updatedTask.price;
         }
 
         taskList$.next(updatedTasks);
     }
 
     private getTask(id: string): ITask | undefined {
-        const tasks = taskList$.getValue();
+        const tasks = this.getTasks();
 
         for (const task of tasks) {
             if (task.id === id) {
