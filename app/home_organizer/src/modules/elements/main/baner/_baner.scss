@@ -2,7 +2,10 @@
 
 @mixin baner() {
   &-banner {
-    @include centered_rectangle($main-banner-width, $main-banner-height);
+    @include setWidthHeight($main-banner-width, $main-banner-height);
+
+    @include flexRowNowrap();
+    @include flexCenter();
 
     background: $app-bgColor2;
     border-top: $app-border;
