@@ -3,7 +3,7 @@ import {Observable} from "evg_observable/src/outLib/Observable";
 import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../../utils/utils";
-import {deleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
+import {quickDeleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
 import {
     AttributeChanged,
     ClassCondition,
@@ -438,7 +438,7 @@ function updateForOfChildren(
             }
 
             if (ifComponent) {
-                deleteFromArray(ifList, ifComponent);
+                quickDeleteFromArray(ifList, ifComponent);
                 removeChild(cycleParent, ifComponent.ifParent);
             } else {
                 removeChild(cycleParent, child);
