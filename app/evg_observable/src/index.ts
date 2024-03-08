@@ -1,6 +1,6 @@
-import {Observable} from "evg_observable/src/outLib/Observable";
-import {Collector} from "evg_observable/src/outLib/Collector";
-import {OrderedObservable} from "evg_observable/src/outLib/OrderedObservable";
+import {Observable} from "./Observables/Observable";
+import {Collector} from "./Observables/Collector";
+import {OrderedObservable} from "./Observables/OrderedObservable";
 
 const parent = (<any>window);
 
