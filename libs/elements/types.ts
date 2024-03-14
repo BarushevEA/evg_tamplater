@@ -59,7 +59,7 @@ export type RootBehavior = {
     parentChanelReady$(): IChanelListener<IChanel>;
     dataCatch$<T>(): IChanelListener<T>;
     detectChanges(): void;
-    collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void;
+    collect(...subscriptionLikeList: ISubscriptionLike[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
     getChanel(element: any): IChanel | undefined;

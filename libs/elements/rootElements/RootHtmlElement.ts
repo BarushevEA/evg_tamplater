@@ -204,7 +204,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             return !!this.getChanel(element);
         }
 
-        collect(...subscriptionLikeList: ISubscriptionLike<any>[]): void {
+        collect(...subscriptionLikeList: ISubscriptionLike[]): void {
             this.ahe_clr.collect(...subscriptionLikeList);
         }
 
