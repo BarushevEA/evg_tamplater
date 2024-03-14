@@ -10,6 +10,11 @@ export type ELEMENT_OPTIONS = {
     template: string;
     element: any;
 };
+
+export type IAppElement = Element & HTMLElement & {
+    isCustomAppElement: boolean;
+};
+
 export type AttributeChanged = {
     name: string,
     oldValue: any,

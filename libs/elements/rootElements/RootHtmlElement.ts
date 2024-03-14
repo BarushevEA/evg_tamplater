@@ -10,6 +10,7 @@ import {
     ClassIf,
     ELEMENT_OPTIONS,
     ForOf,
+    IAppElement,
     IChanel,
     NestedValue,
     OnIf,
@@ -179,10 +180,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         getChanel(element: any): IChanel | undefined {
             if (!element) return undefined;
+            if ((<IAppElement>element).isCustomAppElement) return <IChanel>element;
             if (!(<RootElement>element).ahe_component) return undefined;
             if (!(<IChanel>element).sendData) return undefined;
 
-            return <any>element;
+            return <IChanel>element;
         }
 
         transferToChanel<T, V>(chanelCb: () => IChanel, dataCb: (data: T) => V): void {
@@ -220,13 +222,14 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
 function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
-
     for (let i = 0; i < children.length; i++) {
-        handleInjections(rootElement, detectForCycle(rootElement, <HTMLElement>children[i]));
+        const child = children[i];
+        child.isCustomAppElement = rootElement.isAppElement(child);
+        handleInjections(rootElement, detectForCycle(rootElement, child));
     }
 }
 
-function handleInjections(rootElement: RootElement, children: HTMLElement[]) {
+function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     if (!children.length) return;
 
     let actions = "[";
@@ -268,7 +271,7 @@ function handleInjections(rootElement: RootElement, children: HTMLElement[]) {
         setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
     }
 
-    if (rootElement.isAppElement(child)) {
+    if (child.isCustomAppElement) {
         (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
         (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
     }
@@ -363,11 +366,11 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     return "ifc ";
 }
 
-const emptyArr: HTMLElement[] = <any>[0];
+const emptyArr: IAppElement[] = <any>[0];
 
-function detectForCycle(rootElement: RootElement, element: HTMLElement): HTMLElement[] {
+function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
-    if (!rootElement.isAppElement(element)) return (emptyArr[0] = element) && emptyArr;
+    if (!element.isCustomAppElement) return (emptyArr[0] = element) && emptyArr;
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
     if (!arrName) return (emptyArr[0] = element) && emptyArr;
@@ -405,15 +408,15 @@ function updateForOfChildren(
     childrenForUpdate: HTMLElement[],
     injectedArr: [],
     cycleParent: HTMLElement,
-    template: HTMLElement): HTMLElement[] {
-    const newChildren: HTMLElement[] = [];
+    template: HTMLElement): IAppElement[] {
+    const newChildren: IAppElement[] = [];
     const lenOldChildren = childrenForUpdate.length;
     const lenInjectedArr = injectedArr.length;
     let delta = lenInjectedArr - lenOldChildren;
 
     if (delta > 0) {
         for (let i = 0; i < delta; i++) {
-            const newElement = createElement(template.tagName);
+            const newElement = <IAppElement><any>createElement(template.tagName);
             childrenForUpdate.push(newElement);
             newChildren.push(newElement);
 
@@ -466,7 +469,7 @@ function getDetails(rootElement: RootElement, value: string): ValDetails {
     }
 }
 
-function getFreeChildren(parent: HTMLElement): Element[] {
+function getFreeChildren(parent: HTMLElement): IAppElement[] {
     return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.INFO)}])`));
 }
 
