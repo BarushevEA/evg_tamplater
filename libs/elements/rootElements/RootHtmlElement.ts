@@ -381,17 +381,17 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
     const cycleParent = createElement(E_ROOT_TAG.TEXT_VALUE);
     const htmlParent = element.parentElement;
 
-    htmlParent.insertBefore(cycleParent, element);
-    removeChild(htmlParent, element);
-    removeAttr(element, E_DATA_MARKER.FOR);
-    setAttr(cycleParent, E_DATA_MARKER.INFO, `[for-of]`);
-
     const newElements = updateForOfChildren(
         rootElement,
         [],
         arr,
         cycleParent,
         element);
+
+    setAttr(cycleParent, E_DATA_MARKER.INFO, `[for-of]`);
+    htmlParent.insertBefore(cycleParent, element);
+    removeChild(htmlParent, element);
+    removeAttr(element, E_DATA_MARKER.FOR);
 
     rootElement.ahe_ForOfList.push({
         parent: cycleParent,
