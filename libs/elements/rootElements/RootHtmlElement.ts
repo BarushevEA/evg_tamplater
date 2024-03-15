@@ -243,7 +243,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
             (<RootElement><any>child).ahe_parent_chanel = <IChanel><any>rootElement;
-            (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
+            (<any>child).onParentChanelReady$.next(<IChanel><any>rootElement);
         }
         return;
     }
@@ -273,8 +273,8 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     }
 
     if (child.isCustomAppElement) {
-        (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
-        (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
+        (<RootElement><any>child).ahe_parent_chanel = <IChanel><any>rootElement;
+        (<any>child).onParentChanelReady$.next(<IChanel><any>rootElement);
     }
 }
 
