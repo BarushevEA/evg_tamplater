@@ -184,6 +184,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (!(<RootElement>element).ahe_component) return undefined;
             if (!(<IChanel>element).sendData) return undefined;
 
+            element.isCustomAppElement = true;
+
             return <IChanel>element;
         }
 
@@ -240,7 +242,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
             actions += detectIfConditions(rootElement, <HTMLElement>child);
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
-            (<RootElement><any>child).ahe_parent_chanel = rootElement.getChanel(rootElement);
+            (<RootElement><any>child).ahe_parent_chanel = <IChanel><any>rootElement;
             (<any>child).onParentChanelReady$.next((<RootElement><any>child).ahe_parent_chanel);
         }
         return;
@@ -369,9 +371,7 @@ const emptyArr: IAppElement[] = <any>[0];
 
 function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
-
-    element.isCustomAppElement = rootElement.isAppElement(element);
-    if (!element.isCustomAppElement) return (emptyArr[0] = element) && emptyArr;
+    if (!rootElement.isAppElement(element)) return (emptyArr[0] = element) && emptyArr;
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
     if (!arrName) return (emptyArr[0] = element) && emptyArr;
