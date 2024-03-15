@@ -166,7 +166,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         detectChanges(isForLost?: boolean): void {
             this.beforeDetectChanges$.next(true);
-            !isForLost && changeForOf(this);
+            !isForLost && this.ahe_ForOfList.length && changeForOf(this);
             changeIfConditions(this);
             changeClsConditions(this);
             changeNestedValues(this);
@@ -224,7 +224,6 @@ function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
     for (let i = 0; i < children.length; i++) {
         const child = children[i];
-        child.isCustomAppElement = rootElement.isAppElement(child);
         handleInjections(rootElement, detectForCycle(rootElement, child));
     }
 }
@@ -370,6 +369,8 @@ const emptyArr: IAppElement[] = <any>[0];
 
 function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
+
+    element.isCustomAppElement = rootElement.isAppElement(element);
     if (!element.isCustomAppElement) return (emptyArr[0] = element) && emptyArr;
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
