@@ -474,7 +474,7 @@ function getDetails(rootElement: RootElement, value: string): ValDetails {
 }
 
 function getFreeChildren(parent: HTMLElement): IAppElement[] {
-    return Array.from(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.INFO)}])`));
+    return <IAppElement[]><any>(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.INFO)}])`));
 }
 
 function detectVariables(rootElement: RootElement, element: Element): boolean {
