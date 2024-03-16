@@ -507,7 +507,7 @@ function execute(rootElement: RootElement, functionName: string, evt: MouseEvent
 }
 
 function detectInjections(rootElement: RootElement, element: HTMLElement): string {
-    const injectionName = getInjectionName(rootElement, element, E_DATA_MARKER.INJECT_TO);
+    const injectionName = getInjectionName(element, E_DATA_MARKER.INJECT_TO);
     if (injectionName) {
         rootElement.ahe_component[injectionName] = element;
         return "inj ";
@@ -626,7 +626,6 @@ function detectChangeHandlers(rootElement: RootElement, element: HTMLElement): s
 function getFunctionName(rootElement: RootElement, element: HTMLElement, marker: E_DATA_MARKER): string {
     const functionName = getAttr(element, marker);
     if (!functionName) return "";
-    if (!rootElement) return "";
 
     bindElementToMethod(rootElement, functionName, element);
     removeAttr(element, marker);
@@ -634,10 +633,9 @@ function getFunctionName(rootElement: RootElement, element: HTMLElement, marker:
     return functionName;
 }
 
-function getInjectionName(rootElement: RootElement, element: HTMLElement, marker: E_DATA_MARKER): string {
+function getInjectionName(element: HTMLElement, marker: E_DATA_MARKER): string {
     const injectionName = getAttr(element, marker);
     if (!injectionName) return "";
-    if (!rootElement) return "";
 
     removeAttr(element, marker);
 
@@ -647,7 +645,6 @@ function getInjectionName(rootElement: RootElement, element: HTMLElement, marker
 function detectElementHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getAttr(element, E_DATA_MARKER.ON_HANDLE);
     if (!functionName) return "";
-    if (!rootElement) return "";
 
     bindElementToMethod(rootElement, functionName, element);
     removeAttr(element, E_DATA_MARKER.ON_HANDLE);
@@ -669,8 +666,6 @@ function bindElementToMethod(rootElement: RootElement, functionName: string, ele
 }
 
 function changeNestedValues(rootElement: RootElement): void {
-    if (!rootElement) return;
-
     for (let i = 0; i < rootElement.ahe_nValues.length; i++) {
         const nestedValue = rootElement.ahe_nValues[i];
         const nestedData = rootElement.ahe_component[nestedValue.valueName];
@@ -683,8 +678,6 @@ function changeNestedValues(rootElement: RootElement): void {
 }
 
 function changeNestedFunctions(rootElement: RootElement): void {
-    if (!rootElement) return;
-
     for (let i = 0; i < rootElement.ahe_nFunctions.length; i++) {
         const nestedValue = rootElement.ahe_nFunctions[i];
         const nestedData = rootElement.ahe_component[nestedValue.valueName]();
@@ -697,8 +690,6 @@ function changeNestedFunctions(rootElement: RootElement): void {
 }
 
 function changeIfConditions(rootElement: RootElement) {
-    if (!rootElement) return;
-
     for (let i = 0; i < rootElement.ahe_IfList.length; i++) {
         const onIf = rootElement.ahe_IfList[i];
         let conditionData = onIf.isFunction ?
@@ -720,8 +711,6 @@ function changeIfConditions(rootElement: RootElement) {
 }
 
 function changeClsConditions(rootElement: RootElement) {
-    if (!rootElement) return;
-
     for (let i = 0; i < rootElement.ahe_ClsIfList.length; i++) {
         const classIf = rootElement.ahe_ClsIfList[i];
         const conditions = classIf.classConditions;
