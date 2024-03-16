@@ -129,9 +129,13 @@ function checkDocumentReady(): void {
     if (isDOMContentLoadedListen) return;
     isDOMContentLoadedListen = true;
 
-    AppDocument.addEventListener("DOMContentLoaded", () => {
+    const listener = () => {
         documentReady$.next(true);
-    });
+        AppDocument.removeEventListener("DOMContentLoaded", listener);
+        isDOMContentLoadedListen = false;
+    };
+
+    AppDocument.addEventListener("DOMContentLoaded", listener);
 }
 
 export function runWhenDocumentReady(callback: ICallback<any>): void {

@@ -4,7 +4,7 @@ const mobileTestExp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile/i;
 export const isMobile = isMobileDevice();
 export const isIframe = AppWindow.top !== AppWindow;
 export const AppChanelName = "AppChanelName_$$$_qaswedsaqwkfnv_129038777810456";
-export const TableChannelName = "simpleTable";
+export const APP_RANDOM_STR = "APP_$$$_dfohirglkbjwefoi" + Date.now();
 
 function isMobileDevice(): boolean {
     const userAgentData = (<any>navigator).userAgentData;

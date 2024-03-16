@@ -1,7 +1,7 @@
-import {CONDITION} from "./utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {IChanelListener} from "../env/types";
+import {CONDITION} from "../enums/CONDITION";
 
 export type OnCreate = { onCreate: () => void };
 export type OnInit = { onInit: () => void };
@@ -23,6 +23,7 @@ export type AttributeChanged = {
 export type NestedValue = {
     textElement: HTMLElement;
     valueName: string;
+    lastData: string;
 };
 export type OnIf = {
     ifElement: HTMLElement;

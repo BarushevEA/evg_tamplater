@@ -1,6 +1,6 @@
 import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
-import {CONDITION, E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
+import {E_DATA_MARKER, E_ROOT_TAG, getAttr, getAttrName, removeAttr, setAttr} from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../../utils/utils";
 import {quickDeleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
@@ -18,6 +18,8 @@ import {
     ValDetails
 } from "../types";
 import {clsSeparator} from "../env";
+import {CONDITION} from "../../enums/CONDITION";
+import {APP_RANDOM_STR} from "../../env/env";
 
 const ifDoubleInitVar = "_______$$bool";
 
@@ -225,8 +227,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
     for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        handleInjections(rootElement, detectForCycle(rootElement, child));
+        handleInjections(rootElement, detectForCycle(rootElement, children[i]));
     }
 }
 
@@ -415,6 +416,8 @@ function updateForOfChildren(
     const lenInjectedArr = injectedArr.length;
     let delta = lenInjectedArr - lenOldChildren;
 
+    if (!(lenInjectedArr + lenOldChildren)) return newChildren;
+
     if (delta > 0) {
         for (let i = 0; i < delta; i++) {
             const newElement = <IAppElement><any>createElement(template.tagName);
@@ -481,11 +484,19 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
         const details = getDetails(rootElement, element.innerHTML);
 
         if (details.isFunction) {
-            rootElement.ahe_nFunctions.push({textElement: <HTMLElement>element, valueName: details.valueName});
+            rootElement.ahe_nFunctions.push({
+                textElement: <HTMLElement>element,
+                valueName: details.valueName,
+                lastData: APP_RANDOM_STR
+            });
             return true;
         }
 
-        rootElement.ahe_nValues.push({textElement: <HTMLElement>element, valueName: details.valueName});
+        rootElement.ahe_nValues.push({
+            textElement: <HTMLElement>element,
+            valueName: details.valueName,
+            lastData: APP_RANDOM_STR
+        });
         return true;
     }
     return false;
@@ -662,11 +673,12 @@ function changeNestedValues(rootElement: RootElement): void {
 
     for (let i = 0; i < rootElement.ahe_nValues.length; i++) {
         const nestedValue = rootElement.ahe_nValues[i];
-        const nestedData = "" + rootElement.ahe_component[nestedValue.valueName];
+        const nestedData = rootElement.ahe_component[nestedValue.valueName];
 
-        if (nestedValue.textElement.innerHTML === nestedData) continue;
+        if (nestedValue.lastData === nestedData) continue;
 
         nestedValue.textElement.innerHTML = nestedData;
+        nestedValue.lastData = nestedData;
     }
 }
 
@@ -675,11 +687,12 @@ function changeNestedFunctions(rootElement: RootElement): void {
 
     for (let i = 0; i < rootElement.ahe_nFunctions.length; i++) {
         const nestedValue = rootElement.ahe_nFunctions[i];
-        const nestedData = "" + rootElement.ahe_component[nestedValue.valueName]();
+        const nestedData = rootElement.ahe_component[nestedValue.valueName]();
 
-        if (nestedValue.textElement.innerHTML === nestedData) continue;
+        if (nestedValue.lastData === nestedData) continue;
 
         nestedValue.textElement.innerHTML = nestedData;
+        nestedValue.lastData = nestedData;
     }
 }
 

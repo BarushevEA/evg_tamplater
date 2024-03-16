@@ -49,8 +49,3 @@ export function removeAttr(element: HTMLElement | Element, marker: E_DATA_MARKER
     element.removeAttribute(getAttrName(marker))
 }
 
-export enum CONDITION {
-    UNDEFINED = "",
-    TRUE = "TRUE",
-    FALSE = "FALSE",
-}
