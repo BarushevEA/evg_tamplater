@@ -405,6 +405,10 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
     return newElements;
 }
 
+function handleCirclesChannelData(data: any, element: HTMLElement, root: RootElement) {
+    root.isAppElement(element) && (<IChanel><any>element).sendData(data);
+}
+
 function updateForOfChildren(
     rootElement: RootElement,
     childrenForUpdate: HTMLElement[],
@@ -427,6 +431,12 @@ function updateForOfChildren(
             const value = getAttr(template, E_DATA_MARKER.ON_IF);
             value && setAttr(newElement, E_DATA_MARKER.ON_IF, value);
             appendChild(cycleParent, newElement);
+
+            handleCirclesChannelData(injectedArr[lenInjectedArr - delta + i], newElement, rootElement);
+        }
+
+        for (let i = 0; i < lenInjectedArr - delta; i++) {
+            handleCirclesChannelData(injectedArr[i], childrenForUpdate[i], rootElement);
         }
     } else {
         delta *= -1;
@@ -451,13 +461,10 @@ function updateForOfChildren(
                 removeChild(cycleParent, child);
             }
         }
-    }
 
-    for (let i = 0; i < lenInjectedArr; i++) {
-        const data = injectedArr[i];
-        const child = childrenForUpdate[i];
-        const chanel = rootElement.getChanel(child);
-        chanel && chanel.sendData(data);
+        for (let i = 0; i < lenInjectedArr; i++) {
+            handleCirclesChannelData(injectedArr[i], childrenForUpdate[i], rootElement);
+        }
     }
 
     return newChildren;
