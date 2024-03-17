@@ -1,0 +1,31 @@
+@import "../../css/mixins";
+
+@mixin main() {
+  .fps_window {
+    @include setWidthHeight(100px, 100px);
+    @include flexColumnNowrap();
+    @include flexCenter();
+
+    font-size: 30px;
+  }
+
+  .bg_green {
+    background: #69e49a;
+  }
+
+  .bg_red {
+    background: #e46969;
+  }
+
+  .big_font {
+    font-size: 60px;
+  }
+
+  .button_set_fps {
+    @include button(120px, 40px);
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+  }
+}

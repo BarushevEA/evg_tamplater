@@ -1,0 +1,20 @@
+<div class="big_font">
+    <txt-val>runningSting</txt-val>
+</div>
+<div class="fps_window" data-cls="isStop?bg_red:bg_green">
+    <txt-val>fpsTxt</txt-val>
+</div>
+<div>
+    animation state:
+    <txt-val>animationState</txt-val>
+</div>
+<div>
+    chosen fps:
+    <txt-val>chosenFps</txt-val>
+</div>
+
+<input class="button_set_fps" data-change="setCustomFps" placeholder="insert FPS" type="text">
+<div class="button_set_fps" data-click="set60Fps"> set 60 fps</div>
+<div class="button_set_fps" data-click="set30Fps"> set 30 fps</div>
+<div class="button_set_fps bg_green" data-click="start"> start</div>
+<div class="button_set_fps bg_red" data-click="stop"> stop</div>

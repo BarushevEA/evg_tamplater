@@ -1,0 +1,43 @@
+.fps_window {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.bg_green {
+    background: #69e49a;
+}
+
+.bg_red {
+    background: #e46969;
+}
+
+.big_font {
+    font-size: 60px;
+}
+
+.button_set_fps {
+    width: 120px;
+    height: 40px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.button_set_fps:hover {
+    opacity: 0.5;
+}
+
+/*# sourceMappingURL=style.css.map */
