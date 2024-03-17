@@ -1,16 +1,16 @@
 <div class="cell v-center h-center"
-     data-dblclick="onDblClick"
-     data-cls="cursor_pointer:isPointer"
-     data-mouseleave="onMouseLeave">
+     qsi-cls="cursor_pointer:isPointer"
+     qsi-dblclick="onDblClick"
+     qsi-mouseleave="onMouseLeave">
     <div class="text">
-        <label data-if="isEdit">
+        <label qsi-if="isEdit">
             <input class="input dark"
-                   data-inject_to="input"
-                   data-keydown="onKeyDown"
-                   data-change="onChange">
+                   qsi-change="onChange"
+                   qsi-inject_to="input"
+                   qsi-keydown="onKeyDown">
         </label>
-        <div data-if="!isEdit">
-            <txt-val>data</txt-val>
+        <div qsi-if="!isEdit">
+            <qsi-bind>data</qsi-bind>
         </div>
     </div>
 </div>

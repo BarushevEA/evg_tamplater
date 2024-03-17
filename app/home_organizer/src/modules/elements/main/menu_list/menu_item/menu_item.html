@@ -1,14 +1,14 @@
 <div class="main-menu_item"
-     data-click="onClick">
-    <txt-val>text</txt-val>
+     qsi-click="onClick">
+    <qsi-bind>text</qsi-bind>
     <div class="main-menu_item-hover"></div>
     <div class="main-lang_view"
-         data-if="isSettingLang">
+         qsi-if="isSettingLang">
         <div class="main-lang_view-hover"></div>
-        <txt-val>currentLang</txt-val>
+        <qsi-bind>currentLang</qsi-bind>
         <div class="main-lang_view_box"
-             data-if="isShowLangViewBox">
-            <app-settings_lang data-for="langList"></app-settings_lang>
+             qsi-if="isShowLangViewBox">
+            <app-settings_lang qsi-for="langList"></app-settings_lang>
         </div>
     </div>
 </div>

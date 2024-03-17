@@ -1,24 +1,24 @@
 <main class="app_main">
     <txt-val>name</txt-val>
-    <button data-click="clickHandler">
+    <button qsi-click="clickHandler">
         Show HELLO
         <txt-val>counter</txt-val>
     </button>
-    <div data-if="isShowHello">
+    <div qsi-if="isShowHello">
         <txt-val>showedTxt</txt-val>
     </div>
-    <div data-handle="handleElement">1</div>
-    <div data-handle="handleElement">2</div>
-    <div data-handle="handleElementExtra">3</div>
-    <div data-handle="handleElementExtra">
+    <div qsi-handle="handleElement">1</div>
+    <div qsi-handle="handleElement">2</div>
+    <div qsi-handle="handleElementExtra">3</div>
+    <div qsi-handle="handleElementExtra">
         <txt-val>name</txt-val>
     </div>
     <div>
         <txt-val>name</txt-val>
-        <span data-handle="handleElementExtra"></span>
+        <span qsi-handle="handleElementExtra"></span>
     </div>
     <label>
-        <input data-keydown="keyDownInput" data-change="changeInput">
+        <input qsi-change="changeInput" qsi-keydown="keyDownInput">
     </label>
     <div>
         input key:

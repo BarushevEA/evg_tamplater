@@ -1,7 +1,7 @@
 <div class="big_font">
     <qsi-bind>runningSting</qsi-bind>
 </div>
-<div class="fps_window" data-cls="isStop?bg_red:bg_green">
+<div class="fps_window" qsi-cls="isStop?bg_red:bg_green">
     <qsi-bind>fpsTxt</qsi-bind>
 </div>
 <div>
@@ -13,8 +13,8 @@
     <qsi-bind>chosenFps</qsi-bind>
 </div>
 
-<input class="button_set_fps" data-change="setCustomFps" placeholder="insert FPS" type="text">
-<div class="button_set_fps" data-click="set60Fps"> set 60 fps</div>
-<div class="button_set_fps" data-click="set30Fps"> set 30 fps</div>
-<div class="button_set_fps bg_green" data-click="start"> start</div>
-<div class="button_set_fps bg_red" data-click="stop"> stop</div>
+<input class="button_set_fps" placeholder="insert FPS" qsi-change="setCustomFps" type="text">
+<div class="button_set_fps" qsi-click="set60Fps"> set 60 fps</div>
+<div class="button_set_fps" qsi-click="set30Fps"> set 30 fps</div>
+<div class="button_set_fps bg_green" qsi-click="start"> start</div>
+<div class="button_set_fps bg_red" qsi-click="stop"> stop</div>

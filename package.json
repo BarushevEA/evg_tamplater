@@ -1,7 +1,7 @@
 {
-  "name": "evg_template",
+  "name": "qusi",
   "version": "1.0.0",
-  "description": "Simple TypeScript website template engine",
+  "description": "Qusi - QuickSimple: Emphasizes speed ('Quick') and simplicity ('Simple').",
   "license": "MIT",
   "author": "Barushev Evgeny",
   "devDependencies": {

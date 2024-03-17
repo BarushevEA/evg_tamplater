@@ -18,38 +18,39 @@
 
 ## Instruction for Actions
 
-* `data-click="functionName"` - The attribute contains the function name of this component, which will handle click
+* `qsi-click="functionName"` - The attribute contains the function name of this component, which will handle click
   events on the element.
-* `data-if="variableName or functionName" ` - The attribute contains the field name of this component, if value of field
+* `qsi-if="variableName or functionName" ` - The attribute contains the field name of this component, if value of field
   equals true element will show.
-* `data-handle="functionName" ` The - attribute contains function name of this component. When function is calling, you
+* `qsi-handle="functionName" ` The - attribute contains function name of this component. When function is calling, you
   can get related elements and process them.
-* `data-inject_to="variableName"`- Injection HTML element to the variable.
-* `data-change="functionName"` - Serving a data-change action using function name.
-* `data-keydown="functionName"` - Serving a data-keydown action using function name.
-* `data-keyup="functionName"` - Serving a data-keyup action using function name.
-* `data-dblclick="functionName"` - Serving a data-dblclick action using function name.
-* `data-scroll="functionName"` - Serving a data-scroll action using function name.
-* `data-wheel="functionName"` - Serving a data-wheel action using function name.
-* `data-mouseleave="functionName"` - Serving a data-mouseleave action using function name.
-* `data-mouseenter="functionName"` - Serving a data-mouseenter action using function name.
-* `data-mouseup="functionName"` - Serving a data-mouseup action using function name.
-* `data-mousedown="functionName"` - Serving a data-mousedown action using function name.
-* `data-cls="classCondition"` - Serving classes based on conditions using variable name or function name.
+* `qsi-inject_to="variableName"`- Injection HTML element to the variable.
+* `qsi-change="functionName"` - Serving a qsi-change action using function name.
+* `qsi-keydown="functionName"` - Serving a qsi-keydown action using function name.
+* `qsi-keyup="functionName"` - Serving a qsi-keyup action using function name.
+* `qsi-dblclick="functionName"` - Serving a qsi-dblclick action using function name.
+* `qsi-scroll="functionName"` - Serving a qsi-scroll action using function name.
+* `qsi-wheel="functionName"` - Serving a qsi-wheel action using function name.
+* `qsi-mouseleave="functionName"` - Serving a qsi-mouseleave action using function name.
+* `qsi-mouseenter="functionName"` - Serving a qsi-mouseenter action using function name.
+* `qsi-mouseup="functionName"` - Serving a qsi-mouseup action using function name.
+* `qsi-mousedown="functionName"` - Serving a qsi-mousedown action using function name.
+* `qsi-cls="classCondition"` - Serving classes based on conditions using variable name or function name.
 ### !!! IMPORTANT !!! if you want to use css encryption - className != conditionName
 ```js
-<div data-cls="class1"> === div.classList.add("class1")
-<div data-cls="class1:true"> === div.classList.add("class1")
-<div data-cls="class1:false"> === div.classList.remove("class1")
-<div data-cls="true?class1:class2"> === div.classList.add("class1") & div.classList.remove("class2")
-<div data-cls="false?class1:class2"> === div.classList.add("class2") & div.classList.remove("class1")
+<div qsi-cls="class1">=== div.classList.add("class1")
+    <div qsi-cls="class1:true">=== div.classList.add("class1")
+        <div qsi-cls="class1:false">=== div.classList.remove("class1")
+            <div qsi-cls="true?class1:class2">=== div.classList.add("class1") & div.classList.remove("class2")
+                <div qsi-cls="false?class1:class2">=== div.classList.add("class2") & div.classList.remove("class1")
 ```
 ```html
-<div data-cls="class1"></div>
-<div data-cls="class1:condition class2:condition class3:condition"></div>
-<div data-cls="class1:condition1 class2:condition2 class3:condition3"></div>
-<div class="class0" data-cls="class1:condition1 class2:condition2 class3:condition3"></div>
-<div data-cls="condition?class1:class2"></div>
+
+<div qsi-cls="class1"></div>
+<div qsi-cls="class1:condition class2:condition class3:condition"></div>
+<div qsi-cls="class1:condition1 class2:condition2 class3:condition3"></div>
+<div class="class0" qsi-cls="class1:condition1 class2:condition2 class3:condition3"></div>
+<div qsi-cls="condition?class1:class2"></div>
 ```
 
-* `data-for="arrName"` - This attribute contains the name of iterated array.
+* `qsi-for="arrName"` - This attribute contains the name of iterated array.

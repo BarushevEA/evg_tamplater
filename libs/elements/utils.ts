@@ -27,7 +27,7 @@ export enum E_ROOT_TAG {
 }
 
 export function getAttrName(marker: E_DATA_MARKER): string {
-    return `data-${marker}`;
+    return `qsi-${marker}`;
 }
 
 export function getAttr(element: HTMLElement | Element, marker: E_DATA_MARKER): string {
