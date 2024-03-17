@@ -23,6 +23,7 @@ export const E_DATA_MARKER_KEYS = Object.keys(E_DATA_MARKER);
 
 export enum E_ROOT_TAG {
     TEXT_VALUE = "txt-val",
+    QSI_BIND = "qsi-bind"
 }
 
 export function getAttrName(marker: E_DATA_MARKER): string {

@@ -76,7 +76,9 @@ export type RootBehavior = {
 export type RootElement = {
     ahe_number: number;
     ahe_nValues: NestedValue[];
+    ahe_bindValues: NestedValue[];
     ahe_nFunctions: NestedValue[];
+    ahe_bindFunctions: NestedValue[];
     ahe_IfList: OnIf[];
     ahe_ClsIfList: ClassIf[];
     ahe_ForOfList: ForOf[];

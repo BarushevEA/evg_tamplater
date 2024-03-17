@@ -28,8 +28,12 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         static ahe_Counter = 0;
         ahe_number = 0;
         private ahe_opts: ELEMENT_OPTIONS;
+
         ahe_nValues: NestedValue[];
         ahe_nFunctions: NestedValue[];
+        ahe_bindValues: NestedValue[];
+        ahe_bindFunctions: NestedValue[];
+
         ahe_IfList: OnIf[];
         ahe_ClsIfList: ClassIf[];
         ahe_ForOfList: ForOf[];
@@ -63,6 +67,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
             this.ahe_nValues = [];
+            this.ahe_bindFunctions = [];
+            this.ahe_bindValues = [];
             this.ahe_IfList = [];
             this.ahe_ClsIfList = [];
             this.ahe_ForOfList = [];
@@ -112,6 +118,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
 
             detectInjectedData(this);
             this.detectChanges(true);
@@ -129,6 +136,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             }
 
             if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
 
             this.onDestroy$.next(true);
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
@@ -136,6 +144,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_clr.unsubscribeAll();
             this.ahe_nFunctions.length = 0;
             this.ahe_nValues.length = 0;
+            this.ahe_bindFunctions.length = 0;
+            this.ahe_bindValues.length = 0;
             this.ahe_IfList.length = 0;
             this.ahe_ClsIfList.length = 0;
             this.ahe_ForOfList.length = 0;
@@ -171,6 +181,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             !isForLost && this.ahe_ForOfList.length && changeForOf(this);
             changeIfConditions(this);
             changeClsConditions(this);
+            changeBindValues(this);
+            changeBindFunctions(this);
             changeNestedValues(this);
             changeNestedFunctions(this);
             this.onChangesDetected$.next(true);
@@ -251,27 +263,33 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
 
     const child = children[0];
 
-    if (!detectVariables(rootElement, child)) {
-        actions += detectInjections(rootElement, <HTMLElement>child);
-        actions += detectClickHandlers(rootElement, <HTMLElement>child);
-        actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
-        actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
-        actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
-        actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
-        actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
-        actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
-        actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
-        actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
-        actions += detectScrollHandlers(rootElement, <HTMLElement>child);
-        actions += detectWheelHandlers(rootElement, <HTMLElement>child);
-        actions += detectChangeHandlers(rootElement, <HTMLElement>child);
-        actions += detectElementHandlers(rootElement, <HTMLElement>child);
-        actions += detectIfConditions(rootElement, <HTMLElement>child);
-        actions += detectClsConditions(rootElement, <HTMLElement>child);
-        setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
-    } else {
+    if (detectVariables(rootElement, child)) {
         setAttr(child, E_DATA_MARKER.INFO, actions + "var]");
+        return;
     }
+
+    if (detectBindVariables(rootElement, child)) {
+        setAttr(child, E_DATA_MARKER.INFO, actions + "bind]");
+        return;
+    }
+
+    actions += detectInjections(rootElement, <HTMLElement>child);
+    actions += detectClickHandlers(rootElement, <HTMLElement>child);
+    actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
+    actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
+    actions += detectMouseUpHandlers(rootElement, <HTMLElement>child);
+    actions += detectMouseDownHandlers(rootElement, <HTMLElement>child);
+    actions += detectMouseMoveHandlers(rootElement, <HTMLElement>child);
+    actions += detectKeyDownHandlers(rootElement, <HTMLElement>child);
+    actions += detectKeyUpHandlers(rootElement, <HTMLElement>child);
+    actions += detectDblClickHandlers(rootElement, <HTMLElement>child);
+    actions += detectScrollHandlers(rootElement, <HTMLElement>child);
+    actions += detectWheelHandlers(rootElement, <HTMLElement>child);
+    actions += detectChangeHandlers(rootElement, <HTMLElement>child);
+    actions += detectElementHandlers(rootElement, <HTMLElement>child);
+    actions += detectIfConditions(rootElement, <HTMLElement>child);
+    actions += detectClsConditions(rootElement, <HTMLElement>child);
+    setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
     if (child.isCustomAppElement) {
         (<RootElement><any>child).ahe_parent_chanel = <IChanel><any>rootElement;
@@ -372,6 +390,7 @@ const emptyArr: IAppElement[] = <any>[0];
 
 function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
     if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
+    if (element.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return (emptyArr[0] = element) && emptyArr;
     if (!rootElement.isAppElement(element)) return (emptyArr[0] = element) && emptyArr;
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
@@ -500,6 +519,31 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
         }
 
         rootElement.ahe_nValues.push({
+            textElement: <HTMLElement>element,
+            valueName: details.valueName,
+            lastData: APP_RANDOM_STR
+        });
+        return true;
+    }
+    return false;
+}
+
+function detectBindVariables(rootElement: RootElement, element: Element): boolean {
+    if (element.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) {
+        if (!element.innerHTML) return false;
+
+        const details = getDetails(rootElement, element.innerHTML);
+
+        if (details.isFunction) {
+            rootElement.ahe_bindFunctions.push({
+                textElement: <HTMLElement>element,
+                valueName: details.valueName,
+                lastData: APP_RANDOM_STR
+            });
+            return true;
+        }
+
+        rootElement.ahe_bindValues.push({
             textElement: <HTMLElement>element,
             valueName: details.valueName,
             lastData: APP_RANDOM_STR
@@ -684,6 +728,18 @@ function changeNestedValues(rootElement: RootElement): void {
     }
 }
 
+function changeBindValues(rootElement: RootElement): void {
+    for (let i = 0; i < rootElement.ahe_bindValues.length; i++) {
+        const nestedValue = rootElement.ahe_bindValues[i];
+        const nestedData = rootElement.ahe_component[nestedValue.valueName];
+
+        if (nestedValue.lastData === nestedData) continue;
+
+        nestedValue.textElement.textContent = nestedData;
+        nestedValue.lastData = nestedData;
+    }
+}
+
 function changeNestedFunctions(rootElement: RootElement): void {
     for (let i = 0; i < rootElement.ahe_nFunctions.length; i++) {
         const nestedValue = rootElement.ahe_nFunctions[i];
@@ -692,6 +748,18 @@ function changeNestedFunctions(rootElement: RootElement): void {
         if (nestedValue.lastData === nestedData) continue;
 
         nestedValue.textElement.innerHTML = nestedData;
+        nestedValue.lastData = nestedData;
+    }
+}
+
+function changeBindFunctions(rootElement: RootElement): void {
+    for (let i = 0; i < rootElement.ahe_bindFunctions.length; i++) {
+        const nestedValue = rootElement.ahe_bindFunctions[i];
+        const nestedData = rootElement.ahe_component[nestedValue.valueName]();
+
+        if (nestedValue.lastData === nestedData) continue;
+
+        nestedValue.textElement.textContent = nestedData;
         nestedValue.lastData = nestedData;
     }
 }
