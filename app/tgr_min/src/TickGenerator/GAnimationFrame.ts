@@ -1,18 +1,15 @@
 import {ERROR, EState} from "./Env";
-import {ICallback, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
-import {IGenerator, IRequestAnimationFrame, Status} from "./Types";
+import {IRequestAnimationFrame, Status} from "./Types";
+import {AbstractGenerator} from "./AbstractGenerator";
 
-export class GAnimationFrame implements IGenerator, IRequestAnimationFrame {
+export class GAnimationFrame extends AbstractGenerator implements IRequestAnimationFrame {
     private rafId: number | null = null;
     private fps: number = 60;
-    private state$ = new Observable<EState>(EState.UNDEFINED);
 
-    get state(): EState {
-        if (this.state$.isDestroyed) return EState.DESTROYED;
-        const state = this.state$.getValue();
-        return state ?? EState.UNDEFINED;
+    constructor(rafId: number | null) {
+        super();
+        this.rafId = rafId;
     }
 
     setFPS(num: number): Status {
@@ -37,8 +34,7 @@ export class GAnimationFrame implements IGenerator, IRequestAnimationFrame {
         return this.setFPS(60);
     }
 
-    start(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
+    startProcess(): Status {
         if (this.rafId) return getNegativeStatus(EState.STARTED);
 
         let lastUpdate = Math.floor(performance.now());
@@ -56,43 +52,14 @@ export class GAnimationFrame implements IGenerator, IRequestAnimationFrame {
         };
 
         this.rafId = requestAnimationFrame(animateFrame);
-        this.state$.next(EState.STARTED);
 
-        return getPositiveStatus(EState.STARTED);
+        return getPositiveStatus(EState.STARTED)
     }
 
-    stop(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
+    stopProcess(): Status {
         if (!this.rafId) return getNegativeStatus(ERROR.ERROR_NEGATIVE_DELAY);
-
         cancelAnimationFrame(this.rafId);
         this.rafId = null;
-        this.state$.next(EState.STOPPED);
-
-        return getPositiveStatus(EState.STOPPED);
-    }
-
-    destroy(): Status {
-        this.stop();
-        this.state$.next(EState.DESTROYED);
-        this.state$.destroy();
-
-        return getPositiveStatus(EState.DESTROYED);
-    }
-
-    subscribeOnState(callback: ICallback<EState>): ISubscriptionLike | undefined {
-        if (this.isDestroyed()) return undefined;
-
-        return this.state$.subscribe(callback);
-    }
-
-    subscribeOnProcess(callback: ICallback<EState>): ISubscriptionLike | undefined {
-        if (this.isDestroyed()) return undefined;
-
-        return this.state$.pipe()?.emitByPositive(state => state === EState.PROCESS).subscribe(callback);
-    }
-
-    isDestroyed(): boolean {
-        return this.state === EState.DESTROYED;
+        return getPositiveStatus(EState.STOPPED)
     }
 }

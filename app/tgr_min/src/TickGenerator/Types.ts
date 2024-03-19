@@ -15,6 +15,7 @@ export type IGenerator = {
     start(): Status;
     stop(): Status;
     destroy(): Status;
+    isDestroyed(): boolean;
 };
 
 export type ITimeout = {

@@ -1,18 +1,14 @@
-import {IGenerator, IInterval, milliseconds, Status} from "./Types";
+import {IInterval, milliseconds, Status} from "./Types";
 import {ERROR, EState} from "./Env";
-import {ICallback, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
+import {AbstractGenerator} from "./AbstractGenerator";
 
-export class GInterval implements IGenerator, IInterval {
+export class GInterval extends AbstractGenerator implements IInterval {
     private intervalId: any = 0;
     private delay: milliseconds = 0;
-    private state$ = new Observable<EState>(EState.UNDEFINED);
 
-    get state(): EState {
-        if (this.state$.isDestroyed) return EState.DESTROYED;
-        const state = this.state$.getValue();
-        return state ?? EState.UNDEFINED;
+    constructor() {
+        super();
     }
 
     setInterval(delay: milliseconds): Status {
@@ -26,45 +22,16 @@ export class GInterval implements IGenerator, IInterval {
         return getPositiveStatus(EState.INIT);
     }
 
-    start(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-
+    startProcess(): Status {
         this.intervalId = setInterval(() => {
             this.state$.next(EState.PROCESS);
         }, this.delay);
 
-        this.state$.next(EState.STARTED);
         return getPositiveStatus(EState.STARTED);
     }
 
-    stop(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-
+    stopProcess(): Status {
         clearInterval(this.intervalId);
-        this.state$.next(EState.STOPPED);
         return getPositiveStatus(EState.STOPPED);
-    }
-
-    destroy(): Status {
-        this.stop();
-        this.state$.next(EState.DESTROYED);
-        this.state$.destroy();
-        return getPositiveStatus(EState.DESTROYED);
-    }
-
-    subscribeOnState(callback: ICallback<EState>): ISubscriptionLike | undefined {
-        if (this.isDestroyed()) return undefined;
-
-        return this.state$.subscribe(callback);
-    }
-
-    subscribeOnProcess(callback: ICallback<EState>): ISubscriptionLike | undefined {
-        if (this.isDestroyed()) return undefined;
-
-        return this.state$.pipe()?.emitByPositive(state => state === EState.PROCESS).subscribe(callback);
-    }
-
-    isDestroyed(): boolean {
-        return this.state === EState.DESTROYED;
     }
 }
