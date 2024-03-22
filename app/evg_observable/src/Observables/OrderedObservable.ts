@@ -12,7 +12,7 @@ import {
     IOrderedSubscriptionLike,
     ISubscriptionLike
 } from "./Types";
-import {deleteFromArray} from "./FunctionLibs";
+import {deleteFromArray, sortAscending, sortDescending} from "./FunctionLibs";
 
 export class OrderedSubscribeObject<T> extends SubscribeObject<T> {
     constructor(observable: OrderedObservable<T> | IOrdered<T>, isPipe?: boolean) {
@@ -66,14 +66,22 @@ export class OrderedSubscribeObject<T> extends SubscribeObject<T> {
 
 export class OrderedObservable<T>
     extends Observable<T> implements IOrdered<T> {
+    private sortDirection = sortAscending;
+
+    public setAscendingSort(): boolean {
+        this.sortDirection = sortAscending;
+        return this.sortByOrder();
+    }
+
+    public setDescendingSort(): boolean {
+        this.sortDirection = sortDescending;
+        return this.sortByOrder();
+    }
+
     sortByOrder(): boolean {
         if (this._isDestroyed) return false;
-        this.listeners.sort((a, b) => {
-            if (a.order > b.order) return 1;
-            if (a.order < b.order) return -1;
-            return 0;
-        });
-        return true
+        this.listeners.sort(this.sortDirection);
+        return true;
     }
 
     subscribe(listener: IListener<T>, errorHandler?: IErrorCallback): IOrderedSubscriptionLike | undefined {

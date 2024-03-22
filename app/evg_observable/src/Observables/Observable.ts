@@ -18,6 +18,8 @@ export class SubscribeObject<T> implements ISubscribeObject<T>, IMarkedForUnsubs
     protected observable: IObserver<T> | undefined;
     protected listener: IListener<T> | undefined;
     protected isPipe = false;
+
+    protected _order = 0;
     private isListenPaused = false;
     private once: IOnceMarker = {isOnce: false, isFinished: false};
     private unsubscribeByNegativeCondition: ICallback<T> = <any>null;
@@ -26,19 +28,13 @@ export class SubscribeObject<T> implements ISubscribeObject<T>, IMarkedForUnsubs
     private emitByPositiveCondition: ICallback<T> = <any>null;
     private emitMatchCondition: ICallback<T> = <any>null;
 
-    constructor(observable?: IObserver<T>, isPipe?: boolean) {
-        this.observable = observable;
-        this.isPipe = !!isPipe;
-    }
-
-    protected _order = 0;
-
     get order(): number {
         return this._order;
     }
 
-    set order(value: number) {
-        this._order = value;
+    constructor(observable?: IObserver<T>, isPipe?: boolean) {
+        this.observable = observable;
+        this.isPipe = !!isPipe;
     }
 
     private static callbackSend<T>(value: T, subsObj: SubscribeObject<T>): void {
@@ -130,6 +126,10 @@ export class SubscribeObject<T> implements ISubscribeObject<T>, IMarkedForUnsubs
         this.isListenPaused = true;
     }
 
+    set order(value: number) {
+        this._order = value;
+    }
+
     protected errorHandler: IErrorCallback = (errorData: any, errorMessage: any) => {
         console.log(`(Unit of SubscribeObject).send(${errorData}) ERROR:`, errorMessage);
     };
@@ -137,22 +137,15 @@ export class SubscribeObject<T> implements ISubscribeObject<T>, IMarkedForUnsubs
 
 export class Observable<T> implements IObserver<T>, IStream<T> {
     protected listeners: ISubscribeObject<T>[] = [];
-    protected isNextProcess = false;
-    protected listenersForUnsubscribe: ISubscriptionLike[] = [];
-
-    constructor(private value: T) {
-    }
-
     private _isEnable: boolean = true;
 
     get isEnable(): boolean {
         return this._isEnable;
     }
+    protected isNextProcess = false;
+    protected listenersForUnsubscribe: ISubscriptionLike[] = [];
 
-    protected _isDestroyed = false;
-
-    get isDestroyed(): boolean {
-        return this._isDestroyed;
+    constructor(private value: T) {
     }
 
     disable(): void {
@@ -162,6 +155,8 @@ export class Observable<T> implements IObserver<T>, IStream<T> {
     enable(): void {
         this._isEnable = true;
     }
+
+    protected _isDestroyed = false;
 
     public next(value: T): void {
         if (this._isDestroyed) return;
@@ -180,6 +175,10 @@ export class Observable<T> implements IObserver<T>, IStream<T> {
         if (!this._isEnable) return;
 
         for (let i = 0; i < values.length; i++) this.next(values[i]);
+    }
+
+    get isDestroyed(): boolean {
+        return this._isDestroyed;
     }
 
     public unSubscribe(listener: ISubscriptionLike): void {
