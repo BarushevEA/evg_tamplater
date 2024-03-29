@@ -1,13 +1,13 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {GAnimationFrame} from "../../../TickGenerator/GAnimationFrame";
-import {GInterval} from "../../../TickGenerator/GInterval";
+import {TickCounter} from "../../../TickGenerator/TickCounter";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;
     fpsCounter: number;
     fpsTxt: string;
     animationFrame: GAnimationFrame;
-    timeInterval: GInterval;
+    counter: TickCounter;
     isStop: boolean;
     animationState: any;
     chosenFps: number;
@@ -27,7 +27,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
         this.animationFrame.setDefault();
         this.animationFrame.subscribeOnState((state) => {
-            this.fpsCounter++;
             this.animationState = state;
 
             const str = this.strArr.shift();
@@ -37,21 +36,15 @@ export class Main implements OnInit, OnCreate, OnDestroy {
             this.runningSting = this.strArr.join("");
         });
 
-        this.timeInterval.setInterval(1000);
-        this.timeInterval.subscribeOnProcess(() => {
-            this.fpsTxt = this.getFpsTxt();
-            this.isStop = !this.fpsCounter;
-            this.root.detectChanges();
-            this.fpsCounter = 0;
-        });
+        this.counter.subscribe(fps => this.showFps(fps));
 
         this.animationFrame.start();
-        this.timeInterval.start();
+        this.counter.start();
     }
 
     onDestroy(): void {
         this.animationFrame.stop();
-        this.timeInterval.stop();
+        this.counter.stop();
     }
 
     set60Fps(): void {
@@ -66,10 +59,13 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
     start(): void {
         this.animationFrame.start();
+        this.counter.start();
     }
 
     stop(): void {
         this.animationFrame.stop();
+        this.counter.stop();
+        this.showFps(0);
     }
 
     setCustomFps(evt: Event): void {
@@ -84,7 +80,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.fpsCounter = 0;
         this.fpsTxt = "";
         this.animationFrame = new GAnimationFrame();
-        this.timeInterval = new GInterval();
+        this.counter = new TickCounter(this.animationFrame);
         this.isStop = true;
         this.animationState = "";
         this.chosenFps = 60;
@@ -92,5 +88,12 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
     private getFpsTxt(): string {
         return `${this.fpsCounter} fps`;
+    }
+
+    private showFps(fps: number) {
+        this.fpsCounter = fps;
+        this.fpsTxt = this.getFpsTxt();
+        this.isStop = !this.fpsCounter;
+        this.root.detectChanges();
     }
 }

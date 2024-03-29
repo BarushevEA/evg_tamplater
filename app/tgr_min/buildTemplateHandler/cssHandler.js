@@ -69,7 +69,7 @@ function getEncryptedObject(jsFileStr, cssFileStr) {
     const classStrListModified = [];
     const classes = encrypt.cssIncludeList;
 
-    const dataMarker = `data-cls='`;
+    const dataMarker = `qsi-cls='`;
     const dataStrList = [];
     const dataStrListModified = [];
 
