@@ -1,6 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {GAnimationFrame} from "../../../TickGenerator/GAnimationFrame";
 import {TickCounter} from "../../../TickGenerator/TickCounter";
+import {EState} from "../../../TickGenerator/Env";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;
@@ -26,16 +27,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.root.detectChanges();
 
         this.animationFrame.setDefault();
-        this.animationFrame.subscribeOnState((state) => {
-            this.animationState = state;
-
-            const str = this.strArr.shift();
-            this.strArr.push(str);
-
-            this.root.detectChanges();
-            this.runningSting = this.strArr.join("");
-        });
-
+        this.animationFrame.subscribeOnState((state) => this.showText(state));
         this.counter.subscribe(fps => this.showFps(fps));
 
         this.animationFrame.start();
@@ -88,6 +80,16 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
     private getFpsTxt(): string {
         return `${this.fpsCounter} fps`;
+    }
+
+    private showText(state: EState) {
+        this.animationState = state;
+
+        const str = this.strArr.shift();
+        this.strArr.push(str);
+
+        this.runningSting = this.strArr.join("");
+        this.root.detectChanges();
     }
 
     private showFps(fps: number) {
