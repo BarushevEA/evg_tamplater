@@ -17,6 +17,20 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     runningSting = "-----------[TEST-FPS-PROCESSING]-----------";
     strArr: string[] = this.runningSting.split("");
 
+    metricName: string;
+    metricSeconds: string;
+    metricSecondsMin: string;
+    metricSecondsMax: string;
+    metricSecondsAvg: string;
+    metricMinutes: string;
+    metricMinutesMin: string;
+    metricMinutesMax: string;
+    metricMinutesAvg: string;
+    metricHours: string;
+    metricHoursMin: string;
+    metricHoursMax: string;
+    metricHoursAvg: string;
+
     constructor(readonly root: RootBehavior) {
         this.init(root);
     }
@@ -30,7 +44,10 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
         this.animationFrame.setDefault();
         this.animationFrame.subscribeOnState((state) => this.showText(state));
-        this.animationCounter.subscribe(fps => this.showFps(fps));
+        this.animationCounter.subscribe(fps => {
+            this.showFps(fps);
+            this.showMetrics();
+        });
 
         this.animationFrame.start();
         this.animationCounter.start();
@@ -93,6 +110,20 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.showText = this.meter.decorate("this.showText", this.showText.bind(this));
         this.showFps = this.meter.decorate("this.showFps", this.showFps.bind(this));
         this.meter.start();
+
+        this.metricName = "this.showText";
+        this.metricSeconds = "0";
+        this.metricSecondsMin = "0";
+        this.metricSecondsMax = "0";
+        this.metricSecondsAvg = "0";
+        this.metricMinutes = "0";
+        this.metricMinutesMin = "0";
+        this.metricMinutesMax = "0";
+        this.metricMinutesAvg = "0";
+        this.metricHours = "0";
+        this.metricHoursMin = "0";
+        this.metricHoursMax = "0";
+        this.metricHoursAvg = "0";
     }
 
     private getFpsTxt(): string {
@@ -113,6 +144,24 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.fpsCounter = fps;
         this.fpsTxt = this.getFpsTxt();
         this.isStop = !this.fpsCounter;
+        this.root.detectChanges();
+    }
+
+    private showMetrics() {
+        const metrics = this.meter.getMetrics(this.metricName);
+
+        this.metricSeconds = "" + metrics.countOfUsesPerSecond;
+        this.metricSecondsMin = "" + metrics.countOfUsesPerSecondMin;
+        this.metricSecondsMax = "" + metrics.countOfUsesPerSecondMax;
+        this.metricSecondsAvg = "" + metrics.countOfUsesPerSecondAvg;
+        this.metricMinutes = "" + metrics.countOfUsesPerMinute;
+        this.metricMinutesMin = "" + metrics.countOfUsesPerMinuteMin;
+        this.metricMinutesMax = "" + metrics.countOfUsesPerMinuteMax;
+        this.metricMinutesAvg = "" + metrics.countOfUsesPerMinuteAvg;
+        this.metricHours = "" + metrics.countOfUsesPerHour;
+        this.metricHoursMin = "" + metrics.countOfUsesPerHourMin;
+        this.metricHoursMax = "" + metrics.countOfUsesPerHourMax;
+        this.metricHoursAvg = "" + metrics.countOfUsesPerHourAvg;
         this.root.detectChanges();
     }
 }

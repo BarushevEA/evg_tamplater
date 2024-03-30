@@ -10,6 +10,21 @@
     border-radius: 50%;
   }
 
+  .metrics_window {
+    position: absolute;
+    top: 100px;
+    right: 100px;
+
+    @include setWidthHeight(300px, 600px);
+    @include flexColumnNowrap();
+    @include flexStart();
+
+    font-size: 30px;
+    border: 1px solid #108b55;
+
+    padding: 10px;
+  }
+
   .bg_green {
     background: #69e49a;
   }
