@@ -41,15 +41,8 @@ export class GMeter implements IMeter {
         return getPositiveStatus(EState.PROCESS);
     }
 
-    stop(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
-
-        this.perSecondTimer.stop();
-        this.perMinuteTimer.stop();
-        this.perHourTimer.stop();
-        this.perDayTimer.stop();
-
-        return getPositiveStatus(EState.STOPPED);
+    get length(): number {
+        return Object.keys(this.metrics).length;
     }
 
     destroy(): Status {
@@ -86,10 +79,6 @@ export class GMeter implements IMeter {
 
     get state(): EState {
         return this._state;
-    }
-
-    get length(): number {
-        return Object.keys(this.metrics).length;
     }
 
     decorate(funcName: string, func: (...args: any[]) => any): (...args: any[]) => any {
@@ -155,44 +144,6 @@ export class GMeter implements IMeter {
         };
     }
 
-    private addTimer(deleteObj: { isDeleted: boolean }, timer: AbstractGenerator, handler: () => void) {
-        const subs = timer.subscribeOnProcess(() => {
-            if (deleteObj.isDeleted) {
-                subs?.unsubscribe();
-                return;
-            }
-
-            handler();
-        });
-    }
-
-    getMetrics(funcName: string): IUserMeterData {
-        const metrics: IUserMeterData = {...this.metrics[funcName]};
-        delete (<any>metrics)._deleteObj;
-        delete (<any>metrics)._counter;
-        return metrics;
-    }
-
-    getAll(): IUserMetrics {
-        const userMetrics: IUserMetrics = {};
-
-        for (const metricsKey in this.metrics) {
-            userMetrics[metricsKey] = this.getMetrics(metricsKey);
-        }
-
-        return userMetrics;
-    }
-
-    private clearFunc(): void {
-        const funcListForDelete: string[] = [];
-        for (const funcName in this.metrics) {
-            funcListForDelete.push(funcName);
-        }
-        for (const funcName of funcListForDelete) {
-            this.deleteFunc(funcName);
-        }
-    }
-
     private addTimers(deleteObj: { isDeleted: boolean }, funcName: string) {
         const counter = this.metrics[funcName]._counter;
 
@@ -250,6 +201,62 @@ export class GMeter implements IMeter {
             this.metrics[funcName].countOfUsesPerDayMin = getMinNumNotZero(this.metrics[funcName].countOfUsesPerDayMin, counter.days);
             this.metrics[funcName].countOfUsesPerDayAvg = getAvgNum(this.metrics[funcName].countOfUsesPerDayAvg, counter.days);
             counter.days = 0;
+        });
+    }
+
+    stop(): Status {
+        if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
+
+        this.perSecondTimer.stop();
+        this.perMinuteTimer.stop();
+        this.perHourTimer.stop();
+        this.perDayTimer.stop();
+
+        for (const metricsKey in this.metrics) {
+            this.metrics[metricsKey]._counter.days = 0;
+            this.metrics[metricsKey]._counter.hours = 0;
+            this.metrics[metricsKey]._counter.minutes = 0;
+            this.metrics[metricsKey]._counter.seconds = 0;
+        }
+
+        return getPositiveStatus(EState.STOPPED);
+    }
+
+    getMetrics(funcName: string): IUserMeterData {
+        const metrics: IUserMeterData = {...this.metrics[funcName]};
+        delete (<any>metrics)._deleteObj;
+        delete (<any>metrics)._counter;
+        return metrics;
+    }
+
+    getAll(): IUserMetrics {
+        const userMetrics: IUserMetrics = {};
+
+        for (const metricsKey in this.metrics) {
+            userMetrics[metricsKey] = this.getMetrics(metricsKey);
+        }
+
+        return userMetrics;
+    }
+
+    private clearFunc(): void {
+        const funcListForDelete: string[] = [];
+        for (const funcName in this.metrics) {
+            funcListForDelete.push(funcName);
+        }
+        for (const funcName of funcListForDelete) {
+            this.deleteFunc(funcName);
+        }
+    }
+
+    private addTimer(deleteObj: { isDeleted: boolean }, timer: AbstractGenerator, handler: () => void) {
+        const subs = timer.subscribeOnProcess(() => {
+            if (deleteObj.isDeleted) {
+                subs?.unsubscribe();
+                return;
+            }
+
+            handler();
         });
     }
 }
