@@ -6,6 +6,7 @@ import {Observable} from "evg_observable/src/outLib/Observable";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
 
 export class TickCounter implements ITickCounter {
+    private _state = EState.UNDEFINED;
     private defaultPeriodMs = 1000;
     private periodMs = 0;
     private timer: any;
@@ -18,7 +19,10 @@ export class TickCounter implements ITickCounter {
         this.init();
     }
 
-    private _state = EState.UNDEFINED;
+    private init() {
+        this._state = EState.INIT;
+        this.resetPeriod();
+    }
 
     get state(): EState {
         return this._state;
@@ -99,10 +103,5 @@ export class TickCounter implements ITickCounter {
         this.counter$.destroy();
         this._state = EState.DESTROYED;
         return getPositiveStatus(this.state);
-    }
-
-    private init() {
-        this._state = EState.INIT;
-        this.resetPeriod();
     }
 }

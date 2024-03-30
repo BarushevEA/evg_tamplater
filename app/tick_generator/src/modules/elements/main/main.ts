@@ -2,6 +2,7 @@ import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/
 import {GAnimationFrame} from "../../../TickGenerator/GAnimationFrame";
 import {TickCounter} from "../../../TickGenerator/TickCounter";
 import {EState} from "../../../TickGenerator/Env";
+import {GMeter} from "../../../TickGenerator/GMeter";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;
@@ -9,6 +10,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     fpsTxt: string;
     animationFrame: GAnimationFrame;
     counter: TickCounter;
+    meter: GMeter;
     isStop: boolean;
     animationState: any;
     chosenFps: number;
@@ -52,12 +54,15 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     start(): void {
         this.animationFrame.start();
         this.counter.start();
+        this.meter.start();
     }
 
     stop(): void {
         this.animationFrame.stop();
         this.counter.stop();
+        this.meter.stop();
         this.showFps(0);
+        console.log(this.meter.getAll());
     }
 
     setCustomFps(evt: Event): void {
@@ -73,9 +78,21 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.fpsTxt = "";
         this.animationFrame = new GAnimationFrame();
         this.counter = new TickCounter(this.animationFrame);
+        this.meter = new GMeter();
         this.isStop = true;
         this.animationState = "";
         this.chosenFps = 60;
+        this.addMetrics();
+    }
+
+    private addMetrics() {
+        this.onInit = this.meter.decorate("this.onInit", this.onInit.bind(this));
+        this.start = this.meter.decorate("this.start", this.start.bind(this));
+        this.stop = this.meter.decorate("this.stop", this.stop.bind(this));
+        this.getFpsTxt = this.meter.decorate("this.getFpsTxt", this.getFpsTxt.bind(this));
+        this.showText = this.meter.decorate("this.showText", this.showText.bind(this));
+        this.showFps = this.meter.decorate("this.showFps", this.showFps.bind(this));
+        this.meter.start();
     }
 
     private getFpsTxt(): string {

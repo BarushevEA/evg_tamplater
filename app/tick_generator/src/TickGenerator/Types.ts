@@ -44,14 +44,30 @@ export type ITickCounter = ILifeCircle & {
     subscribe(callback: ICallback<number>): ISubscriptionLike | undefined;
 };
 
-export type IMeterData = {
+export type IUserMeterData = {
     countOfUses: number;
     countOfErrors: number;
-    useTime: number;
+    totalExecutionTime: number;
+    timePerCall: number;
     countOfUsesPerSecond: number;
+    countOfUsesPerSecondMax: number;
+    countOfUsesPerSecondMin: number;
+    countOfUsesPerSecondAvg: number;
     countOfUsesPerMinute: number;
+    countOfUsesPerMinuteMax: number;
+    countOfUsesPerMinuteMin: number;
+    countOfUsesPerMinuteAvg: number;
     countOfUsesPerHour: number;
+    countOfUsesPerHourMax: number;
+    countOfUsesPerHourMin: number;
+    countOfUsesPerHourAvg: number;
     countOfUsesPerDay: number;
+    countOfUsesPerDayMax: number;
+    countOfUsesPerDayMin: number;
+    countOfUsesPerDayAvg: number;
+}
+
+export type IMeterData = IUserMeterData & {
     _deleteObj: { isDeleted: boolean; };
     _counter: {
         seconds: number;
@@ -65,10 +81,14 @@ export type Metrics = {
     [funcName: string]: IMeterData;
 };
 
+export type IUserMetrics = {
+    [funcName: string]: IUserMeterData;
+};
+
 export type IMeter = ILifeCircle & {
     length: number;
     decorate(funcName: string, func: (...args: any[]) => any): (...args: any[]) => any;
     deleteFunc(funcName: string): Status;
-    getMetrics(funcName: string): IMeterData;
-    getAll(): Metrics;
+    getMetrics(funcName: string): IUserMeterData;
+    getAll(): IUserMetrics;
 };
