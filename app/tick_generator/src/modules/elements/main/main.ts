@@ -9,7 +9,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     fpsCounter: number;
     fpsTxt: string;
     animationFrame: GAnimationFrame;
-    counter: TickCounter;
+    animationCounter: TickCounter;
     meter: GMeter;
     isStop: boolean;
     animationState: any;
@@ -30,15 +30,15 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
         this.animationFrame.setDefault();
         this.animationFrame.subscribeOnState((state) => this.showText(state));
-        this.counter.subscribe(fps => this.showFps(fps));
+        this.animationCounter.subscribe(fps => this.showFps(fps));
 
         this.animationFrame.start();
-        this.counter.start();
+        this.animationCounter.start();
     }
 
     onDestroy(): void {
         this.animationFrame.stop();
-        this.counter.stop();
+        this.animationCounter.stop();
     }
 
     set60Fps(): void {
@@ -53,13 +53,13 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
     start(): void {
         this.animationFrame.start();
-        this.counter.start();
+        this.animationCounter.start();
         this.meter.start();
     }
 
     stop(): void {
         this.animationFrame.stop();
-        this.counter.stop();
+        this.animationCounter.stop();
         this.meter.stop();
         this.showFps(0);
         console.log(this.meter.getAll());
@@ -77,7 +77,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.fpsCounter = 0;
         this.fpsTxt = "";
         this.animationFrame = new GAnimationFrame();
-        this.counter = new TickCounter(this.animationFrame);
+        this.animationCounter = new TickCounter(this.animationFrame);
         this.meter = new GMeter();
         this.isStop = true;
         this.animationState = "";
