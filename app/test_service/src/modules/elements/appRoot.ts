@@ -1,7 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy {
-    readonly root: RootBehavior;
+    readonly root;
     name: string;
 
     constructor(root: RootBehavior) {

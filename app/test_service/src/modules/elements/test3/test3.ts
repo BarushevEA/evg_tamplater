@@ -1,0 +1,39 @@
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {chanelInput$, chanelOutput$} from "../../services/service";
+import {COMMAND_TEST3, ID} from "../../env/types";
+
+export class Test3 implements OnInit, OnCreate, OnDestroy {
+    readonly root;
+    name: string;
+    testData3: string;
+    id: string;
+
+    constructor(root: RootBehavior) {
+        this.root = root;
+        this.name = root.tagName;
+        this.testData3 = "testData3";
+        this.id = ID.TEST3;
+    }
+
+    onCreate(): void {
+    }
+
+    onInit(): void {
+        setTimeout(() => {
+            chanelInput$.next({
+                id: this.id,
+                command: COMMAND_TEST3.GET_COOKIE,
+            });
+        }, 5000);
+
+        chanelOutput$.subscribe(msg => {
+            if (!msg) return;
+            if (msg.id != this.id) return;
+            this.testData3 = msg.payload;
+            this.root.detectChanges();
+        });
+    }
+
+    onDestroy(): void {
+    }
+}
