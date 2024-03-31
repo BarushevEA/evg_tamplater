@@ -25,12 +25,15 @@ export class Test1 implements OnInit, OnCreate, OnDestroy {
             });
         }, 1000);
 
-        chanelOutput$.subscribe(msg => {
-            if (!msg) return;
-            if (msg.id != this.id) return;
-            this.testData1 = msg.payload;
-            this.root.detectChanges();
-        });
+        this.root.collect(
+            chanelOutput$
+                .pipe()
+                .emitByPositive(msg => msg && (msg.id === this.id))
+                .subscribe(msg => {
+                    this.testData1 = msg.payload;
+                    this.root.detectChanges();
+                })
+        );
     }
 
     onDestroy(): void {
