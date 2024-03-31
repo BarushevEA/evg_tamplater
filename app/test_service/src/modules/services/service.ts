@@ -17,20 +17,20 @@ export class ServiceController {
     private handlerTest1(msg: IMsg) {
         if (msg.command === COMMAND_TEST1.GET_APPLES) {
             chanelOutput$.next({
-                id: ID.TEST1,
+                id: msg.id,
                 payload: "sweet apples",
             });
             return;
         }
         if (msg.command === COMMAND_TEST1.GET_MEET) {
             chanelOutput$.next({
-                id: ID.TEST1,
+                id: msg.id,
                 payload: "delicious meet",
             });
             return;
         }
         chanelOutput$.next({
-            id: ID.TEST1,
+            id: msg.id,
             payload: "empty",
         });
         return;
@@ -39,20 +39,20 @@ export class ServiceController {
     private handlerTest2(msg: IMsg) {
         if (msg.command === COMMAND_TEST2.GET_CAR) {
             chanelOutput$.next({
-                id: ID.TEST2,
+                id: msg.id,
                 payload: "cool car",
             });
             return;
         }
         if (msg.command === COMMAND_TEST2.GET_BIKE) {
             chanelOutput$.next({
-                id: ID.TEST2,
+                id: msg.id,
                 payload: "cool bike",
             });
             return;
         }
         chanelOutput$.next({
-            id: ID.TEST2,
+            id: msg.id,
             payload: "empty",
         });
         return;
@@ -61,20 +61,20 @@ export class ServiceController {
     private handlerTest3(msg: IMsg) {
         if (msg.command === COMMAND_TEST3.GET_COOKIE) {
             chanelOutput$.next({
-                id: ID.TEST3,
+                id: msg.id,
                 payload: "cool cookie",
             });
             return;
         }
         if (msg.command === COMMAND_TEST3.GET_CAKE) {
             chanelOutput$.next({
-                id: ID.TEST3,
+                id: msg.id,
                 payload: "cool cake",
             });
             return;
         }
         chanelOutput$.next({
-            id: ID.TEST3,
+            id: msg.id,
             payload: "empty",
         });
         return;

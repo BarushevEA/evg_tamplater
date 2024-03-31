@@ -138,10 +138,9 @@ class Maker {
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../${levels}libs/elements/types";
 
 export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy {
-    readonly root: RootBehavior;
     name: string;
 
-    constructor(root: RootBehavior) {
+    constructor(readonly root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
     }
