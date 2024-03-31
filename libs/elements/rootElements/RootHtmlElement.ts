@@ -211,7 +211,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                     chanelCb().sendData<V>(
                         dataCb(data)
                     )
-                })
+                });
         }
 
         sendToChanel<T>(chanel: IChanel, data: T): void {

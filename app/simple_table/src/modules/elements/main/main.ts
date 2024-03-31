@@ -2,7 +2,7 @@ import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../..
 import {ROW, TableOptions} from "../../env/types";
 
 export class Main implements OnCreate, OnInit, OnDestroy {
-    readonly root;
+    readonly root: RootBehavior;
     name: string;
     header: HTMLElement;
     body: HTMLElement;
