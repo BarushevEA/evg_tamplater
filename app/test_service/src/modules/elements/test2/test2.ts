@@ -3,12 +3,11 @@ import {chanelInput$, chanelOutput$} from "../../services/service";
 import {COMMAND_TEST2, ID} from "../../env/types";
 
 export class Test2 implements OnInit, OnCreate, OnDestroy {
-    readonly root;
     name: string;
     testData2: string;
     id: string;
 
-    constructor(root: RootBehavior) {
+    constructor(readonly root: RootBehavior) {
         this.root = root;
         this.name = root.tagName;
         this.testData2 = "testData2";
