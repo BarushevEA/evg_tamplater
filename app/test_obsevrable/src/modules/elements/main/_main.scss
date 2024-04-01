@@ -1,0 +1,9 @@
+@import "../../css/mixins";
+
+@mixin main() {
+  .button {
+    @include button(100px, 40px);
+    background: #108b55;
+    border-radius: 20px;
+  }
+}

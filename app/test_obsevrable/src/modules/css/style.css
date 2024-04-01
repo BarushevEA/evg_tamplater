@@ -1,0 +1,19 @@
+.button {
+    width: 100px;
+    height: 40px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: #108b55;
+    border-radius: 20px;
+}
+
+.button:hover {
+    opacity: 0.5;
+}
+
+/*# sourceMappingURL=style.css.map */

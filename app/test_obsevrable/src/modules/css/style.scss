@@ -1,0 +1,7 @@
+@import "mixins";
+@import "../elements/main/main";
+
+@include main();
+.app {
+
+}
