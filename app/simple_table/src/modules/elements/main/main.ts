@@ -18,11 +18,11 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.transferToChanel<TableOptions, ROW[]>(
+        this.root.transferToChannel<TableOptions, ROW[]>(
             () => this.headerChanel,
             data => [{id: 0, isEditDisabled: true, arr: data.header}]);
 
-        this.root.transferToChanel<TableOptions, ROW[]>(
+        this.root.transferToChannel<TableOptions, ROW[]>(
             () => this.bodyChanel,
             data => {
                 const rows: ROW[] = [];
@@ -35,7 +35,7 @@ export class Main implements OnCreate, OnInit, OnDestroy {
                 return rows;
             });
 
-        this.root.transferToChanel<TableOptions, string>(
+        this.root.transferToChannel<TableOptions, string>(
             () => this.footerChanel,
             data => data.footer);
     }

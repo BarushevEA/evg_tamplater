@@ -14,7 +14,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.transferToChanel<any, any>(
+        this.root.transferToChannel<any, any>(
             () => this.taskListChanel,
             data => data
         );

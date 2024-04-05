@@ -203,7 +203,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             return <IChannel>element;
         }
 
-        transferToChanel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void {
+        transferToChannel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void {
             this.dataCatch$<T>()
                 .pipe()
                 .emitByPositive(() => chanelCb())
@@ -214,7 +214,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 });
         }
 
-        sendToChanel<T>(chanel: IChannel, data: T): void {
+        sendToChannel<T>(chanel: IChannel, data: T): void {
             chanel && chanel.sendData<T>(data);
         }
 

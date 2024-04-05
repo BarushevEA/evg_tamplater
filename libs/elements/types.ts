@@ -69,8 +69,8 @@ export type RootBehavior = {
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
     getChannel(element: any): IChannel | undefined;
-    transferToChanel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void;
-    sendToChanel<T>(chanel: IChannel, data: T): void;
+    transferToChannel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void;
+    sendToChannel<T>(chanel: IChannel, data: T): void;
     isAppElement(element: any): boolean;
 } & HTMLElement;
 export type RootElement = {
