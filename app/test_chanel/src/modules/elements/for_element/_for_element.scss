@@ -1,0 +1,24 @@
+@import "../../css/mixins";
+
+@mixin for_element() {
+  .students-list {
+    @include setWidthHeight(200px, 300px);
+    box-sizing: border-box;
+
+    border: 1px solid #062c46;
+    border-radius: 4px;
+
+    background-color: rgba(0, 100, 100, 0.2);
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .photo {
+    @include setWidthHeight(70px, 70px);
+    @include setMinWidthHeight(70px, 70px);
+    border: 1px solid #062c46;
+    border-radius: 4px;
+
+    object-fit: cover;
+  }
+}

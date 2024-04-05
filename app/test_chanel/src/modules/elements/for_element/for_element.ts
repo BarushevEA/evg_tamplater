@@ -1,0 +1,50 @@
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {IStudent} from "../../env/types";
+
+export class For_element implements OnInit, OnCreate, OnDestroy {
+    message: string;
+
+    photo: string;
+    name: string;
+    age: number;
+    isStudying: boolean;
+    class: string;
+    school: string;
+    photoImg: HTMLElement;
+
+    constructor(readonly root: RootBehavior) {
+
+    }
+
+    onCreate(): void {
+        this.root.collect(
+            this.root.dataCatch$<IStudent>()
+                .pipe()
+                .emitByPositive(msg => !!msg)
+                .subscribe((msg: IStudent) => {
+                    this.setStudent(msg);
+                })
+        );
+    }
+
+    onInit(): void {
+    }
+
+    onDestroy(): void {
+    }
+
+    private setStudent(student: IStudent) {
+        this.name = student.name ?? "NOT PRESENT YET";
+        this.age = student.age ?? NaN;
+        this.photo = student.photo ?? "";
+        this.isStudying = student.isStudying ?? false;
+        this.class = student.class ?? "NOT PRESENT YET";
+        this.school = student.school ?? "NOT PRESENT YET";
+
+        if (this.photo) {
+            (<HTMLImageElement>this.photoImg).src = this.photo;
+        }
+
+        this.root.detectChanges();
+    }
+}

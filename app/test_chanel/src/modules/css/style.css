@@ -1,0 +1,22 @@
+.students-list {
+    width: 200px;
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #062c46;
+    border-radius: 4px;
+    background-color: rgba(0, 100, 100, 0.2);
+    padding: 10px;
+    margin: 10px;
+}
+
+.photo {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    min-height: 70px;
+    border: 1px solid #062c46;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/*# sourceMappingURL=style.css.map */
