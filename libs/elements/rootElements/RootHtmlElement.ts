@@ -192,7 +192,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onDataCatch$.next(data);
         }
 
-        getChanel(element: any): IChannel | undefined {
+        getChannel(element: any): IChannel | undefined {
             if (!element) return undefined;
             if ((<IAppElement>element).isCustomAppElement) return <IChannel>element;
             if (!(<RootElement>element).ahe_component) return undefined;
@@ -219,7 +219,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         isAppElement(element: any): boolean {
-            return !!this.getChanel(element);
+            return !!this.getChannel(element);
         }
 
         collect(...subscriptionLikeList: ISubscriptionLike[]): void {
