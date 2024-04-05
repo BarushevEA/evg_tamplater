@@ -1,7 +1,7 @@
 import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
-    readonly root;
+    readonly root: RootBehavior;
     name: string;
     taskList: HTMLElement;
     taskListChanel: IChannel;
@@ -28,6 +28,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     private initTaskListChanel(): void {
-        this.taskListChanel = this.root.getChanel(this.taskList);
+        this.taskListChanel = this.root.getChannel(this.taskList);
     }
 }

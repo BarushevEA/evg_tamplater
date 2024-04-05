@@ -4,7 +4,7 @@ import {IsTableReady$} from "../services/tableServices";
 import {getAttrNative} from "../../../../../libs/elements/utils";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OptionsCollector {
-    readonly root;
+    readonly root: RootBehavior;
     name: string;
     main: HTMLElement;
     tableName: string;
@@ -26,7 +26,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OptionsCollector {
     }
 
     private handleMainChanel() {
-        this.mainChanel = this.root.getChanel(this.main);
+        this.mainChanel = this.root.getChannel(this.main);
     }
 
     onDestroy(): void {

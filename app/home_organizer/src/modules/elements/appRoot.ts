@@ -7,7 +7,7 @@ import {MenuEvent} from "../env/menuEnv/types";
 import {MOCK_TASKS} from "../env/taskEnv/mockData";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy {
-    readonly root;
+    readonly root: RootBehavior;
     name: string;
 
     main: HTMLElement;
@@ -39,7 +39,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy {
     }
 
     private initMainChanel(): void {
-        this.mainChanel = this.root.getChanel(this.main);
+        this.mainChanel = this.root.getChannel(this.main);
     }
 
     private handleMenuEvents() {

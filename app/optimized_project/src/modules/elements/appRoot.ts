@@ -3,7 +3,7 @@ import {NextMain$} from "../services/headerService";
 import {OnCreate, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 
 export class AppRoot implements OnInit, OnCreate {
-    readonly root;
+    readonly root: RootBehavior;
     name: string;
     isShowMain = true;
     main: HTMLElement;
@@ -29,7 +29,7 @@ export class AppRoot implements OnInit, OnCreate {
             }),
         );
 
-        const chanel = this.root.getChanel(this.main);
+        const chanel = this.root.getChannel(this.main);
         if (chanel) {
             chanel.sendData<string>("Message by AppRoot");
         }
