@@ -1,10 +1,10 @@
-import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     readonly root;
     name: string;
     taskList: HTMLElement;
-    taskListChanel: IChanel;
+    taskListChanel: IChannel;
 
     // isMenuShow: boolean = menuService$.getValue().isShow;
 

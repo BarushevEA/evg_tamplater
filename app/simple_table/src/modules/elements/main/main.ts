@@ -1,4 +1,4 @@
-import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {ROW, TableOptions} from "../../env/types";
 
 export class Main implements OnCreate, OnInit, OnDestroy {
@@ -8,9 +8,9 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     body: HTMLElement;
     footer: HTMLElement;
 
-    headerChanel: IChanel;
-    bodyChanel: IChanel;
-    footerChanel: IChanel;
+    headerChanel: IChannel;
+    bodyChanel: IChannel;
+    footerChanel: IChannel;
 
     constructor(root: RootBehavior) {
         this.root = root;
@@ -47,15 +47,15 @@ export class Main implements OnCreate, OnInit, OnDestroy {
     }
 
     private initHeaderChanel() {
-        this.headerChanel = this.root.getChanel(this.header);
+        this.headerChanel = this.root.getChannel(this.header);
     }
 
     private initBodyChanel() {
-        this.bodyChanel = this.root.getChanel(this.body);
+        this.bodyChanel = this.root.getChannel(this.body);
     }
 
     private initFooterChanel() {
-        this.footerChanel = this.root.getChanel(this.footer);
+        this.footerChanel = this.root.getChannel(this.footer);
     }
 
     onDestroy(): void {

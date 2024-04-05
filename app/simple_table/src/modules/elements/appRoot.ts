@@ -1,4 +1,4 @@
-import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
+import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 import {OptionsCollector, TableOptions} from "../env/types";
 import {IsTableReady$} from "../services/tableServices";
 import {getAttrNative} from "../../../../../libs/elements/utils";
@@ -9,7 +9,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OptionsCollector {
     main: HTMLElement;
     tableName: string;
 
-    mainChanel: IChanel;
+    mainChanel: IChannel;
 
     constructor(root: RootBehavior) {
         this.root = root;

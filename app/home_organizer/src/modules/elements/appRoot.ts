@@ -1,4 +1,4 @@
-import {IChanel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
+import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 import {menuService$} from "../services/observables";
 import {E_MENU_ACTION, E_MENU_OWNER} from "../env/menuEnv/enums";
 import {E_TASK_LIST} from "../env/taskEnv/enums";
@@ -11,7 +11,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy {
     name: string;
 
     main: HTMLElement;
-    mainChanel: IChanel;
+    mainChanel: IChannel;
 
     constructor(root: RootBehavior) {
         this.root = root;

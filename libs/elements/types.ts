@@ -52,7 +52,7 @@ export type ForOf = {
     children: HTMLElement[];
     valueName: string;
 };
-export type IChanel = {
+export type IChannel = {
     sendData<T>(data: T): void;
 };
 export type RootBehavior = {
@@ -62,15 +62,15 @@ export type RootBehavior = {
     attributeChange$(): IChanelListener<AttributeChanged>;
     beforeChanges$(): IChanelListener<boolean>;
     changesDetected$(): IChanelListener<boolean>;
-    parentChanelReady$(): IChanelListener<IChanel>;
+    parentChanelReady$(): IChanelListener<IChannel>;
     dataCatch$<T>(): IChanelListener<T>;
     detectChanges(): void;
     collect(...subscriptionLikeList: ISubscriptionLike[]): void;
     getElementsBoundToMethod(method: any): HTMLElement[];
     destroy(): void;
-    getChanel(element: any): IChanel | undefined;
-    transferToChanel<T, V>(chanelCb: () => IChanel, dataCb: (data: T) => V): void;
-    sendToChanel<T>(chanel: IChanel, data: T): void;
+    getChannel(element: any): IChannel | undefined;
+    transferToChanel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void;
+    sendToChanel<T>(chanel: IChannel, data: T): void;
     isAppElement(element: any): boolean;
 } & HTMLElement;
 export type RootElement = {
@@ -84,7 +84,7 @@ export type RootElement = {
     ahe_ForOfList: ForOf[];
     ahe_component: any;
     ahe_clr: Collector;
-    ahe_parent_chanel: IChanel;
+    ahe_parent_chanel: IChannel;
 } & RootBehavior;
 export type ValDetails = {
     isInversion: boolean;

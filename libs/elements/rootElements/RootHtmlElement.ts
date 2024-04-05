@@ -11,7 +11,7 @@ import {
     ELEMENT_OPTIONS,
     ForOf,
     IAppElement,
-    IChanel,
+    IChannel,
     NestedValue,
     OnIf,
     RootElement,
@@ -39,7 +39,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_ForOfList: ForOf[];
         ahe_clr: Collector;
         ahe_component: any;
-        ahe_parent_chanel: IChanel;
+        ahe_parent_chanel: IChannel;
 
         onAdopted$: Observable<boolean>;
         onInit$: Observable<boolean>;
@@ -48,7 +48,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         beforeDetectChanges$: Observable<boolean>;
         onChangesDetected$: Observable<boolean>;
         onDataCatch$: Observable<any>;
-        onParentChanelReady$: Observable<IChanel>;
+        onParentChanelReady$: Observable<IChannel>;
 
         constructor() {
             super();
@@ -79,7 +79,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.ahe_component.onCreate) this.ahe_component.onCreate();
         }
 
-        parentChanelReady$(): ISubscriber<IChanel> & IObservablePipe<IChanel> {
+        parentChanelReady$(): ISubscriber<IChannel> & IObservablePipe<IChannel> {
             return this.onParentChanelReady$;
         }
 
@@ -192,18 +192,18 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onDataCatch$.next(data);
         }
 
-        getChanel(element: any): IChanel | undefined {
+        getChanel(element: any): IChannel | undefined {
             if (!element) return undefined;
-            if ((<IAppElement>element).isCustomAppElement) return <IChanel>element;
+            if ((<IAppElement>element).isCustomAppElement) return <IChannel>element;
             if (!(<RootElement>element).ahe_component) return undefined;
-            if (!(<IChanel>element).sendData) return undefined;
+            if (!(<IChannel>element).sendData) return undefined;
 
             element.isCustomAppElement = true;
 
-            return <IChanel>element;
+            return <IChannel>element;
         }
 
-        transferToChanel<T, V>(chanelCb: () => IChanel, dataCb: (data: T) => V): void {
+        transferToChanel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void {
             this.dataCatch$<T>()
                 .pipe()
                 .emitByPositive(() => chanelCb())
@@ -214,7 +214,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 });
         }
 
-        sendToChanel<T>(chanel: IChanel, data: T): void {
+        sendToChanel<T>(chanel: IChannel, data: T): void {
             chanel && chanel.sendData<T>(data);
         }
 
@@ -255,8 +255,8 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
             actions += detectIfConditions(rootElement, <HTMLElement>child);
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
-            (<RootElement><any>child).ahe_parent_chanel = <IChanel><any>rootElement;
-            (<any>child).onParentChanelReady$.next(<IChanel><any>rootElement);
+            (<RootElement><any>child).ahe_parent_chanel = <IChannel><any>rootElement;
+            (<any>child).onParentChanelReady$.next(<IChannel><any>rootElement);
         }
         return;
     }
@@ -292,8 +292,8 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
     if (child.isCustomAppElement) {
-        (<RootElement><any>child).ahe_parent_chanel = <IChanel><any>rootElement;
-        (<any>child).onParentChanelReady$.next(<IChanel><any>rootElement);
+        (<RootElement><any>child).ahe_parent_chanel = <IChannel><any>rootElement;
+        (<any>child).onParentChanelReady$.next(<IChannel><any>rootElement);
     }
 }
 
@@ -425,7 +425,7 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
 }
 
 function handleCirclesChannelData(data: any, element: HTMLElement, root: RootElement) {
-    root.isAppElement(element) && (<IChanel><any>element).sendData(data);
+    root.isAppElement(element) && (<IChannel><any>element).sendData(data);
 }
 
 function updateForOfChildren(
