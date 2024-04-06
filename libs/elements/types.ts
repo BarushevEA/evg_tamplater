@@ -79,6 +79,7 @@ export type RootElement = {
     ahe_bindValues: NestedValue[];
     ahe_nFunctions: NestedValue[];
     ahe_sourceComponents: NestedValue[];
+    ahe_sourceComponentsFunctions: NestedValue[];
     ahe_bindFunctions: NestedValue[];
     ahe_IfList: OnIf[];
     ahe_ClsIfList: ClassIf[];

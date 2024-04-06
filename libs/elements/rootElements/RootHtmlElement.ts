@@ -32,6 +32,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_nValues: NestedValue[];
         ahe_nFunctions: NestedValue[];
         ahe_sourceComponents: NestedValue[];
+        ahe_sourceComponentsFunctions: NestedValue[];
         ahe_bindValues: NestedValue[];
         ahe_bindFunctions: NestedValue[];
 
@@ -67,6 +68,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onParentChanelReady$ = new Observable(undefined);
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
+            this.ahe_sourceComponentsFunctions = [];
             this.ahe_sourceComponents = [];
             this.ahe_nValues = [];
             this.ahe_bindFunctions = [];
@@ -146,6 +148,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             this.ahe_clr.unsubscribeAll();
             this.ahe_nFunctions.length = 0;
+            this.ahe_sourceComponentsFunctions.length = 0;
             this.ahe_sourceComponents.length = 0;
             this.ahe_nValues.length = 0;
             this.ahe_bindFunctions.length = 0;
@@ -187,6 +190,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             changeClsConditions(this);
             changeBindValues(this);
             changeSource(this);
+            changeSourceFunctions(this);
             changeBindFunctions(this);
             changeNestedValues(this);
             changeNestedFunctions(this);
@@ -562,19 +566,25 @@ function execute(rootElement: RootElement, functionName: string, evt: MouseEvent
 function detectSource(rootElement: RootElement, element: HTMLElement): string {
     const fieldName = getFieldName(element, E_DATA_MARKER.SOURCE);
     if (!fieldName) return "";
-    if (!(fieldName in rootElement.ahe_component)) return "";
+    const details = getDetails(rootElement, fieldName);
 
-    const source = rootElement.ahe_component[fieldName];
+    if (details.isFunction) {
+        rootElement.ahe_sourceComponentsFunctions.push({
+            textElement: <HTMLElement>element,
+            valueName: details.valueName,
+            lastData: "",
+        });
+        return "src ";
+    }
 
     rootElement.ahe_sourceComponents.push(
         {
             textElement: <HTMLElement>element,
             valueName: fieldName,
-            lastData: source ?? APP_RANDOM_STR
+            lastData: ""
         }
     );
 
-    (<any>element).src = source;
     return "src ";
 }
 
@@ -739,11 +749,25 @@ function changeSource(rootElement: RootElement): void {
     for (let i = 0; i < rootElement.ahe_sourceComponents.length; i++) {
         const nestedValue = rootElement.ahe_sourceComponents[i];
         const nestedData = rootElement.ahe_component[nestedValue.valueName];
+        const value = nestedData ?? "";
 
-        if (nestedValue.lastData === nestedData) continue;
+        if (nestedValue.lastData === value) continue;
 
-        (<any>nestedValue.textElement).src = nestedData;
-        nestedValue.lastData = nestedData;
+        (<any>nestedValue.textElement).src = value;
+        nestedValue.lastData = value;
+    }
+}
+
+function changeSourceFunctions(rootElement: RootElement): void {
+    for (let i = 0; i < rootElement.ahe_sourceComponentsFunctions.length; i++) {
+        const nestedValue = rootElement.ahe_sourceComponentsFunctions[i];
+        const nestedData = rootElement.ahe_component[nestedValue.valueName]();
+        const value = nestedData ?? "";
+
+        if (nestedValue.lastData === value) continue;
+
+        (<any>nestedValue.textElement).src = value;
+        nestedValue.lastData = value;
     }
 }
 
