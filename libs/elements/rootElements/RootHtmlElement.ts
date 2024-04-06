@@ -121,10 +121,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
 
             detectInjectedData(this);
-            this.detectChanges(true);
-
             this.onInit$.next(true);
+
             if (this.ahe_component.onInit) this.ahe_component.onInit();
+
+            this.detectChanges(true);
         }
 
         disconnectedCallback() {

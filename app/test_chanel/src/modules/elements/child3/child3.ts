@@ -23,7 +23,6 @@ export class Child3 implements OnInit, OnCreate, OnDestroy {
 
     onInit(): void {
         this.message = this.name;
-        this.root.detectChanges();
     }
 
     onDestroy(): void {
