@@ -461,7 +461,7 @@ function detectKeyDownHandlers(rootElement: RootElement, element: HTMLElement): 
 
 function detectKeyUpHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_UP);
-    if (functionName) return "";
+    if (!functionName) return "";
     element.onkeyup = (evt) => execute(rootElement, functionName, evt);
     return "kup ";
 }
