@@ -54,3 +54,7 @@
 ```
 
 * `qsi-for="arrName"` - This attribute contains the name of iterated array.
+* `qsi-src="urlLink"` - This attribute contains the name of url source field.
+
+* `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
+* `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
