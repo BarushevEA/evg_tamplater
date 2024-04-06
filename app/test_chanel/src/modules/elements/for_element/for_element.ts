@@ -2,8 +2,6 @@ import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/
 import {IStudent} from "../../env/types";
 
 export class For_element implements OnInit, OnCreate, OnDestroy {
-    message: string;
-
     photo: string;
     name: string;
     age: number;
