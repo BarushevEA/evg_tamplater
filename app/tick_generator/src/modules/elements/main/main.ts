@@ -40,7 +40,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
 
     onInit(): void {
         this.fpsTxt = this.getFpsTxt();
-        this.root.detectChanges();
 
         this.animationFrame.setDefault();
         this.animationFrame.subscribeOnState((state) => this.showText(state));
