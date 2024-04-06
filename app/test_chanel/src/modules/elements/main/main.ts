@@ -29,6 +29,12 @@ export class Main implements OnInit, OnCreate, OnDestroy {
             this.sendMessageToChildren();
         }, 5000);
 
+        const images = [
+            "./assets/img/photo_2024-04-06_00-29-23.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHvkoW4YAf73Ea3smStZwvrdxi4sUChgm6VOFHyfJ1Q&s",
+            "https://media.licdn.com/dms/image/C4E03AQHjm7BY5INpBA/profile-displayphoto-shrink_200_200/0/1660152384175?e=2147483647&v=beta&t=5XDlbq2DvTVNmAuyCtaPfyqvvraRxC_1mK-u4Lh--ZU"
+        ];
+
         setTimeout(() => {
             this.forElements = [
                 {
@@ -37,7 +43,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
                     age: 18,
                     class: "3TI",
                     school: "ZSZnr1",
-                    photo: "./assets/img/photo_2024-04-06_00-29-23.jpg"
+                    photo: images[0]
                 },
                 {
                     name: "Andrey",
@@ -45,7 +51,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
                     age: 21,
                     class: "4TI",
                     school: "ZSZnr1",
-                    photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUHvkoW4YAf73Ea3smStZwvrdxi4sUChgm6VOFHyfJ1Q&s"
+                    photo: images[1]
                 },
                 {
                     name: "Nik",
@@ -53,7 +59,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
                     age: 18,
                     class: "1",
                     school: "СШ#76",
-                    photo: "https://media.licdn.com/dms/image/C4E03AQHjm7BY5INpBA/profile-displayphoto-shrink_200_200/0/1660152384175?e=2147483647&v=beta&t=5XDlbq2DvTVNmAuyCtaPfyqvvraRxC_1mK-u4Lh--ZU"
+                    photo: images[2]
                 },
                 {name: "Kazashka", isStudying: false, age: 18, class: "3TI", school: "ZSZnr1"},
                 {name: "Kazashka1", isStudying: false, age: 18, class: "3TI", school: "ZSZnr1"},
@@ -62,6 +68,26 @@ export class Main implements OnInit, OnCreate, OnDestroy {
                 {name: "Kazashka4", isStudying: false, age: 18, class: "3TI", school: "ZSZnr1"},
             ];
             this.root.detectChanges();
+
+            let imageCounter = 0;
+
+            setInterval(() => {
+                this.forElements = [
+                    {
+                        name: "Sergey",
+                        isStudying: true,
+                        age: 18,
+                        class: "3TI",
+                        school: "ZSZnr1",
+                        photo: images[imageCounter],
+                    }
+                ];
+                imageCounter++;
+
+                if (imageCounter >= images.length) imageCounter = 0;
+
+                this.root.detectChanges();
+            }, 2000);
         }, 10000);
     }
 
