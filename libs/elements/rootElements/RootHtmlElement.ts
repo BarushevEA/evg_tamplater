@@ -510,53 +510,49 @@ function getFreeChildren(parent: HTMLElement): IAppElement[] {
 }
 
 function detectVariables(rootElement: RootElement, element: Element): boolean {
-    if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) {
-        if (!element.innerHTML) return false;
+    if (element.tagName.toLowerCase() !== E_ROOT_TAG.TEXT_VALUE) return false;
+    if (!element.innerHTML) return false;
 
-        const details = getDetails(rootElement, element.innerHTML);
+    const details = getDetails(rootElement, element.innerHTML);
 
-        if (details.isFunction) {
-            rootElement.ahe_nFunctions.push({
-                textElement: <HTMLElement>element,
-                valueName: details.valueName,
-                lastData: APP_RANDOM_STR
-            });
-            return true;
-        }
-
-        rootElement.ahe_nValues.push({
+    if (details.isFunction) {
+        rootElement.ahe_nFunctions.push({
             textElement: <HTMLElement>element,
             valueName: details.valueName,
             lastData: APP_RANDOM_STR
         });
         return true;
     }
-    return false;
+
+    rootElement.ahe_nValues.push({
+        textElement: <HTMLElement>element,
+        valueName: details.valueName,
+        lastData: APP_RANDOM_STR
+    });
+    return true;
 }
 
 function detectBindVariables(rootElement: RootElement, element: Element): boolean {
-    if (element.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) {
-        if (!element.innerHTML) return false;
+    if (element.tagName.toLowerCase() !== E_ROOT_TAG.QSI_BIND) return false;
+    if (!element.innerHTML) return false;
 
-        const details = getDetails(rootElement, element.innerHTML);
+    const details = getDetails(rootElement, element.innerHTML);
 
-        if (details.isFunction) {
-            rootElement.ahe_bindFunctions.push({
-                textElement: <HTMLElement>element,
-                valueName: details.valueName,
-                lastData: APP_RANDOM_STR
-            });
-            return true;
-        }
-
-        rootElement.ahe_bindValues.push({
+    if (details.isFunction) {
+        rootElement.ahe_bindFunctions.push({
             textElement: <HTMLElement>element,
             valueName: details.valueName,
             lastData: APP_RANDOM_STR
         });
         return true;
     }
-    return false;
+
+    rootElement.ahe_bindValues.push({
+        textElement: <HTMLElement>element,
+        valueName: details.valueName,
+        lastData: APP_RANDOM_STR
+    });
+    return true;
 }
 
 function execute(rootElement: RootElement, functionName: string, evt: MouseEvent | KeyboardEvent | Event) {
@@ -584,119 +580,93 @@ function detectSource(rootElement: RootElement, element: HTMLElement): string {
 
 function detectInjections(rootElement: RootElement, element: HTMLElement): string {
     const injectionName = getFieldName(element, E_DATA_MARKER.INJECT_TO);
-    if (injectionName) {
-        rootElement.ahe_component[injectionName] = element;
-        return "inj ";
-    }
-    return "";
+    if (!injectionName) return "";
+    rootElement.ahe_component[injectionName] = element;
+    return "inj ";
 }
 
 function detectClickHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_CLICK);
-    if (functionName) {
-        element.onclick = (evt) => execute(rootElement, functionName, evt);
-        return "clk ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onclick = (evt) => execute(rootElement, functionName, evt);
+    return "clk ";
 }
 
 function detectMouseLeaveHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_LEAVE);
-    if (functionName) {
-        element.onmouseleave = (evt) => execute(rootElement, functionName, evt);
-        return "mlv ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onmouseleave = (evt) => execute(rootElement, functionName, evt);
+    return "mlv ";
 }
 
 function detectMouseEnterHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_ENTER);
-    if (functionName) {
-        element.onmouseenter = (evt) => execute(rootElement, functionName, evt);
-        return "mer ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onmouseenter = (evt) => execute(rootElement, functionName, evt);
+    return "mer ";
 }
 
 function detectMouseUpHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_UP);
-    if (functionName) {
-        element.onmouseup = (evt) => execute(rootElement, functionName, evt);
-        return "mup ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onmouseup = (evt) => execute(rootElement, functionName, evt);
+    return "mup ";
 }
 
 function detectMouseDownHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_DOWN);
-    if (functionName) {
-        element.onmousedown = (evt) => execute(rootElement, functionName, evt);
-        return "mdn ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onmousedown = (evt) => execute(rootElement, functionName, evt);
+    return "mdn ";
 }
 
 function detectMouseMoveHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_MOVE);
-    if (functionName) {
-        element.onmousemove = (evt) => execute(rootElement, functionName, evt);
-        return "mmv ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onmousemove = (evt) => execute(rootElement, functionName, evt);
+    return "mmv ";
 }
 
 function detectKeyDownHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_DOWN);
-    if (functionName) {
-        element.onkeydown = (evt) => execute(rootElement, functionName, evt);
-        return "kdn ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onkeydown = (evt) => execute(rootElement, functionName, evt);
+    return "kdn ";
 }
 
 function detectKeyUpHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_UP);
-    if (functionName) {
-        element.onkeyup = (evt) => execute(rootElement, functionName, evt);
-        return "kup ";
-    }
-    return "";
+    if (functionName) return "";
+    element.onkeyup = (evt) => execute(rootElement, functionName, evt);
+    return "kup ";
 }
 
 function detectDblClickHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_DBL_CLICK);
-    if (functionName) {
-        element.ondblclick = (evt) => execute(rootElement, functionName, evt);
-        return "dbc ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.ondblclick = (evt) => execute(rootElement, functionName, evt);
+    return "dbc ";
 }
 
 function detectScrollHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_SCROLL);
-    if (functionName) {
-        element.onscroll = (evt) => execute(rootElement, functionName, evt);
-        return "scl ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onscroll = (evt) => execute(rootElement, functionName, evt);
+    return "scl ";
 }
 
 function detectWheelHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_WHEEL);
-    if (functionName) {
-        element.onwheel = (evt) => execute(rootElement, functionName, evt);
-        return "whl ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onwheel = (evt) => execute(rootElement, functionName, evt);
+    return "whl ";
 }
 
 function detectChangeHandlers(rootElement: RootElement, element: HTMLElement): string {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_CHANGE);
-    if (functionName) {
-        element.onchange = (evt) => execute(rootElement, functionName, evt);
-        return "chg ";
-    }
-    return "";
+    if (!functionName) return "";
+    element.onchange = (evt) => execute(rootElement, functionName, evt);
+    return "chg ";
 }
 
 function getFunctionName(rootElement: RootElement, element: HTMLElement, marker: E_DATA_MARKER): string {
