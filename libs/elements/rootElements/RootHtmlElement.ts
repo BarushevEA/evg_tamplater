@@ -31,6 +31,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         ahe_nValues: NestedValue[];
         ahe_nFunctions: NestedValue[];
+        ahe_sourceComponents: NestedValue[];
         ahe_bindValues: NestedValue[];
         ahe_bindFunctions: NestedValue[];
 
@@ -66,6 +67,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onParentChanelReady$ = new Observable(undefined);
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
+            this.ahe_sourceComponents = [];
             this.ahe_nValues = [];
             this.ahe_bindFunctions = [];
             this.ahe_bindValues = [];
@@ -144,6 +146,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             this.ahe_clr.unsubscribeAll();
             this.ahe_nFunctions.length = 0;
+            this.ahe_sourceComponents.length = 0;
             this.ahe_nValues.length = 0;
             this.ahe_bindFunctions.length = 0;
             this.ahe_bindValues.length = 0;
@@ -183,6 +186,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             changeIfConditions(this);
             changeClsConditions(this);
             changeBindValues(this);
+            changeSource(this);
             changeBindFunctions(this);
             changeNestedValues(this);
             changeNestedFunctions(this);
@@ -275,6 +279,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     }
 
     actions += detectInjections(rootElement, <HTMLElement>child);
+    actions += detectSource(rootElement, <HTMLElement>child);
     actions += detectClickHandlers(rootElement, <HTMLElement>child);
     actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
     actions += detectMouseEnterHandlers(rootElement, <HTMLElement>child);
@@ -558,8 +563,27 @@ function execute(rootElement: RootElement, functionName: string, evt: MouseEvent
     rootElement.ahe_component[functionName](evt);
 }
 
+function detectSource(rootElement: RootElement, element: HTMLElement): string {
+    const fieldName = getFieldName(element, E_DATA_MARKER.SOURCE);
+    if (!fieldName) return "";
+    if (!(fieldName in rootElement.ahe_component)) return "";
+
+    const source = rootElement.ahe_component[fieldName];
+
+    rootElement.ahe_sourceComponents.push(
+        {
+            textElement: <HTMLElement>element,
+            valueName: fieldName,
+            lastData: source ?? APP_RANDOM_STR
+        }
+    );
+
+    (<any>element).src = source;
+    return "src ";
+}
+
 function detectInjections(rootElement: RootElement, element: HTMLElement): string {
-    const injectionName = getInjectionName(element, E_DATA_MARKER.INJECT_TO);
+    const injectionName = getFieldName(element, E_DATA_MARKER.INJECT_TO);
     if (injectionName) {
         rootElement.ahe_component[injectionName] = element;
         return "inj ";
@@ -685,7 +709,7 @@ function getFunctionName(rootElement: RootElement, element: HTMLElement, marker:
     return functionName;
 }
 
-function getInjectionName(element: HTMLElement, marker: E_DATA_MARKER): string {
+function getFieldName(element: HTMLElement, marker: E_DATA_MARKER): string {
     const injectionName = getAttr(element, marker);
     if (!injectionName) return "";
 
@@ -737,6 +761,18 @@ function changeBindValues(rootElement: RootElement): void {
         if (nestedValue.lastData === nestedData) continue;
 
         nestedValue.textElement.textContent = nestedData;
+        nestedValue.lastData = nestedData;
+    }
+}
+
+function changeSource(rootElement: RootElement): void {
+    for (let i = 0; i < rootElement.ahe_sourceComponents.length; i++) {
+        const nestedValue = rootElement.ahe_sourceComponents[i];
+        const nestedData = rootElement.ahe_component[nestedValue.valueName];
+
+        if (nestedValue.lastData === nestedData) continue;
+
+        (<any>nestedValue.textElement).src = nestedData;
         nestedValue.lastData = nestedData;
     }
 }

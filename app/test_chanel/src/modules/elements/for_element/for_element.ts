@@ -10,7 +10,6 @@ export class For_element implements OnInit, OnCreate, OnDestroy {
     isStudying: boolean;
     class: string;
     school: string;
-    photoImg: HTMLElement;
 
     constructor(readonly root: RootBehavior) {
 
@@ -40,10 +39,6 @@ export class For_element implements OnInit, OnCreate, OnDestroy {
         this.isStudying = student.isStudying ?? false;
         this.class = student.class ?? "NOT PRESENT YET";
         this.school = student.school ?? "NOT PRESENT YET";
-
-        if (this.photo) {
-            (<HTMLImageElement>this.photoImg).src = this.photo;
-        }
 
         this.root.detectChanges();
     }

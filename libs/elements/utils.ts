@@ -1,5 +1,6 @@
 export enum E_DATA_MARKER {
     INFO = "i",
+    SOURCE = "src",
     INJECT_TO = "inject_to",
     ON_CLICK = "click",
     ON_CHANGE = "change",
