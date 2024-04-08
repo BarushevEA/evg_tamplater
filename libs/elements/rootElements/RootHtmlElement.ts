@@ -207,6 +207,12 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onDataCatch$.next(data);
         }
 
+        sendMessageToParent<T>(data: T): boolean {
+            if (!this.ahe_parent_chanel) return false;
+            this.ahe_parent_chanel?.sendMessage(data);
+            return true;
+        }
+
         getChannel(element: any): IChannel | undefined {
             if (!element) return undefined;
             if ((<IAppElement>element).isCustomAppElement) return <IChannel>element;

@@ -71,6 +71,7 @@ export type RootBehavior = {
     getChannel(element: any): IChannel | undefined;
     transferToChannel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void;
     sendToChannel<T>(chanel: IChannel, data: T): void;
+    sendMessageToParent<T>(data: T): boolean;
     isAppElement(element: any): boolean;
 } & HTMLElement;
 export type RootElement = {
