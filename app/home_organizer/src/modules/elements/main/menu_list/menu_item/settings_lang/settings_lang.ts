@@ -14,7 +14,7 @@ export class Settings_lang implements OnInit, OnCreate, OnDestroy {
 
     onCreate(): void {
         this.root
-            .dataCatch$<LOCATION>()
+            .onMessage$<LOCATION>()
             .subscribe(locale => {
                 this.localeTxt = locale;
                 this.root.detectChanges();

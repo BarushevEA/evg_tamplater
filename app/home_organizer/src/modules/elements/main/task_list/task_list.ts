@@ -43,7 +43,7 @@ export class Task_list implements OnInit, OnCreate, OnDestroy {
             })
         );
 
-        this.root.dataCatch$().subscribe(() => {
+        this.root.onMessage$().subscribe(() => {
             this.refreshTaskList();
             this.root.detectChanges();
         });

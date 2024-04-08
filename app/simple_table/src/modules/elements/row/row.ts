@@ -14,7 +14,7 @@ export class Row implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<ROW>()
+        this.root.onMessage$<ROW>()
             .subscribe(row => {
                 this.cells.length = 0;
                 this.id = row.id;

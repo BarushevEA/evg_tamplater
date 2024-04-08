@@ -15,7 +15,7 @@ export class For_element implements OnInit, OnCreate, OnDestroy {
 
     onCreate(): void {
         this.root.collect(
-            this.root.dataCatch$<IStudent>()
+            this.root.onMessage$<IStudent>()
                 .pipe()
                 .emitByPositive(msg => !!msg)
                 .subscribe((msg: IStudent) => {

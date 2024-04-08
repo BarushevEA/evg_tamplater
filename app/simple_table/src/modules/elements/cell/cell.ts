@@ -20,7 +20,7 @@ export class Cell implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<CELL>()
+        this.root.onMessage$<CELL>()
             .subscribe(cell => {
                 this.isEditDisabled = !!cell.isEditDisabled;
                 this.id = cell.id;

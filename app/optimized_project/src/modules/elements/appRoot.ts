@@ -15,7 +15,7 @@ export class AppRoot implements OnInit, OnCreate {
 
     onCreate(): void {
         this.root.collect(
-            this.root.dataCatch$<string>().subscribe(data => {
+            this.root.onMessage$<string>().subscribe(data => {
                 console.log("AppRoot dataCatch$:", data);
             }),
         );

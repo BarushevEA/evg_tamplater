@@ -53,7 +53,7 @@ export class Task implements OnInit, OnCreate, OnDestroy, ITask {
 
     onCreate(): void {
         this.root
-            .dataCatch$()
+            .onMessage$()
             .subscribe((data: ITask) => {
                 for (const dataKey in data) {
                     (<any>this)[dataKey] = (<any>data)[dataKey];

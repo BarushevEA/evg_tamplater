@@ -12,7 +12,7 @@ export class Footer implements OnCreate, OnInit, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<string>()
+        this.root.onMessage$<string>()
             .subscribe(text => {
                 this.text = text;
                 this.root.detectChanges();

@@ -14,7 +14,7 @@ export class Test implements OnInit, OnDestroy, OnCreate {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<number>().subscribe(data => {
+        this.root.onMessage$<number>().subscribe(data => {
             this.num = data;
             this.isRed = data > 0 && data < 4;
             this.isBlue = data > 3;

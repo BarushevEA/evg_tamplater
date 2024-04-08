@@ -27,7 +27,7 @@ export class Menu_item implements OnInit, OnCreate, OnDestroy {
 
     onCreate(): void {
         this.root
-            .dataCatch$<MenuItem>()
+            .onMessage$<MenuItem>()
             .subscribe(data => {
                 this.text = data.text;
                 this.owner = data.owner;

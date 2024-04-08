@@ -10,7 +10,7 @@ export class Child4 implements OnInit, OnCreate, OnDestroy {
 
     onCreate(): void {
         this.root.collect(
-            this.root.dataCatch$<string>()
+            this.root.onMessage$<string>()
                 .pipe()
                 .emitByPositive(msg => !!msg)
                 .subscribe((msg: string) => {

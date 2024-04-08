@@ -13,7 +13,7 @@ export class Header implements OnCreate, OnInit, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.dataCatch$<ROW[]>()
+        this.root.onMessage$<ROW[]>()
             .subscribe(rows => {
                 this.rows.length = 0;
                 this.rows.push(...rows);

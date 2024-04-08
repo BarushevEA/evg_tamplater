@@ -28,6 +28,7 @@ import {
     OnIf,
     RootElement
 } from "../types";
+import {IChanelListener} from "../../env/types";
 
 export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstructor {
     class RootHtmlElement extends HTMLElement implements RootElement {
@@ -55,7 +56,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         attributeChanged$: Observable<AttributeChanged | undefined>;
         beforeDetectChanges$: Observable<boolean>;
         onChangesDetected$: Observable<boolean>;
-        onDataCatch$: Observable<any>;
+        onMsg$: Observable<any>;
         onParentChanelReady$: Observable<IChannel>;
 
         constructor() {
@@ -70,7 +71,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.attributeChanged$ = new Observable(undefined);
             this.beforeDetectChanges$ = new Observable(false);
             this.onChangesDetected$ = new Observable(false);
-            this.onDataCatch$ = new Observable(undefined);
+            this.onMsg$ = new Observable(undefined);
             this.onParentChanelReady$ = new Observable(undefined);
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
@@ -117,8 +118,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             return this.onChangesDetected$;
         }
 
-        dataCatch$<T>(): ISubscriber<T> & IObservablePipe<T> {
-            return <any>this.onDataCatch$;
+        onMessage$<T>(): IChanelListener<T> {
+            return <any>this.onMsg$;
         }
 
         connectedCallback() {
@@ -169,7 +170,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.attributeChanged$.unsubscribeAll();
             this.beforeDetectChanges$.unsubscribeAll();
             this.onChangesDetected$.unsubscribeAll();
-            this.onDataCatch$.unsubscribeAll();
+            this.onMsg$.unsubscribeAll();
             this.onParentChanelReady$.unsubscribeAll();
         }
 
@@ -204,7 +205,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         sendMessage<T>(data: T): void {
-            this.onDataCatch$.next(data);
+            this.onMsg$.next(data);
         }
 
         sendMessageToParent<T>(data: T): boolean {
@@ -225,7 +226,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         transferToChannel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void {
-            this.dataCatch$<T>()
+            this.onMessage$<T>()
                 .pipe()
                 .emitByPositive(() => chanelCb())
                 .subscribe((data: T) => {
