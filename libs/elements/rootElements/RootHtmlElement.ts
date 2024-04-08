@@ -203,7 +203,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onChangesDetected$.next(true);
         }
 
-        sendData<T>(data: T): void {
+        sendMessage<T>(data: T): void {
             this.onDataCatch$.next(data);
         }
 
@@ -211,7 +211,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (!element) return undefined;
             if ((<IAppElement>element).isCustomAppElement) return <IChannel>element;
             if (!(<RootElement>element).ahe_component) return undefined;
-            if (!(<IChannel>element).sendData) return undefined;
+            if (!(<IChannel>element).sendMessage) return undefined;
 
             element.isCustomAppElement = true;
 
@@ -223,14 +223,14 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 .pipe()
                 .emitByPositive(() => chanelCb())
                 .subscribe((data: T) => {
-                    chanelCb().sendData<V>(
+                    chanelCb().sendMessage<V>(
                         dataCb(data)
                     )
                 });
         }
 
         sendToChannel<T>(chanel: IChannel, data: T): void {
-            chanel && chanel.sendData<T>(data);
+            chanel && chanel.sendMessage<T>(data);
         }
 
         isAppElement(element: any): boolean {

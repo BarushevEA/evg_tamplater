@@ -31,7 +31,7 @@ export class AppRoot implements OnInit, OnCreate {
 
         const chanel = this.root.getChannel(this.main);
         if (chanel) {
-            chanel.sendData<string>("Message by AppRoot");
+            chanel.sendMessage<string>("Message by AppRoot");
         }
     }
 

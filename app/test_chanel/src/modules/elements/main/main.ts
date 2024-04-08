@@ -102,9 +102,9 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     private sendMessageToChildren() {
-        this.child1Chanel?.sendData("Message by main to child1");
-        this.child2Chanel?.sendData("Message by main to child2");
-        this.child3Chanel?.sendData("Message by main to child3");
-        this.child4Chanel?.sendData("Message by main to child4");
+        this.child1Chanel?.sendMessage("Message by main to child1");
+        this.child2Chanel?.sendMessage("Message by main to child2");
+        this.child3Chanel?.sendMessage("Message by main to child3");
+        this.child4Chanel?.sendMessage("Message by main to child4");
     }
 }

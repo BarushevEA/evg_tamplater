@@ -53,7 +53,7 @@ export type ForOf = {
     valueName: string;
 };
 export type IChannel = {
-    sendData<T>(data: T): void;
+    sendMessage<T>(data: T): void;
 };
 export type RootBehavior = {
     adopted$(): IChanelListener<boolean>;

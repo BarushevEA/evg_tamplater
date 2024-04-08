@@ -65,7 +65,7 @@ our most popular chicken recipes of all time.
         console.log("dataCatch$.value:", this.root.dataCatch$().getValue());
         const chanel = this.root.parentChanelReady$().getValue();
         if (chanel) {
-            chanel.sendData("Main sendData");
+            chanel.sendMessage("Main sendData");
         }
 
         this.root.collect(

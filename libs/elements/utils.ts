@@ -250,7 +250,7 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
 }
 
 function handleCirclesChannelData(data: any, element: HTMLElement, root: RootElement) {
-    root.isAppElement(element) && (<IChannel><any>element).sendData(data);
+    root.isAppElement(element) && (<IChannel><any>element).sendMessage(data);
 }
 
 function updateForOfChildren(
