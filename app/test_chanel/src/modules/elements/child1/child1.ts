@@ -1,6 +1,6 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/elements/types";
 
-export class Child1 implements OnInit, OnCreate, OnDestroy {
+export class Child1 implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
     message: string;
 
@@ -9,16 +9,6 @@ export class Child1 implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.collect(
-            this.root.onMessage$<string>()
-                .pipe()
-                .emitByPositive(msg => !!msg)
-                .subscribe((msg: string) => {
-                    console.log(msg);
-                    this.message = msg;
-                    this.root.detectChanges();
-                })
-        );
     }
 
     onInit(): void {
@@ -31,5 +21,11 @@ export class Child1 implements OnInit, OnCreate, OnDestroy {
     }
 
     onDestroy(): void {
+    }
+
+    onMessage(msg: string): void {
+        console.log(msg);
+        this.message = msg;
+        this.root.detectChanges();
     }
 }

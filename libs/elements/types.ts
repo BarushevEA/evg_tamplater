@@ -6,6 +6,7 @@ import {CONDITION} from "../enums/CONDITION";
 export type OnCreate = { onCreate: () => void };
 export type OnInit = { onInit: () => void };
 export type OnDestroy = { onDestroy: () => void };
+export type OnMessage = { onMessage: (message: any) => void };
 export type ELEMENT_OPTIONS = {
     template: string;
     element: any;

@@ -137,11 +137,15 @@ class Maker {
         this.tsTemplate = `
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../${levels}libs/elements/types";
 
-export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy {
+export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
+    }
+    
+    onMessage(message: any): void {
+        console.log(this.root.tagName, "message:", message);
     }
 
     onCreate(): void {

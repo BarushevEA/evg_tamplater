@@ -1,7 +1,14 @@
-import {IChildChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {
+    IChildChannel,
+    OnCreate,
+    OnDestroy,
+    OnInit,
+    OnMessage,
+    RootBehavior
+} from "../../../../../../libs/elements/types";
 import {IStudent} from "../../env/types";
 
-export class Main implements OnInit, OnCreate, OnDestroy {
+export class Main implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
 
     child1Chanel: IChildChannel;
@@ -16,13 +23,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
-        this.root.collect(
-            this.root
-                .onMessage$()
-                .subscribe(message => {
-                    console.log("MAIN MESSAGE:", message);
-                })
-        );
     }
 
     onInit(): void {
@@ -100,5 +100,9 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.child2Chanel?.sendMessage("Message by main to child2");
         this.child3Chanel?.sendMessage("Message by main to child3");
         this.child4Chanel?.sendMessage("Message by main to child4");
+    }
+
+    onMessage(message: any): void {
+        console.log("MAIN MESSAGE:", message);
     }
 }
