@@ -55,6 +55,7 @@ export type ForOf = {
 export type IChannel = {
     sendMessage<T>(data: T): void;
 };
+export type IChildChannel = IChannel | undefined;
 export type RootBehavior = {
     adopted$(): IChanelListener<boolean>;
     init$(): IChanelListener<boolean>;

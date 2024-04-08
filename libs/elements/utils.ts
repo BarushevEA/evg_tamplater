@@ -9,6 +9,7 @@ export enum E_DATA_MARKER {
     INFO = "i",
     SOURCE = "src",
     INJECT_TO = "inject_to",
+    CHANNEL = "channel",
     ON_CLICK = "click",
     ON_CHANGE = "change",
     ON_KEY_DOWN = "keydown",
@@ -98,6 +99,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     }
 
     actions += detectInjections(rootElement, <HTMLElement>child);
+    actions += detectChannel(rootElement, <HTMLElement>child);
     actions += detectSource(rootElement, <HTMLElement>child);
     actions += detectClickHandlers(rootElement, <HTMLElement>child);
     actions += detectMouseLeaveHandlers(rootElement, <HTMLElement>child);
@@ -408,6 +410,15 @@ function detectInjections(rootElement: RootElement, element: HTMLElement): strin
     if (!injectionName) return "";
     rootElement.ahe_component[injectionName] = element;
     return "inj ";
+}
+
+function detectChannel(rootElement: RootElement, element: HTMLElement): string {
+    const channelName = getFieldName(element, E_DATA_MARKER.CHANNEL);
+    if (!channelName) return "";
+    if (!(<IAppElement>element).isCustomAppElement) return "";
+
+    rootElement.ahe_component[channelName] = <IChannel>element;
+    return "cnl ";
 }
 
 function detectClickHandlers(rootElement: RootElement, element: HTMLElement): string {
