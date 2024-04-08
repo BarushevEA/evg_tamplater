@@ -209,7 +209,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         sendMessageToParent<T>(data: T): boolean {
             if (!this.ahe_parent_chanel) return false;
-            this.ahe_parent_chanel?.sendMessage(data);
+            this.ahe_parent_chanel.sendMessage(data);
             return true;
         }
 
