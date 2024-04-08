@@ -23,6 +23,11 @@ export class Child1 implements OnInit, OnCreate, OnDestroy {
 
     onInit(): void {
         this.message = this.name;
+        let counter = 0;
+        setInterval(() => {
+            this.root.sendMessageToParent<string>(`from Child1 message #${counter}`);
+            counter++;
+        }, 1000);
     }
 
     onDestroy(): void {

@@ -16,6 +16,13 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     onCreate(): void {
+        this.root.collect(
+            this.root
+                .onMessage$()
+                .subscribe(message => {
+                    console.log("MAIN MESSAGE:", message);
+                })
+        );
     }
 
     onInit(): void {
