@@ -25,6 +25,7 @@
 * `qsi-handle="functionName" ` The - attribute contains function name of this component. When function is calling, you
   can get related elements and process them.
 * `qsi-inject_to="variableName"`- Injection HTML element to the variable.
+* `qsi-channel="variableName"`- Injection IChildChannel element to the variable.
 * `qsi-change="functionName"` - Serving a qsi-change action using function name.
 * `qsi-keydown="functionName"` - Serving a qsi-keydown action using function name.
 * `qsi-keyup="functionName"` - Serving a qsi-keyup action using function name.
