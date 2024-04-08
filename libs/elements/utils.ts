@@ -417,7 +417,7 @@ function detectChannel(rootElement: RootElement, element: HTMLElement): string {
     if (!channelName) return "";
     if (!(<IAppElement>element).isCustomAppElement) return "";
 
-    rootElement.ahe_component[channelName] = <IChannel>element;
+    rootElement.ahe_component[channelName] = <IChannel><any>element;
     return "cnl ";
 }
 

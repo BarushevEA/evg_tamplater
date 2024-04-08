@@ -1,17 +1,13 @@
-import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {IChildChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {IStudent} from "../../env/types";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;
-    child1: HTMLElement;
-    child2: HTMLElement;
-    child3: HTMLElement;
-    child4: HTMLElement;
 
-    child1Chanel: IChannel;
-    child2Chanel: IChannel;
-    child3Chanel: IChannel;
-    child4Chanel: IChannel;
+    child1Chanel: IChildChannel;
+    child2Chanel: IChildChannel;
+    child3Chanel: IChildChannel;
+    child4Chanel: IChildChannel;
 
     forElements: IStudent[] = [{name: "Sergey"}, {name: "Andrey"}, {name: "Nik"}];
 
@@ -23,8 +19,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     onInit(): void {
-        this.initializeChannels();
-
         setTimeout(() => {
             this.sendMessageToChildren();
         }, 5000);
@@ -92,13 +86,6 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     onDestroy(): void {
-    }
-
-    private initializeChannels() {
-        this.child1Chanel = this.root.getChannel(this.child1);
-        this.child2Chanel = this.root.getChannel(this.child2);
-        this.child3Chanel = this.root.getChannel(this.child3);
-        this.child4Chanel = this.root.getChannel(this.child4);
     }
 
     private sendMessageToChildren() {
