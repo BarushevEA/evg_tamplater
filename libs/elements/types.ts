@@ -59,7 +59,6 @@ export type IChannel = {
 export type IChildChannel = IChannel | undefined;
 export type RootBehavior = {
     adopted$(): IChanelListener<boolean>;
-    init$(): IChanelListener<boolean>;
     destroy$(): IChanelListener<boolean>;
     attributeChange$(): IChanelListener<AttributeChanged>;
     beforeChanges$(): IChanelListener<boolean>;
