@@ -50,9 +50,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_component: any;
         ahe_parent_chanel: IChannel;
 
-        onAdopted$: Observable<boolean>;
-        onInit$: Observable<boolean>;
-        onDestroy$: Observable<boolean>;
+        ahe_onAdopted$: Observable<boolean>;
+        ahe_beforeInit$: Observable<boolean>;
+        ahe_beforeDestroy$: Observable<boolean>;
         attributeChanged$: Observable<AttributeChanged | undefined>;
         beforeDetectChanges$: Observable<boolean>;
         onChangesDetected$: Observable<boolean>;
@@ -65,9 +65,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_number = RootHtmlElement.ahe_Counter;
             RootHtmlElement.ahe_Counter++;
 
-            this.onAdopted$ = new Observable(false);
-            this.onInit$ = new Observable(false);
-            this.onDestroy$ = new Observable(false);
+            this.ahe_onAdopted$ = new Observable(false);
+            this.ahe_beforeInit$ = new Observable(false);
+            this.ahe_beforeDestroy$ = new Observable(false);
             this.attributeChanged$ = new Observable(undefined);
             this.beforeDetectChanges$ = new Observable(false);
             this.onChangesDetected$ = new Observable(false);
@@ -95,15 +95,15 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         adopted$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.onAdopted$;
+            return this.ahe_onAdopted$;
         }
 
-        init$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.onInit$;
+        beforeInit$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.ahe_beforeInit$;
         }
 
-        destroy$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.onDestroy$;
+        beforeDestroy$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.ahe_beforeDestroy$;
         }
 
         attributeChange$(): ISubscriber<AttributeChanged | undefined> & IObservablePipe<AttributeChanged | undefined> {
@@ -123,16 +123,17 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         connectedCallback() {
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_component[ifDoubleInitVar]) return;
             }
 
+            this.ahe_beforeInit$.next(true);
+
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
 
             detectInjectedData(this);
-            this.onInit$.next(true);
 
             if (this.ahe_component.onInit) this.ahe_component.onInit();
             if (this.ahe_component.onMessage) {
@@ -147,6 +148,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         disconnectedCallback() {
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_component[ifDoubleInitVar]) {
                     this.ahe_component[ifDoubleInitVar] = true;
@@ -154,10 +157,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 }
             }
 
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
+            this.ahe_beforeDestroy$.next(true);
 
-            this.onDestroy$.next(true);
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
 
             this.ahe_clr.unsubscribeAll();
@@ -171,9 +172,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_ClsIfList.length = 0;
             this.ahe_ForOfList.length = 0;
             this.innerHTML = "";
-            this.onAdopted$.unsubscribeAll();
-            this.onInit$.unsubscribeAll();
-            this.onDestroy$.unsubscribeAll();
+            this.ahe_onAdopted$.unsubscribeAll();
+            this.ahe_beforeInit$.unsubscribeAll();
+            this.ahe_beforeDestroy$.unsubscribeAll();
             this.attributeChanged$.unsubscribeAll();
             this.beforeDetectChanges$.unsubscribeAll();
             this.onChangesDetected$.unsubscribeAll();
@@ -186,7 +187,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         adoptedCallback() {
-            this.onAdopted$.next(true);
+            this.ahe_onAdopted$.next(true);
         }
 
         getElementsBoundToMethod(method: any): HTMLElement[] {
@@ -256,7 +257,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         destroy(): void {
-            this.onAdopted$.destroy();
+            this.ahe_onAdopted$.destroy();
             this.attributeChanged$.destroy();
             this.ahe_clr.destroy();
         }

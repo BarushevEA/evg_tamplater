@@ -541,7 +541,7 @@ function bindElementToMethod(rootElement: RootElement, functionName: string, ele
     if (!method.htmlElements[rootElement.ahe_number]) method.htmlElements[rootElement.ahe_number] = [];
 
     rootElement.ahe_clr.collect(
-        rootElement.destroy$().subscribe(isDestroy => isDestroy && (method.htmlElements = {}))
+        rootElement.beforeDestroy$().subscribe(isDestroy => isDestroy && (method.htmlElements = {}))
     );
 
     method.htmlElements[rootElement.ahe_number].push(element);
