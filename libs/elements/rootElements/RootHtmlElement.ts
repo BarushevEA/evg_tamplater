@@ -51,6 +51,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_parent_chanel: IChannel;
 
         onAdopted$: Observable<boolean>;
+        onInit$: Observable<boolean>;
         onDestroy$: Observable<boolean>;
         attributeChanged$: Observable<AttributeChanged | undefined>;
         beforeDetectChanges$: Observable<boolean>;
@@ -65,6 +66,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             RootHtmlElement.ahe_Counter++;
 
             this.onAdopted$ = new Observable(false);
+            this.onInit$ = new Observable(false);
             this.onDestroy$ = new Observable(false);
             this.attributeChanged$ = new Observable(undefined);
             this.beforeDetectChanges$ = new Observable(false);
@@ -94,6 +96,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         adopted$(): ISubscriber<boolean> & IObservablePipe<boolean> {
             return this.onAdopted$;
+        }
+
+        init$(): ISubscriber<boolean> & IObservablePipe<boolean> {
+            return this.onInit$;
         }
 
         destroy$(): ISubscriber<boolean> & IObservablePipe<boolean> {
@@ -126,6 +132,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
 
             detectInjectedData(this);
+            this.onInit$.next(true);
 
             if (this.ahe_component.onInit) this.ahe_component.onInit();
             if (this.ahe_component.onMessage) {
@@ -165,6 +172,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_ForOfList.length = 0;
             this.innerHTML = "";
             this.onAdopted$.unsubscribeAll();
+            this.onInit$.unsubscribeAll();
             this.onDestroy$.unsubscribeAll();
             this.attributeChanged$.unsubscribeAll();
             this.beforeDetectChanges$.unsubscribeAll();
