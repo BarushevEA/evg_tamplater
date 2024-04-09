@@ -135,14 +135,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             detectInjectedData(this);
 
-            if (this.ahe_component.onInit) this.ahe_component.onInit();
             if (this.ahe_component.onMessage) {
-                this.collect(
-                    this.onMsg$.subscribe(message => {
-                        this.ahe_component.onMessage(message);
-                    })
-                );
+                this.collect(this.onMsg$.subscribe(message => this.ahe_component.onMessage(message)));
             }
+            if (this.ahe_component.onInit) this.ahe_component.onInit();
 
             this.detectChanges(true);
         }
