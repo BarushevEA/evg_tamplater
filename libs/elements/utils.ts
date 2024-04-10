@@ -31,8 +31,8 @@ export enum E_DATA_MARKER {
 export const E_DATA_MARKER_KEYS = Object.keys(E_DATA_MARKER);
 
 export enum E_ROOT_TAG {
-    TEXT_VALUE = "txt-val",
-    QSI_BIND = "qsi-bind"
+    TEXT_VALUE = "TXT-VAL",
+    QSI_BIND = "QSI-BIND"
 }
 
 export function getAttrName(marker: E_DATA_MARKER): string {
@@ -216,8 +216,8 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 const emptyArr: IAppElement[] = <any>[0];
 
 function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
-    if (element.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
-    if (element.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return (emptyArr[0] = element) && emptyArr;
+    if (element.tagName === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
+    if (element.tagName === E_ROOT_TAG.QSI_BIND) return (emptyArr[0] = element) && emptyArr;
     if (!rootElement.isAppElement(element)) return (emptyArr[0] = element) && emptyArr;
 
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
@@ -331,7 +331,7 @@ function getFreeChildren(parent: HTMLElement): IAppElement[] {
 }
 
 function detectVariables(rootElement: RootElement, element: Element): boolean {
-    if (element.tagName.toLowerCase() !== E_ROOT_TAG.TEXT_VALUE) return false;
+    if (element.tagName !== E_ROOT_TAG.TEXT_VALUE) return false;
     if (!element.innerHTML) return false;
 
     const details = getDetails(rootElement, element.innerHTML);
@@ -354,7 +354,7 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
 }
 
 function detectBindVariables(rootElement: RootElement, element: Element): boolean {
-    if (element.tagName.toLowerCase() !== E_ROOT_TAG.QSI_BIND) return false;
+    if (element.tagName !== E_ROOT_TAG.QSI_BIND) return false;
     if (!element.innerHTML) return false;
 
     const details = getDetails(rootElement, element.innerHTML);

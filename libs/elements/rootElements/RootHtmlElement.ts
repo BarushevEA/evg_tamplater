@@ -66,8 +66,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_number = ahe_Counter;
             ahe_Counter++;
 
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
+            if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
 
             this.ahe_onAdopted$ = new Observable(false);
             this.ahe_beforeInit$ = new Observable(false);
@@ -127,8 +127,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         connectedCallback() {
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
+            if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_component[ifDoubleInitVar]) return;
             }
@@ -148,8 +148,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         disconnectedCallback() {
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
-            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
+            if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_component[ifDoubleInitVar]) {
                     this.ahe_component[ifDoubleInitVar] = true;
