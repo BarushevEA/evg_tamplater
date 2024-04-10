@@ -14,7 +14,9 @@ import {
     E_DATA_MARKER,
     E_ROOT_TAG,
     getAttr,
-    ifDoubleInitVar
+    ifDoubleInitVar,
+    removeAttr,
+    txtValBuffer
 } from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {
@@ -148,7 +150,13 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         disconnectedCallback() {
-            if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName === E_ROOT_TAG.TEXT_VALUE) {
+                if (!this.innerHTML) {
+                    removeAttr(this, E_DATA_MARKER.INFO);
+                    txtValBuffer.push(this);
+                }
+                return;
+            }
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_component[ifDoubleInitVar]) {
@@ -156,12 +164,12 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                     return;
                 }
             }
-
             this.ahe_beforeDestroy$.next(true);
 
-            if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
 
+            if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
             this.ahe_clr.unsubscribeAll();
+
             this.ahe_nFunctions.length = 0;
             this.ahe_sourceComponentsFunctions.length = 0;
             this.ahe_sourceComponents.length = 0;

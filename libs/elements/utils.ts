@@ -190,7 +190,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     let valueName = getAttr(element, E_DATA_MARKER.ON_IF);
     if (!valueName) return "";
 
-    const ifParent = createElement(E_ROOT_TAG.TEXT_VALUE);
+    const ifParent = getTxtValue();
     const htmlParent = element.parentElement;
 
     const details = getDetails(rootElement, valueName);
@@ -214,6 +214,13 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 }
 
 const emptyArr: IAppElement[] = <any>[0];
+export const txtValBuffer: HTMLElement[] = [];
+
+function getTxtValue(): HTMLElement {
+    if (txtValBuffer.length) return txtValBuffer.pop();
+
+    return createElement(E_ROOT_TAG.TEXT_VALUE);
+}
 
 function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
     if (element.tagName === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
@@ -226,7 +233,7 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
     const arr = rootElement.ahe_component[arrName];
     if (!arr) return (emptyArr[0] = element) && emptyArr;
 
-    const cycleParent = createElement(E_ROOT_TAG.TEXT_VALUE);
+    const cycleParent = getTxtValue();
     const htmlParent = element.parentElement;
 
     const newElements = updateForOfChildren(
