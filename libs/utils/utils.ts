@@ -31,7 +31,7 @@ export function b64DecodeUnicode(str: string): string {
 }
 
 export function setInnerHtml(element: HTMLElement, HTMLText: string): void {
-    if (element && element.innerHTML) element.innerHTML = HTMLText;
+    if (element) element.innerHTML = HTMLText;
 }
 
 export function createElement(tagName: string): HTMLElement {

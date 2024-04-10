@@ -245,7 +245,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         sendToChannel<T>(chanel: IChannel, data: T): void {
-            chanel && chanel.sendMessage<T>(data);
+            chanel?.sendMessage<T>(data);
         }
 
         isAppElement(element: any): boolean {
