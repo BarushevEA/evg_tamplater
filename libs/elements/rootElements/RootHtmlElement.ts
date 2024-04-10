@@ -30,9 +30,10 @@ import {
 } from "../types";
 import {IChanelListener} from "../../env/types";
 
+let ahe_Counter = 0;
+
 export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstructor {
     class RootHtmlElement extends HTMLElement implements RootElement {
-        static ahe_Counter = 0;
         ahe_number = 0;
         private ahe_opts: ELEMENT_OPTIONS;
 
@@ -62,8 +63,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         constructor() {
             super();
 
-            this.ahe_number = RootHtmlElement.ahe_Counter;
-            RootHtmlElement.ahe_Counter++;
+            this.ahe_number = ahe_Counter;
+            ahe_Counter++;
+
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.TEXT_VALUE) return;
+            if (this.tagName.toLowerCase() === E_ROOT_TAG.QSI_BIND) return;
 
             this.ahe_onAdopted$ = new Observable(false);
             this.ahe_beforeInit$ = new Observable(false);
