@@ -5,7 +5,7 @@ import {E_ROOT_TAG} from "./utils";
 
 export function RegisterRootElements() {
     registerElements([
-        {tagName: E_ROOT_TAG.TEXT_VALUE, targetElement: AppText},
-        {tagName: E_ROOT_TAG.QSI_BIND, targetElement: QSIBind},
+        {tagName: E_ROOT_TAG.TEXT_VALUE.toLowerCase(), targetElement: AppText},
+        {tagName: E_ROOT_TAG.QSI_BIND.toLowerCase(), targetElement: QSIBind},
     ]);
 }
