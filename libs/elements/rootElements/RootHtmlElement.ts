@@ -183,11 +183,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-            this.attributeChanged$.next({name, oldValue, newValue});
+            this.attributeChanged$?.next({name, oldValue, newValue});
         }
 
         adoptedCallback() {
-            this.ahe_onAdopted$.next(true);
+            this.ahe_onAdopted$?.next(true);
         }
 
         getElementsBoundToMethod(method: any): HTMLElement[] {
