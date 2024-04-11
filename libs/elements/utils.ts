@@ -215,10 +215,18 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 
 const emptyArr: IAppElement[] = <any>[0];
 export const txtValBuffer: HTMLElement[] = [];
+export const txtValBufferLength = 100;
+
+function createTxtValBuffer() {
+    for (let i = 0; i < txtValBufferLength; i++) {
+        txtValBuffer.push(createElement(E_ROOT_TAG.TEXT_VALUE));
+    }
+}
+
+createTxtValBuffer();
 
 function getTxtValue(): HTMLElement {
     if (txtValBuffer.length) return txtValBuffer.pop();
-
     return createElement(E_ROOT_TAG.TEXT_VALUE);
 }
 

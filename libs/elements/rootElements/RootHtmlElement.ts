@@ -16,7 +16,8 @@ import {
     getAttr,
     ifDoubleInitVar,
     removeAttr,
-    txtValBuffer
+    txtValBuffer,
+    txtValBufferLength
 } from "../utils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {
@@ -151,7 +152,9 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         disconnectedCallback() {
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) {
-                if (!this.innerHTML) {
+                if (txtValBuffer.length >= txtValBufferLength) return;
+                if (getAttr(this, E_DATA_MARKER.INFO)) {
+                    this.innerHTML = "";
                     removeAttr(this, E_DATA_MARKER.INFO);
                     txtValBuffer.push(this);
                 }
@@ -164,8 +167,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                     return;
                 }
             }
-            this.ahe_beforeDestroy$.next(true);
 
+            this.ahe_beforeDestroy$.next(true);
 
             if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
             this.ahe_clr.unsubscribeAll();
