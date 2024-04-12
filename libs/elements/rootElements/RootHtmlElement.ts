@@ -153,8 +153,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         disconnectedCallback() {
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) {
                 if (txtValBuffer.length >= txtValBufferLength) return;
-                if (getAttr(this, E_DATA_MARKER.INFO)) {
-                    this.innerHTML = "";
+                if (this.innerHTML == "") {
                     removeAttr(this, E_DATA_MARKER.INFO);
                     txtValBuffer.push(this);
                 }
