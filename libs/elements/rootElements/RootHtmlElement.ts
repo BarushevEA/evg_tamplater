@@ -94,7 +94,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_opts = options;
             this.ahe_component = new options.element(this);
 
-            if (this.ahe_component.onCreate) this.ahe_component.onCreate();
+            if ("onCreate" in this.ahe_component) this.ahe_component.onCreate();
         }
 
         parentChanelReady$(): ISubscriber<IChannel> & IObservablePipe<IChannel> {
@@ -142,10 +142,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             detectInjectedData(this);
 
-            if (this.ahe_component.onMessage) {
+            if ("onMessage" in this.ahe_component) {
                 this.collect(this.onMsg$.subscribe(message => this.ahe_component.onMessage(message)));
             }
-            if (this.ahe_component.onInit) this.ahe_component.onInit();
+            if ("onInit" in this.ahe_component) this.ahe_component.onInit();
 
             this.detectChanges(true);
         }
@@ -169,19 +169,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             this.ahe_beforeDestroy$.next(true);
 
-            if (this.ahe_component.onDestroy) this.ahe_component.onDestroy();
+            this.clearProperties();
             this.ahe_clr.unsubscribeAll();
-
-            this.ahe_nFunctions.length = 0;
-            this.ahe_sourceComponentsFunctions.length = 0;
-            this.ahe_sourceComponents.length = 0;
-            this.ahe_nValues.length = 0;
-            this.ahe_bindFunctions.length = 0;
-            this.ahe_bindValues.length = 0;
-            this.ahe_IfList.length = 0;
-            this.ahe_ClsIfList.length = 0;
-            this.ahe_ForOfList.length = 0;
-            this.innerHTML = "";
             this.ahe_onAdopted$.unsubscribeAll();
             this.ahe_beforeInit$.unsubscribeAll();
             this.ahe_beforeDestroy$.unsubscribeAll();
@@ -190,6 +179,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.onChangesDetected$.unsubscribeAll();
             this.onMsg$.unsubscribeAll();
             this.onParentChanelReady$.unsubscribeAll();
+
+            if ("onDestroy" in this.ahe_component) this.ahe_component.onDestroy();
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -267,9 +258,30 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         destroy(): void {
+            this.clearProperties();
+
             this.ahe_onAdopted$.destroy();
+            this.ahe_beforeInit$.destroy();
+            this.ahe_beforeDestroy$.destroy();
             this.attributeChanged$.destroy();
+            this.beforeDetectChanges$.destroy();
+            this.onChangesDetected$.destroy();
+            this.onMsg$.destroy();
+            this.onParentChanelReady$.destroy();
             this.ahe_clr.destroy();
+        }
+
+        private clearProperties() {
+            this.ahe_nFunctions.length = 0;
+            this.ahe_sourceComponentsFunctions.length = 0;
+            this.ahe_sourceComponents.length = 0;
+            this.ahe_nValues.length = 0;
+            this.ahe_bindFunctions.length = 0;
+            this.ahe_bindValues.length = 0;
+            this.ahe_IfList.length = 0;
+            this.ahe_ClsIfList.length = 0;
+            this.ahe_ForOfList.length = 0;
+            this.innerHTML = "";
         }
     }
 
