@@ -1,4 +1,4 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Child3 implements OnInit, OnCreate, OnDestroy {
     name: string;

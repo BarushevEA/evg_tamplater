@@ -1,6 +1,6 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../../../libs/elements/types";
 import {LOCATION} from "../../../../../../../../../libs/elements/AppLocalization/location";
 import {location$} from "../../../../../../../../../libs/elements/AppLocalization/LocationManager";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../../../libs/env/types";
 
 export class Settings_lang implements OnInit, OnCreate, OnDestroy {
     readonly root;

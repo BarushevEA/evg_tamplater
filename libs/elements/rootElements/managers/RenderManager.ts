@@ -1,7 +1,7 @@
 import {appendChild, createElement, getStyle, runWhenDocumentReady} from "../../../utils/utils";
-import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator";
+import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator/registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
-import {RegisterRootElements} from "../../registerRootElements";
+import {RegisterRootElements} from "../../registrator/registerRootElements";
 import {AppDocument} from "../../../env/browserVariables";
 
 export class RenderManager {

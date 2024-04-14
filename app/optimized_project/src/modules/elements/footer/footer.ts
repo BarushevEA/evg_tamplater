@@ -1,4 +1,4 @@
-import {OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Footer implements OnInit{
     readonly root;

@@ -1,7 +1,9 @@
 import {registerElements} from "./registrator";
-import {AppText} from "./rootElements/appText";
-import {QSIBind} from "./rootElements/qsiBind";
-import {E_ROOT_TAG} from "./utils";
+import {AppText} from "../rootElements/appText";
+import {QSIBind} from "../rootElements/qsiBind";
+
+
+import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
 
 export function RegisterRootElements() {
     registerElements([

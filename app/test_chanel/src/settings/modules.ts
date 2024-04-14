@@ -4,7 +4,7 @@ import {Child3} from "../modules/elements/child3/child3";
 import {Child2} from "../modules/elements/child2/child2";
 import {Child1} from "../modules/elements/child1/child1";
 import {Main} from "../modules/elements/main/main";
-import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator";
+import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
 import {APP_TAG_NAME} from "../../../../libs/elements/rootElements/managers/APP_TAG_NAME";
 

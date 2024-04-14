@@ -1,39 +1,10 @@
-import {ClassCondition, ClassIf, IAppElement, IChannel, OnIf, RootElement, ValDetails} from "./types";
-import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../utils/utils";
+import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../../utils/utils";
 import {quickDeleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
-import {APP_RANDOM_STR} from "../env/env";
-import {CONDITION} from "../enums/CONDITION";
-import {clsSeparator} from "./env";
-
-export enum E_DATA_MARKER {
-    INFO = "i",
-    SOURCE = "src",
-    INJECT_TO = "inject_to",
-    CHANNEL = "channel",
-    ON_CLICK = "click",
-    ON_CHANGE = "change",
-    ON_KEY_DOWN = "keydown",
-    ON_KEY_UP = "keyup",
-    ON_KEY_DBL_CLICK = "dblclick",
-    ON_SCROLL = "scroll",
-    ON_WHEEL = "wheel",
-    ON_MOUSE_LEAVE = "mouseleave",
-    ON_MOUSE_ENTER = "mouseenter",
-    ON_MOUSE_UP = "mouseup",
-    ON_MOUSE_DOWN = "mousedown",
-    ON_MOUSE_MOVE = "mousemove",
-    ON_HANDLE = "handle",
-    ON_IF = "if",
-    CLASS_IF = "cls",
-    FOR = "for",
-}
-
-export const E_DATA_MARKER_KEYS = Object.keys(E_DATA_MARKER);
-
-export enum E_ROOT_TAG {
-    TEXT_VALUE = "TXT-VAL",
-    QSI_BIND = "QSI-BIND"
-}
+import {APP_RANDOM_STR, clsSeparator, emptyArr, txtValBuffer, txtValBufferLength} from "../../env/env";
+import {CONDITION} from "../../enums/CONDITION";
+import {E_DATA_MARKER} from "../../enums/E_DATA_MARKER";
+import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
+import {ClassCondition, ClassIf, IAppElement, IChannel, OnIf, RootElement, ValDetails} from "../../env/types";
 
 export function getAttrName(marker: E_DATA_MARKER): string {
     return `qsi-${marker}`;
@@ -58,8 +29,6 @@ export function removeAttr(element: HTMLElement | Element, marker: E_DATA_MARKER
     if (!element) return;
     element.removeAttribute(getAttrName(marker))
 }
-
-export const ifDoubleInitVar = "_______$$bool";
 
 export function detectInjectedData(rootElement: RootElement): void {
     const children = getFreeChildren(rootElement);
@@ -212,10 +181,6 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 
     return "ifc ";
 }
-
-const emptyArr: IAppElement[] = <any>[0];
-export const txtValBuffer: HTMLElement[] = [];
-export const txtValBufferLength = 100;
 
 function createTxtValBuffer() {
     for (let i = 0; i < txtValBufferLength; i++) {

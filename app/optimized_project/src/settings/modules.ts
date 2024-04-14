@@ -1,4 +1,4 @@
-import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator";
+import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
 import {Header} from "../modules/elements/header/header";
 import {Footer} from "../modules/elements/footer/footer";

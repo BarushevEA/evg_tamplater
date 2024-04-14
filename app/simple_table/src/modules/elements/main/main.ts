@@ -1,5 +1,5 @@
-import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {ROW, TableOptions} from "../../env/types";
+import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main implements OnCreate, OnInit, OnDestroy {
     readonly root: RootBehavior;

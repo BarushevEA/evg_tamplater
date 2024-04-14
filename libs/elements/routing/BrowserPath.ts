@@ -1,4 +1,4 @@
-import {AppWindow} from "../env/browserVariables";
+import {AppWindow} from "../../env/browserVariables";
 import {ICallback, IDestroy, IObserver, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {Observable} from "evg_observable/src/outLib/Observable";
 

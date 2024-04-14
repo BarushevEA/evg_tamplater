@@ -1,9 +1,9 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {currentTaskList$, taskList$} from "../../../services/observables";
 import {TASK_SERVICE} from "../../../services/taskService";
 import {ILocalizedText} from "../../../../../../../libs/elements/AppLocalization/types";
 import {APP_LOCALE, location$} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {bannerFieldsTxt} from "../../../env/Languages/banner";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/env/types";
 
 export class Baner implements OnInit, OnCreate, OnDestroy {
     readonly root;

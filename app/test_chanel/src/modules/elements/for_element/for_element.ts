@@ -1,5 +1,5 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {IStudent} from "../../env/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class For_element implements OnInit, OnCreate, OnDestroy {
     photo: string;

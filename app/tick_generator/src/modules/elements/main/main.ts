@@ -1,8 +1,8 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {GAnimationFrame} from "../../../TickGenerator/GAnimationFrame";
 import {TickCounter} from "../../../TickGenerator/TickCounter";
 import {EState} from "../../../TickGenerator/Env";
 import {GMeter} from "../../../TickGenerator/GMeter";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;

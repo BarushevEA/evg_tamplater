@@ -1,10 +1,10 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {ITask} from "../../../env/taskEnv/types";
 import {E_TASK_ACTION, E_TASK_TYPE} from "../../../env/taskEnv/enums";
 import {TASK_SERVICE} from "../../../services/taskService";
 import {ILocalizedText} from "../../../../../../../libs/elements/AppLocalization/types";
 import {APP_LOCALE, location$} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {taskFieldTxt} from "../../../env/Languages/task";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/env/types";
 
 export class Task implements OnInit, OnCreate, OnDestroy, ITask {
     readonly root;

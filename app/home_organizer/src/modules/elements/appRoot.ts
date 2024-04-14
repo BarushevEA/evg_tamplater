@@ -1,10 +1,10 @@
-import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/elements/types";
 import {menuService$} from "../services/observables";
 import {E_MENU_ACTION, E_MENU_OWNER} from "../env/menuEnv/enums";
 import {E_TASK_LIST} from "../env/taskEnv/enums";
 import {TASK_SERVICE} from "../services/taskService";
 import {MenuEvent} from "../env/menuEnv/types";
 import {MOCK_TASKS} from "../env/taskEnv/mockData";
+import {IChannel, OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../libs/env/types";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy {
     readonly root: RootBehavior;

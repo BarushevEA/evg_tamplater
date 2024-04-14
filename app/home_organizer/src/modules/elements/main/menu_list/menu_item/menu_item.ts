@@ -1,9 +1,9 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../../libs/elements/types";
 import {location$} from "../../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {E_MENU_OWNER, E_SETTINGS} from "../../../../env/menuEnv/enums";
 import {LANG_LIST} from "../../../../env/variables";
 import {clickMenuItem} from "../../../../env/menuEnv/utils";
 import {MenuItem} from "../../../../env/menuEnv/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../../libs/env/types";
 
 export class Menu_item implements OnInit, OnCreate, OnDestroy {
     readonly root;

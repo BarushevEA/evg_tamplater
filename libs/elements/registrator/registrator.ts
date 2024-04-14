@@ -1,5 +1,5 @@
-import {runWhenDocumentReady} from "../utils/utils";
-import {getCustomElement} from "./rootElements/RootHtmlElement";
+import {runWhenDocumentReady} from "../../utils/utils";
+import {getCustomElement} from "../rootElements/RootHtmlElement";
 
 export type ELEMENT_REG_OPTION = {
     tagName: string;

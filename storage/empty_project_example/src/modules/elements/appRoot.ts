@@ -1,4 +1,4 @@
-import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;

@@ -1,9 +1,9 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {ITask} from "../../../env/taskEnv/types";
 import {currentTaskList$, taskList$} from "../../../services/observables";
 import {E_TASK_LIST} from "../../../env/taskEnv/enums";
 import {APP_LOCALE} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
 import {TASK_SERVICE} from "../../../services/taskService";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/env/types";
 
 export class Task_list implements OnInit, OnCreate, OnDestroy {
     readonly root;

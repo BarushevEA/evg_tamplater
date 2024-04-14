@@ -1,4 +1,3 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {E_CHOICE, E_MENU_ACTION, E_MENU_OWNER} from "../../../env/menuEnv/enums";
 import {closeMenu, IsMenuShowing, openMenu} from "../../../env/menuEnv/utils";
 import {APP_LOCALE, location$} from "../../../../../../../libs/elements/AppLocalization/LocationManager";
@@ -6,6 +5,7 @@ import {menuChoiceLocale} from "../../../env/menuEnv/variables";
 import {ILocalizedText} from "../../../../../../../libs/elements/AppLocalization/types";
 import {menuService$} from "../../../services/observables";
 import {MenuEvent} from "../../../env/menuEnv/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/env/types";
 
 export class Choice implements OnInit, OnCreate, OnDestroy {
     readonly root: RootBehavior;

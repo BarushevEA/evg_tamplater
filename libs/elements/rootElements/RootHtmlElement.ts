@@ -11,14 +11,9 @@ import {
     changeSource,
     changeSourceFunctions,
     detectInjectedData,
-    E_DATA_MARKER,
-    E_ROOT_TAG,
     getAttr,
-    ifDoubleInitVar,
-    removeAttr,
-    txtValBuffer,
-    txtValBufferLength
-} from "../utils";
+    removeAttr
+} from "./rootUtils";
 import {Collector} from "evg_observable/src/outLib/Collector";
 import {
     AttributeChanged,
@@ -26,12 +21,15 @@ import {
     ELEMENT_OPTIONS,
     ForOf,
     IAppElement,
+    IChanelListener,
     IChannel,
     NestedValue,
     OnIf,
     RootElement
-} from "../types";
-import {IChanelListener} from "../../env/types";
+} from "../../env/types";
+import {E_DATA_MARKER} from "../../enums/E_DATA_MARKER";
+import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
+import {ifDoubleInitVar, txtValBuffer, txtValBufferLength} from "../../env/env";
 
 let ahe_Counter = 0;
 

@@ -1,6 +1,6 @@
 import {APP_INFO} from "../../../settings/info";
 
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main implements OnCreate, OnInit, OnDestroy {
     readonly root;

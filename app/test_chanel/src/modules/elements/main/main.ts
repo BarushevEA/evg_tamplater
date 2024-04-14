@@ -1,12 +1,5 @@
-import {
-    IChildChannel,
-    OnCreate,
-    OnDestroy,
-    OnInit,
-    OnMessage,
-    RootBehavior
-} from "../../../../../../libs/elements/types";
 import {IStudent} from "../../env/types";
+import {IChildChannel, OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;

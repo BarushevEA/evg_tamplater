@@ -1,6 +1,6 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {chanelInput$, chanelOutput$} from "../../services/service";
 import {COMMAND_TEST3, ID} from "../../env/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Test3 implements OnInit, OnCreate, OnDestroy {
     name: string;

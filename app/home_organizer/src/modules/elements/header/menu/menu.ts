@@ -1,8 +1,8 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/elements/types";
 import {menuService$} from "../../../services/observables";
 import {E_MENU_ACTION, E_MENU_OWNER} from "../../../env/menuEnv/enums";
 import {closeMenu, openMenu} from "../../../env/menuEnv/utils";
 import {MenuEvent} from "../../../env/menuEnv/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../../libs/env/types";
 
 export class Menu implements OnInit, OnCreate, OnDestroy {
     readonly root;

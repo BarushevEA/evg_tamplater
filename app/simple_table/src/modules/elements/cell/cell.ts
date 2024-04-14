@@ -1,7 +1,7 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {getValue, setValue} from "../../../../../../libs/utils/utils";
 import {CELL, CellId} from "../../env/types";
 import {CellChange$} from "../../services/tableServices";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Cell implements OnInit, OnCreate, OnDestroy {
     readonly root;

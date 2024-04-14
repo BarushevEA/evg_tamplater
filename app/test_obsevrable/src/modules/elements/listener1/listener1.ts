@@ -1,6 +1,6 @@
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
 import {MainEvents$} from "../../services/service";
 import {IMassage} from "../../env/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Listener1 implements OnInit, OnCreate, OnDestroy {
     name: string;

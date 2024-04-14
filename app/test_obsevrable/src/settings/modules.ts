@@ -3,7 +3,7 @@ import {Listener4} from "../modules/elements/listener4/listener4";
 import {Listener3} from "../modules/elements/listener3/listener3";
 import {Listener2} from "../modules/elements/listener2/listener2";
 import {Listener1} from "../modules/elements/listener1/listener1";
-import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator";
+import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
 import {APP_TAG_NAME} from "../../../../libs/elements/rootElements/managers/APP_TAG_NAME";
 

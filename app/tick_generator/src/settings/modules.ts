@@ -1,5 +1,5 @@
 import {Main} from "../modules/elements/main/main";
-import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator";
+import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
 import {APP_TAG_NAME} from "../../../../libs/elements/rootElements/managers/APP_TAG_NAME";
 

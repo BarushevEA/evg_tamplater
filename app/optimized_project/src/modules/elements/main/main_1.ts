@@ -1,4 +1,4 @@
-import {OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/elements/types";
+import {OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
 
 export class Main_1 implements OnInit, OnDestroy {
     readonly root;
