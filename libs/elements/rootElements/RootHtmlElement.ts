@@ -55,11 +55,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_onAdopted$: Observable<boolean>;
         ahe_beforeInit$: Observable<boolean>;
         ahe_beforeDestroy$: Observable<boolean>;
-        attributeChanged$: Observable<AttributeChanged | undefined>;
-        beforeDetectChanges$: Observable<boolean>;
-        onChangesDetected$: Observable<boolean>;
-        onMsg$: Observable<any>;
-        onParentChanelReady$: Observable<IChannel>;
+        ahe_attrChanged$: Observable<AttributeChanged | undefined>;
+        ahe_beforeDetectChanges$: Observable<boolean>;
+        ahe_onChangesDetected$: Observable<boolean>;
+        ahe_onMsg$: Observable<any>;
+        ahe_onPChanelReady$: Observable<IChannel>;
 
         constructor() {
             super();
@@ -73,11 +73,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_onAdopted$ = new Observable(false);
             this.ahe_beforeInit$ = new Observable(false);
             this.ahe_beforeDestroy$ = new Observable(false);
-            this.attributeChanged$ = new Observable(undefined);
-            this.beforeDetectChanges$ = new Observable(false);
-            this.onChangesDetected$ = new Observable(false);
-            this.onMsg$ = new Observable(undefined);
-            this.onParentChanelReady$ = new Observable(undefined);
+            this.ahe_attrChanged$ = new Observable(undefined);
+            this.ahe_beforeDetectChanges$ = new Observable(false);
+            this.ahe_onChangesDetected$ = new Observable(false);
+            this.ahe_onMsg$ = new Observable(undefined);
+            this.ahe_onPChanelReady$ = new Observable(undefined);
             this.ahe_clr = new Collector();
             this.ahe_nFunctions = [];
             this.ahe_sourceComponentsFunctions = [];
@@ -96,7 +96,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         parentChanelReady$(): ISubscriber<IChannel> & IObservablePipe<IChannel> {
-            return this.onParentChanelReady$;
+            return this.ahe_onPChanelReady$;
         }
 
         adopted$(): ISubscriber<boolean> & IObservablePipe<boolean> {
@@ -112,19 +112,19 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         attributeChange$(): ISubscriber<AttributeChanged | undefined> & IObservablePipe<AttributeChanged | undefined> {
-            return this.attributeChanged$;
+            return this.ahe_attrChanged$;
         }
 
         beforeChanges$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.beforeDetectChanges$;
+            return this.ahe_beforeDetectChanges$;
         }
 
         changesDetected$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.onChangesDetected$;
+            return this.ahe_onChangesDetected$;
         }
 
         onMessage$<T>(): IChanelListener<T> {
-            return <any>this.onMsg$;
+            return <any>this.ahe_onMsg$;
         }
 
         connectedCallback() {
@@ -141,7 +141,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             detectInjectedData(this);
 
             if ("onMessage" in this.ahe_component) {
-                this.collect(this.onMsg$.subscribe(message => this.ahe_component.onMessage(message)));
+                this.collect(this.ahe_onMsg$.subscribe(message => this.ahe_component.onMessage(message)));
             }
             if ("onInit" in this.ahe_component) this.ahe_component.onInit();
 
@@ -172,17 +172,17 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_onAdopted$.unsubscribeAll();
             this.ahe_beforeInit$.unsubscribeAll();
             this.ahe_beforeDestroy$.unsubscribeAll();
-            this.attributeChanged$.unsubscribeAll();
-            this.beforeDetectChanges$.unsubscribeAll();
-            this.onChangesDetected$.unsubscribeAll();
-            this.onMsg$.unsubscribeAll();
-            this.onParentChanelReady$.unsubscribeAll();
+            this.ahe_attrChanged$.unsubscribeAll();
+            this.ahe_beforeDetectChanges$.unsubscribeAll();
+            this.ahe_onChangesDetected$.unsubscribeAll();
+            this.ahe_onMsg$.unsubscribeAll();
+            this.ahe_onPChanelReady$.unsubscribeAll();
 
             if ("onDestroy" in this.ahe_component) this.ahe_component.onDestroy();
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-            this.attributeChanged$?.next({name, oldValue, newValue});
+            this.ahe_attrChanged$?.next({name, oldValue, newValue});
         }
 
         adoptedCallback() {
@@ -198,7 +198,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         detectChanges(isForLost?: boolean): void {
-            this.beforeDetectChanges$.next(true);
+            this.ahe_beforeDetectChanges$.next(true);
             !isForLost && this.ahe_ForOfList.length && changeForOf(this);
             changeIfConditions(this);
             changeClsConditions(this);
@@ -208,11 +208,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             changeBindFunctions(this);
             changeNestedValues(this);
             changeNestedFunctions(this);
-            this.onChangesDetected$.next(true);
+            this.ahe_onChangesDetected$.next(true);
         }
 
         sendMessage<T>(data: T): void {
-            this.onMsg$.next(data);
+            this.ahe_onMsg$.next(data);
         }
 
         sendMessageToParent<T>(data: T): boolean {
@@ -261,11 +261,11 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_onAdopted$.destroy();
             this.ahe_beforeInit$.destroy();
             this.ahe_beforeDestroy$.destroy();
-            this.attributeChanged$.destroy();
-            this.beforeDetectChanges$.destroy();
-            this.onChangesDetected$.destroy();
-            this.onMsg$.destroy();
-            this.onParentChanelReady$.destroy();
+            this.ahe_attrChanged$.destroy();
+            this.ahe_beforeDetectChanges$.destroy();
+            this.ahe_onChangesDetected$.destroy();
+            this.ahe_onMsg$.destroy();
+            this.ahe_onPChanelReady$.destroy();
             this.ahe_clr.destroy();
         }
 

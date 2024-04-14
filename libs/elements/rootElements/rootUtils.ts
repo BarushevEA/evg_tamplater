@@ -50,7 +50,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
             (<RootElement><any>child).ahe_parent_chanel = <IChannel><any>rootElement;
-            (<any>child).onParentChanelReady$.next(<IChannel><any>rootElement);
+            (<any>child).ahe_onPChanelReady$.next(<IChannel><any>rootElement);
         }
         return;
     }
@@ -89,7 +89,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
 
     if (child.isCustomAppElement) {
         (<RootElement><any>child).ahe_parent_chanel = <IChannel><any>rootElement;
-        (<any>child).onParentChanelReady$.next(<IChannel><any>rootElement);
+        (<any>child).ahe_onPChanelReady$.next(<IChannel><any>rootElement);
     }
 }
 
