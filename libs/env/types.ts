@@ -74,19 +74,19 @@ export type RootBehavior = {
     isAppElement(element: any): boolean;
 } & HTMLElement;
 export type RootElement = {
-    ahe_number: number;
-    ahe_nValues: NestedValue[];
-    ahe_bindValues: NestedValue[];
-    ahe_nFunctions: NestedValue[];
-    ahe_sourceComponents: NestedValue[];
-    ahe_sourceComponentsFunctions: NestedValue[];
-    ahe_bindFunctions: NestedValue[];
-    ahe_IfList: OnIf[];
-    ahe_ClsIfList: ClassIf[];
-    ahe_ForOfList: ForOf[];
-    ahe_component: any;
+    ahe_nmr: number;
+    ahe_nVls: NestedValue[];
+    ahe_bndVls: NestedValue[];
+    ahe_nFns: NestedValue[];
+    ahe_srcCms: NestedValue[];
+    ahe_srcCmsFns: NestedValue[];
+    ahe_bndFns: NestedValue[];
+    ahe_IfLst: OnIf[];
+    ahe_ClsIfLst: ClassIf[];
+    ahe_ForOfLst: ForOf[];
+    ahe_cmt: any;
     ahe_clr: Collector;
-    ahe_parent_chanel: IChannel;
+    ahe_pnt_chl: IChannel;
 } & RootBehavior;
 export type ValDetails = {
     isInversion: boolean;

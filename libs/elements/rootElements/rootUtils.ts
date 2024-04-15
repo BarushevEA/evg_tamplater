@@ -49,8 +49,8 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
             actions += detectIfConditions(rootElement, <HTMLElement>child);
             setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
-            (<RootElement><any>child).ahe_parent_chanel = <IChannel><any>rootElement;
-            (<any>child).ahe_onPChanelReady$.next(<IChannel><any>rootElement);
+            (<RootElement><any>child).ahe_pnt_chl = <IChannel><any>rootElement;
+            (<any>child).ahe_onPChlRdy$.next(<IChannel><any>rootElement);
         }
         return;
     }
@@ -88,8 +88,8 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
     if (child.isCustomAppElement) {
-        (<RootElement><any>child).ahe_parent_chanel = <IChannel><any>rootElement;
-        (<any>child).ahe_onPChanelReady$.next(<IChannel><any>rootElement);
+        (<RootElement><any>child).ahe_pnt_chl = <IChannel><any>rootElement;
+        (<any>child).ahe_onPChlRdy$.next(<IChannel><any>rootElement);
     }
 }
 
@@ -149,7 +149,7 @@ function detectClsConditions(rootElement: RootElement, element: HTMLElement): st
         });
     }
 
-    rootElement.ahe_ClsIfList.push(clsIf);
+    rootElement.ahe_ClsIfLst.push(clsIf);
     removeAttr(element, E_DATA_MARKER.CLASS_IF);
 
     return "cls ";
@@ -164,7 +164,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 
     const details = getDetails(rootElement, valueName);
 
-    rootElement.ahe_IfList.push({
+    rootElement.ahe_IfLst.push({
         ifElement: element,
         valueName: details.valueName,
         ifParent: ifParent,
@@ -203,7 +203,7 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
     const arrName = getAttr(element, E_DATA_MARKER.FOR);
     if (!arrName) return (emptyArr[0] = element) && emptyArr;
 
-    const arr = rootElement.ahe_component[arrName];
+    const arr = rootElement.ahe_cmt[arrName];
     if (!arr) return (emptyArr[0] = element) && emptyArr;
 
     const cycleParent = getTxtValue();
@@ -221,7 +221,7 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
     removeChild(htmlParent, element);
     removeAttr(element, E_DATA_MARKER.FOR);
 
-    rootElement.ahe_ForOfList.push({
+    rootElement.ahe_ForOfLst.push({
         parent: cycleParent,
         template: element,
         children: newElements,
@@ -268,7 +268,7 @@ function updateForOfChildren(
         delta *= -1;
         for (let i = 0; i < delta; i++) {
             const child = childrenForUpdate.pop();
-            const ifList = rootElement.ahe_IfList;
+            const ifList = rootElement.ahe_IfLst;
             let ifComponent: OnIf;
 
             for (let j = 0; j < ifList.length; j++) {
@@ -302,7 +302,7 @@ function getDetails(rootElement: RootElement, value: string): ValDetails {
     return {
         isInversion: isInversion,
         valueName: name,
-        isFunction: typeof rootElement.ahe_component[name] === "function"
+        isFunction: typeof rootElement.ahe_cmt[name] === "function"
     }
 }
 
@@ -317,7 +317,7 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
     const details = getDetails(rootElement, element.innerHTML);
 
     if (details.isFunction) {
-        rootElement.ahe_nFunctions.push({
+        rootElement.ahe_nFns.push({
             textElement: <HTMLElement>element,
             valueName: details.valueName,
             lastData: APP_RANDOM_STR
@@ -325,7 +325,7 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
         return true;
     }
 
-    rootElement.ahe_nValues.push({
+    rootElement.ahe_nVls.push({
         textElement: <HTMLElement>element,
         valueName: details.valueName,
         lastData: APP_RANDOM_STR
@@ -340,7 +340,7 @@ function detectBindVariables(rootElement: RootElement, element: Element): boolea
     const details = getDetails(rootElement, element.innerHTML);
 
     if (details.isFunction) {
-        rootElement.ahe_bindFunctions.push({
+        rootElement.ahe_bndFns.push({
             textElement: <HTMLElement>element,
             valueName: details.valueName,
             lastData: APP_RANDOM_STR
@@ -348,7 +348,7 @@ function detectBindVariables(rootElement: RootElement, element: Element): boolea
         return true;
     }
 
-    rootElement.ahe_bindValues.push({
+    rootElement.ahe_bndVls.push({
         textElement: <HTMLElement>element,
         valueName: details.valueName,
         lastData: APP_RANDOM_STR
@@ -357,7 +357,7 @@ function detectBindVariables(rootElement: RootElement, element: Element): boolea
 }
 
 function execute(rootElement: RootElement, functionName: string, evt: MouseEvent | KeyboardEvent | Event) {
-    rootElement.ahe_component[functionName](evt);
+    rootElement.ahe_cmt[functionName](evt);
 }
 
 function detectSource(rootElement: RootElement, element: HTMLElement): string {
@@ -366,7 +366,7 @@ function detectSource(rootElement: RootElement, element: HTMLElement): string {
     const details = getDetails(rootElement, fieldName);
 
     if (details.isFunction) {
-        rootElement.ahe_sourceComponentsFunctions.push({
+        rootElement.ahe_srcCmsFns.push({
             textElement: <HTMLElement>element,
             valueName: details.valueName,
             lastData: "",
@@ -374,7 +374,7 @@ function detectSource(rootElement: RootElement, element: HTMLElement): string {
         return "src ";
     }
 
-    rootElement.ahe_sourceComponents.push(
+    rootElement.ahe_srcCms.push(
         {
             textElement: <HTMLElement>element,
             valueName: fieldName,
@@ -388,7 +388,7 @@ function detectSource(rootElement: RootElement, element: HTMLElement): string {
 function detectInjections(rootElement: RootElement, element: HTMLElement): string {
     const injectionName = getFieldName(element, E_DATA_MARKER.INJECT_TO);
     if (!injectionName) return "";
-    rootElement.ahe_component[injectionName] = element;
+    rootElement.ahe_cmt[injectionName] = element;
     return "inj ";
 }
 
@@ -397,7 +397,7 @@ function detectChannel(rootElement: RootElement, element: HTMLElement): string {
     if (!channelName) return "";
     if (!(<IAppElement>element).isCustomAppElement) return "";
 
-    rootElement.ahe_component[channelName] = <IChannel><any>element;
+    rootElement.ahe_cmt[channelName] = <IChannel><any>element;
     return "cnl ";
 }
 
@@ -514,23 +514,23 @@ function detectElementHandlers(rootElement: RootElement, element: HTMLElement): 
 }
 
 function bindElementToMethod(rootElement: RootElement, functionName: string, element: HTMLElement) {
-    const method = rootElement.ahe_component[functionName];
+    const method = rootElement.ahe_cmt[functionName];
 
     if (!method) return;
     if (!method.htmlElements) method.htmlElements = {};
-    if (!method.htmlElements[rootElement.ahe_number]) method.htmlElements[rootElement.ahe_number] = [];
+    if (!method.htmlElements[rootElement.ahe_nmr]) method.htmlElements[rootElement.ahe_nmr] = [];
 
     rootElement.ahe_clr.collect(
         rootElement.beforeDestroy$().subscribe(isDestroy => isDestroy && (method.htmlElements = {}))
     );
 
-    method.htmlElements[rootElement.ahe_number].push(element);
+    method.htmlElements[rootElement.ahe_nmr].push(element);
 }
 
 export function changeNestedValues(rootElement: RootElement): void {
-    for (let i = 0; i < rootElement.ahe_nValues.length; i++) {
-        const nestedValue = rootElement.ahe_nValues[i];
-        const nestedData = rootElement.ahe_component[nestedValue.valueName];
+    for (let i = 0; i < rootElement.ahe_nVls.length; i++) {
+        const nestedValue = rootElement.ahe_nVls[i];
+        const nestedData = rootElement.ahe_cmt[nestedValue.valueName];
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -540,9 +540,9 @@ export function changeNestedValues(rootElement: RootElement): void {
 }
 
 export function changeBindValues(rootElement: RootElement): void {
-    for (let i = 0; i < rootElement.ahe_bindValues.length; i++) {
-        const nestedValue = rootElement.ahe_bindValues[i];
-        const nestedData = rootElement.ahe_component[nestedValue.valueName];
+    for (let i = 0; i < rootElement.ahe_bndVls.length; i++) {
+        const nestedValue = rootElement.ahe_bndVls[i];
+        const nestedData = rootElement.ahe_cmt[nestedValue.valueName];
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -552,9 +552,9 @@ export function changeBindValues(rootElement: RootElement): void {
 }
 
 export function changeSource(rootElement: RootElement): void {
-    for (let i = 0; i < rootElement.ahe_sourceComponents.length; i++) {
-        const nestedValue = rootElement.ahe_sourceComponents[i];
-        const nestedData = rootElement.ahe_component[nestedValue.valueName];
+    for (let i = 0; i < rootElement.ahe_srcCms.length; i++) {
+        const nestedValue = rootElement.ahe_srcCms[i];
+        const nestedData = rootElement.ahe_cmt[nestedValue.valueName];
         const value = nestedData ?? "";
 
         if (nestedValue.lastData === value) continue;
@@ -565,9 +565,9 @@ export function changeSource(rootElement: RootElement): void {
 }
 
 export function changeSourceFunctions(rootElement: RootElement): void {
-    for (let i = 0; i < rootElement.ahe_sourceComponentsFunctions.length; i++) {
-        const nestedValue = rootElement.ahe_sourceComponentsFunctions[i];
-        const nestedData = rootElement.ahe_component[nestedValue.valueName]();
+    for (let i = 0; i < rootElement.ahe_srcCmsFns.length; i++) {
+        const nestedValue = rootElement.ahe_srcCmsFns[i];
+        const nestedData = rootElement.ahe_cmt[nestedValue.valueName]();
         const value = nestedData ?? "";
 
         if (nestedValue.lastData === value) continue;
@@ -578,9 +578,9 @@ export function changeSourceFunctions(rootElement: RootElement): void {
 }
 
 export function changeNestedFunctions(rootElement: RootElement): void {
-    for (let i = 0; i < rootElement.ahe_nFunctions.length; i++) {
-        const nestedValue = rootElement.ahe_nFunctions[i];
-        const nestedData = rootElement.ahe_component[nestedValue.valueName]();
+    for (let i = 0; i < rootElement.ahe_nFns.length; i++) {
+        const nestedValue = rootElement.ahe_nFns[i];
+        const nestedData = rootElement.ahe_cmt[nestedValue.valueName]();
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -590,9 +590,9 @@ export function changeNestedFunctions(rootElement: RootElement): void {
 }
 
 export function changeBindFunctions(rootElement: RootElement): void {
-    for (let i = 0; i < rootElement.ahe_bindFunctions.length; i++) {
-        const nestedValue = rootElement.ahe_bindFunctions[i];
-        const nestedData = rootElement.ahe_component[nestedValue.valueName]();
+    for (let i = 0; i < rootElement.ahe_bndFns.length; i++) {
+        const nestedValue = rootElement.ahe_bndFns[i];
+        const nestedData = rootElement.ahe_cmt[nestedValue.valueName]();
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -602,11 +602,11 @@ export function changeBindFunctions(rootElement: RootElement): void {
 }
 
 export function changeIfConditions(rootElement: RootElement) {
-    for (let i = 0; i < rootElement.ahe_IfList.length; i++) {
-        const onIf = rootElement.ahe_IfList[i];
+    for (let i = 0; i < rootElement.ahe_IfLst.length; i++) {
+        const onIf = rootElement.ahe_IfLst[i];
         let conditionData = onIf.isFunction ?
-            !!(<any>rootElement.ahe_component)[onIf.valueName]() :
-            !!(<any>rootElement.ahe_component)[onIf.valueName];
+            !!(<any>rootElement.ahe_cmt)[onIf.valueName]() :
+            !!(<any>rootElement.ahe_cmt)[onIf.valueName];
         if (onIf.isInversion) conditionData = !conditionData;
 
         if (conditionData === onIf.oldCondition) continue;
@@ -623,11 +623,11 @@ export function changeIfConditions(rootElement: RootElement) {
 }
 
 export function changeClsConditions(rootElement: RootElement) {
-    for (let i = 0; i < rootElement.ahe_ClsIfList.length; i++) {
-        const classIf = rootElement.ahe_ClsIfList[i];
+    for (let i = 0; i < rootElement.ahe_ClsIfLst.length; i++) {
+        const classIf = rootElement.ahe_ClsIfLst[i];
         const conditions = classIf.classConditions;
         const element = classIf.element;
-        const handler = rootElement.ahe_component;
+        const handler = rootElement.ahe_cmt;
 
         for (let j = 0; j < conditions.length; j++) {
             const condition = conditions[j];
@@ -672,14 +672,14 @@ export function changeClsConditions(rootElement: RootElement) {
 }
 
 export function changeForOf(rootElement: RootElement) {
-    const list = rootElement.ahe_ForOfList;
+    const list = rootElement.ahe_ForOfLst;
 
     for (let i = 0; i < list.length; i++) {
         const forOf = list[i];
         const elements = updateForOfChildren(
             rootElement,
             forOf.children,
-            rootElement.ahe_component[forOf.valueName],
+            rootElement.ahe_cmt[forOf.valueName],
             forOf.parent,
             forOf.template);
         handleInjections(rootElement, elements);

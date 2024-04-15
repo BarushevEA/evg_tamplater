@@ -35,92 +35,92 @@ let ahe_Counter = 0;
 
 export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstructor {
     class RootHtmlElement extends HTMLElement implements RootElement {
-        ahe_number = 0;
+        ahe_nmr = 0;
         private ahe_opts: ELEMENT_OPTIONS;
 
-        ahe_nValues: NestedValue[];
-        ahe_nFunctions: NestedValue[];
-        ahe_sourceComponents: NestedValue[];
-        ahe_sourceComponentsFunctions: NestedValue[];
-        ahe_bindValues: NestedValue[];
-        ahe_bindFunctions: NestedValue[];
+        ahe_nVls: NestedValue[];
+        ahe_nFns: NestedValue[];
+        ahe_srcCms: NestedValue[];
+        ahe_srcCmsFns: NestedValue[];
+        ahe_bndVls: NestedValue[];
+        ahe_bndFns: NestedValue[];
 
-        ahe_IfList: OnIf[];
-        ahe_ClsIfList: ClassIf[];
-        ahe_ForOfList: ForOf[];
+        ahe_IfLst: OnIf[];
+        ahe_ClsIfLst: ClassIf[];
+        ahe_ForOfLst: ForOf[];
         ahe_clr: Collector;
-        ahe_component: any;
-        ahe_parent_chanel: IChannel;
+        ahe_cmt: any;
+        ahe_pnt_chl: IChannel;
 
-        ahe_onAdopted$: Observable<boolean>;
-        ahe_beforeInit$: Observable<boolean>;
-        ahe_beforeDestroy$: Observable<boolean>;
-        ahe_attrChanged$: Observable<AttributeChanged | undefined>;
-        ahe_beforeDetectChanges$: Observable<boolean>;
-        ahe_onChangesDetected$: Observable<boolean>;
+        ahe_onAdt$: Observable<boolean>;
+        ahe_bfrIni$: Observable<boolean>;
+        ahe_bfrDst$: Observable<boolean>;
+        ahe_atrChd$: Observable<AttributeChanged | undefined>;
+        ahe_bfrDctChg$: Observable<boolean>;
+        ahe_onChgDtd$: Observable<boolean>;
         ahe_onMsg$: Observable<any>;
-        ahe_onPChanelReady$: Observable<IChannel>;
+        ahe_onPChlRdy$: Observable<IChannel>;
 
         constructor() {
             super();
 
-            this.ahe_number = ahe_Counter;
+            this.ahe_nmr = ahe_Counter;
             ahe_Counter++;
 
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
 
-            this.ahe_onAdopted$ = new Observable(false);
-            this.ahe_beforeInit$ = new Observable(false);
-            this.ahe_beforeDestroy$ = new Observable(false);
-            this.ahe_attrChanged$ = new Observable(undefined);
-            this.ahe_beforeDetectChanges$ = new Observable(false);
-            this.ahe_onChangesDetected$ = new Observable(false);
+            this.ahe_onAdt$ = new Observable(false);
+            this.ahe_bfrIni$ = new Observable(false);
+            this.ahe_bfrDst$ = new Observable(false);
+            this.ahe_atrChd$ = new Observable(undefined);
+            this.ahe_bfrDctChg$ = new Observable(false);
+            this.ahe_onChgDtd$ = new Observable(false);
             this.ahe_onMsg$ = new Observable(undefined);
-            this.ahe_onPChanelReady$ = new Observable(undefined);
+            this.ahe_onPChlRdy$ = new Observable(undefined);
             this.ahe_clr = new Collector();
-            this.ahe_nFunctions = [];
-            this.ahe_sourceComponentsFunctions = [];
-            this.ahe_sourceComponents = [];
-            this.ahe_nValues = [];
-            this.ahe_bindFunctions = [];
-            this.ahe_bindValues = [];
-            this.ahe_IfList = [];
-            this.ahe_ClsIfList = [];
-            this.ahe_ForOfList = [];
+            this.ahe_nFns = [];
+            this.ahe_srcCmsFns = [];
+            this.ahe_srcCms = [];
+            this.ahe_nVls = [];
+            this.ahe_bndFns = [];
+            this.ahe_bndVls = [];
+            this.ahe_IfLst = [];
+            this.ahe_ClsIfLst = [];
+            this.ahe_ForOfLst = [];
 
             this.ahe_opts = options;
-            this.ahe_component = new options.element(this);
+            this.ahe_cmt = new options.element(this);
 
-            if ("onCreate" in this.ahe_component) this.ahe_component.onCreate();
+            if ("onCreate" in this.ahe_cmt) this.ahe_cmt.onCreate();
         }
 
         parentChanelReady$(): ISubscriber<IChannel> & IObservablePipe<IChannel> {
-            return this.ahe_onPChanelReady$;
+            return this.ahe_onPChlRdy$;
         }
 
         adopted$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.ahe_onAdopted$;
+            return this.ahe_onAdt$;
         }
 
         beforeInit$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.ahe_beforeInit$;
+            return this.ahe_bfrIni$;
         }
 
         beforeDestroy$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.ahe_beforeDestroy$;
+            return this.ahe_bfrDst$;
         }
 
         attributeChange$(): ISubscriber<AttributeChanged | undefined> & IObservablePipe<AttributeChanged | undefined> {
-            return this.ahe_attrChanged$;
+            return this.ahe_atrChd$;
         }
 
         beforeChanges$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.ahe_beforeDetectChanges$;
+            return this.ahe_bfrDctChg$;
         }
 
         changesDetected$(): ISubscriber<boolean> & IObservablePipe<boolean> {
-            return this.ahe_onChangesDetected$;
+            return this.ahe_onChgDtd$;
         }
 
         onMessage$<T>(): IChanelListener<T> {
@@ -131,19 +131,19 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
-                if (!this.ahe_component[ifDoubleInitVar]) return;
+                if (!this.ahe_cmt[ifDoubleInitVar]) return;
             }
 
-            this.ahe_beforeInit$.next(true);
+            this.ahe_bfrIni$.next(true);
 
             if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
 
             detectInjectedData(this);
 
-            if ("onMessage" in this.ahe_component) {
-                this.collect(this.ahe_onMsg$.subscribe(message => this.ahe_component.onMessage(message)));
+            if ("onMessage" in this.ahe_cmt) {
+                this.collect(this.ahe_onMsg$.subscribe(message => this.ahe_cmt.onMessage(message)));
             }
-            if ("onInit" in this.ahe_component) this.ahe_component.onInit();
+            if ("onInit" in this.ahe_cmt) this.ahe_cmt.onInit();
 
             this.detectChanges(true);
         }
@@ -159,47 +159,47 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             }
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
-                if (!this.ahe_component[ifDoubleInitVar]) {
-                    this.ahe_component[ifDoubleInitVar] = true;
+                if (!this.ahe_cmt[ifDoubleInitVar]) {
+                    this.ahe_cmt[ifDoubleInitVar] = true;
                     return;
                 }
             }
 
-            this.ahe_beforeDestroy$.next(true);
+            this.ahe_bfrDst$.next(true);
 
             this.clearProperties();
             this.ahe_clr.unsubscribeAll();
-            this.ahe_onAdopted$.unsubscribeAll();
-            this.ahe_beforeInit$.unsubscribeAll();
-            this.ahe_beforeDestroy$.unsubscribeAll();
-            this.ahe_attrChanged$.unsubscribeAll();
-            this.ahe_beforeDetectChanges$.unsubscribeAll();
-            this.ahe_onChangesDetected$.unsubscribeAll();
+            this.ahe_onAdt$.unsubscribeAll();
+            this.ahe_bfrIni$.unsubscribeAll();
+            this.ahe_bfrDst$.unsubscribeAll();
+            this.ahe_atrChd$.unsubscribeAll();
+            this.ahe_bfrDctChg$.unsubscribeAll();
+            this.ahe_onChgDtd$.unsubscribeAll();
             this.ahe_onMsg$.unsubscribeAll();
-            this.ahe_onPChanelReady$.unsubscribeAll();
+            this.ahe_onPChlRdy$.unsubscribeAll();
 
-            if ("onDestroy" in this.ahe_component) this.ahe_component.onDestroy();
+            if ("onDestroy" in this.ahe_cmt) this.ahe_cmt.onDestroy();
         }
 
         attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-            this.ahe_attrChanged$?.next({name, oldValue, newValue});
+            this.ahe_atrChd$?.next({name, oldValue, newValue});
         }
 
         adoptedCallback() {
-            this.ahe_onAdopted$?.next(true);
+            this.ahe_onAdt$?.next(true);
         }
 
         getElementsBoundToMethod(method: any): HTMLElement[] {
             if (!method) return [];
             if (!method.htmlElements) return [];
-            if (!method.htmlElements[this.ahe_number]) return [];
+            if (!method.htmlElements[this.ahe_nmr]) return [];
 
-            return <HTMLElement[]>(method.htmlElements[this.ahe_number]);
+            return <HTMLElement[]>(method.htmlElements[this.ahe_nmr]);
         }
 
         detectChanges(isForLost?: boolean): void {
-            this.ahe_beforeDetectChanges$.next(true);
-            !isForLost && this.ahe_ForOfList.length && changeForOf(this);
+            this.ahe_bfrDctChg$.next(true);
+            !isForLost && this.ahe_ForOfLst.length && changeForOf(this);
             changeIfConditions(this);
             changeClsConditions(this);
             changeBindValues(this);
@@ -208,7 +208,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             changeBindFunctions(this);
             changeNestedValues(this);
             changeNestedFunctions(this);
-            this.ahe_onChangesDetected$.next(true);
+            this.ahe_onChgDtd$.next(true);
         }
 
         sendMessage<T>(data: T): void {
@@ -216,15 +216,15 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         sendMessageToParent<T>(data: T): boolean {
-            if (!this.ahe_parent_chanel) return false;
-            this.ahe_parent_chanel.sendMessage(data);
+            if (!this.ahe_pnt_chl) return false;
+            this.ahe_pnt_chl.sendMessage(data);
             return true;
         }
 
         getChannel(element: any): IChannel | undefined {
             if (!element) return undefined;
             if ((<IAppElement>element).isCustomAppElement) return <IChannel>element;
-            if (!(<RootElement>element).ahe_component) return undefined;
+            if (!(<RootElement>element).ahe_cmt) return undefined;
             if (!(<IChannel>element).sendMessage) return undefined;
 
             element.isCustomAppElement = true;
@@ -258,27 +258,27 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         destroy(): void {
             this.clearProperties();
 
-            this.ahe_onAdopted$.destroy();
-            this.ahe_beforeInit$.destroy();
-            this.ahe_beforeDestroy$.destroy();
-            this.ahe_attrChanged$.destroy();
-            this.ahe_beforeDetectChanges$.destroy();
-            this.ahe_onChangesDetected$.destroy();
+            this.ahe_onAdt$.destroy();
+            this.ahe_bfrIni$.destroy();
+            this.ahe_bfrDst$.destroy();
+            this.ahe_atrChd$.destroy();
+            this.ahe_bfrDctChg$.destroy();
+            this.ahe_onChgDtd$.destroy();
             this.ahe_onMsg$.destroy();
-            this.ahe_onPChanelReady$.destroy();
+            this.ahe_onPChlRdy$.destroy();
             this.ahe_clr.destroy();
         }
 
         private clearProperties() {
-            this.ahe_nFunctions.length = 0;
-            this.ahe_sourceComponentsFunctions.length = 0;
-            this.ahe_sourceComponents.length = 0;
-            this.ahe_nValues.length = 0;
-            this.ahe_bindFunctions.length = 0;
-            this.ahe_bindValues.length = 0;
-            this.ahe_IfList.length = 0;
-            this.ahe_ClsIfList.length = 0;
-            this.ahe_ForOfList.length = 0;
+            this.ahe_nFns.length = 0;
+            this.ahe_srcCmsFns.length = 0;
+            this.ahe_srcCms.length = 0;
+            this.ahe_nVls.length = 0;
+            this.ahe_bndFns.length = 0;
+            this.ahe_bndVls.length = 0;
+            this.ahe_IfLst.length = 0;
+            this.ahe_ClsIfLst.length = 0;
+            this.ahe_ForOfLst.length = 0;
             this.innerHTML = "";
         }
     }
