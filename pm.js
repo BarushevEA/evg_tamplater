@@ -45,7 +45,7 @@ const emptyProjectPath = path.join(__dirname, "storage", emptyProjectName);
  *
  * @type {string}
  */
-const destinationProjectPath = path.join(__dirname, "app", newProjectName);
+const destinationProjectPath = path.join(process.cwd(), "app", newProjectName);
 /**
  * The buildOptionsProjectPath represents the file path of the 'appPath.js' within
  * the 'buildOptions' directory of a destination project.
