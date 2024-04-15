@@ -2,7 +2,11 @@
   "name": "qusi",
   "version": "1.0.0",
   "description": "Qusi - QuickSimple: Emphasizes speed ('Quick') and simplicity ('Simple').",
+  "main": "pm.js",
   "license": "MIT",
+  "bin": {
+    "create-qusi": "./pm.js"
+  },
   "author": "Barushev Evgeny",
   "devDependencies": {
     "@babel/core": "^7.24.0",
