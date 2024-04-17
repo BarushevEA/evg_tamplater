@@ -8,7 +8,7 @@
     "create-qusi": "./pm.js"
   },
   "author": "Barushev Evgeny",
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.24.0",
     "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-transform-object-rest-spread": "^7.24.0",
