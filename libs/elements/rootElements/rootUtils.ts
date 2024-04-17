@@ -685,3 +685,16 @@ export function changeForOf(rootElement: RootElement) {
         handleInjections(rootElement, elements);
     }
 }
+
+export function clearProperties(rootElement: RootElement & HTMLElement): void {
+    rootElement.ahe_nFns.length = 0;
+    rootElement.ahe_srcCmsFns.length = 0;
+    rootElement.ahe_srcCms.length = 0;
+    rootElement.ahe_nVls.length = 0;
+    rootElement.ahe_bndFns.length = 0;
+    rootElement.ahe_bndVls.length = 0;
+    rootElement.ahe_IfLst.length = 0;
+    rootElement.ahe_ClsIfLst.length = 0;
+    rootElement.ahe_ForOfLst.length = 0;
+    rootElement.innerHTML = "";
+}

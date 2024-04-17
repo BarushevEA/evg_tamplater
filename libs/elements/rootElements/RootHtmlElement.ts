@@ -10,6 +10,7 @@ import {
     changeNestedValues,
     changeSource,
     changeSourceFunctions,
+    clearProperties,
     detectInjectedData,
     getAttr,
     removeAttr
@@ -44,10 +45,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         ahe_srcCmsFns: NestedValue[];
         ahe_bndVls: NestedValue[];
         ahe_bndFns: NestedValue[];
-
         ahe_IfLst: OnIf[];
         ahe_ClsIfLst: ClassIf[];
         ahe_ForOfLst: ForOf[];
+
         ahe_clr: Collector;
         ahe_cmt: any;
         ahe_pnt_chl: IChannel;
@@ -70,6 +71,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
 
+            this.ahe_clr = new Collector();
             this.ahe_onAdt$ = new Observable(false);
             this.ahe_bfrIni$ = new Observable(false);
             this.ahe_bfrDst$ = new Observable(false);
@@ -78,7 +80,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_onChgDtd$ = new Observable(false);
             this.ahe_onMsg$ = new Observable(undefined);
             this.ahe_onPChlRdy$ = new Observable(undefined);
-            this.ahe_clr = new Collector();
+
             this.ahe_nFns = [];
             this.ahe_srcCmsFns = [];
             this.ahe_srcCms = [];
@@ -167,7 +169,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             this.ahe_bfrDst$.next(true);
 
-            this.clearProperties();
+            clearProperties(this);
+
             this.ahe_clr.unsubscribeAll();
             this.ahe_onAdt$.unsubscribeAll();
             this.ahe_bfrIni$.unsubscribeAll();
@@ -256,7 +259,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         destroy(): void {
-            this.clearProperties();
+            clearProperties(this);
 
             this.ahe_onAdt$.destroy();
             this.ahe_bfrIni$.destroy();
@@ -267,19 +270,6 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_onMsg$.destroy();
             this.ahe_onPChlRdy$.destroy();
             this.ahe_clr.destroy();
-        }
-
-        private clearProperties() {
-            this.ahe_nFns.length = 0;
-            this.ahe_srcCmsFns.length = 0;
-            this.ahe_srcCms.length = 0;
-            this.ahe_nVls.length = 0;
-            this.ahe_bndFns.length = 0;
-            this.ahe_bndVls.length = 0;
-            this.ahe_IfLst.length = 0;
-            this.ahe_ClsIfLst.length = 0;
-            this.ahe_ForOfLst.length = 0;
-            this.innerHTML = "";
         }
     }
 
