@@ -528,9 +528,11 @@ function bindElementToMethod(rootElement: RootElement, functionName: string, ele
 }
 
 export function changeNestedValues(rootElement: RootElement): void {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_nVls.length; i++) {
         const nestedValue = rootElement.ahe_nVls[i];
-        const nestedData = rootElement.ahe_cmt[nestedValue.valueName];
+        const nestedData = handler[nestedValue.valueName];
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -540,9 +542,11 @@ export function changeNestedValues(rootElement: RootElement): void {
 }
 
 export function changeBindValues(rootElement: RootElement): void {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_bndVls.length; i++) {
         const nestedValue = rootElement.ahe_bndVls[i];
-        const nestedData = rootElement.ahe_cmt[nestedValue.valueName];
+        const nestedData = handler[nestedValue.valueName];
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -552,9 +556,11 @@ export function changeBindValues(rootElement: RootElement): void {
 }
 
 export function changeSource(rootElement: RootElement): void {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_srcCms.length; i++) {
         const nestedValue = rootElement.ahe_srcCms[i];
-        const nestedData = rootElement.ahe_cmt[nestedValue.valueName];
+        const nestedData = handler[nestedValue.valueName];
         const value = nestedData ?? "";
 
         if (nestedValue.lastData === value) continue;
@@ -565,9 +571,11 @@ export function changeSource(rootElement: RootElement): void {
 }
 
 export function changeSourceFunctions(rootElement: RootElement): void {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_srcCmsFns.length; i++) {
         const nestedValue = rootElement.ahe_srcCmsFns[i];
-        const nestedData = rootElement.ahe_cmt[nestedValue.valueName]();
+        const nestedData = handler[nestedValue.valueName]();
         const value = nestedData ?? "";
 
         if (nestedValue.lastData === value) continue;
@@ -578,9 +586,11 @@ export function changeSourceFunctions(rootElement: RootElement): void {
 }
 
 export function changeNestedFunctions(rootElement: RootElement): void {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_nFns.length; i++) {
         const nestedValue = rootElement.ahe_nFns[i];
-        const nestedData = rootElement.ahe_cmt[nestedValue.valueName]();
+        const nestedData = handler[nestedValue.valueName]();
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -590,9 +600,11 @@ export function changeNestedFunctions(rootElement: RootElement): void {
 }
 
 export function changeBindFunctions(rootElement: RootElement): void {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_bndFns.length; i++) {
         const nestedValue = rootElement.ahe_bndFns[i];
-        const nestedData = rootElement.ahe_cmt[nestedValue.valueName]();
+        const nestedData = handler[nestedValue.valueName]();
 
         if (nestedValue.lastData === nestedData) continue;
 
@@ -602,11 +614,11 @@ export function changeBindFunctions(rootElement: RootElement): void {
 }
 
 export function changeIfConditions(rootElement: RootElement) {
+    const handler = rootElement.ahe_cmt;
+
     for (let i = 0; i < rootElement.ahe_IfLst.length; i++) {
         const onIf = rootElement.ahe_IfLst[i];
-        let conditionData = onIf.isFunction ?
-            !!(<any>rootElement.ahe_cmt)[onIf.valueName]() :
-            !!(<any>rootElement.ahe_cmt)[onIf.valueName];
+        let conditionData = onIf.isFunction ? !!handler[onIf.valueName]() : !!handler[onIf.valueName];
         if (onIf.isInversion) conditionData = !conditionData;
 
         if (conditionData === onIf.oldCondition) continue;
@@ -623,29 +635,29 @@ export function changeIfConditions(rootElement: RootElement) {
 }
 
 export function changeClsConditions(rootElement: RootElement) {
-    for (let i = 0; i < rootElement.ahe_ClsIfLst.length; i++) {
-        const classIf = rootElement.ahe_ClsIfLst[i];
-        const conditions = classIf.classConditions;
-        const element = classIf.element;
-        const handler = rootElement.ahe_cmt;
+    const handler = rootElement.ahe_cmt;
 
-        for (let j = 0; j < conditions.length; j++) {
-            const condition = conditions[j];
+    for (let i = 0; i < rootElement.ahe_ClsIfLst.length; i++) {
+        const {classConditions, element} = rootElement.ahe_ClsIfLst[i];
+
+        for (let j = 0; j < classConditions.length; j++) {
+            const condition = classConditions[j];
             let conditionData: CONDITION;
+
             if (condition.isConditionDisabled) {
                 conditionData = CONDITION.TRUE;
             } else {
                 let isCondition = condition.isFunction ?
-                    !!(<any>handler)[condition.conditionName]() :
-                    !!(<any>handler)[condition.conditionName];
+                    !!handler[condition.conditionName]() :
+                    !!handler[condition.conditionName];
+
                 if (condition.isInversion) isCondition = !isCondition;
                 conditionData = isCondition ? CONDITION.TRUE : CONDITION.FALSE;
             }
 
             if (conditionData === condition.oldCondition) continue;
             condition.oldCondition = conditionData;
-            const firstClassName = condition.firstClassName;
-            const secondClassName = condition.secondClassName;
+            const {firstClassName, secondClassName} = condition;
 
             if (secondClassName) {
                 if (conditionData === CONDITION.TRUE) {
@@ -666,6 +678,7 @@ export function changeClsConditions(rootElement: RootElement) {
                 }
                 continue;
             }
+
             addClasses(element, [firstClassName]);
         }
     }
@@ -673,13 +686,14 @@ export function changeClsConditions(rootElement: RootElement) {
 
 export function changeForOf(rootElement: RootElement) {
     const list = rootElement.ahe_ForOfLst;
+    const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < list.length; i++) {
         const forOf = list[i];
         const elements = updateForOfChildren(
             rootElement,
             forOf.children,
-            rootElement.ahe_cmt[forOf.valueName],
+            handler[forOf.valueName],
             forOf.parent,
             forOf.template);
         handleInjections(rootElement, elements);
