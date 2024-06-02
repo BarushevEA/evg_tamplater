@@ -83,6 +83,22 @@ export abstract class Pipe<T> implements ISubscribe<T> {
     switch(): SwitchCase<T> {
         return new SwitchCase<T>(this);
     }
+
+    processChain(listener: IListener<T>): void {
+        const chain = this.chainHandlers;
+        const data = this.pipeData;
+        for (let i = 0; i < chain.length; i++) {
+            data.isNeedUnsubscribe = false;
+            data.isAvailable = false;
+
+            chain[i]();
+            if (data.isNeedUnsubscribe) return (<any>this).unsubscribe();
+            if (!data.isAvailable) return;
+            if (data.isBreakChain) break;
+        }
+
+        return listener(data.payload);
+    }
 }
 
 export class SwitchCase<T> implements ISubscribe<T>, IPipeCase<T> {
