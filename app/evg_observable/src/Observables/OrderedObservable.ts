@@ -1,68 +1,16 @@
-import {Observable, SubscribeObject} from "./Observable";
+import {Observable} from "./Observable";
 import {
-    ICallback,
     IErrorCallback,
     IListener,
     IMarkedForUnsubscribe,
-    IObserver,
     IOrdered,
-    IOrderedObservable,
     IOrderedSetup,
-    IOrderedSubscribe,
     IOrderedSubscriptionLike,
+    ISetObservableValue,
     ISubscriptionLike
 } from "./Types";
 import {deleteFromArray, sortAscending, sortDescending} from "./FunctionLibs";
-
-export class OrderedSubscribeObject<T> extends SubscribeObject<T> {
-    constructor(observable: OrderedObservable<T> | IOrdered<T>, isPipe?: boolean) {
-        super(<IObserver<T>>observable, isPipe);
-    }
-
-    get order(): number {
-        return this._order;
-    }
-
-    set order(value: number) {
-        if (!this.observable ||
-            (this.observable && this.observable.isDestroyed)) {
-            this._order = <any>undefined;
-            return
-        }
-        this._order = value;
-        (<IOrderedObservable><any>this.observable).sortByOrder();
-    }
-
-    subscribe(listener: IListener<T>, errorHandler?: IErrorCallback): IOrderedSubscriptionLike {
-        this.listener = listener;
-        errorHandler && (this.errorHandler = errorHandler);
-        return this;
-    }
-
-    setOnce(): IOrderedSubscribe<T> {
-        return <any>super.setOnce();
-    }
-
-    unsubscribeByNegative(condition: ICallback<any>): IOrderedSubscribe<T> {
-        return <any>super.unsubscribeByNegative(condition);
-    }
-
-    unsubscribeByPositive(condition: ICallback<any>): IOrderedSubscribe<T> {
-        return <any>super.unsubscribeByPositive(condition);
-    }
-
-    emitByNegative(condition: ICallback<any>): IOrderedSubscribe<T> {
-        return <any>super.emitByNegative(condition);
-    }
-
-    emitByPositive(condition: ICallback<any>): IOrderedSubscribe<T> {
-        return <any>super.emitByPositive(condition);
-    }
-
-    emitMatch(condition: ICallback<any>): IOrderedSubscribe<T> {
-        return <any>super.emitMatch(condition);
-    }
-}
+import {OrderedSubscribeObject} from "./OrderedSubscribeObject";
 
 export class OrderedObservable<T>
     extends Observable<T> implements IOrdered<T> {
@@ -84,19 +32,17 @@ export class OrderedObservable<T>
         return true;
     }
 
-    subscribe(listener: IListener<T>, errorHandler?: IErrorCallback): IOrderedSubscriptionLike | undefined {
-        if (this._isDestroyed) return undefined;
-        if (!listener) return undefined;
+    subscribe(listener: IListener<T> | ISetObservableValue, errorHandler?: IErrorCallback): IOrderedSubscriptionLike | undefined {
+        if (!this.isSubsValid(listener)) return undefined;
         const subscribeObject = new OrderedSubscribeObject(this, false);
-        subscribeObject.subscribe(listener, errorHandler);
-        this.listeners.push(subscribeObject);
+        this.addObserver(<any>subscribeObject, listener, errorHandler);
         return subscribeObject;
     }
 
     pipe(): IOrderedSetup<T> | undefined {
         if (this._isDestroyed) return undefined;
         const subscribeObject = new OrderedSubscribeObject(this, true);
-        this.listeners.push(subscribeObject);
+        this.listeners.push(<any>subscribeObject);
         return subscribeObject;
     }
 
