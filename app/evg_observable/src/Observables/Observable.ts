@@ -30,8 +30,8 @@ export class Observable<T> implements IObserver<T>, IStream<T> {
         this._isEnable = true;
     }
 
-    get isDestroyed(): boolean {
-        return this._isDestroyed;
+    get isEnable(): boolean {
+        return this._isEnable;
     }
 
     public next(value: T): void {
@@ -53,8 +53,8 @@ export class Observable<T> implements IObserver<T>, IStream<T> {
         for (let i = 0; i < values.length; i++) this.next(values[i]);
     }
 
-    get isEnable(): boolean {
-        return this._isEnable;
+    get isDestroyed(): boolean {
+        return this._isDestroyed;
     }
 
     public unSubscribe(listener: ISubscriptionLike): void {

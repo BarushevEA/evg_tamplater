@@ -14,6 +14,11 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T>, 
     isMarkedForUnsubscribe: boolean = false;
     observable: IObserver<T> | undefined;
     listener: IListener<T> | undefined;
+    _order = 0;
+
+    get order(): number {
+        return this._order;
+    }
     isPaused = false;
     isPipe = false;
 
@@ -22,20 +27,6 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T>, 
         this.observable = observable;
         this.isPipe = !!isPipe;
     }
-
-    _order = 0;
-
-    get order(): number {
-        return this._order;
-    }
-
-    set order(value: number) {
-        this._order = value;
-    }
-
-    errorHandler: IErrorCallback = (errorData: any, errorMessage: any) => {
-        console.log(`(Unit of SubscribeObject).send(${errorData}) ERROR:`, errorMessage);
-    };
 
     subscribe(observer: IListener<T> | ISetObservableValue, errorHandler?: IErrorCallback): ISubscriptionLike {
         this.listener = getListener(observer);
@@ -68,6 +59,14 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T>, 
     pause(): void {
         this.isPaused = true;
     }
+
+    set order(value: number) {
+        this._order = value;
+    }
+
+    errorHandler: IErrorCallback = (errorData: any, errorMessage: any) => {
+        console.log(`(Unit of SubscribeObject).send(${errorData}) ERROR:`, errorMessage);
+    };
 }
 
 function processValue<T>(value: T, subsObj: SubscribeObject<T>): void {
