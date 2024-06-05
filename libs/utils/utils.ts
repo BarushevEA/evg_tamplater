@@ -117,32 +117,26 @@ export function setValue<T>(element: HTMLElement | Element, value: T): void {
     (<any>element).value = value;
 }
 
-export const documentReady$ = new Observable(false);
-let isDOMContentLoadedListen = false;
-
-function checkDocumentReady(): void {
-    if (AppDocument.body) {
-        documentReady$.next(true);
-        return;
-    }
-
-    if (isDOMContentLoadedListen) return;
-    isDOMContentLoadedListen = true;
-
-    const listener = () => {
-        documentReady$.next(true);
-        AppDocument.removeEventListener("DOMContentLoaded", listener);
-        isDOMContentLoadedListen = false;
-    };
-
-    AppDocument.addEventListener("DOMContentLoaded", listener);
-}
-
+export const documentReady$ = new Observable<HTMLElement>(null);
 export function runWhenDocumentReady(callback: ICallback<any>): void {
     documentReady$
         .pipe()
+        .emitByPositive(body => !!body)
         .setOnce()
-        .subscribe(isReady => isReady && callback())
+        .subscribe(callback);
 
-    checkDocumentReady();
+    documentReady$
+        .pipe()
+        .emitByPositive(body => !body)
+        .setOnce()
+        .subscribe(() => {
+            const listener = () => {
+                documentReady$.next(AppDocument.body);
+                AppDocument.removeEventListener("DOMContentLoaded", listener);
+            };
+
+            AppDocument.addEventListener("DOMContentLoaded", listener);
+        });
+
+    documentReady$.next(AppDocument.body);
 }
