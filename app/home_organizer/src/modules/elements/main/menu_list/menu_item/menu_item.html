@@ -1,11 +1,11 @@
 <div class="main-menu_item"
      qsi-click="onClick">
-    <qsi-bind>text</qsi-bind>
+    {{text}}
     <div class="main-menu_item-hover"></div>
     <div class="main-lang_view"
          qsi-if="isSettingLang">
         <div class="main-lang_view-hover"></div>
-        <qsi-bind>currentLang</qsi-bind>
+        {{currentLang}}
         <div class="main-lang_view_box"
              qsi-if="isShowLangViewBox">
             <app-settings_lang qsi-for="langList"></app-settings_lang>

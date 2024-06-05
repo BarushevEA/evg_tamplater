@@ -4,23 +4,17 @@
          qsi-cls="main-task-favorite main-task-favorite_icon:isFavorite"></div>
     <div class="main-task_info">
         <div class="ellipsis">
-            <qsi-bind>count</qsi-bind>
-            <span>&nbsp</span>
-            <qsi-bind>nameTxt</qsi-bind>
+            {{count}}<span>&nbsp</span>{{nameTxt}}
         </div>
         <div class="main-task_description ellipsis">
-            <qsi-bind>descriptionTxt</qsi-bind>
+            {{descriptionTxt}}
         </div>
         <div class="main-task_amount">
             <div class="ellipsis">
-                <qsi-bind>priceFieldTxt</qsi-bind>
-                <span>: </span>
-                <qsi-bind>price</qsi-bind>
+                {{priceFieldTxt}}<span>: </span>{{price}}
             </div>
             <div class="ellipsis">
-                <qsi-bind>costFieldTxt</qsi-bind>
-                <span>: </span>
-                <qsi-bind>cost</qsi-bind>
+                {{costFieldTxt}}<span>: </span>{{cost}}
             </div>
         </div>
     </div>
