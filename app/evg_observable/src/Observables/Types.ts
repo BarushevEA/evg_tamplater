@@ -2,9 +2,6 @@ import {SwitchCase} from "./Pipe";
 import {FilterSwitchCase} from "./Filter";
 
 export type ICallback<T> = (value?: T) => any;
-export type IMarkedForUnsubscribe = {
-    isMarkedForUnsubscribe: boolean;
-};
 export type IErrorCallback = (errorData: any, errorMessage: any) => void;
 export type ISubscribe<T> = {
     subscribe(listener: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike | undefined;

@@ -16,7 +16,7 @@ export class Filter<T> implements IFilter<T>, IFilterSwitch<T> {
     private errorHandler: IErrorCallback | undefined;
 
     get isEmpty(): boolean {
-        return this.chainHandlers.length === 0;
+        return !this.chainHandlers.length;
     }
 
     filter(condition: ICallback<any>): IFilterSetup<T> {

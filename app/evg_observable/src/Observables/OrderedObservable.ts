@@ -1,7 +1,6 @@
 import {Observable} from "./Observable";
 import {
     IErrorCallback,
-    IMarkedForUnsubscribe,
     IOrdered,
     IOrderedSetup,
     IOrderedSubscriptionLike,
@@ -48,9 +47,7 @@ export class OrderedObservable<T>
     public unSubscribe(listener: ISubscriptionLike): void {
         if (this._isDestroyed) return;
         if (this.isNextProcess && listener) {
-            const marker: IMarkedForUnsubscribe = <any>listener;
-            !marker.isMarkedForUnsubscribe && this.listenersForUnsubscribe.push(listener);
-            marker.isMarkedForUnsubscribe = true;
+            this.listenersForUnsubscribe.push(listener);
             return;
         }
         this.listeners && !deleteFromArray(this.listeners, listener);

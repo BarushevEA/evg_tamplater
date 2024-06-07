@@ -2,7 +2,6 @@ import {
     IAddFilter,
     IErrorCallback,
     IFilterSetup,
-    IMarkedForUnsubscribe,
     IObserver,
     ISetup,
     IStream,
@@ -41,20 +40,6 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         return this._isEnable;
     }
 
-    addFilter(errorHandler?: IErrorCallback): IFilterSetup<T> {
-        if (errorHandler) {
-            this.filterCase.addErrorHandler(errorHandler);
-        }
-        return this.filterCase;
-    }
-
-    stream(values: T[]): void {
-        if (this._isDestroyed) return;
-        if (!this._isEnable) return;
-
-        for (let i = 0; i < values.length; i++) this.next(values[i]);
-    }
-
     public next(value: T): void {
         if (this._isDestroyed) return;
         if (!this._isEnable) return;
@@ -71,12 +56,24 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         this.listenersForUnsubscribe.length && this.handleListenersForUnsubscribe();
     }
 
+    addFilter(errorHandler?: IErrorCallback): IFilterSetup<T> {
+        if (errorHandler) {
+            this.filterCase.addErrorHandler(errorHandler);
+        }
+        return this.filterCase;
+    }
+
+    stream(values: T[]): void {
+        if (this._isDestroyed) return;
+        if (!this._isEnable) return;
+
+        for (let i = 0; i < values.length; i++) this.next(values[i]);
+    }
+
     public unSubscribe(listener: ISubscriptionLike): void {
         if (this._isDestroyed) return;
         if (this.isNextProcess && listener) {
-            const marker: IMarkedForUnsubscribe = <any>listener;
-            !marker.isMarkedForUnsubscribe && this.listenersForUnsubscribe.push(listener);
-            marker.isMarkedForUnsubscribe = true;
+            this.listenersForUnsubscribe.push(listener);
             return;
         }
         this.listeners && !quickDeleteFromArray(this.listeners, listener);

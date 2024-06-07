@@ -1,17 +1,8 @@
-import {
-    IErrorCallback,
-    IListener,
-    IMarkedForUnsubscribe,
-    IObserver,
-    ISubscribeGroup,
-    ISubscribeObject,
-    ISubscriptionLike
-} from "./Types";
+import {IErrorCallback, IListener, IObserver, ISubscribeGroup, ISubscribeObject, ISubscriptionLike} from "./Types";
 import {Pipe} from "./Pipe";
 import {getListener} from "./FunctionLibs";
 
-export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T>, IMarkedForUnsubscribe {
-    isMarkedForUnsubscribe: boolean = false;
+export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
     observable: IObserver<T> | undefined;
     listener: IListener<T> | undefined;
     get order(): number {
@@ -39,6 +30,16 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T>, 
         this.chainHandlers.length = 0;
     }
 
+    send(value: T): void {
+        try {
+            this.pipeData.payload = value;
+            this.pipeData.isBreakChain = false;
+            this.processValue(value);
+        } catch (err) {
+            this.errorHandler(value, err);
+        }
+    }
+
     subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike {
         this.listener = getListener(observer);
         errorHandler && (this.errorHandler = errorHandler);
@@ -51,16 +52,6 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T>, 
 
     pause(): void {
         this.isPaused = true;
-    }
-
-    send(value: T): void {
-        try {
-            this.pipeData.payload = value;
-            this.pipeData.isBreakChain = false;
-            this.processValue(value);
-        } catch (err) {
-            this.errorHandler(value, err);
-        }
     }
 
     set order(value: number) {
