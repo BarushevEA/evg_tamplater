@@ -50,6 +50,14 @@ const menFilter = (person: Person) => person.gender === GENDER.MAN;
 const womenFilter = (person: Person) => person.gender === GENDER.WOMAN;
 const blondFilter = (person: Person) => person.hairColor === HAIR.BLOND;
 const blackFilter = (person: Person) => person.hairColor === HAIR.BLACK;
+const personValidationFilters = [
+    (person: Person) => !!person,
+    (person: Person) => "name" in person,
+    (person: Person) => "age" in person,
+    (person: Person) => "gender" in person,
+    (person: Person) => "major" in person,
+    (person: Person) => "hairColor" in person,
+];
 
 // Callback function to execute when some man is ready to work
 const manReadyToWork = (worker: Person) => {
@@ -68,14 +76,20 @@ const blondAndBlack = (person: Person) => {
 
 // Apply the filters to men$ and women$
 men$.addFilter()
+    .pushFilters(personValidationFilters)
     .filter(menFilter);
 
 women$.addFilter()
+    .pushFilters(personValidationFilters)
     .filter(womenFilter);
 
 // Subscribe the callback function to the created Observables
-men$.subscribe(manReadyToWork);
-women$.subscribe(womanReadyToWork);
+men$.pipe()
+    .pushRefiners(personValidationFilters)
+    .subscribe(manReadyToWork);
+women$.pipe()
+    .pushRefiners(personValidationFilters)
+    .subscribe(womanReadyToWork);
 
 // Stream the list of people by applying the age filters
 personal$.pipe()
