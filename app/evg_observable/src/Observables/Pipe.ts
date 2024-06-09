@@ -70,6 +70,16 @@ export abstract class Pipe<T> implements ISubscribe<T> {
         return this;
     }
 
+    refine(condition: ICallback<any>): ISetup<T> {
+        return this.emitByPositive(condition);
+    }
+
+    pushRefiners(conditions: ICallback<any>[]): ISetup<T> {
+        if (!Array.isArray(conditions)) return this;
+        for (let i = 0; i < conditions.length; i++) this.emitByPositive(conditions[i]);
+        return this;
+    }
+
     emitMatch(condition: ICallback<T>): ISetup<T> {
         const data = this.pipeData;
         this.chainHandlers.push(
@@ -126,6 +136,12 @@ export class SwitchCase<T> implements ISubscribe<T>, IPipeCase<T> {
                 if (id === chain.length && !data.isBreakChain) data.isAvailable = false;
             }
         );
+        return this;
+    }
+
+    pushCases(conditions: ICallback<any>[]): IPipeCase<T> & ISubscribe<T> {
+        if (!Array.isArray(conditions)) return this;
+        for (let i = 0; i < conditions.length; i++) this.case(conditions[i]);
         return this;
     }
 }

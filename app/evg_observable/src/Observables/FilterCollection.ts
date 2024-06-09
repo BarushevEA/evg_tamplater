@@ -10,9 +10,10 @@ import {
     IFilterSwitch
 } from "./Types";
 
-export class Filter<T> implements IFilter<T>, IFilterSwitch<T> {
+export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
     chainHandlers: IChainCallback [] = [];
     pipeData: IFilterPayload = {isBreakChain: false, isAvailable: false, payload: null};
+    response: IFilterResponse = {isOK: false, payload: undefined};
     private errorHandler: IErrorCallback | undefined;
 
     get isEmpty(): boolean {
@@ -29,6 +30,12 @@ export class Filter<T> implements IFilter<T>, IFilterSwitch<T> {
         return this;
     }
 
+    pushFilters(conditions: ICallback<any>[]): IFilterSetup<T> {
+        if (!Array.isArray(conditions)) return this;
+        for (let i = 0; i < conditions.length; i++) this.filter(conditions[i]);
+        return this;
+    }
+
     switch(): FilterSwitchCase<T> {
         return new FilterSwitchCase<T>(this);
     }
@@ -36,7 +43,9 @@ export class Filter<T> implements IFilter<T>, IFilterSwitch<T> {
     processChain(value: T): IFilterResponse {
         const chain = this.chainHandlers;
         const data = this.pipeData;
-        const response: IFilterResponse = {isOK: false, payload: undefined};
+        const response = this.response;
+        response.isOK = false;
+        response.payload = undefined;
         data.payload = value;
         data.isBreakChain = false;
 
@@ -69,10 +78,10 @@ export class Filter<T> implements IFilter<T>, IFilterSwitch<T> {
 }
 
 export class FilterSwitchCase<T> implements IFilterCase<T> {
-    private pipe: Filter<T>;
+    private pipe: FilterCollection<T>;
     private caseCounter: number;
 
-    constructor(pipe: Filter<T>) {
+    constructor(pipe: FilterCollection<T>) {
         this.pipe = pipe;
         this.caseCounter = pipe.chainHandlers.length ? pipe.chainHandlers.length : 0;
     }
@@ -89,6 +98,12 @@ export class FilterSwitchCase<T> implements IFilterCase<T> {
                 if (id === chain.length && !data.isBreakChain) data.isAvailable = false;
             }
         );
+        return this;
+    }
+
+    pushCases(conditions: ICallback<any>[]): IFilterCase<T> {
+        if (!Array.isArray(conditions)) return this;
+        for (let i = 0; i < conditions.length; i++) this.case(conditions[i]);
         return this;
     }
 }

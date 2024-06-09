@@ -40,18 +40,18 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
         }
     }
 
-    subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike {
-        this.listener = getListener(observer);
-        errorHandler && (this.errorHandler = errorHandler);
-        return this;
-    }
-
     resume(): void {
         this.isPaused = false;
     }
 
     pause(): void {
         this.isPaused = true;
+    }
+
+    subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike {
+        this.listener = getListener(observer);
+        errorHandler && (this.errorHandler = errorHandler);
+        return this;
     }
 
     set order(value: number) {

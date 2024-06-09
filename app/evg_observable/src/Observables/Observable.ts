@@ -11,7 +11,7 @@ import {
 } from "./Types";
 import {quickDeleteFromArray} from "./FunctionLibs";
 import {SubscribeObject} from "./SubscribeObject";
-import {Filter} from "./Filter";
+import {FilterCollection} from "./FilterCollection";
 
 export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     protected listeners: ISubscribeObject<T>[] = [];
@@ -19,7 +19,7 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     protected _isDestroyed = false;
     protected isNextProcess = false;
     protected listenersForUnsubscribe: ISubscriptionLike[] = [];
-    private filterCase = new Filter<T>();
+    private filterCase = new FilterCollection<T>();
 
     constructor(private value: T) {
     }
@@ -56,18 +56,18 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         this.listenersForUnsubscribe.length && this.handleListenersForUnsubscribe();
     }
 
-    addFilter(errorHandler?: IErrorCallback): IFilterSetup<T> {
-        if (errorHandler) {
-            this.filterCase.addErrorHandler(errorHandler);
-        }
-        return this.filterCase;
-    }
-
     stream(values: T[]): void {
         if (this._isDestroyed) return;
         if (!this._isEnable) return;
 
         for (let i = 0; i < values.length; i++) this.next(values[i]);
+    }
+
+    addFilter(errorHandler?: IErrorCallback): IFilterSetup<T> {
+        if (errorHandler) {
+            this.filterCase.addErrorHandler(errorHandler);
+        }
+        return this.filterCase;
     }
 
     public unSubscribe(listener: ISubscriptionLike): void {
