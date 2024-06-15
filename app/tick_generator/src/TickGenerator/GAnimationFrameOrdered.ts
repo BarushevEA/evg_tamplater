@@ -7,15 +7,14 @@ export class GAnimationFrameOrdered extends AbstractOrderedGenerator implements 
     private rafId: number | null = null;
     private fps: number = 60;
 
-    constructor(rafId: number | null) {
+    constructor() {
         super();
-        this.rafId = rafId;
+        this.rafId = null;
     }
 
     setFPS(num: number): Status {
-        const state = this.state;
         if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-        if (state === EState.STARTED) return getNegativeStatus(state);
+        if (this.rafId) return getNegativeStatus(EState.STARTED);
         if (num < 1) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
 
         this.fps = num;
@@ -53,6 +52,7 @@ export class GAnimationFrameOrdered extends AbstractOrderedGenerator implements 
 
         this.rafId = requestAnimationFrame(animateFrame);
 
+        this.state$.next(EState.STARTED);
         return getPositiveStatus(EState.STARTED)
     }
 
@@ -60,6 +60,8 @@ export class GAnimationFrameOrdered extends AbstractOrderedGenerator implements 
         if (!this.rafId) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
         cancelAnimationFrame(this.rafId);
         this.rafId = null;
+
+        this.state$.next(EState.STOPPED);
         return getPositiveStatus(EState.STOPPED)
     }
 }

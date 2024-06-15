@@ -41,32 +41,6 @@ export class GMeter implements IMeter {
         return getPositiveStatus(EState.PROCESS);
     }
 
-    get length(): number {
-        return Object.keys(this.metrics).length;
-    }
-
-    destroy(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
-
-        this.stop();
-        this.clearFunc();
-
-        this.perSecondTimer.destroy();
-        this.perMinuteTimer.destroy();
-        this.perHourTimer.destroy();
-        this.perDayTimer.destroy();
-
-        return getPositiveStatus(EState.DESTROYED);
-    }
-
-    isDestroyed(): boolean {
-        return this._state === EState.DESTROYED;
-    }
-
-    get state(): EState {
-        return this._state;
-    }
-
     stop(): Status {
         if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
 
@@ -86,6 +60,14 @@ export class GMeter implements IMeter {
         return getPositiveStatus(EState.STOPPED);
     }
 
+    get length(): number {
+        return Object.keys(this.metrics).length;
+    }
+
+    get state(): EState {
+        return this._state;
+    }
+
     deleteFunc(funcName: string): Status {
         if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
 
@@ -99,6 +81,20 @@ export class GMeter implements IMeter {
         }
 
         return getNegativeStatus(ERROR.NAME_IS_NOT_PRESENT);
+    }
+
+    destroy(): Status {
+        if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
+
+        this.stop();
+        this.clearFunc();
+
+        this.perSecondTimer.destroy();
+        this.perMinuteTimer.destroy();
+        this.perHourTimer.destroy();
+        this.perDayTimer.destroy();
+
+        return getPositiveStatus(EState.DESTROYED);
     }
 
     decorate(funcName: string, func: (...args: any[]) => any): (...args: any[]) => any {
@@ -163,33 +159,6 @@ export class GMeter implements IMeter {
                 }
             }
         };
-    }
-
-    private clearFunc(): void {
-        const funcListForDelete: string[] = [];
-        for (const funcName in this.metrics) {
-            funcListForDelete.push(funcName);
-        }
-        for (const funcName of funcListForDelete) {
-            this.deleteFunc(funcName);
-        }
-    }
-
-    getMetrics(funcName: string): IUserMeterData {
-        const metrics: IUserMeterData = {...this.metrics[funcName]};
-        delete (<any>metrics)._deleteObj;
-        delete (<any>metrics)._counter;
-        return metrics;
-    }
-
-    getAll(): IUserMetrics {
-        const userMetrics: IUserMetrics = {};
-
-        for (const metricsKey in this.metrics) {
-            userMetrics[metricsKey] = this.getMetrics(metricsKey);
-        }
-
-        return userMetrics;
     }
 
     private addTimers(deleteObj: { isDeleted: boolean }, metric: IMeterData) {
@@ -261,5 +230,36 @@ export class GMeter implements IMeter {
 
             handler();
         });
+    }
+
+    isDestroyed(): boolean {
+        return this._state === EState.DESTROYED;
+    }
+
+    getMetrics(funcName: string): IUserMeterData {
+        const metrics: IUserMeterData = {...this.metrics[funcName]};
+        delete (<any>metrics)._deleteObj;
+        delete (<any>metrics)._counter;
+        return metrics;
+    }
+
+    getAll(): IUserMetrics {
+        const userMetrics: IUserMetrics = {};
+
+        for (const metricsKey in this.metrics) {
+            userMetrics[metricsKey] = this.getMetrics(metricsKey);
+        }
+
+        return userMetrics;
+    }
+
+    private clearFunc(): void {
+        const funcListForDelete: string[] = [];
+        for (const funcName in this.metrics) {
+            funcListForDelete.push(funcName);
+        }
+        for (const funcName of funcListForDelete) {
+            this.deleteFunc(funcName);
+        }
     }
 }
