@@ -70,8 +70,19 @@ export abstract class Pipe<T> implements ISubscribe<T> {
         return this;
     }
 
-    refine(condition: ICallback<any>): ISetup<T> {
+    refine(condition: ICallback<T>): ISetup<T> {
         return this.emitByPositive(condition);
+    }
+
+    then<K>(condition: ICallback<T>): ISetup<K> {
+        const data = this.pipeData;
+        this.chainHandlers.push(
+            (): void => {
+                data.payload = condition(data.payload);
+                data.isAvailable = true;
+            }
+        );
+        return <any>this as ISetup<K>;
     }
 
     pushRefiners(conditions: ICallback<any>[]): ISetup<T> {

@@ -9,8 +9,7 @@ import {
     IOrderedSetup,
     IOrderedSubscribe,
     IOrderedSubscriptionLike,
-    ISetObservableValue,
-    ISetup
+    ISetObservableValue
 } from "./Types";
 import {OrderedObservable} from "./OrderedObservable";
 
@@ -56,14 +55,6 @@ export class OrderedSubscribeObject<T> extends SubscribeObject<T> implements IOr
 
     emitByPositive(condition: ICallback<any>): IOrderedSetup<T> {
         return <any>super.emitByPositive(condition);
-    }
-
-    refine(condition: ICallback<any>): ISetup<T> {
-        return <any>super.emitByPositive(condition);
-    }
-
-    pushRefiners(conditions: ICallback<any>[]): ISetup<T> {
-        return <any>super.pushRefiners(conditions);
     }
 
     emitMatch(condition: ICallback<any>): IOrderedSetup<T> {
