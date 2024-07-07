@@ -50,6 +50,10 @@ export abstract class Pipe<T> implements ISubscribe<T> {
         return this;
     }
 
+    unsubscribeBy(condition: ICallback<T>): ISetup<T> {
+        return this.unsubscribeByPositive(condition);
+    }
+
     emitByNegative(condition: ICallback<T>): ISetup<T> {
         const data = this.pipeData;
         this.chainHandlers.push(
@@ -74,17 +78,6 @@ export abstract class Pipe<T> implements ISubscribe<T> {
         return this.emitByPositive(condition);
     }
 
-    then<K>(condition: ICallback<T>): ISetup<K> {
-        const data = this.pipeData;
-        this.chainHandlers.push(
-            (): void => {
-                data.payload = condition(data.payload);
-                data.isAvailable = true;
-            }
-        );
-        return <any>this as ISetup<K>;
-    }
-
     pushRefiners(conditions: ICallback<any>[]): ISetup<T> {
         if (!Array.isArray(conditions)) return this;
         for (let i = 0; i < conditions.length; i++) this.emitByPositive(conditions[i]);
@@ -103,6 +96,39 @@ export abstract class Pipe<T> implements ISubscribe<T> {
 
     switch(): SwitchCase<T> {
         return new SwitchCase<T>(this);
+    }
+
+    then<K>(condition: ICallback<T>): ISetup<K> {
+        const data = this.pipeData;
+        this.chainHandlers.push(
+            (): void => {
+                data.payload = condition(data.payload);
+                data.isAvailable = true;
+            }
+        );
+        return <any>this as ISetup<K>;
+    }
+
+    serialize(): ISetup<string> {
+        const data = this.pipeData;
+        this.chainHandlers.push(
+            (): void => {
+                data.payload = JSON.stringify(data.payload);
+                data.isAvailable = true;
+            }
+        );
+        return <any>this as ISetup<string>;
+    }
+
+    deserialize<K>(): ISetup<K> {
+        const data = this.pipeData;
+        this.chainHandlers.push(
+            (): void => {
+                data.payload = JSON.parse(data.payload);
+                data.isAvailable = true;
+            }
+        );
+        return <any>this as ISetup<K>;
     }
 
     processChain(listener: IListener<T>): void {

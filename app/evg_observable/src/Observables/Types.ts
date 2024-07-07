@@ -41,6 +41,7 @@ export type ISetup<T> =
     IOnce<T> &
     ISwitch<T> &
     ITransform<T> &
+    ISerialisation &
     ISubscribe<T>;
 export type IOrderedSetup<T> =
     IOrderedUnsubscribeByNegative<T> &
@@ -51,6 +52,7 @@ export type IOrderedSetup<T> =
     IOrderedOnce<T> &
     IOrderedSwitch<T> &
     IOrderedTransform<T> &
+    IOrderedSerialisation &
     IOrderedSubscribe<T>;
 export type ISubscribeObject<T> =
     ISubscriptionLike &
@@ -96,22 +98,24 @@ export type ISend<T> = {
     send(value: T): void;
 };
 export type IUnsubscribeByNegative<T> = {
-    unsubscribeByNegative(condition: ICallback<any>): ISetup<T>;
+    unsubscribeByNegative(condition: ICallback<T>): ISetup<T>;
 };
 export type IOrderedUnsubscribeByNegative<T> = {
-    unsubscribeByNegative(condition: ICallback<any>): IOrderedSetup<T>;
+    unsubscribeByNegative(condition: ICallback<T>): IOrderedSetup<T>;
 };
 export type IUnsubscribeByPositive<T> = {
-    unsubscribeByPositive(condition: ICallback<any>): ISetup<T>;
+    unsubscribeByPositive(condition: ICallback<T>): ISetup<T>;
+    unsubscribeBy(condition: ICallback<T>): ISetup<T>;
 };
 export type IOrderedUnsubscribeByPositive<T> = {
-    unsubscribeByPositive(condition: ICallback<any>): IOrderedSetup<T>;
+    unsubscribeByPositive(condition: ICallback<T>): IOrderedSetup<T>;
+    unsubscribeBy(condition: ICallback<T>): ISetup<T>;
 };
 export type IEmitByNegative<T> = {
-    emitByNegative(condition: ICallback<any>): ISetup<T>;
+    emitByNegative(condition: ICallback<T>): ISetup<T>;
 };
 export type IOrderedEmitByNegative<T> = {
-    emitByNegative(condition: ICallback<any>): IOrderedSetup<T>;
+    emitByNegative(condition: ICallback<T>): IOrderedSetup<T>;
 };
 export type IEmitByPositive<T> = {
     emitByPositive(condition: ICallback<T>): ISetup<T>;
@@ -121,6 +125,10 @@ export type IEmitByPositive<T> = {
 export type ITransform<T> = {
     then<K>(condition: ICallback<T>): ISetup<K>;
 };
+export type ISerialisation = {
+    serialize(): ISetup<string>;
+    deserialize<K>(): ISetup<K>;
+};
 export type IOrderedEmitByPositive<T> = {
     emitByPositive(condition: ICallback<any>): IOrderedSetup<T>;
     refine(condition: ICallback<any>): ISetup<T>;
@@ -128,6 +136,10 @@ export type IOrderedEmitByPositive<T> = {
 };
 export type IOrderedTransform<T> = {
     then<K>(condition: ICallback<T>): ISetup<K>;
+};
+export type IOrderedSerialisation = {
+    serialize(): ISetup<string>;
+    deserialize<K>(): ISetup<K>;
 };
 export type IEmitMatchCondition<T> = {
     emitMatch(condition: ICallback<any>): ISetup<T>;
