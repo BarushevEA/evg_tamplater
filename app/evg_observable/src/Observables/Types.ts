@@ -165,7 +165,7 @@ export type IOrderedSubscribe<T> = {
 };
 
 export type IPipePayload = { isBreakChain: boolean, isNeedUnsubscribe: boolean, isAvailable: boolean, payload: any };
-export type IChainCallback = () => void;
+export type IChainCallback = (data: IPipePayload) => void;
 export type IPipeCase<T> = {
     case(condition: ICallback<any>): IPipeCase<T> & ISubscribe<T>;
     pushCases(conditions: ICallback<any>[]): IPipeCase<T> & ISubscribe<T>;
@@ -191,6 +191,7 @@ export type IFilterCase<T> = {
     pushCases(conditions: ICallback<any>[]): IFilterCase<T>;
 };
 export type IFilterPayload = { isBreakChain: boolean, isAvailable: boolean, payload: any };
+export type IFilterChainCallback = (data: IFilterPayload) => void;
 export type IFilterResponse = {
     isOK: boolean;
     payload: any;

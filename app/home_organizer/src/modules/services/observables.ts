@@ -1,4 +1,4 @@
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {Observable} from "evg_observable";
 import {MenuEvent} from "../env/menuEnv/types";
 import {menuObject} from "../env/menuEnv/variables";
 import {E_TASK_LIST} from "../env/taskEnv/enums";

@@ -61,7 +61,7 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
     processValue<T>(value: T): void {
         const listener = this.listener;
         if (!listener) return this.unsubscribe();
-        if (!this.observable) return this.unsubscribe();
+        if (!this.observable) return;
         if (this.isPaused) return;
         if (!this.isPipe) return listener(<any>value);
 
