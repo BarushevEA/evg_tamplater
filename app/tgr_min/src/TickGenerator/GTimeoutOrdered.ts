@@ -12,9 +12,8 @@ export class GTimeoutOrdered extends AbstractOrderedGenerator implements ITimeou
     }
 
     setTimeout(delay: milliseconds): Status {
-        const state = this.state;
         if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-        if (state === EState.STARTED) return getNegativeStatus(state);
+        if (this.timerId) return getNegativeStatus(EState.STARTED);
         if (delay < 0) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
 
         this.delay = delay;
@@ -29,11 +28,15 @@ export class GTimeoutOrdered extends AbstractOrderedGenerator implements ITimeou
             this.state$.next(EState.STOPPED);
         }, this.delay);
 
+        this.state$.next(EState.STARTED);
         return getPositiveStatus(EState.STARTED);
     }
 
     stopProcess(): Status {
         clearTimeout(this.timerId);
+        this.timerId = 0;
+
+        this.state$.next(EState.STOPPED);
         return getPositiveStatus(EState.STOPPED);
     }
 }

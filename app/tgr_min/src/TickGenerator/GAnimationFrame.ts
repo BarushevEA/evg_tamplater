@@ -4,18 +4,18 @@ import {IRequestAnimationFrame, Status} from "./Types";
 import {AbstractGenerator} from "./AbstractGenerator";
 
 export class GAnimationFrame extends AbstractGenerator implements IRequestAnimationFrame {
-    private rafId: number | null = null;
-    private fps: number = 60;
+    private rafId: number | null;
+    private fps: number;
 
-    constructor(rafId: number | null) {
+    constructor() {
         super();
-        this.rafId = rafId;
+        this.fps = 60;
+        this.rafId = null;
     }
 
     setFPS(num: number): Status {
-        const state = this.state;
         if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-        if (state === EState.STARTED) return getNegativeStatus(state);
+        if (this.rafId) return getNegativeStatus(EState.STARTED);
         if (num < 1) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
 
         this.fps = num;
@@ -53,13 +53,16 @@ export class GAnimationFrame extends AbstractGenerator implements IRequestAnimat
 
         this.rafId = requestAnimationFrame(animateFrame);
 
-        return getPositiveStatus(EState.STARTED)
+        this.state$.next(EState.STARTED);
+        return getPositiveStatus(EState.STARTED);
     }
 
     stopProcess(): Status {
         if (!this.rafId) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
         cancelAnimationFrame(this.rafId);
         this.rafId = null;
+
+        this.state$.next(EState.STOPPED);
         return getPositiveStatus(EState.STOPPED)
     }
 }

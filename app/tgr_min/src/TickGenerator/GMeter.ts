@@ -1,16 +1,49 @@
-import {IMeter, IMeterData, Metrics, Status} from "./Types";
+import {IMeter, IMeterData, IUserMeterData, IUserMetrics, Metrics, Status} from "./Types";
 import {ERROR, EState} from "./Env";
 import {GInterval} from "./GInterval";
-import {getNegativeStatus, getPositiveStatus} from "./Utils";
+import {getAvgNum, getMaxNum, getMinNumNotZero, getNegativeStatus, getPositiveStatus} from "./Utils";
 import {AbstractGenerator} from "./AbstractGenerator";
 
+function updateMetricsPerSecond(metric: IMeterData) {
+    const counter = metric._counter;
+    metric.countOfUsesPerSecond = counter.seconds;
+    metric.countOfUsesPerSecondMax = getMaxNum(metric.countOfUsesPerSecondMax, counter.seconds);
+    metric.countOfUsesPerSecondMin = getMinNumNotZero(metric.countOfUsesPerSecondMin, counter.seconds);
+    metric.countOfUsesPerSecondAvg = getAvgNum(metric.countOfUsesPerSecondAvg, counter.seconds);
+}
+
+function updateMetricsPerPerMinute(metric: IMeterData) {
+    const counter = metric._counter;
+    metric.countOfUsesPerMinute = counter.minutes;
+    metric.countOfUsesPerMinuteMax = getMaxNum(metric.countOfUsesPerMinuteMax, counter.minutes);
+    metric.countOfUsesPerMinuteMin = getMinNumNotZero(metric.countOfUsesPerMinuteMin, counter.minutes);
+    metric.countOfUsesPerMinuteAvg = getAvgNum(metric.countOfUsesPerMinuteAvg, counter.minutes);
+}
+
+function updateMetricsPerHour(metric: IMeterData) {
+    const counter = metric._counter;
+    metric.countOfUsesPerHour = counter.hours;
+    metric.countOfUsesPerHourMax = getMaxNum(metric.countOfUsesPerHourMax, counter.hours);
+    metric.countOfUsesPerHourMin = getMinNumNotZero(metric.countOfUsesPerHourMin, counter.hours);
+    metric.countOfUsesPerHourAvg = getAvgNum(metric.countOfUsesPerHourAvg, counter.hours);
+}
+
+function updateMetricsPerDay(metric: IMeterData) {
+    const counter = metric._counter;
+    metric.countOfUsesPerDay = counter.days;
+    metric.countOfUsesPerDayMax = getMaxNum(metric.countOfUsesPerDayMax, counter.days);
+    metric.countOfUsesPerDayMin = getMinNumNotZero(metric.countOfUsesPerDayMin, counter.days);
+    metric.countOfUsesPerDayAvg = getAvgNum(metric.countOfUsesPerDayAvg, counter.days);
+}
 
 export class GMeter implements IMeter {
-    private metrics: Metrics;
-    private perSecondTimer: GInterval;
-    private perMinuteTimer: GInterval;
-    private perHourTimer: GInterval;
-    private perDayTimer: GInterval;
+    private readonly metrics: Metrics;
+    private readonly perSecondTimer: GInterval;
+    private readonly perMinuteTimer: GInterval;
+    private readonly perHourTimer: GInterval;
+    private readonly perDayTimer: GInterval;
+
+    private _state: EState;
 
     constructor() {
         this.metrics = {};
@@ -29,8 +62,6 @@ export class GMeter implements IMeter {
         this.perDayTimer.setInterval(24 * 60 * 60 * 1000);
     }
 
-    private _state: EState;
-
     get state(): EState {
         return this._state;
     }
@@ -47,7 +78,12 @@ export class GMeter implements IMeter {
         this.perHourTimer.start();
         this.perDayTimer.start();
 
+        this._state = EState.PROCESS;
         return getPositiveStatus(EState.PROCESS);
+    }
+
+    isDestroyed(): boolean {
+        return this._state === EState.DESTROYED;
     }
 
     stop(): Status {
@@ -58,6 +94,15 @@ export class GMeter implements IMeter {
         this.perHourTimer.stop();
         this.perDayTimer.stop();
 
+        for (const metricsKey in this.metrics) {
+            const metric = this.metrics[metricsKey];
+            metric._counter.days = 0;
+            metric._counter.hours = 0;
+            metric._counter.minutes = 0;
+            metric._counter.seconds = 0;
+        }
+
+        this._state = EState.STOPPED;
         return getPositiveStatus(EState.STOPPED);
     }
 
@@ -72,20 +117,18 @@ export class GMeter implements IMeter {
         this.perHourTimer.destroy();
         this.perDayTimer.destroy();
 
+        this._state = EState.DESTROYED;
         return getPositiveStatus(EState.DESTROYED);
-    }
-
-    isDestroyed(): boolean {
-        return this._state === EState.DESTROYED;
     }
 
     deleteFunc(funcName: string): Status {
         if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
 
         if (funcName in this.metrics) {
-            this.metrics[funcName]._deleteObj.isDeleted = true;
+            const metric = this.metrics[funcName];
+            metric._deleteObj.isDeleted = true;
             // @ts-ignore
-            this.metrics[funcName]._deleteObj = null
+            metric._deleteObj = null
             delete this.metrics[funcName];
             return getPositiveStatus(EState.DELETED);
         }
@@ -93,9 +136,97 @@ export class GMeter implements IMeter {
         return getNegativeStatus(ERROR.NAME_IS_NOT_PRESENT);
     }
 
-    decorate(funcName: string, func: (...args: any[]) => any): (...args: any[]) => any {
-        if (this.isDestroyed()) throw new Error(ERROR.INSTANCE_DESTROYED);
+    decorate<T>(funcName: string, func: (...args: any[]) => T): (...args: any[]) => T {
+        const {deleteObj, metric} = this.createMetric(funcName);
+
+        return (...args: any[]) => {
+            if (deleteObj.isDeleted) return func(...args);
+
+            const start = Date.now();
+            metric.countOfUses++;
+            metric._counter.seconds++;
+            metric._counter.minutes++;
+            metric._counter.hours++;
+            metric._counter.days++;
+
+            try {
+                return func(...args);
+            } catch (error) {
+                if (!deleteObj.isDeleted) metric.countOfErrors++;
+                throw error;
+            } finally {
+                if (!deleteObj.isDeleted) {
+                    metric.timePerCall = Date.now() - start;
+                    metric.totalExecutionTime += metric.timePerCall;
+                }
+            }
+        };
+    }
+
+    decorateAsync<T>(funcName: string, func: (...args: any[]) => Promise<T>): (...args: any[]) => Promise<T> {
+        const {deleteObj, metric} = this.createMetric(funcName);
+
+        return async (...args: any[]): Promise<T> => {
+            if (deleteObj.isDeleted) return await func(...args);
+
+            const start = Date.now();
+            metric.countOfUses++;
+            metric._counter.seconds++;
+            metric._counter.minutes++;
+            metric._counter.hours++;
+            metric._counter.days++;
+
+            try {
+                return await func(...args);
+            } catch (error) {
+                if (!deleteObj.isDeleted) metric.countOfErrors++;
+                throw error;
+            } finally {
+                if (!deleteObj.isDeleted) {
+                    metric.timePerCall = Date.now() - start;
+                    metric.totalExecutionTime += metric.timePerCall;
+                }
+            }
+        };
+    }
+
+    getMetrics(funcName: string): IUserMeterData {
+        const metrics: IUserMeterData = {...this.metrics[funcName]};
+        delete (<any>metrics)._deleteObj;
+        delete (<any>metrics)._counter;
+        return metrics;
+    }
+
+    getAll(): IUserMetrics {
+        const userMetrics: IUserMetrics = {};
+
+        for (const metricsKey in this.metrics) {
+            userMetrics[metricsKey] = this.getMetrics(metricsKey);
+        }
+
+        return userMetrics;
+    }
+
+    private addTimer(deleteObj: { isDeleted: boolean }, timer: AbstractGenerator, handler: () => void) {
+        const subs = timer.subscribeOnProcess(() => {
+            if (deleteObj.isDeleted) {
+                subs?.unsubscribe();
+                return;
+            }
+
+            handler();
+        });
+    }
+
+    private clearFunc(): void {
+        const listForDelete: string[] = [];
+        for (const funcName in this.metrics) listForDelete.push(funcName);
+        for (const funcName of listForDelete) this.deleteFunc(funcName);
+    }
+
+    private createMetric(funcName: string): { deleteObj: { isDeleted: boolean }, metric: IMeterData } {
         if (funcName in this.metrics) throw new Error(`A function with the name "${funcName}" is already decorated`);
+        if (this.isDestroyed()) throw new Error(ERROR.INSTANCE_DESTROYED);
 
         const deleteObj = {isDeleted: false}
         const counter = {
@@ -108,90 +239,60 @@ export class GMeter implements IMeter {
         this.metrics[funcName] = {
             countOfUses: 0,
             countOfErrors: 0,
-            useTime: 0,
+            totalExecutionTime: 0,
+            timePerCall: 0,
             countOfUsesPerSecond: 0,
             countOfUsesPerMinute: 0,
             countOfUsesPerHour: 0,
             countOfUsesPerDay: 0,
+            countOfUsesPerDayAvg: 0,
+            countOfUsesPerDayMax: 0,
+            countOfUsesPerDayMin: 0,
+            countOfUsesPerHourAvg: 0,
+            countOfUsesPerHourMax: 0,
+            countOfUsesPerHourMin: 0,
+            countOfUsesPerMinuteAvg: 0,
+            countOfUsesPerMinuteMax: 0,
+            countOfUsesPerMinuteMin: 0,
+            countOfUsesPerSecondAvg: 0,
+            countOfUsesPerSecondMax: 0,
+            countOfUsesPerSecondMin: 0,
             _deleteObj: deleteObj,
-            _counter: counter,
+            _counter: counter
         };
 
-        this.addTimers(deleteObj, funcName);
-
-        return async (...args: any[]) => {
-            if (deleteObj.isDeleted) return await func(...args);
-
-            const start = Date.now();
-            this.metrics[funcName].countOfUses++;
-            this.metrics[funcName]._counter.seconds++;
-            this.metrics[funcName]._counter.minutes++;
-            this.metrics[funcName]._counter.hours++;
-            this.metrics[funcName]._counter.days++;
-
-            try {
-                return await func(...args);
-            } catch (error) {
-                if (!deleteObj.isDeleted) this.metrics[funcName].countOfErrors++;
-                throw error;
-            } finally {
-                if (!deleteObj.isDeleted) {
-                    this.metrics[funcName].useTime += Date.now() - start;
-                }
-            }
-        };
+        const metric = this.metrics[funcName];
+        this.addTimers(deleteObj, metric);
+        return {deleteObj, metric};
     }
 
-    getMetrics(funcName: string): IMeterData {
-        return this.metrics[funcName];
-    }
-
-    getAll(): Metrics {
-        return this.metrics;
-    }
-
-    private clearFunc(): void {
-        const funcListForDelete: string[] = [];
-        for (const funcName in this.metrics) {
-            funcListForDelete.push(funcName);
-        }
-        for (const funcName of funcListForDelete) {
-            this.deleteFunc(funcName);
-        }
-    }
-
-    private addTimers(deleteObj: { isDeleted: boolean }, funcName: string) {
-        const counter = this.metrics[funcName]._counter;
+    private addTimers(deleteObj: { isDeleted: boolean }, metric: IMeterData) {
+        const counter = metric._counter;
 
         this.addTimer(deleteObj, this.perSecondTimer, () => {
-            this.metrics[funcName].countOfUsesPerSecond = counter.seconds;
+            updateMetricsPerSecond(metric);
+            updateMetricsPerPerMinute(metric);
+            updateMetricsPerHour(metric);
+            updateMetricsPerDay(metric);
             counter.seconds = 0;
         });
 
         this.addTimer(deleteObj, this.perMinuteTimer, () => {
-            this.metrics[funcName].countOfUsesPerMinute = counter.minutes;
+            updateMetricsPerPerMinute(metric);
+            updateMetricsPerHour(metric);
+            updateMetricsPerDay(metric);
             counter.minutes = 0;
         });
 
         this.addTimer(deleteObj, this.perHourTimer, () => {
-            this.metrics[funcName].countOfUsesPerHour = counter.hours;
+            updateMetricsPerHour(metric);
+            updateMetricsPerDay(metric);
             counter.hours = 0;
         });
 
         this.addTimer(deleteObj, this.perDayTimer, () => {
-            this.metrics[funcName].countOfUsesPerDay = counter.days;
+            updateMetricsPerDay(metric);
             counter.days = 0;
-        });
-    }
-
-    private addTimer(deleteObj: { isDeleted: boolean }, timer: AbstractGenerator, handler: () => void) {
-        const subs = timer.subscribeOnProcess(() => {
-            if (deleteObj.isDeleted) {
-                subs?.unsubscribe();
-                return;
-            }
-
-            handler();
         });
     }
 }

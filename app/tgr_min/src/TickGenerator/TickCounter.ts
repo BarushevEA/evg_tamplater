@@ -2,10 +2,11 @@ import {ITickCounter, Status} from "./Types";
 import {ERROR, EState} from "./Env";
 import {AbstractGenerator} from "./AbstractGenerator";
 import {ICallback, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {Observable} from "evg_observable";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
 
 export class TickCounter implements ITickCounter {
+    private _state = EState.UNDEFINED;
     private defaultPeriodMs = 1000;
     private periodMs = 0;
     private timer: any;
@@ -18,7 +19,13 @@ export class TickCounter implements ITickCounter {
         this.init();
     }
 
-    private _state = EState.UNDEFINED;
+    resetPeriod(): Status {
+        if (this.isDestroyed()) getNegativeStatus(ERROR.INSTANCE_DESTROYED);
+        if (this.state === EState.STARTED) getNegativeStatus(this.state);
+
+        this.periodMs = this.defaultPeriodMs;
+        return getPositiveStatus(this.state);
+    }
 
     get state(): EState {
         return this._state;
@@ -32,23 +39,10 @@ export class TickCounter implements ITickCounter {
         return this.sum;
     }
 
-    resetPeriod(): Status {
-        if (this.isDestroyed()) getNegativeStatus(ERROR.INSTANCE_DESTROYED);
-        if ((this.state == EState.STOPPED) || (this.state == EState.INIT)) return {
-            isApplied: false,
-            state: this.state
-        };
-
-        this.periodMs = this.defaultPeriodMs;
-        return getPositiveStatus(this.state);
-    }
-
     setPeriod(period: number): Status {
         if (this.isDestroyed()) getNegativeStatus(ERROR.INSTANCE_DESTROYED);
-        if ((this.state == EState.STOPPED) || (this.state == EState.INIT)) return {
-            isApplied: false,
-            state: this.state
-        };
+        if (this.state === EState.STARTED) getNegativeStatus(this.state);
+
         if ((typeof period !== 'number') || (period < 0)) return {
             isApplied: false,
             state: ERROR.TYPE_INVALID
@@ -58,13 +52,9 @@ export class TickCounter implements ITickCounter {
         return getPositiveStatus(this.state);
     }
 
-    subscribe(callback: ICallback<number>): ISubscriptionLike | undefined {
-        if (this.isDestroyed()) return undefined;
-        return this.counter$.subscribe(callback);
-    }
-
     start(): Status {
         if (this.isDestroyed()) getNegativeStatus(ERROR.INSTANCE_DESTROYED);
+        if (this.state === EState.STARTED) getNegativeStatus(this.state);
 
         let innerCounter = 0;
         this.subscriber = this.subject.subscribeOnProcess(() => {
@@ -81,6 +71,16 @@ export class TickCounter implements ITickCounter {
 
         this._state = EState.STARTED;
         return getPositiveStatus(this.state);
+    }
+
+    subscribe(callback: ICallback<number>): ISubscriptionLike | undefined {
+        if (this.isDestroyed()) return undefined;
+        return this.counter$.subscribe(callback);
+    }
+
+    private init() {
+        this._state = EState.INIT;
+        this.resetPeriod();
     }
 
     stop(): Status {
@@ -103,10 +103,5 @@ export class TickCounter implements ITickCounter {
         this.counter$.destroy();
         this._state = EState.DESTROYED;
         return getPositiveStatus(this.state);
-    }
-
-    private init() {
-        this._state = EState.INIT;
-        this.resetPeriod();
     }
 }

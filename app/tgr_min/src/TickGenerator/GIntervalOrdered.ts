@@ -12,9 +12,8 @@ export class GIntervalOrdered extends AbstractOrderedGenerator implements IInter
     }
 
     setInterval(delay: milliseconds): Status {
-        const state = this.state;
         if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-        if (state === EState.STARTED) return getNegativeStatus(state);
+        if (this.intervalId) return getNegativeStatus(EState.STARTED);
         if (delay < 0) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
 
         this.delay = delay;
@@ -27,11 +26,15 @@ export class GIntervalOrdered extends AbstractOrderedGenerator implements IInter
             this.state$.next(EState.PROCESS);
         }, this.delay);
 
+        this.state$.next(EState.STARTED);
         return getPositiveStatus(EState.STARTED);
     }
 
     stopProcess(): Status {
         clearInterval(this.intervalId);
+        this.intervalId = 0;
+
+        this.state$.next(EState.STOPPED);
         return getPositiveStatus(EState.STOPPED);
     }
 }
