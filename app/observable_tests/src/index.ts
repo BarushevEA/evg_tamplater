@@ -93,8 +93,8 @@ women$.pipe()
 
 // Stream the list of people by applying the age filters
 personal$.pipe()
-    .emitByPositive(youngAgeFilter)
-    .emitByPositive(oldAgeFilter)
+    .refine(youngAgeFilter)
+    .refine(oldAgeFilter)
     .subscribe([men$, women$]);
 
 // Stream the list of people considering the hair color

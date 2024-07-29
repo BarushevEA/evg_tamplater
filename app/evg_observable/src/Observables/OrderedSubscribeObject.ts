@@ -1,6 +1,5 @@
 import {SubscribeObject} from "./SubscribeObject";
 import {
-    ICallback,
     IErrorCallback,
     IListener,
     IObserver,
@@ -39,25 +38,5 @@ export class OrderedSubscribeObject<T> extends SubscribeObject<T> implements IOr
 
     setOnce(): IOrderedSubscribe<T> {
         return <any>super.setOnce();
-    }
-
-    unsubscribeByNegative(condition: ICallback<any>): IOrderedSetup<T> {
-        return <any>super.unsubscribeByNegative(condition);
-    }
-
-    unsubscribeByPositive(condition: ICallback<any>): IOrderedSetup<T> {
-        return <any>super.unsubscribeByPositive(condition);
-    }
-
-    emitByNegative(condition: ICallback<any>): IOrderedSetup<T> {
-        return <any>super.emitByNegative(condition);
-    }
-
-    emitByPositive(condition: ICallback<any>): IOrderedSetup<T> {
-        return <any>super.emitByPositive(condition);
-    }
-
-    emitMatch(condition: ICallback<any>): IOrderedSetup<T> {
-        return <any>super.emitMatch(condition);
     }
 }

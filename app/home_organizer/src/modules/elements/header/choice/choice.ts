@@ -48,7 +48,7 @@ export class Choice implements OnInit, OnCreate, OnDestroy {
     private subscribeToMenuSelectionChange() {
         return menuService$
             .pipe()
-            .emitByPositive((event: MenuEvent) => {
+            .refine((event: MenuEvent) => {
                 return (event.owner === E_MENU_OWNER.CHOICE) && (event.menuAction === E_MENU_ACTION.ITEM_CLICK);
             })
             .subscribe(event => {

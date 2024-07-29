@@ -39,6 +39,11 @@ export class TickCounter implements ITickCounter {
         return this.sum;
     }
 
+    subscribe(callback: ICallback<number>): ISubscriptionLike | undefined {
+        if (this.isDestroyed()) return undefined;
+        return this.counter$.subscribe(callback);
+    }
+
     setPeriod(period: number): Status {
         if (this.isDestroyed()) getNegativeStatus(ERROR.INSTANCE_DESTROYED);
         if (this.state === EState.STARTED) getNegativeStatus(this.state);
@@ -50,6 +55,11 @@ export class TickCounter implements ITickCounter {
 
         this.periodMs = period;
         return getPositiveStatus(this.state);
+    }
+
+    private init() {
+        this._state = EState.INIT;
+        this.resetPeriod();
     }
 
     start(): Status {
@@ -71,16 +81,6 @@ export class TickCounter implements ITickCounter {
 
         this._state = EState.STARTED;
         return getPositiveStatus(this.state);
-    }
-
-    subscribe(callback: ICallback<number>): ISubscriptionLike | undefined {
-        if (this.isDestroyed()) return undefined;
-        return this.counter$.subscribe(callback);
-    }
-
-    private init() {
-        this._state = EState.INIT;
-        this.resetPeriod();
     }
 
     stop(): Status {

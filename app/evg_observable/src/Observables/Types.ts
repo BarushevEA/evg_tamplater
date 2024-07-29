@@ -1,4 +1,4 @@
-import {SwitchCase} from "./Pipe";
+import {PipeSwitchCase} from "./Pipe";
 import {FilterSwitchCase} from "./FilterCollection";
 
 export type ICallback<T> = (value?: T) => any;
@@ -15,10 +15,10 @@ export type IOrder = {
     order: number;
 };
 export type ISwitch<T> = {
-    switch(): SwitchCase<T>;
+    switch(): PipeSwitchCase<T>;
 };
 export type IOrderedSwitch<T> = {
-    switch(): SwitchCase<T>;
+    switch(): PipeSwitchCase<T>;
 };
 export type IOnce<T> = {
     setOnce(): ISubscribe<T>;
@@ -33,22 +33,16 @@ export type ISubscriptionLike = {
     unsubscribe(): void;
 };
 export type ISetup<T> =
-    IUnsubscribeByNegative<T> &
     IUnsubscribeByPositive<T> &
-    IEmitByNegative<T> &
     IEmitByPositive<T> &
-    IEmitMatchCondition<T> &
     IOnce<T> &
     ISwitch<T> &
     ITransform<T> &
     ISerialisation &
     ISubscribe<T>;
 export type IOrderedSetup<T> =
-    IOrderedUnsubscribeByNegative<T> &
     IOrderedUnsubscribeByPositive<T> &
-    IOrderedEmitByNegative<T> &
     IOrderedEmitByPositive<T> &
-    IOrderedEmitMatchCondition<T> &
     IOrderedOnce<T> &
     IOrderedSwitch<T> &
     IOrderedTransform<T> &
@@ -104,11 +98,9 @@ export type IOrderedUnsubscribeByNegative<T> = {
     unsubscribeByNegative(condition: ICallback<T>): IOrderedSetup<T>;
 };
 export type IUnsubscribeByPositive<T> = {
-    unsubscribeByPositive(condition: ICallback<T>): ISetup<T>;
     unsubscribeBy(condition: ICallback<T>): ISetup<T>;
 };
 export type IOrderedUnsubscribeByPositive<T> = {
-    unsubscribeByPositive(condition: ICallback<T>): IOrderedSetup<T>;
     unsubscribeBy(condition: ICallback<T>): ISetup<T>;
 };
 export type IEmitByNegative<T> = {
@@ -118,7 +110,6 @@ export type IOrderedEmitByNegative<T> = {
     emitByNegative(condition: ICallback<T>): IOrderedSetup<T>;
 };
 export type IEmitByPositive<T> = {
-    emitByPositive(condition: ICallback<T>): ISetup<T>;
     refine(condition: ICallback<T>): ISetup<T>;
     pushRefiners(conditions: ICallback<T>[]): ISetup<T>;
 };
@@ -130,7 +121,6 @@ export type ISerialisation = {
     deserialize<K>(): ISetup<K>;
 };
 export type IOrderedEmitByPositive<T> = {
-    emitByPositive(condition: ICallback<any>): IOrderedSetup<T>;
     refine(condition: ICallback<any>): ISetup<T>;
     pushRefiners(conditions: ICallback<any>[]): ISetup<T>;
 };
@@ -164,9 +154,13 @@ export type IOrderedSubscribe<T> = {
     subscribe(listener: IListener<T>, errorHandler?: IErrorCallback): IOrderedSubscriptionLike;
 };
 
-export type IPipePayload = { isBreakChain: boolean, isNeedUnsubscribe: boolean, isAvailable: boolean, payload: any };
+export type IChainContainer = {
+    chain: any[];
+}
+
+export type IPipePayload = { isBreak: boolean, isUnsubscribe: boolean, isAvailable: boolean, payload: any };
 export type IChainCallback = (data: IPipePayload) => void;
-export type IPipeCase<T> = {
+export type IPipeCase<T> = ISubscribe<T> & {
     case(condition: ICallback<any>): IPipeCase<T> & ISubscribe<T>;
     pushCases(conditions: ICallback<any>[]): IPipeCase<T> & ISubscribe<T>;
 };
@@ -190,7 +184,7 @@ export type IFilterCase<T> = {
     case(condition: ICallback<any>): IFilterCase<T>;
     pushCases(conditions: ICallback<any>[]): IFilterCase<T>;
 };
-export type IFilterPayload = { isBreakChain: boolean, isAvailable: boolean, payload: any };
+export type IFilterPayload = { isBreak: boolean, isAvailable: boolean, payload: any };
 export type IFilterChainCallback = (data: IFilterPayload) => void;
 export type IFilterResponse = {
     isOK: boolean;

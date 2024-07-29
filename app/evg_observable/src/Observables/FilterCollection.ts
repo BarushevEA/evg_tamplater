@@ -2,22 +2,28 @@ import {
     ICallback,
     IErrorCallback,
     IFilter,
-    IFilterCase,
     IFilterChainCallback,
     IFilterPayload,
     IFilterResponse,
     IFilterSetup,
     IFilterSwitch
 } from "./Types";
+import {SwitchCase} from "./AbstractSwitchCase";
 
 export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
-    chainHandlers: IFilterChainCallback [] = [];
-    pipeData: IFilterPayload = {isBreakChain: false, isAvailable: false, payload: null};
+    chain: IFilterChainCallback [] = [];
+    flow: IFilterPayload = {isBreak: false, isAvailable: false, payload: null};
     response: IFilterResponse = {isOK: false, payload: undefined};
-    private errorHandler: IErrorCallback | undefined;
+    private errHandler: IErrorCallback | undefined;
 
     get isEmpty(): boolean {
-        return !this.chainHandlers.length;
+        return !this.chain.length;
+    }
+
+    pushFilters(conditions: ICallback<any>[]): IFilterSetup<T> {
+        if (!Array.isArray(conditions)) return this;
+        for (let i = 0; i < conditions.length; i++) this.filter(conditions[i]);
+        return this;
     }
 
     filter(condition: ICallback<any>): IFilterSetup<T> {
@@ -28,14 +34,18 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
         );
     }
 
+    switch(): FilterSwitchCase<T> {
+        return new FilterSwitchCase<T>(this);
+    }
+
     processChain(value: T): IFilterResponse {
-        const chain = this.chainHandlers;
-        const data = this.pipeData;
+        const chain = this.chain;
+        const data = this.flow;
         const response = this.response;
         response.isOK = false;
         response.payload = undefined;
         data.payload = value;
-        data.isBreakChain = false;
+        data.isBreak = false;
 
         try {
             for (let i = 0; i < chain.length; i++) {
@@ -43,11 +53,11 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
 
                 chain[i](data);
                 if (!data.isAvailable) return response;
-                if (data.isBreakChain) break;
+                if (data.isBreak) break;
             }
         } catch (err) {
-            if (this.errorHandler) {
-                this.errorHandler(err, "Filter.processChain ERROR:");
+            if (this.errHandler) {
+                this.errHandler(err, "Filter.processChain ERROR:");
             } else {
                 console.log("Filter.processChain ERROR:", err);
             }
@@ -60,52 +70,15 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
         return response;
     }
 
-    pushFilters(conditions: ICallback<any>[]): IFilterSetup<T> {
-        if (!Array.isArray(conditions)) return this;
-        for (let i = 0; i < conditions.length; i++) this.filter(conditions[i]);
-        return this;
-    }
-
-    switch(): FilterSwitchCase<T> {
-        return new FilterSwitchCase<T>(this);
+    addErrorHandler(errorHandler: IErrorCallback) {
+        this.errHandler = errorHandler;
     }
 
     private push(callback: IFilterChainCallback): IFilterSetup<T> {
-        this.chainHandlers.push(callback);
+        this.chain.push(callback);
         return this;
-    }
-
-    addErrorHandler(errorHandler: IErrorCallback) {
-        this.errorHandler = errorHandler;
     }
 }
 
-export class FilterSwitchCase<T> implements IFilterCase<T> {
-    private pipe: FilterCollection<T>;
-    private caseCounter: number;
-
-    constructor(pipe: FilterCollection<T>) {
-        this.pipe = pipe;
-        this.caseCounter = pipe.chainHandlers.length ? pipe.chainHandlers.length : 0;
-    }
-
-    case(condition: ICallback<any>): IFilterCase<T> {
-        this.caseCounter++;
-        const id = this.caseCounter;
-        const chain = this.pipe.chainHandlers;
-        chain.push(
-            (data: IFilterPayload): void => {
-                data.isAvailable = true
-                if (condition(data.payload)) data.isBreakChain = true;
-                if (id === chain.length && !data.isBreakChain) data.isAvailable = false;
-            }
-        );
-        return this;
-    }
-
-    pushCases(conditions: ICallback<any>[]): IFilterCase<T> {
-        if (!Array.isArray(conditions)) return this;
-        for (let i = 0; i < conditions.length; i++) this.case(conditions[i]);
-        return this;
-    }
+export class FilterSwitchCase<T> extends SwitchCase<T, FilterCollection<T>, IFilter<T>> {
 }

@@ -46,7 +46,7 @@ export class Menu implements OnInit, OnCreate, OnDestroy {
     private menuEventsHandle() {
         return menuService$
             .pipe()
-            .emitByPositive(
+            .refine(
                 (event: MenuEvent) => {
                     if (event.menuAction !== E_MENU_ACTION.SHOW) {
                         this.isMenuOpened = false;

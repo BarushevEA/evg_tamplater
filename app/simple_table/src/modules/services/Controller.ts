@@ -74,7 +74,7 @@ class TableWaiter implements ITableWaiter {
 
             IsTableReady$
                 .pipe()
-                .emitByPositive((table: OptionsCollector) => {
+                .refine((table: OptionsCollector) => {
                     if (!table) return false;
                     return table.getTableName() === this.tableName;
                 })
@@ -107,7 +107,7 @@ class TableExecutor implements ITableExecutor {
         this.cellListener = cellListener;
         CellChange$
             .pipe()
-            .emitByPositive((cell: CellId) => {
+            .refine((cell: CellId) => {
                 if (!cell) return false;
                 return cell.tableName === this.table.getTableName();
             })

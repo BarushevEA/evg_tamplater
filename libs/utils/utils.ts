@@ -121,13 +121,13 @@ export const documentReady$ = new Observable<HTMLElement>(null);
 export function runWhenDocumentReady(callback: ICallback<any>): void {
     documentReady$
         .pipe()
-        .emitByPositive(body => !!body)
+        .refine(body => !!body)
         .setOnce()
         .subscribe(callback);
 
     documentReady$
         .pipe()
-        .emitByPositive(body => !body)
+        .refine(body => !body)
         .setOnce()
         .subscribe(() => {
             const listener = () => {

@@ -22,22 +22,18 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
         console.log(`(Unit of SubscribeObject).send(${errorData}) ERROR:`, errorMessage);
     };
 
+    subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike {
+        this.listener = getListener(observer);
+        errorHandler && (this.errorHandler = errorHandler);
+        return this;
+    }
+
     public unsubscribe(): void {
         if (!this.observable) return;
         this.observable.unSubscribe(this);
         this.observable = <any>null;
         this.listener = <any>null;
-        this.chainHandlers.length = 0;
-    }
-
-    send(value: T): void {
-        try {
-            this.pipeData.payload = value;
-            this.pipeData.isBreakChain = false;
-            this.processValue(value);
-        } catch (err) {
-            this.errorHandler(value, err);
-        }
+        this.chain.length = 0;
     }
 
     resume(): void {
@@ -48,10 +44,14 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
         this.isPaused = true;
     }
 
-    subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike {
-        this.listener = getListener(observer);
-        errorHandler && (this.errorHandler = errorHandler);
-        return this;
+    send(value: T): void {
+        try {
+            this.flow.payload = value;
+            this.flow.isBreak = false;
+            this.processValue(value);
+        } catch (err) {
+            this.errorHandler(value, err);
+        }
     }
 
     set order(value: number) {

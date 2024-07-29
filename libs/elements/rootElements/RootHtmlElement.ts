@@ -238,7 +238,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         transferToChannel<T, V>(chanelCb: () => IChannel, dataCb: (data: T) => V): void {
             this.onMessage$<T>()
                 .pipe()
-                .emitByPositive(() => chanelCb())
+                .refine(() => chanelCb())
                 .subscribe((data: T) => {
                     chanelCb().sendMessage<V>(
                         dataCb(data)

@@ -28,7 +28,7 @@ export class Test3 implements OnInit, OnCreate, OnDestroy {
         this.root.collect(
             chanelOutput$
                 .pipe()
-                .emitByPositive(msg => msg && (msg.id === this.id))
+                .refine(msg => msg && (msg.id === this.id))
                 .subscribe(msg => {
                     this.testData3 = msg.payload;
                     this.root.detectChanges();

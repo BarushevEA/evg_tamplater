@@ -12,7 +12,7 @@ export class Child3 implements OnInit, OnCreate, OnDestroy {
         this.root.collect(
             this.root.onMessage$<string>()
                 .pipe()
-                .emitByPositive(msg => !!msg)
+                .refine(msg => !!msg)
                 .subscribe((msg: string) => {
                     console.log(msg);
                     this.message = msg;

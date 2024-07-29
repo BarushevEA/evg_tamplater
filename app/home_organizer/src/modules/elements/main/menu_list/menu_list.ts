@@ -47,7 +47,7 @@ export class Menu_list implements OnInit, OnCreate, OnDestroy {
         this.root.collect(
             menuService$
                 .pipe()
-                .emitByPositive((event: MenuEvent) => event.menuAction === E_MENU_ACTION.SHOW)
+                .refine((event: MenuEvent) => event.menuAction === E_MENU_ACTION.SHOW)
                 .subscribe(menu => {
                     this.initOwnerData(menu);
                     this.initItems();

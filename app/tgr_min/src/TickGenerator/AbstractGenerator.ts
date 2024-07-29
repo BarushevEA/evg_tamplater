@@ -51,7 +51,7 @@ export abstract class AbstractGenerator implements IGenerator {
     subscribeOnProcess(callback: ICallback<EState>): ISubscriptionLike | undefined {
         if (this.isDestroyed()) return undefined;
 
-        return this.state$.pipe()?.emitByPositive(state => state === EState.PROCESS).subscribe(callback);
+        return this.state$.pipe()?.refine(state => state === EState.PROCESS).subscribe(callback);
     }
 
     isDestroyed(): boolean {

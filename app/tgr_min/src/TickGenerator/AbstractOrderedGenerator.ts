@@ -13,6 +13,6 @@ export abstract class AbstractOrderedGenerator extends AbstractGenerator {
 
     subscribeOnProcess(callback: ICallback<EState>): IOrderedSubscriptionLike | undefined {
         if (this.isDestroyed()) return undefined;
-        return this.state$.pipe()?.emitByPositive(state => state === EState.PROCESS).subscribe(callback);
+        return <IOrderedSubscriptionLike>this.state$.pipe()?.refine(state => state === EState.PROCESS).subscribe(callback);
     }
 }
