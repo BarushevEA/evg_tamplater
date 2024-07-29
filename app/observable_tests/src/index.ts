@@ -1,7 +1,8 @@
 // Import the Observable library
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {Observable} from "evg_observable";
 
 // Constants representing different hair colors
+
 const HAIR = {
     BLOND: "BLOND",
     BLACK: "BLACK",
