@@ -61,16 +61,8 @@ export class GMeter implements IMeter {
         this.perDayTimer.setInterval(24 * 60 * 60 * 1000);
     }
 
-    start(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
-
-        this.perSecondTimer.start();
-        this.perMinuteTimer.start();
-        this.perHourTimer.start();
-        this.perDayTimer.start();
-
-        this._state = EState.PROCESS;
-        return getPositiveStatus(EState.PROCESS);
+    get length(): number {
+        return Object.keys(this.metrics).length;
     }
 
     stop(): Status {
@@ -127,8 +119,21 @@ export class GMeter implements IMeter {
         return getNegativeStatus(ERROR.NAME_IS_NOT_PRESENT);
     }
 
-    get length(): number {
-        return Object.keys(this.metrics).length;
+    start(): Status {
+        if (this.isDestroyed()) return getNegativeStatus(ERROR.INSTANCE_DESTROYED);
+        if (this._state === EState.STARTED) return getNegativeStatus(EState.STARTED);
+
+        this.perSecondTimer.start();
+        this.perMinuteTimer.start();
+        this.perHourTimer.start();
+        this.perDayTimer.start();
+
+        this._state = EState.STARTED;
+        return getPositiveStatus(EState.STARTED);
+    }
+
+    isDestroyed(): boolean {
+        return this._state === EState.DESTROYED;
     }
 
     decorate<T>(funcName: string, func: (...args: any[]) => T): (...args: any[]) => T {
@@ -138,19 +143,38 @@ export class GMeter implements IMeter {
             if (deleteObj.isDeleted) return func(...args);
 
             const start = Date.now();
-            metric.countOfUses++;
-            metric._counter.seconds++;
-            metric._counter.minutes++;
-            metric._counter.hours++;
-            metric._counter.days++;
+            this.trackMetric(metric);
 
             try {
                 return func(...args);
             } catch (error) {
-                if (!deleteObj.isDeleted) metric.countOfErrors++;
+                if (!deleteObj.isDeleted && (this._state === EState.STARTED)) metric.countOfErrors++;
                 throw error;
             } finally {
-                if (!deleteObj.isDeleted) {
+                if (!deleteObj.isDeleted && (this._state === EState.STARTED)) {
+                    metric.timePerCall = Date.now() - start;
+                    metric.totalExecutionTime += metric.timePerCall;
+                }
+            }
+        };
+    }
+
+    decorateAsync<T>(funcName: string, func: (...args: any[]) => Promise<T>): (...args: any[]) => Promise<T> {
+        const {deleteObj, metric} = this.createMetric(funcName);
+
+        return async (...args: any[]): Promise<T> => {
+            if (deleteObj.isDeleted) return await func(...args);
+
+            const start = Date.now();
+            this.trackMetric(metric);
+
+            try {
+                return await func(...args);
+            } catch (error) {
+                if (!deleteObj.isDeleted && (this._state === EState.STARTED)) metric.countOfErrors++;
+                throw error;
+            } finally {
+                if (!deleteObj.isDeleted && (this._state === EState.STARTED)) {
                     metric.timePerCall = Date.now() - start;
                     metric.totalExecutionTime += metric.timePerCall;
                 }
@@ -200,10 +224,6 @@ export class GMeter implements IMeter {
         return {deleteObj, metric};
     }
 
-    isDestroyed(): boolean {
-        return this._state === EState.DESTROYED;
-    }
-
     private addTimers(deleteObj: { isDeleted: boolean }, metric: IMeterData) {
         const counter = metric._counter;
 
@@ -234,38 +254,17 @@ export class GMeter implements IMeter {
         });
     }
 
-    decorateAsync<T>(funcName: string, func: (...args: any[]) => Promise<T>): (...args: any[]) => Promise<T> {
-        const {deleteObj, metric} = this.createMetric(funcName);
-
-        return async (...args: any[]): Promise<T> => {
-            if (deleteObj.isDeleted) return await func(...args);
-
-            const start = Date.now();
-            metric.countOfUses++;
-            metric._counter.seconds++;
-            metric._counter.minutes++;
-            metric._counter.hours++;
-            metric._counter.days++;
-
-            try {
-                return await func(...args);
-            } catch (error) {
-                if (!deleteObj.isDeleted) metric.countOfErrors++;
-                throw error;
-            } finally {
-                if (!deleteObj.isDeleted) {
-                    metric.timePerCall = Date.now() - start;
-                    metric.totalExecutionTime += metric.timePerCall;
-                }
-            }
-        };
-    }
-
     getMetrics(funcName: string): IUserMeterData {
-        const metrics: IUserMeterData = {...this.metrics[funcName]};
+        const metrics: IUserMeterData = {...this.metrics[funcName]} as IUserMeterData;
         delete (<any>metrics)._deleteObj;
         delete (<any>metrics)._counter;
         return metrics;
+    }
+
+    private clearFunc(): void {
+        const listForDelete: string[] = [];
+        for (const funcName in this.metrics) listForDelete.push(funcName);
+        for (const funcName of listForDelete) this.deleteFunc(funcName);
     }
 
     getAll(): IUserMetrics {
@@ -278,10 +277,14 @@ export class GMeter implements IMeter {
         return userMetrics;
     }
 
-    private clearFunc(): void {
-        const listForDelete: string[] = [];
-        for (const funcName in this.metrics) listForDelete.push(funcName);
-        for (const funcName of listForDelete) this.deleteFunc(funcName);
+    private trackMetric(metric: IMeterData) {
+        if (this._state === EState.STARTED) {
+            metric.countOfUses++;
+            metric._counter.seconds++;
+            metric._counter.minutes++;
+            metric._counter.hours++;
+            metric._counter.days++;
+        }
     }
 
     private addTimer(deleteObj: { isDeleted: boolean }, timer: AbstractGenerator, handler: () => void) {
