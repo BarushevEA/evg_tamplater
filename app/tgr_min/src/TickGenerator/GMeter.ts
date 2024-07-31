@@ -132,10 +132,6 @@ export class GMeter implements IMeter {
         return getPositiveStatus(EState.STARTED);
     }
 
-    isDestroyed(): boolean {
-        return this._state === EState.DESTROYED;
-    }
-
     decorate<T>(funcName: string, func: (...args: any[]) => T): (...args: any[]) => T {
         const {deleteObj, metric} = this.createMetric(funcName);
 
@@ -180,6 +176,10 @@ export class GMeter implements IMeter {
                 }
             }
         };
+    }
+
+    isDestroyed(): boolean {
+        return this._state === EState.DESTROYED;
     }
 
     private createMetric(funcName: string): { deleteObj: { isDeleted: boolean }, metric: IMeterData } {
@@ -255,7 +255,7 @@ export class GMeter implements IMeter {
     }
 
     getMetrics(funcName: string): IUserMeterData {
-        const metrics: IUserMeterData = {...this.metrics[funcName]} as IUserMeterData;
+        const metrics: IUserMeterData = {...this.metrics[funcName]};
         delete (<any>metrics)._deleteObj;
         delete (<any>metrics)._counter;
         return metrics;

@@ -150,7 +150,7 @@ import {getDefaultMeasureMeter, Measure} from "evg_tick_generator";
 
 // Пример использования
 class Example {
-    @Measure("Example")
+    @Measure()
     someMethod1() {
         console.log('someMethod1: This method is metered');
         let a = 0;
@@ -159,7 +159,7 @@ class Example {
         }
     }
 
-    @Measure("Example")
+    @Measure()
     async someMethod2() {
         await new Promise(resolve => setTimeout(resolve, 100));
         console.log('someMethod2: This method is metered');

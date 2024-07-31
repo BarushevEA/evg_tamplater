@@ -1,6 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
-import {GAnimationFrame, GMeter, TickCounter} from "evg_tick_generator";
+import {GAnimationFrame, getDefaultMeasureMeter, Measure, TickCounter} from "evg_tick_generator";
 import {EState} from "evg_tick_generator/src/outLib/Env";
+import {IMeter} from "evg_tick_generator/src/outLib/Types";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;
@@ -8,7 +9,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     fpsTxt: string;
     animationFrame: GAnimationFrame;
     animationCounter: TickCounter;
-    meter: GMeter;
+    meter: IMeter;
     isStop: boolean;
     animationState: any;
     chosenFps: number;
@@ -33,9 +34,12 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.init(root);
     }
 
+    @Measure()
     onCreate(): void {
     }
 
+    // @Tracker()
+    @Measure()
     onInit(): void {
         this.fpsTxt = this.getFpsTxt();
 
@@ -50,27 +54,32 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.animationCounter.start();
     }
 
+    @Measure()
     onDestroy(): void {
         this.animationFrame.stop();
         this.animationCounter.stop();
     }
 
+    @Measure()
     set60Fps(): void {
         this.animationFrame.set60fps();
         this.chosenFps = 60;
     }
 
+    @Measure()
     set30Fps(): void {
         this.animationFrame.setFPS(30);
         this.chosenFps = 30;
     }
 
+    @Measure()
     start(): void {
         this.animationFrame.start();
         this.animationCounter.start();
         this.meter.start();
     }
 
+    @Measure()
     stop(): void {
         this.animationFrame.stop();
         this.animationCounter.stop();
@@ -79,6 +88,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         console.log(this.meter.getAll());
     }
 
+    @Measure()
     setCustomFps(evt: Event): void {
         this.chosenFps = +(<any>evt.target).value;
         if (typeof this.chosenFps === "number") {
@@ -86,13 +96,14 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         }
     }
 
+    @Measure()
     private init(root: RootBehavior) {
         this.name = root.tagName;
         this.fpsCounter = 0;
         this.fpsTxt = "";
         this.animationFrame = new GAnimationFrame();
         this.animationCounter = new TickCounter(this.animationFrame);
-        this.meter = new GMeter();
+        this.meter = getDefaultMeasureMeter();
         this.isStop = true;
         this.animationState = "";
         this.chosenFps = 60;
@@ -100,15 +111,15 @@ export class Main implements OnInit, OnCreate, OnDestroy {
     }
 
     private addMetrics() {
-        this.onInit = this.meter.decorate("this.onInit", this.onInit.bind(this));
-        this.start = this.meter.decorate("this.start", this.start.bind(this));
-        this.stop = this.meter.decorate("this.stop", this.stop.bind(this));
-        this.getFpsTxt = this.meter.decorate("this.getFpsTxt", this.getFpsTxt.bind(this));
-        this.showText = this.meter.decorate("this.showText", this.showText.bind(this));
-        this.showFps = this.meter.decorate("this.showFps", this.showFps.bind(this));
+        // this.onInit = this.meter.decorate("this.onInit", this.onInit.bind(this));
+        // this.start = this.meter.decorate("this.start", this.start.bind(this));
+        // this.stop = this.meter.decorate("this.stop", this.stop.bind(this));
+        // this.getFpsTxt = this.meter.decorate("this.getFpsTxt", this.getFpsTxt.bind(this));
+        // this.showText = this.meter.decorate("this.showText", this.showText.bind(this));
+        // this.showFps = this.meter.decorate("this.showFps", this.showFps.bind(this));
         this.meter.start();
 
-        this.metricName = "this.showText";
+        this.metricName = "SHOW TEXT";
         this.metricSeconds = "0";
         this.metricSecondsMin = "0";
         this.metricSecondsMax = "0";
@@ -123,10 +134,12 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.metricHoursAvg = "0";
     }
 
+    @Measure()
     private getFpsTxt(): string {
         return `${this.fpsCounter} fps`;
     }
 
+    @Measure("SHOW TEXT")
     private showText(state: EState) {
         this.animationState = state;
 
@@ -137,6 +150,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.root.detectChanges();
     }
 
+    @Measure()
     private showFps(fps: number) {
         this.fpsCounter = fps;
         this.fpsTxt = this.getFpsTxt();
@@ -144,6 +158,7 @@ export class Main implements OnInit, OnCreate, OnDestroy {
         this.root.detectChanges();
     }
 
+    @Measure()
     private showMetrics() {
         const metrics = this.meter.getMetrics(this.metricName);
 

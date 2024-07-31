@@ -57,6 +57,11 @@ export class TickCounter implements ITickCounter {
         return getPositiveStatus(this.state);
     }
 
+    private init() {
+        this._state = EState.INIT;
+        this.resetPeriod();
+    }
+
     start(): Status {
         if (this.isDestroyed()) getNegativeStatus(ERROR.INSTANCE_DESTROYED);
         if (this.state === EState.STARTED) getNegativeStatus(EState.STARTED);
@@ -76,11 +81,6 @@ export class TickCounter implements ITickCounter {
 
         this._state = EState.STARTED;
         return getPositiveStatus(this.state);
-    }
-
-    private init() {
-        this._state = EState.INIT;
-        this.resetPeriod();
     }
 
     stop(): Status {
