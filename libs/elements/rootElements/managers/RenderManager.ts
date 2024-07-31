@@ -1,12 +1,13 @@
-import {appendChild, createElement, getStyle, runWhenDocumentReady} from "../../../utils/utils";
+import {appendChild, createElement, getStyle, log, runWhenDocumentReady} from "../../../utils/utils";
 import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator/registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
 import {RegisterRootElements} from "../../registrator/registerRootElements";
 import {AppDocument} from "../../../env/browserVariables";
+import {E_APP_MODE} from "../../../enums/E_APP_MODE";
 
 export class RenderManager {
     private appElement: HTMLElement;
-    isComponentMode = false;
+    appMode: E_APP_MODE = E_APP_MODE.GENERAL_APPLICATION;
 
     constructor() {
     }
@@ -15,8 +16,9 @@ export class RenderManager {
         registerElements(options);
     }
 
-    public run(isComponentMode?: boolean): void {
-        this.isComponentMode = !!isComponentMode;
+    public run(appMode?: E_APP_MODE): void {
+        if (appMode) this.appMode = appMode;
+
         runWhenDocumentReady(() => {
             this.process();
         });
@@ -28,7 +30,7 @@ export class RenderManager {
     }
 
     private init(): void {
-        if (this.isComponentMode) return;
+        if (this.appMode === E_APP_MODE.CUSTOM_COMPONENT) return;
         this.appElement = createElement(APP_TAG_NAME);
     }
 
@@ -36,9 +38,23 @@ export class RenderManager {
         const rootStyle = getStyle(getRootStyles());
         const mainStyle = getStyle("APP_EXAMPLE_____STYLE");
 
+        switch (this.appMode) {
+            case E_APP_MODE.CUSTOM_COMPONENT:
+                this.setStylesToHead(rootStyle, mainStyle);
+                break;
+            case E_APP_MODE.GENERAL_APPLICATION:
+                this.setStylesToHead(rootStyle, mainStyle);
+                appendChild(AppDocument.body, this.appElement)
+                break;
+            case E_APP_MODE.WIDGET_APPLICATION:
+        }
+
+        log(this.appMode);
+    }
+
+    private setStylesToHead(rootStyle: HTMLElement, mainStyle: HTMLElement) {
         appendChild(AppDocument.head, rootStyle);
         appendChild(AppDocument.head, mainStyle);
-        !this.isComponentMode && appendChild(AppDocument.body, this.appElement);
     }
 }
 

@@ -18,7 +18,7 @@ export function logError(message: any, err: any): void {
     log(message, err);
 }
 
-export function log(...args: any): void {
+export function log(...args: any[]): void {
     appInfo ?
         console.log(appInfo.description, ...args) :
         console.log(`APP`, ...args);
@@ -118,6 +118,7 @@ export function setValue<T>(element: HTMLElement | Element, value: T): void {
 }
 
 export const documentReady$ = new Observable<HTMLElement>(null);
+
 export function runWhenDocumentReady(callback: ICallback<any>): void {
     documentReady$
         .pipe()
