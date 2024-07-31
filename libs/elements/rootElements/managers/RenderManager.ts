@@ -1,4 +1,4 @@
-import {appendChild, createElement, getStyle, log, runWhenDocumentReady} from "../../../utils/utils";
+import {appendChild, createElement, getDiv, getStyle, log, runWhenDocumentReady} from "../../../utils/utils";
 import {getRootStyles, REG_OPTIONS, registerElements} from "../../registrator/registrator";
 import {APP_TAG_NAME} from "./APP_TAG_NAME";
 import {RegisterRootElements} from "../../registrator/registerRootElements";
@@ -8,6 +8,7 @@ import {E_APP_MODE} from "../../../enums/E_APP_MODE";
 export class RenderManager {
     private appElement: HTMLElement;
     appMode: E_APP_MODE = E_APP_MODE.GENERAL_APPLICATION;
+    widgetRoot = getDiv();
 
     constructor() {
     }
@@ -16,8 +17,9 @@ export class RenderManager {
         registerElements(options);
     }
 
-    public run(appMode?: E_APP_MODE): void {
+    public run(appMode?: E_APP_MODE, widgetRoot?: HTMLElement): void {
         if (appMode) this.appMode = appMode;
+        if (widgetRoot) this.widgetRoot = widgetRoot;
 
         runWhenDocumentReady(() => {
             this.process();
@@ -47,6 +49,11 @@ export class RenderManager {
                 appendChild(AppDocument.body, this.appElement)
                 break;
             case E_APP_MODE.WIDGET_APPLICATION:
+                let shadowRoot = this.widgetRoot.attachShadow({mode: 'closed'});
+                appendChild(shadowRoot, rootStyle);
+                appendChild(shadowRoot, mainStyle);
+                appendChild(shadowRoot, this.appElement);
+                appendChild(AppDocument.body, this.widgetRoot);
         }
 
         log(this.appMode);
