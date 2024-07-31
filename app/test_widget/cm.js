@@ -135,7 +135,8 @@ class Maker {
 
         this.htmlTemplate = `<div>Hello ${this.htmlFileName}</div>`;
         this.tsTemplate = `
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../${levels}libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../${levels}libs/env/types";
+import {log} from "../../../../../../libs/utils/utils";
 
 export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
@@ -145,7 +146,7 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, 
     }
     
     onMessage(message: any): void {
-        console.log(this.root.tagName, "message:", message);
+        log(this.root.tagName, "message:", message);
     }
 
     onCreate(): void {

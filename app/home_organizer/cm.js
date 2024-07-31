@@ -135,15 +135,18 @@ class Maker {
 
         this.htmlTemplate = `<div>Hello ${this.htmlFileName}</div>`;
         this.tsTemplate = `
-import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../${levels}libs/elements/types";
+import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../${levels}libs/env/types";
+import {log} from "../../../../../../libs/utils/utils";
 
-export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy {
-    readonly root;
+export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
 
-    constructor(root: RootBehavior) {
-        this.root = root;
+    constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
+    }
+    
+    onMessage(message: any): void {
+        log(this.root.tagName, "message:", message);
     }
 
     onCreate(): void {
