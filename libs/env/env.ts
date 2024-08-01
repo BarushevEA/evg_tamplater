@@ -9,6 +9,6 @@ export const ifDoubleInitVar = "_______$$bool";
 
 export const emptyArr: IAppElement[] = <any>[0];
 export const txtValBuffer: HTMLElement[] = [];
-export const txtValBufferLength = 100;
+export const txtValBufferLength = 10000;
 export const MAX_Z_INDEX = 2147483647;
 
