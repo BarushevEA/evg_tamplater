@@ -1,4 +1,4 @@
-import {addClasses, appendChild, createElement, removeChild, removeClasses} from "../../utils/utils";
+import {addClasses, appendChild, createElement, removeClasses, removeElement} from "../../utils/utils";
 import {quickDeleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
 import {APP_RANDOM_STR, clsSeparator, emptyArr, txtValBuffer, txtValBufferLength} from "../../env/env";
 import {CONDITION} from "../../enums/CONDITION";
@@ -174,7 +174,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     });
 
     htmlParent.insertBefore(ifParent, element);
-    removeChild(htmlParent, element);
+    removeElement(element);
     removeAttr(element, E_DATA_MARKER.ON_IF);
 
     setAttr(ifParent, E_DATA_MARKER.INFO, "[ifp]");
@@ -218,7 +218,7 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
 
     setAttr(cycleParent, E_DATA_MARKER.INFO, `[for-of]`);
     htmlParent.insertBefore(cycleParent, element);
-    removeChild(htmlParent, element);
+    removeElement(element);
     removeAttr(element, E_DATA_MARKER.FOR);
 
     rootElement.ahe_ForOfLst.push({
@@ -282,9 +282,9 @@ function updateForOfChildren(
 
             if (ifComponent) {
                 quickDeleteFromArray(ifList, ifComponent);
-                removeChild(cycleParent, ifComponent.ifParent);
+                removeElement(ifComponent.ifParent);
             } else {
-                removeChild(cycleParent, child);
+                removeElement(child);
             }
         }
 
@@ -629,7 +629,7 @@ export function changeIfConditions(rootElement: RootElement) {
         if (conditionData) {
             if (!isContains) appendChild(onIf.ifParent, onIf.ifElement);
         } else {
-            if (isContains) removeChild(onIf.ifParent, onIf.ifElement);
+            if (isContains) removeElement(onIf.ifElement);
         }
     }
 }

@@ -1,0 +1,7 @@
+// CSS marker
+exports.CSS_Marker = "APP_EXAMPLE_____STYLE";
+
+// Template markers with they file names
+exports.htmlTemplates = {
+    "APP_EXAMPLE_____ROOT": "root.html",
+};

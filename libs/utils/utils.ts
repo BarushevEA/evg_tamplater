@@ -100,6 +100,10 @@ export function removeChild(parent: HTMLElement, child: HTMLElement | Element): 
     if (parent && child) parent.removeChild(child);
 }
 
+export function removeElement(child: HTMLElement | Element): void {
+    child && child.remove();
+}
+
 export function getElementsByClass(parent: HTMLElement, token: string): Element[] {
     if (!parent) return [];
 
