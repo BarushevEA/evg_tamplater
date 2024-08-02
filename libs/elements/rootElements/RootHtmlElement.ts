@@ -71,6 +71,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
 
+            (<any>this).ahe_isCustomAppElement = true;
+
             this.ahe_clr = new Collector();
             this.ahe_onAdt$ = new Observable(false);
             this.ahe_bfrIni$ = new Observable(false);
@@ -226,11 +228,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
         getChannel(element: any): IChannel | undefined {
             if (!element) return undefined;
-            if ((<IAppElement>element).isCustomAppElement) return <IChannel>element;
-            if (!(<RootElement>element).ahe_cmt) return undefined;
-            if (!(<IChannel>element).sendMessage) return undefined;
-
-            element.isCustomAppElement = true;
+            if (!(<IAppElement>element).ahe_isCustomAppElement) return undefined;
 
             return <IChannel>element;
         }
@@ -251,7 +249,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         isAppElement(element: any): boolean {
-            return !!this.getChannel(element);
+            return !!element && element.ahe_isCustomAppElement;
         }
 
         collect(...subscriptionLikeList: ISubscriptionLike[]): void {

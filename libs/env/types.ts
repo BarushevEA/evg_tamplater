@@ -11,7 +11,7 @@ export type GlobalDocument = Document & {};
 
 
 export type IAppElement = Element & HTMLElement & {
-    isCustomAppElement: boolean;
+    ahe_isCustomAppElement: boolean;
 };
 export type AttributeChanged = {
     name: string,

@@ -87,7 +87,7 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
     actions += detectClsConditions(rootElement, <HTMLElement>child);
     setAttr(child, E_DATA_MARKER.INFO, actions.trim() + "]");
 
-    if (child.isCustomAppElement) {
+    if (child.ahe_isCustomAppElement) {
         (<RootElement><any>child).ahe_pnt_chl = <IChannel><any>rootElement;
         (<any>child).ahe_onPChlRdy$.next(<IChannel><any>rootElement);
     }
@@ -183,9 +183,7 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
 }
 
 function createTxtValBuffer() {
-    for (let i = 0; i < txtValBufferLength; i++) {
-        txtValBuffer.push(createElement(E_ROOT_TAG.TEXT_VALUE));
-    }
+    for (let i = 0; i < txtValBufferLength; i++) txtValBuffer.push(createElement(E_ROOT_TAG.TEXT_VALUE));
 }
 
 createTxtValBuffer();
@@ -395,7 +393,7 @@ function detectInjections(rootElement: RootElement, element: HTMLElement): strin
 function detectChannel(rootElement: RootElement, element: HTMLElement): string {
     const channelName = getFieldName(element, E_DATA_MARKER.CHANNEL);
     if (!channelName) return "";
-    if (!(<IAppElement>element).isCustomAppElement) return "";
+    if (!(<IAppElement>element).ahe_isCustomAppElement) return "";
 
     rootElement.ahe_cmt[channelName] = <IChannel><any>element;
     return "cnl ";
