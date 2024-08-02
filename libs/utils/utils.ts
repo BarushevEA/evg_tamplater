@@ -87,21 +87,19 @@ export function toggleClasses(element: HTMLElement, classes: string[]): void {
 }
 
 export function isClassPresent(element: HTMLElement, token: string): boolean {
-    if (!element) return false;
-
-    return element.classList.contains(token);
+    return !!element?.classList.contains(token);
 }
 
 export function appendChild(parent: HTMLElement | ShadowRoot, child: HTMLElement): void {
-    if (parent && child) parent.appendChild(child);
+    if (child) parent?.appendChild(child);
 }
 
 export function removeChild(parent: HTMLElement, child: HTMLElement | Element): void {
-    if (parent && child) parent.removeChild(child);
+    if (child) parent?.removeChild(child);
 }
 
 export function removeElement(child: HTMLElement | Element): void {
-    child && child.remove();
+    child?.remove();
 }
 
 export function getElementsByClass(parent: HTMLElement, token: string): Element[] {
@@ -111,17 +109,15 @@ export function getElementsByClass(parent: HTMLElement, token: string): Element[
 }
 
 export function getValue<T>(element: HTMLElement | Element): T {
-    if (!element) return undefined;
-    if (!(<any>element).value) return undefined;
-    return (<any>element).value
+    return (<any>element)?.value;
 }
 
 export function setValue<T>(element: HTMLElement | Element, value: T): void {
-    if (!element) return;
-    (<any>element).value = value;
+    if (element) (<any>element).value = value;
 }
 
 export const documentReady$ = new Observable<HTMLElement>(null);
+
 export function runWhenDocumentReady(callback: ICallback<any>): void {
     documentReady$
         .pipe()
@@ -131,7 +127,7 @@ export function runWhenDocumentReady(callback: ICallback<any>): void {
 
     documentReady$
         .pipe()
-        .refine(body => !body)
+        .unsubscribeBy(body => !!body)
         .setOnce()
         .subscribe(() => {
             const listener = () => {

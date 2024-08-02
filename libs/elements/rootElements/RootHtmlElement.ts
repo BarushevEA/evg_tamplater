@@ -238,9 +238,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 .pipe()
                 .refine(() => chanelCb())
                 .subscribe((data: T) => {
-                    chanelCb().sendMessage<V>(
-                        dataCb(data)
-                    )
+                    chanelCb().sendMessage<V>(dataCb(data));
                 });
         }
 
@@ -249,7 +247,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         }
 
         isAppElement(element: any): boolean {
-            return !!element && element.ahe_isCustomAppElement;
+            return !!element?.ahe_isCustomAppElement;
         }
 
         collect(...subscriptionLikeList: ISubscriptionLike[]): void {
