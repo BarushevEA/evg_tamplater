@@ -1,4 +1,9 @@
-import {makeRoute, REGISTER_ROUTES} from "../../../../libs/elements/rootElements/appRoute";
+import {
+    BROWSER_ROUTING,
+    makeRoute,
+    REGISTER_ROUTES,
+    setBrowserRoutingMode
+} from "../../../../libs/elements/rootElements/appRoute";
 import {Main} from "../modules/elements/main/main";
 import {Page1} from "../modules/elements/page1/page1";
 import {Page2} from "../modules/elements/page2/page2";
@@ -38,3 +43,5 @@ REGISTER_ROUTES(
         makeRoute(ROUTE_COMMAND.PAGE3, "/page3", Page3),
     ]
 );
+
+setBrowserRoutingMode(BROWSER_ROUTING.SHOW);

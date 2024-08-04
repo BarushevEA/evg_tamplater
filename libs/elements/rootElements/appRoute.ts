@@ -1,8 +1,21 @@
-import {IRouteModel, IRouteOption, OnInit, RootBehavior} from "../../env/types";
-import {Observable} from "evg_observable";
+import {IRouteModel, IRouteOption, OnDestroy, OnInit, RootBehavior} from "../../env/types";
+import {Collector, Observable} from "evg_observable";
 import {QSI_APP_COMPONENT} from "../registrator/registrator";
 import {getDefaultMeasureMeter, Measure} from "evg_tick_generator";
 import {log} from "../../utils/utils";
+import {BROWSER_PATH} from "../routing/BrowserPath";
+
+export enum BROWSER_ROUTING {
+    SHOW = "SHOW",
+    SHOW_WITHOUT_HISTORY = "SHOW_WITHOUT_HISTORY",
+    HIDDEN = "HIDDEN",
+}
+
+let browserRouting = BROWSER_ROUTING.SHOW;
+
+export function setBrowserRoutingMode(mode: BROWSER_ROUTING) {
+    browserRouting = mode;
+}
 
 export const ROUTE_COMMAND$ = new Observable<string>("");
 const routes$ = new Observable<IRouteOption>(null);
@@ -23,13 +36,13 @@ export function REGISTER_ROUTES(defaultCommand?: string, routes?: IRouteModel[])
     });
 }
 
-export class QSI_APP_ROOT_AppRoute implements OnInit {
-    private routes: { [command: string]: IRouteModel } = {};
+const collector = new Collector();
+
+export class QSI_APP_ROOT_AppRoute implements OnInit, OnDestroy {
+    private routesByCommand: { [command: string]: IRouteModel } = {};
+    private routesByPath: { [command: string]: IRouteModel } = {};
 
     constructor(private readonly root: RootBehavior) {
-        ROUTE_COMMAND$.pipe()
-            .refine(command => !!command)
-            .subscribe(command => this.setRoute(command));
     }
 
     @Measure()
@@ -39,7 +52,19 @@ export class QSI_APP_ROOT_AppRoute implements OnInit {
     }
 
     @Measure()
+    onDestroy(): void {
+        collector.unsubscribeAll();
+    }
+
+    @Measure()
     private process(): void {
+        collector.collect(
+            ROUTE_COMMAND$.pipe()
+                .refine(command => !!command)
+                .subscribe(command => this.setRouteByCommand(command)),
+            BROWSER_PATH.subscribe((path: string) => this.setRouteByHistory(path))
+        )
+
         if (routes$.getValue()) {
             this.initOptions();
         } else {
@@ -55,16 +80,37 @@ export class QSI_APP_ROOT_AppRoute implements OnInit {
         let option = routes$.getValue();
         defaultCommand = option.defaultCommand;
         const routes = option.routes;
-        for (let i = 0; i < routes.length; i++) this.routes[routes[i].command] = routes[i];
+        for (let i = 0; i < routes.length; i++) {
+            this.routesByCommand[routes[i].command] = routes[i];
+            this.routesByPath[routes[i].path] = routes[i];
+        }
 
-        this.setRoute(defaultCommand);
+        this.setRouteByCommand(defaultCommand);
     }
 
     @Measure()
-    private setRoute(command: string): void {
-        const tagName = this.routes[command].component.qsi_app_tag_name;
+    private setRouteByCommand(command: string): void {
+        const tagName = this.routesByCommand[command].component.qsi_app_tag_name;
         this.root.innerHTML = `<${tagName}></${tagName}>`;
 
         log("METRICS", getDefaultMeasureMeter().getAll());
+
+        switch (browserRouting) {
+            case BROWSER_ROUTING.HIDDEN:
+                break;
+            case BROWSER_ROUTING.SHOW:
+                BROWSER_PATH.set(this.routesByCommand[command].path);
+                break;
+            case BROWSER_ROUTING.SHOW_WITHOUT_HISTORY:
+                BROWSER_PATH.setWithoutHistory(this.routesByCommand[command].path);
+        }
+    }
+
+    @Measure()
+    private setRouteByHistory(historyPath: string): void {
+        if (!(historyPath in this.routesByPath)) return;
+
+        const tagName = this.routesByPath[historyPath].component.qsi_app_tag_name;
+        this.root.innerHTML = `<${tagName}></${tagName}>`;
     }
 }
