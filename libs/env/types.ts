@@ -110,6 +110,6 @@ export type IRouteModel = {
 };
 
 export type IRouteOption = {
-    defaultCommand: string;
+    defaultCmd: string;
     routes: IRouteModel[];
 };

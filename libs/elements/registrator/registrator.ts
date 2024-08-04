@@ -8,7 +8,7 @@ export type QSI_APP_COMPONENT = {
 
 export type ELEMENT_REG_OPTION = {
     tagName: string;
-    targetElement: CustomElementConstructor;
+    target: CustomElementConstructor;
     element: QSI_APP_COMPONENT;
 }
 
@@ -29,7 +29,7 @@ export function registerElements(opts: REG_OPTIONS, isUsersElements?: boolean): 
     }
 
     runWhenDocumentReady(() => {
-        for (let i = 0; i < opts.length; i++) customElements.define(opts[i].tagName, opts[i].targetElement);
+        for (let i = 0; i < opts.length; i++) customElements.define(opts[i].tagName, opts[i].target);
         if (isUsersElements) IS_ELEMENTS_REGISTERED$.next(true);
     });
 }
@@ -41,7 +41,7 @@ export function getRootStyles(): string {
 export function getOption(element: any, tagName: string, template: TEMPLATE): ELEMENT_REG_OPTION {
     return {
         tagName: tagName,
-        targetElement: getCustomElement({
+        target: getCustomElement({
             template: template,
             element: element,
         }),

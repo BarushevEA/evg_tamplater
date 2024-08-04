@@ -1,5 +1,5 @@
 import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {Collector, Observable} from "evg_observable";
 import {
     changeBindFunctions,
     changeBindValues,
@@ -15,7 +15,6 @@ import {
     getAttr,
     removeAttr
 } from "./rootUtils";
-import {Collector} from "evg_observable/src/outLib/Collector";
 import {
     AttributeChanged,
     ClassIf,

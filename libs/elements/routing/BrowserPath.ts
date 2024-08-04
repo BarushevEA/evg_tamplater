@@ -10,46 +10,46 @@ export type IBrowserPath = {
 
 class BrowserPath implements IBrowserPath, IDestroy {
     isDestroyed: boolean;
-    private handleRouteChangeBind: any;
-    private routState$: IObserver<string>;
+    private readonly popstate: any;
+    private state$: IObserver<string>;
 
     constructor() {
         this.isDestroyed = false;
-        this.handleRouteChangeBind = this.handleRouteChange.bind(this);
-        this.routState$ = new Observable("");
-        AppWindow.addEventListener("popstate", this.handleRouteChangeBind);
+        this.popstate = this.popState.bind(this);
+        this.state$ = new Observable("");
+        AppWindow.addEventListener("popstate", this.popstate);
 
-        this.handleRouteChange();
+        this.popState();
     }
 
     set(url: string) {
         if (this.isDestroyed) return;
 
         AppWindow.history.pushState({}, "", url);
-        this.handleRouteChange();
+        this.popState();
     }
 
     setWithoutHistory(url: string) {
         if (this.isDestroyed) return;
 
         AppWindow.history.replaceState({}, "", url);
-        this.handleRouteChange();
+        this.popState();
     }
 
     subscribe(listener: ICallback<string>): ISubscriptionLike {
         if (this.isDestroyed) return undefined;
-        return this.routState$.subscribe(listener);
+        return this.state$.subscribe(listener);
     }
 
     destroy(): void {
-        AppWindow.removeEventListener("popstate", this.handleRouteChangeBind);
-        this.routState$.destroy();
+        AppWindow.removeEventListener("popstate", this.popstate);
+        this.state$.destroy();
         this.isDestroyed = true;
     }
 
-    private handleRouteChange() {
+    private popState() {
         const path = AppWindow.location.pathname;
-        this.routState$.next(path);
+        this.state$.next(path);
     }
 }
 
