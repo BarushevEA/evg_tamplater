@@ -1,11 +1,2 @@
-import {getCustomElement} from "./RootHtmlElement";
-
-class AppTxt {
+export class QSI_APP_ROOT_AppTxt {
 }
-
-export const AppText = getCustomElement(
-    {
-        template: "",
-        element: AppTxt
-    }
-);

@@ -12,7 +12,7 @@ export class RenderManager {
     }
 
     public register(options: REG_OPTIONS): void {
-        registerElements(options);
+        registerElements(options, true);
     }
 
     public run(isComponentMode?: boolean): void {

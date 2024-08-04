@@ -1,6 +1,7 @@
 import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {CONDITION} from "../enums/CONDITION";
 import {Collector} from "evg_observable/src/outLib/Collector";
+import {QSI_APP_COMPONENT} from "../elements/registrator/registrator";
 
 export type Base64 = string;
 export type JsonStr = string;
@@ -100,4 +101,15 @@ export type OnMessage = { onMessage: (message: any) => void };
 export type ELEMENT_OPTIONS = {
     template: string;
     element: any;
+};
+
+export type IRouteModel = {
+    path: string;
+    command: string;
+    component: QSI_APP_COMPONENT;
+};
+
+export type IRouteOption = {
+    defaultCommand: string;
+    routes: IRouteModel[];
 };

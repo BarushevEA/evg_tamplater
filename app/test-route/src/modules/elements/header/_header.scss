@@ -1,0 +1,20 @@
+@import "../../css/mixins";
+
+@mixin header() {
+  .buttons_bar {
+    @include setWidthHeight(600px, 100px);
+
+    display: flex;
+    @include flexCenter();
+
+    background: #69b2e4;
+  }
+
+  .button {
+    @include setWidthHeight(100px, 40px);
+
+    background: #e4a269;
+
+    margin: 5px;
+  }
+}

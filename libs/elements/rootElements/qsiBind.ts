@@ -1,11 +1,2 @@
-import {getCustomElement} from "./RootHtmlElement";
-
-class QsiBind {
+export class QSI_APP_ROOT_QsiBind {
 }
-
-export const QSIBind = getCustomElement(
-    {
-        template: "",
-        element: QsiBind
-    }
-);

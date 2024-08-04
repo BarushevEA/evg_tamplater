@@ -1,13 +1,13 @@
-import {registerElements} from "./registrator";
-import {AppText} from "../rootElements/appText";
-import {QSIBind} from "../rootElements/qsiBind";
-
-
+import {getOption, registerElements} from "./registrator";
 import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
+import {QSI_APP_ROOT_AppTxt} from "../rootElements/appText";
+import {QSI_APP_ROOT_QsiBind} from "../rootElements/qsiBind";
+import {QSI_APP_ROOT_AppRoute} from "../rootElements/appRoute";
 
 export function RegisterRootElements() {
     registerElements([
-        {tagName: E_ROOT_TAG.TEXT_VALUE.toLowerCase(), targetElement: AppText},
-        {tagName: E_ROOT_TAG.QSI_BIND.toLowerCase(), targetElement: QSIBind},
-    ]);
+        getOption(QSI_APP_ROOT_AppTxt, E_ROOT_TAG.TEXT_VALUE.toLowerCase(), ""),
+        getOption(QSI_APP_ROOT_QsiBind, E_ROOT_TAG.QSI_BIND.toLowerCase(), ""),
+        getOption(QSI_APP_ROOT_AppRoute, E_ROOT_TAG.APP_ROUTE.toLowerCase(), ""),
+    ])
 }

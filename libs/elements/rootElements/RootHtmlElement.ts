@@ -65,11 +65,15 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         constructor() {
             super();
 
-            this.ahe_nmr = ahe_Counter;
-            ahe_Counter++;
-
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
+
+            this.ahe_opts = options;
+            this.ahe_cmt = new options.element(this);
+            if (this.tagName === E_ROOT_TAG.APP_ROUTE) return;
+
+            this.ahe_nmr = ahe_Counter;
+            ahe_Counter++;
 
             (<any>this).ahe_isCustomAppElement = true;
 
@@ -92,9 +96,6 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_IfLst = [];
             this.ahe_ClsIfLst = [];
             this.ahe_ForOfLst = [];
-
-            this.ahe_opts = options;
-            this.ahe_cmt = new options.element(this);
 
             if ("onCreate" in this.ahe_cmt) this.ahe_cmt.onCreate();
         }
@@ -134,6 +135,10 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         connectedCallback() {
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
+            if (this.tagName === E_ROOT_TAG.APP_ROUTE) {
+                this.ahe_cmt.onInit();
+                return;
+            }
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_cmt[ifDoubleInitVar]) return;
             }
@@ -162,6 +167,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
                 return;
             }
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
+            if (this.tagName === E_ROOT_TAG.APP_ROUTE) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_cmt[ifDoubleInitVar]) {
                     this.ahe_cmt[ifDoubleInitVar] = true;
