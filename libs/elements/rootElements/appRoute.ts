@@ -90,8 +90,7 @@ export class QSI_APP_ROOT_AppRoute implements OnInit, OnDestroy {
 
     @Measure()
     private setRouteByCommand(command: string): void {
-        const tagName = this.routesByCommand[command].component.qsi_app_tag_name;
-        this.root.innerHTML = `<${tagName}></${tagName}>`;
+        this.setRoute(this.routesByCommand[command]);
 
         log("METRICS", getDefaultMeasureMeter().getAll());
 
@@ -109,8 +108,12 @@ export class QSI_APP_ROOT_AppRoute implements OnInit, OnDestroy {
     @Measure()
     private setRouteByHistory(historyPath: string): void {
         if (!(historyPath in this.routesByPath)) return;
+        this.setRoute(this.routesByPath[historyPath]);
+    }
 
-        const tagName = this.routesByPath[historyPath].component.qsi_app_tag_name;
+    @Measure()
+    private setRoute(routeModel: IRouteModel): void {
+        const tagName = routeModel.component.qsi_app_tag_name;
         this.root.innerHTML = `<${tagName}></${tagName}>`;
     }
 }
