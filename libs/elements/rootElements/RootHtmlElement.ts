@@ -1,5 +1,3 @@
-import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Collector, Observable} from "evg_observable";
 import {
     changeBindFunctions,
     changeBindValues,
@@ -30,6 +28,8 @@ import {
 import {E_DATA_MARKER} from "../../enums/E_DATA_MARKER";
 import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
 import {ifDoubleInitVar, txtValBuffer, txtValBufferLength} from "../../env/env";
+import {Collector, Observable} from "../../Observables";
+import {IObservablePipe, ISubscriber, ISubscriptionLike} from "../../Observables/Types";
 
 let ahe_Counter = 0;
 

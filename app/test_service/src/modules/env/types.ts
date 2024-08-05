@@ -1,4 +1,4 @@
-import {ICallback} from "evg_observable/src/outLib/Types";
+import {ICallback} from "../../../../../libs/Observables/Types";
 
 export type IMsg = {
     id: string;

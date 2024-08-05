@@ -1,11 +1,13 @@
-import {GTimeout} from "./TickGenerator/GTimeout";
-import {GInterval} from "./TickGenerator/GInterval";
-import {GAnimationFrame} from "./TickGenerator/GAnimationFrame";
-import {GTimeoutOrdered} from "./TickGenerator/GTimeoutOrdered";
-import {GIntervalOrdered} from "./TickGenerator/GIntervalOrdered";
-import {GAnimationFrameOrdered} from "./TickGenerator/GAnimationFrameOrdered";
-import {TickCounter} from "./TickGenerator/TickCounter";
-import {GMeter} from "./TickGenerator/GMeter";
+import {
+    GAnimationFrame,
+    GAnimationFrameOrdered,
+    GInterval,
+    GIntervalOrdered,
+    GMeter,
+    GTimeout,
+    GTimeoutOrdered,
+    TickCounter
+} from "../../../libs/TickGenerator";
 
 const parent = (<any>window);
 parent.GTimeout = GTimeout;

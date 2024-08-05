@@ -1,6 +1,6 @@
 import {runWhenDocumentReady} from "../../utils/utils";
 import {getCustomElement} from "../rootElements/RootHtmlElement";
-import {Observable} from "evg_observable";
+import {Observable} from "../../Observables";
 
 export type QSI_APP_COMPONENT = {
     qsi_app_tag_name: string,

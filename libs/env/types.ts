@@ -1,7 +1,7 @@
-import {IObservablePipe, ISubscriber, ISubscriptionLike} from "evg_observable/src/outLib/Types";
 import {CONDITION} from "../enums/CONDITION";
-import {Collector} from "evg_observable/src/outLib/Collector";
 import {QSI_APP_COMPONENT} from "../elements/registrator/registrator";
+import {IObservablePipe, ISubscriber, ISubscriptionLike} from "../Observables/Types";
+import {Collector} from "../Observables";
 
 export type Base64 = string;
 export type JsonStr = string;

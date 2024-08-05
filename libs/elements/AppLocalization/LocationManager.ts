@@ -1,7 +1,7 @@
 import {ILocalizedText} from "./types";
-import {ICallback} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
 import {LOCATION} from "./location";
+import {Observable} from "../../Observables";
+import {ICallback} from "../../Observables/Types";
 
 export const location$: Observable<LOCATION> = new Observable<LOCATION>(LOCATION.EN);
 

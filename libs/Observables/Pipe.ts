@@ -18,6 +18,22 @@ export abstract class Pipe<T> implements ISubscribe<T> {
 
     abstract subscribe(listener: IListener<T> | ISetObservableValue, errorHandler?: IErrorCallback): ISubscriptionLike | undefined;
 
+    processChain(listener: IListener<T>): void {
+        const chain = this.chain;
+        const data = this.flow;
+        for (let i = 0; i < chain.length; i++) {
+            data.isUnsubscribe = false;
+            data.isAvailable = false;
+
+            chain[i](data);
+            if (data.isUnsubscribe) return (<any>this).unsubscribe();
+            if (!data.isAvailable) return;
+            if (data.isBreak) break;
+        }
+
+        return listener(data.payload);
+    }
+
     setOnce(): ISubscribe<T> {
         return this.push(
             (data: IPipePayload): void => {
@@ -52,22 +68,6 @@ export abstract class Pipe<T> implements ISubscribe<T> {
 
     switch(): PipeSwitchCase<T> {
         return new PipeSwitchCase<T>(this);
-    }
-
-    processChain(listener: IListener<T>): void {
-        const chain = this.chain;
-        const data = this.flow;
-        for (let i = 0; i < chain.length; i++) {
-            data.isUnsubscribe = false;
-            data.isAvailable = false;
-
-            chain[i](data);
-            if (data.isUnsubscribe) return (<any>this).unsubscribe();
-            if (!data.isAvailable) return;
-            if (data.isBreak) break;
-        }
-
-        return listener(data.payload);
     }
 
     then<K>(condition: ICallback<T>): ISetup<K> {

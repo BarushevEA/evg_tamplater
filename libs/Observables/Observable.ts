@@ -15,21 +15,13 @@ import {FilterCollection} from "./FilterCollection";
 
 export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     protected listeners: ISubscribeObject<T>[] = [];
+    private isStop: boolean = true;
     protected isKilled = false;
     protected isProcess = false;
     protected trash: ISubscriptionLike[] = [];
-    private isStop: boolean = true;
     private filters = new FilterCollection<T>();
 
     constructor(private value: T) {
-    }
-
-    get isEnable(): boolean {
-        return this.isStop;
-    }
-
-    get isDestroyed(): boolean {
-        return this.isKilled;
     }
 
     addFilter(errorHandler?: IErrorCallback): IFilterSetup<T> {
@@ -45,6 +37,10 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
 
     enable(): void {
         this.isStop = true;
+    }
+
+    get isEnable(): boolean {
+        return this.isStop;
     }
 
     public next(value: T): void {
@@ -68,6 +64,10 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         if (!this.isStop) return;
 
         for (let i = 0; i < values.length; i++) this.next(values[i]);
+    }
+
+    get isDestroyed(): boolean {
+        return this.isKilled;
     }
 
     public unSubscribe(listener: ISubscriptionLike): void {
@@ -113,16 +113,16 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         this.listeners.push(subscribeObject);
     }
 
+    protected isListener(listener: ISubscribeGroup<T>): boolean {
+        if (this.isKilled) return false;
+        return !!listener;
+    }
+
     pipe(): ISetup<T> | undefined {
         if (this.isKilled) return undefined;
         const subscribeObject = new SubscribeObject(this, true);
         this.listeners.push(subscribeObject);
         return subscribeObject;
-    }
-
-    protected isListener(listener: ISubscribeGroup<T>): boolean {
-        if (this.isKilled) return false;
-        return !!listener;
     }
 
     private handleListenersForUnsubscribe(): void {

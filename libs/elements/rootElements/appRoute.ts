@@ -1,7 +1,7 @@
 import {IRouteModel, IRouteOption, OnDestroy, OnInit, RootBehavior} from "../../env/types";
-import {Collector, Observable} from "evg_observable";
 import {QSI_APP_COMPONENT} from "../registrator/registrator";
 import {BROWSER_PATH} from "../routing/BrowserPath";
+import {Collector, Observable} from "../../Observables";
 
 export enum BROWSER_ROUTING {
     SHOW = "SHOW",

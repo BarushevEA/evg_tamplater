@@ -1,3 +1,3 @@
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {Observable} from "../../../../../libs/Observables";
 
 export const NextMain$ = new Observable(false);

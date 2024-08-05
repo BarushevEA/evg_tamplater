@@ -255,7 +255,7 @@ export class GMeter implements IMeter {
     }
 
     getMetrics(funcName: string): IUserMeterData {
-        const metrics: IUserMeterData = {...this.metrics[funcName]};
+        const metrics: IUserMeterData = {...(<any>this.metrics)[funcName]};
         delete (<any>metrics)._deleteObj;
         delete (<any>metrics)._counter;
         return metrics;

@@ -1,9 +1,9 @@
 import {ITickCounter, Status} from "./Types";
 import {ERROR, EState} from "./Env";
 import {AbstractGenerator} from "./AbstractGenerator";
-import {ICallback, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
+import {Observable} from "../Observables";
+import {ICallback, ISubscriptionLike} from "../Observables/Types";
 
 export class TickCounter implements ITickCounter {
     private _state = EState.UNDEFINED;

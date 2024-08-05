@@ -1,7 +1,8 @@
 import {AbstractGenerator} from "./AbstractGenerator";
-import {OrderedObservable} from "evg_observable/src/outLib/OrderedObservable";
 import {EState} from "./Env";
-import {ICallback, IOrderedSubscriptionLike} from "evg_observable/src/outLib/Types";
+import {OrderedObservable} from "../Observables";
+import {ICallback, IOrderedSubscriptionLike} from "../Observables/Types";
+
 
 export abstract class AbstractOrderedGenerator extends AbstractGenerator {
     protected state$ = new OrderedObservable<EState>(EState.UNDEFINED);

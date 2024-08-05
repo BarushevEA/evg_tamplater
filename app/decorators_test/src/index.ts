@@ -11,8 +11,6 @@
 
 // ДЕКОРАТОР МЕТОДА
 
-import {getDefaultMeasureMeter, Measure} from "evg_tick_generator";
-
 // function timing(classNameOriginal: string) {
 //     return function (target: any, key: string, descriptor: any) {
 //         const originalMethod = descriptor.value;
@@ -149,6 +147,8 @@ import {getDefaultMeasureMeter, Measure} from "evg_tick_generator";
 // }
 
 // Пример использования
+import {getDefaultMeasureMeter, Measure} from "../../../libs/TickGenerator";
+
 class Example {
     @Measure()
     someMethod1() {

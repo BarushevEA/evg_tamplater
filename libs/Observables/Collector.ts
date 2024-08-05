@@ -5,10 +5,6 @@ export class Collector implements ICollector {
     protected list: ISubscriptionLike[] = [];
     private isKilled = false;
 
-    get isDestroyed(): boolean {
-        return this.isKilled;
-    }
-
     collect(...subscriptionLikeList: ISubscriptionLike[]): void {
         if (!this.isKilled) this.list.push(...subscriptionLikeList);
     }
@@ -34,5 +30,9 @@ export class Collector implements ICollector {
         this.list.length = 0;
         this.list = <any>0;
         this.isKilled = true;
+    }
+
+    get isDestroyed(): boolean {
+        return this.isKilled;
     }
 }

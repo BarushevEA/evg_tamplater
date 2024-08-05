@@ -1,6 +1,6 @@
 import {AppWindow} from "../../env/browserVariables";
-import {ICallback, IDestroy, IObserver, ISubscriptionLike} from "evg_observable/src/outLib/Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
+import {ICallback, IDestroy, IObserver, ISubscriptionLike} from "../../Observables/Types";
+import {Observable} from "../../Observables";
 
 export type IBrowserPath = {
     setWithoutHistory(url: string): void;

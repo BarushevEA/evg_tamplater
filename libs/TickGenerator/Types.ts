@@ -1,5 +1,5 @@
 import {ERROR, EState} from "./Env";
-import {ICallback, ISubscriptionLike} from "evg_observable/src/outLib/Types";
+import {ICallback, ISubscriptionLike} from "../Observables/Types";
 
 export type milliseconds = number;
 

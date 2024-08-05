@@ -1,10 +1,10 @@
 import {addClasses, appendChild, createElement, removeClasses, removeElement} from "../../utils/utils";
-import {quickDeleteFromArray} from "evg_observable/src/outLib/FunctionLibs";
 import {APP_RANDOM_STR, clsSeparator, emptyArr, txtValBuffer, txtValBufferLength} from "../../env/env";
 import {CONDITION} from "../../enums/CONDITION";
 import {E_DATA_MARKER} from "../../enums/E_DATA_MARKER";
 import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
 import {ClassCondition, ClassIf, IAppElement, IChannel, OnIf, RootElement, ValDetails} from "../../env/types";
+import {quickDeleteFromArray} from "../../Observables";
 
 export function getAttrName(marker: E_DATA_MARKER): string {
     return `qsi-${marker}`;

@@ -1,6 +1,4 @@
-import {Observable} from "./Observables/Observable";
-import {Collector} from "./Observables/Collector";
-import {OrderedObservable} from "./Observables/OrderedObservable";
+import {Collector, Observable, OrderedObservable} from "../../../libs/Observables";
 
 const parent = (<any>window);
 

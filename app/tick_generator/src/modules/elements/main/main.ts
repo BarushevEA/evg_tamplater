@@ -1,7 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior} from "../../../../../../libs/env/types";
-import {GAnimationFrame, getDefaultMeasureMeter, Measure, TickCounter} from "evg_tick_generator";
-import {EState} from "evg_tick_generator/src/outLib/Env";
-import {IMeter} from "evg_tick_generator/src/outLib/Types";
+import {GAnimationFrame, getDefaultMeasureMeter, Measure, TickCounter} from "../../../../../../libs/TickGenerator";
+import {IMeter} from "../../../../../../libs/TickGenerator/Types";
+import {EState} from "../../../../../../libs/TickGenerator/Env";
 
 export class Main implements OnInit, OnCreate, OnDestroy {
     name: string;

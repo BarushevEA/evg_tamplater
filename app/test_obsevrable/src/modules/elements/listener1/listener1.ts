@@ -15,7 +15,7 @@ export class Listener1 implements OnInit, OnCreate, OnDestroy {
         this.root.collect(
             MainEvents$
                 .pipe()
-                .unsubscribeByPositive((msg: IMassage) => (msg.number > 11))
+                .unsubscribeBy((msg: IMassage) => (msg.number > 11))
                 .subscribe(msg => {
                     if (!msg) return;
                     console.log(msg.number);

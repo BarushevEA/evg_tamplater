@@ -2,6 +2,7 @@ import {
     ICallback,
     IErrorCallback,
     IFilter,
+    IFilterCase,
     IFilterChainCallback,
     IFilterPayload,
     IFilterResponse,
@@ -32,6 +33,11 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
                 if (condition(data.payload)) data.isAvailable = true;
             }
         );
+    }
+
+    private push(callback: IFilterChainCallback): IFilterSetup<T> {
+        this.chain.push(callback);
+        return this;
     }
 
     switch(): FilterSwitchCase<T> {
@@ -73,12 +79,7 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
     addErrorHandler(errorHandler: IErrorCallback) {
         this.errHandler = errorHandler;
     }
-
-    private push(callback: IFilterChainCallback): IFilterSetup<T> {
-        this.chain.push(callback);
-        return this;
-    }
 }
 
-export class FilterSwitchCase<T> extends SwitchCase<T, FilterCollection<T>, IFilter<T>> {
+export class FilterSwitchCase<T> extends SwitchCase<T, FilterCollection<T>, IFilterCase<T>> {
 }

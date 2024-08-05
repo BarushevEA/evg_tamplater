@@ -1,8 +1,8 @@
 import {AppInfo} from "./appInfo";
-import {Observable} from "evg_observable/src/outLib/Observable";
-import {ICallback} from "evg_observable/src/outLib/Types";
 import {HTML_BLOCK} from "../elements/registrator/registrator";
 import {AppDocument} from "../env/browserVariables";
+import {Observable} from "../Observables";
+import {ICallback} from "../Observables/Types";
 
 let appInfo: AppInfo;
 

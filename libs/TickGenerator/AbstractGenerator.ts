@@ -1,8 +1,10 @@
 import {IGenerator, Status} from "./Types";
-import {Observable} from "evg_observable/src/outLib/Observable";
+
 import {EState} from "./Env";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
-import {ICallback, ISubscriptionLike} from "evg_observable/src/outLib/Types";
+import {Observable} from "../Observables";
+import {ICallback, ISubscriptionLike} from "../Observables/Types";
+
 
 export abstract class AbstractGenerator implements IGenerator {
     protected state$ = new Observable<EState>(EState.UNDEFINED);
