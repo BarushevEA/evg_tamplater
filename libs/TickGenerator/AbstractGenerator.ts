@@ -1,5 +1,4 @@
 import {IGenerator, Status} from "./Types";
-
 import {EState} from "./Env";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
 import {Observable} from "../Observables";
@@ -21,7 +20,7 @@ export abstract class AbstractGenerator implements IGenerator {
         const status = this.startProcess();
         if (!status.isApplied) return status;
 
-        return this.getPositive(status);
+        return getPositiveStatus(<EState><any>status.state);
     }
 
     abstract startProcess(): Status;
@@ -32,7 +31,7 @@ export abstract class AbstractGenerator implements IGenerator {
         const status = this.stopProcess();
         if (!status.isApplied) return status;
 
-        return this.getPositive(status);
+        return getPositiveStatus(<EState><any>status.state);
     }
 
     abstract stopProcess(): Status;
@@ -58,10 +57,5 @@ export abstract class AbstractGenerator implements IGenerator {
 
     isDestroyed(): boolean {
         return this.state === EState.DESTROYED;
-    }
-
-    private getPositive(status: Status) {
-        this.state$.next(<EState><any>status.state);
-        return getPositiveStatus(<EState><any>status.state);
     }
 }

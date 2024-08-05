@@ -2,8 +2,8 @@ import {ITickCounter, Status} from "./Types";
 import {ERROR, EState} from "./Env";
 import {AbstractGenerator} from "./AbstractGenerator";
 import {getNegativeStatus, getPositiveStatus} from "./Utils";
-import {Observable} from "../Observables";
 import {ICallback, ISubscriptionLike} from "../Observables/Types";
+import {Observable} from "../Observables";
 
 export class TickCounter implements ITickCounter {
     private _state = EState.UNDEFINED;
