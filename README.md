@@ -60,3 +60,96 @@
 * `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
 * `{{fieldName}}` - This the same of qsi-bind.
 * `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
+
+## Routing Functionality
+
+We've added routing functionality in our project for smoother transitions between views.
+
+### Setting Up Routing
+
+Routing settings are located in the <projectName>/src/settings/routes.ts file.
+
+### User-friendly Route Management
+
+For a more user-friendly way of managing routing, we recommend using the ROUTE_COMMAND enum. Its values are set
+according to the names of views, which makes scoping and navigating through your views easier and more intuitive.
+
+### Registering Routes
+
+To register routes, use the REGISTER_ROUTES function, which accepts two arguments:
+
+1. Setup of the route, used as a starting point.
+2. An array with the registered routes. Routes are specified following the format: label/route/component.
+
+### Routing Mode
+
+Choose the routing mode with the setBrowserRoutingMode function. This mode can be in one of three states:
+
+1. BROWSER_ROUTING.SHOW - routes are displayed in the browser line. When navigating in the browser using history arrows,
+   the route will be indicated according to history, and a command to display the view corresponding to this route will
+   be generated.
+2. BROWSER_ROUTING.SHOW_WITHOUT_HISTORY - history arrows won't work, but routes will be displayed in the browser line
+   when navigating to the registered views through routing.
+3. BROWSER_ROUTING.HIDDEN - you can navigate through views using routing and command labels, but the browser line will
+   only indicate the route with which the application was loaded. The application will react to history arrows according
+   to the default browser settings.
+
+### Navigation Between Views
+
+To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN);.
+
+### Example of the routes settings file:
+
+Initial look:
+
+```typescript
+import {BROWSER_ROUTING, REGISTER_ROUTES, setBrowserRoutingMode} from "../../../../libs/elements/rootElements/appRoute";
+
+export const START_ROUTES_REGISTRATION = () => true;
+
+export enum ROUTE_COMMAND {
+
+}
+
+REGISTER_ROUTES(
+
+);
+
+setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+```
+
+Configured look:
+
+```typescript
+import {
+    BROWSER_ROUTING,
+    makeRoute,
+    REGISTER_ROUTES,
+    setBrowserRoutingMode
+} from "../../../../libs/elements/rootElements/appRoute";
+import {Main} from "../modules/elements/main/main";
+import {Page1} from "../modules/elements/page1/page1";
+import {Page2} from "../modules/elements/page2/page2";
+import {Page3} from "../modules/elements/page3/page3";
+
+export const START_ROUTES_REGISTRATION = () => true;
+
+export enum ROUTE_COMMAND {
+    MAIN = "MAIN",
+    PAGE1 = "PAGE1",
+    PAGE2 = "PAGE2",
+    PAGE3 = "PAGE3",
+}
+
+REGISTER_ROUTES(
+    ROUTE_COMMAND.MAIN,
+    [
+        makeRoute(ROUTE_COMMAND.MAIN, "/main", Main),
+        makeRoute(ROUTE_COMMAND.PAGE1, "/page1", Page1),
+        makeRoute(ROUTE_COMMAND.PAGE2, "/page2", Page2),
+        makeRoute(ROUTE_COMMAND.PAGE3, "/page3", Page3),
+    ]
+);
+
+setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+```
