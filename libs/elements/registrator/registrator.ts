@@ -1,6 +1,6 @@
-import {runWhenDocumentReady} from "../../utils/utils";
 import {getCustomElement} from "../rootElements/RootHtmlElement";
 import {Observable} from "../../Observables";
+import {runWhenDocumentReady} from "../rootElements/rootUtils";
 
 export type QSI_APP_COMPONENT = {
     qsi_app_tag_name: string,
@@ -22,7 +22,7 @@ export const ROOT_STYLES: string[] = [`${HTML_BLOCK} ${ignoreElement}`];
 
 export const IS_ELEMENTS_REGISTERED$ = new Observable<boolean>(false);
 
-export function registerElements(opts: REG_OPTIONS, isUsersElements?: boolean): void {
+export const registerElements = (opts: REG_OPTIONS, isUsersElements?: boolean): void => {
     for (let i = 0; i < opts.length; i++) {
         ROOT_STYLES.push(`${opts[i].tagName} ${ignoreElement}`);
         opts[i].element.qsi_app_tag_name = opts[i].tagName;
@@ -32,13 +32,13 @@ export function registerElements(opts: REG_OPTIONS, isUsersElements?: boolean): 
         for (let i = 0; i < opts.length; i++) customElements.define(opts[i].tagName, opts[i].target);
         if (isUsersElements) IS_ELEMENTS_REGISTERED$.next(true);
     });
-}
+};
 
-export function getRootStyles(): string {
+export const getRootStyles = (): string => {
     return ROOT_STYLES.join("");
-}
+};
 
-export function getOption(element: any, tagName: string, template: TEMPLATE): ELEMENT_REG_OPTION {
+export const getOption = (element: any, tagName: string, template: TEMPLATE): ELEMENT_REG_OPTION => {
     return {
         tagName: tagName,
         target: getCustomElement({
@@ -47,4 +47,4 @@ export function getOption(element: any, tagName: string, template: TEMPLATE): EL
         }),
         element: element as QSI_APP_COMPONENT
     };
-}
+};

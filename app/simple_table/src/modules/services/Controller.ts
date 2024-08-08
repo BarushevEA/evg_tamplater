@@ -1,8 +1,8 @@
 import {CellId, OptionsCollector, TableOptions} from "../env/types";
 import {AppDocument, AppWindow} from "../../../../../libs/env/browserVariables";
-import {runWhenDocumentReady} from "../../../../../libs/utils/utils";
 import {CellChange$, IsTableReady$} from "./tableServices";
 import {APP_TAG_NAME} from "../../../../../libs/elements/rootElements/managers/APP_TAG_NAME";
+import {runWhenDocumentReady} from "../../../../../libs/elements/rootElements/rootUtils";
 
 export type IController = {
     createTable(name: string): IInject;

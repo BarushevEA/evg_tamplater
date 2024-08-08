@@ -1,43 +1,156 @@
-import {addClasses, appendChild, createElement, removeClasses, removeElement} from "../../utils/utils";
 import {APP_RANDOM_STR, clsSeparator, emptyArr, txtValBuffer, txtValBufferLength} from "../../env/env";
 import {CONDITION} from "../../enums/CONDITION";
 import {E_DATA_MARKER} from "../../enums/E_DATA_MARKER";
 import {E_ROOT_TAG} from "../../enums/E_ROOT_TAG";
 import {ClassCondition, ClassIf, IAppElement, IChannel, OnIf, RootElement, ValDetails} from "../../env/types";
-import {quickDeleteFromArray} from "../../Observables";
+import {Observable, quickDeleteFromArray} from "../../Observables";
+import {AppDocument} from "../../env/browserVariables";
+import {ICallback} from "../../Observables/Types";
+import {HTML_BLOCK} from "../registrator/registrator";
 
-export function getAttrName(marker: E_DATA_MARKER): string {
+export const setInnerHtml = (element: HTMLElement, HTMLText: string): void => {
+    if (element) element.innerHTML = HTMLText;
+};
+
+export const createElement = (tagName: string): HTMLElement => {
+    return AppDocument.createElement(tagName);
+};
+
+export const getDiv = (): HTMLElement => {
+    return createElement("div");
+};
+
+export const getStyle = (style: string): HTMLElement => {
+    const element = createElement("style")
+    element.innerHTML = style;
+    return element;
+};
+
+export const getWrapper = (): HTMLElement => {
+    return createElement(HTML_BLOCK);
+};
+
+export const getMain = (): HTMLElement => {
+    return createElement("main");
+};
+
+export const getSection = (): HTMLElement => {
+    return createElement("section");
+};
+
+export const getHeader = (): HTMLElement => {
+    return createElement("header");
+};
+
+export const getFooter = (): HTMLElement => {
+    return createElement("footer");
+};
+
+export const removeClasses = (element: HTMLElement, classes: string[]): void => {
+    if (!element) return;
+
+    for (let i = 0; i < classes.length; i++) element.classList.remove(classes[i]);
+};
+
+export const addClasses = (element: HTMLElement, classes: string[]): void => {
+    if (!element) return;
+
+    for (let i = 0; i < classes.length; i++) element.classList.add(classes[i]);
+};
+
+export const toggleClasses = (element: HTMLElement, classes: string[]): void => {
+    if (!element) return;
+
+    for (let i = 0; i < classes.length; i++) element.classList.toggle(classes[i]);
+};
+
+export const isClassPresent = (element: HTMLElement, token: string): boolean => {
+    return !!element?.classList.contains(token);
+};
+
+export const appendChild = (parent: HTMLElement | ShadowRoot, child: HTMLElement): void => {
+    if (child) parent?.appendChild(child);
+};
+
+export const removeChild = (parent: HTMLElement, child: HTMLElement | Element): void => {
+    if (child) parent?.removeChild(child);
+};
+
+export const removeElement = (child: HTMLElement | Element): void => {
+    child?.remove();
+};
+
+export const getElementsByClass = (parent: HTMLElement, token: string): Element[] => {
+    if (!parent) return [];
+
+    return Array.from(parent.getElementsByClassName(token));
+};
+
+export const getValue = <T>(element: HTMLElement | Element): T => {
+    return (<any>element)?.value;
+};
+
+export const setValue = <T>(element: HTMLElement | Element, value: T): void => {
+    if (element) (<any>element).value = value;
+};
+
+export const documentReady$ = new Observable<HTMLElement>(null);
+
+export const runWhenDocumentReady = (callback: ICallback<any>): void => {
+    documentReady$
+        .pipe()
+        .refine(body => !!body)
+        .setOnce()
+        .subscribe(callback);
+
+    documentReady$
+        .pipe()
+        .unsubscribeBy(body => !!body)
+        .setOnce()
+        .subscribe(() => {
+            const listener = () => {
+                documentReady$.next(AppDocument.body);
+                AppDocument.removeEventListener("DOMContentLoaded", listener);
+            };
+
+            AppDocument.addEventListener("DOMContentLoaded", listener);
+        });
+
+    documentReady$.next(AppDocument.body);
+};
+
+export const getAttrName = (marker: E_DATA_MARKER): string => {
     return `qsi-${marker}`;
-}
+};
 
-export function getAttr(element: HTMLElement | Element, marker: E_DATA_MARKER): string {
+export const getAttr = (element: HTMLElement | Element, marker: E_DATA_MARKER): string => {
     if (!element) return "";
     return element.getAttribute(getAttrName(marker))
-}
+};
 
-export function getAttrNative(element: HTMLElement | Element, marker: string): string {
+export const getAttrNative = (element: HTMLElement | Element, marker: string): string => {
     if (!element) return "";
     return element.getAttribute(marker)
-}
+};
 
-export function setAttr(element: HTMLElement | Element, marker: E_DATA_MARKER, value: string) {
+export const setAttr = (element: HTMLElement | Element, marker: E_DATA_MARKER, value: string): void => {
     if (!element) return;
     element.setAttribute(getAttrName(marker), value);
-}
+};
 
-export function removeAttr(element: HTMLElement | Element, marker: E_DATA_MARKER): void {
+export const removeAttr = (element: HTMLElement | Element, marker: E_DATA_MARKER): void => {
     if (!element) return;
     element.removeAttribute(getAttrName(marker))
-}
+};
 
-export function detectInjectedData(rootElement: RootElement): void {
+export const detectInjectedData = (rootElement: RootElement): void => {
     const children = getFreeChildren(rootElement);
     for (let i = 0; i < children.length; i++) {
         handleInjections(rootElement, detectForCycle(rootElement, children[i]));
     }
-}
+};
 
-function handleInjections(rootElement: RootElement, children: IAppElement[]) {
+const handleInjections = (rootElement: RootElement, children: IAppElement[]) => {
     if (!children.length) return;
 
     let actions = "[";
@@ -91,9 +204,9 @@ function handleInjections(rootElement: RootElement, children: IAppElement[]) {
         (<RootElement><any>child).ahe_pnt_chl = <IChannel><any>rootElement;
         (<any>child).ahe_onPChlRdy$.next(<IChannel><any>rootElement);
     }
-}
+};
 
-function detectClsConditions(rootElement: RootElement, element: HTMLElement): string {
+const detectClsConditions = (rootElement: RootElement, element: HTMLElement): string => {
     let classData = getAttr(element, E_DATA_MARKER.CLASS_IF);
     if (!classData) return "";
 
@@ -153,9 +266,9 @@ function detectClsConditions(rootElement: RootElement, element: HTMLElement): st
     removeAttr(element, E_DATA_MARKER.CLASS_IF);
 
     return "cls ";
-}
+};
 
-function detectIfConditions(rootElement: RootElement, element: HTMLElement): string {
+const detectIfConditions = (rootElement: RootElement, element: HTMLElement): string => {
     let valueName = getAttr(element, E_DATA_MARKER.ON_IF);
     if (!valueName) return "";
 
@@ -180,20 +293,20 @@ function detectIfConditions(rootElement: RootElement, element: HTMLElement): str
     setAttr(ifParent, E_DATA_MARKER.INFO, "[ifp]");
 
     return "ifc ";
-}
+};
 
-function createTxtValBuffer() {
+const createTxtValBuffer = () => {
     for (let i = 0; i < txtValBufferLength; i++) txtValBuffer.push(createElement(E_ROOT_TAG.TEXT_VALUE));
-}
+};
 
 createTxtValBuffer();
 
-function getTxtValue(): HTMLElement {
+const getTxtValue = (): HTMLElement => {
     if (txtValBuffer.length) return txtValBuffer.pop();
     return createElement(E_ROOT_TAG.TEXT_VALUE);
-}
+};
 
-function detectForCycle(rootElement: RootElement, element: IAppElement): IAppElement[] {
+const detectForCycle = (rootElement: RootElement, element: IAppElement): IAppElement[] => {
     if (element.tagName === E_ROOT_TAG.TEXT_VALUE) return (emptyArr[0] = element) && emptyArr;
     if (element.tagName === E_ROOT_TAG.QSI_BIND) return (emptyArr[0] = element) && emptyArr;
     if (!rootElement.isAppElement(element)) return (emptyArr[0] = element) && emptyArr;
@@ -227,18 +340,18 @@ function detectForCycle(rootElement: RootElement, element: IAppElement): IAppEle
     });
 
     return newElements;
-}
+};
 
-function handleCirclesChannelData(data: any, element: HTMLElement, root: RootElement) {
+const handleCirclesChannelData = (data: any, element: HTMLElement, root: RootElement) => {
     root.isAppElement(element) && (<IChannel><any>element).sendMessage(data);
-}
+};
 
-function updateForOfChildren(
+const updateForOfChildren = (
     rootElement: RootElement,
     childrenForUpdate: HTMLElement[],
     injectedArr: [],
     cycleParent: HTMLElement,
-    template: HTMLElement): IAppElement[] {
+    template: HTMLElement): IAppElement[] => {
     const newChildren: IAppElement[] = [];
     const lenOldChildren = childrenForUpdate.length;
     const lenInjectedArr = injectedArr.length;
@@ -292,9 +405,9 @@ function updateForOfChildren(
     }
 
     return newChildren;
-}
+};
 
-function getDetails(rootElement: RootElement, value: string): ValDetails {
+const getDetails = (rootElement: RootElement, value: string): ValDetails => {
     const isInversion = value[0] === "!";
     const name = isInversion ? value.substring(1) : value;
     return {
@@ -302,13 +415,13 @@ function getDetails(rootElement: RootElement, value: string): ValDetails {
         valueName: name,
         isFunction: typeof rootElement.ahe_cmt[name] === "function"
     }
-}
+};
 
-function getFreeChildren(parent: HTMLElement): IAppElement[] {
+const getFreeChildren = (parent: HTMLElement): IAppElement[] => {
     return <IAppElement[]><any>(parent.querySelectorAll(`*:not([${getAttrName(E_DATA_MARKER.INFO)}])`));
-}
+};
 
-function detectVariables(rootElement: RootElement, element: Element): boolean {
+const detectVariables = (rootElement: RootElement, element: Element): boolean => {
     if (element.tagName !== E_ROOT_TAG.TEXT_VALUE) return false;
     if (!element.innerHTML) return false;
 
@@ -329,9 +442,9 @@ function detectVariables(rootElement: RootElement, element: Element): boolean {
         lastData: APP_RANDOM_STR
     });
     return true;
-}
+};
 
-function detectBindVariables(rootElement: RootElement, element: Element): boolean {
+const detectBindVariables = (rootElement: RootElement, element: Element): boolean => {
     if (element.tagName !== E_ROOT_TAG.QSI_BIND) return false;
     if (!element.innerHTML) return false;
 
@@ -352,13 +465,13 @@ function detectBindVariables(rootElement: RootElement, element: Element): boolea
         lastData: APP_RANDOM_STR
     });
     return true;
-}
+};
 
-function execute(rootElement: RootElement, functionName: string, evt: MouseEvent | KeyboardEvent | Event) {
+const execute = (rootElement: RootElement, functionName: string, evt: MouseEvent | KeyboardEvent | Event): void => {
     rootElement.ahe_cmt[functionName](evt);
-}
+};
 
-function detectSource(rootElement: RootElement, element: HTMLElement): string {
+const detectSource = (rootElement: RootElement, element: HTMLElement): string => {
     const fieldName = getFieldName(element, E_DATA_MARKER.SOURCE);
     if (!fieldName) return "";
     const details = getDetails(rootElement, fieldName);
@@ -381,109 +494,109 @@ function detectSource(rootElement: RootElement, element: HTMLElement): string {
     );
 
     return "src ";
-}
+};
 
-function detectInjections(rootElement: RootElement, element: HTMLElement): string {
+const detectInjections = (rootElement: RootElement, element: HTMLElement): string => {
     const injectionName = getFieldName(element, E_DATA_MARKER.INJECT_TO);
     if (!injectionName) return "";
     rootElement.ahe_cmt[injectionName] = element;
     return "inj ";
-}
+};
 
-function detectChannel(rootElement: RootElement, element: HTMLElement): string {
+const detectChannel = (rootElement: RootElement, element: HTMLElement): string => {
     const channelName = getFieldName(element, E_DATA_MARKER.CHANNEL);
     if (!channelName) return "";
     if (!(<IAppElement>element).ahe_isCustomAppElement) return "";
 
     rootElement.ahe_cmt[channelName] = <IChannel><any>element;
     return "cnl ";
-}
+};
 
-function detectClickHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectClickHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_CLICK);
     if (!functionName) return "";
     element.onclick = (evt) => execute(rootElement, functionName, evt);
     return "clk ";
-}
+};
 
-function detectMouseLeaveHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectMouseLeaveHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_LEAVE);
     if (!functionName) return "";
     element.onmouseleave = (evt) => execute(rootElement, functionName, evt);
     return "mlv ";
-}
+};
 
-function detectMouseEnterHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectMouseEnterHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_ENTER);
     if (!functionName) return "";
     element.onmouseenter = (evt) => execute(rootElement, functionName, evt);
     return "mer ";
-}
+};
 
-function detectMouseUpHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectMouseUpHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_UP);
     if (!functionName) return "";
     element.onmouseup = (evt) => execute(rootElement, functionName, evt);
     return "mup ";
-}
+};
 
-function detectMouseDownHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectMouseDownHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_DOWN);
     if (!functionName) return "";
     element.onmousedown = (evt) => execute(rootElement, functionName, evt);
     return "mdn ";
-}
+};
 
-function detectMouseMoveHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectMouseMoveHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_MOUSE_MOVE);
     if (!functionName) return "";
     element.onmousemove = (evt) => execute(rootElement, functionName, evt);
     return "mmv ";
-}
+};
 
-function detectKeyDownHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectKeyDownHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_DOWN);
     if (!functionName) return "";
     element.onkeydown = (evt) => execute(rootElement, functionName, evt);
     return "kdn ";
-}
+};
 
-function detectKeyUpHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectKeyUpHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_UP);
     if (!functionName) return "";
     element.onkeyup = (evt) => execute(rootElement, functionName, evt);
     return "kup ";
-}
+};
 
-function detectDblClickHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectDblClickHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_KEY_DBL_CLICK);
     if (!functionName) return "";
     element.ondblclick = (evt) => execute(rootElement, functionName, evt);
     return "dbc ";
-}
+};
 
-function detectScrollHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectScrollHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_SCROLL);
     if (!functionName) return "";
     element.onscroll = (evt) => execute(rootElement, functionName, evt);
     return "scl ";
-}
+};
 
-function detectWheelHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectWheelHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_WHEEL);
     if (!functionName) return "";
     element.onwheel = (evt) => execute(rootElement, functionName, evt);
     return "whl ";
-}
+};
 
-function detectChangeHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectChangeHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getFunctionName(rootElement, element, E_DATA_MARKER.ON_CHANGE);
     if (!functionName) return "";
     element.onchange = (evt) => execute(rootElement, functionName, evt);
     return "chg ";
-}
+};
 
-function getFunctionName(rootElement: RootElement, element: HTMLElement, marker: E_DATA_MARKER): string {
+const getFunctionName = (rootElement: RootElement, element: HTMLElement, marker: E_DATA_MARKER): string => {
     const functionName = getAttr(element, marker);
     if (!functionName) return "";
 
@@ -491,27 +604,27 @@ function getFunctionName(rootElement: RootElement, element: HTMLElement, marker:
     removeAttr(element, marker);
 
     return functionName;
-}
+};
 
-function getFieldName(element: HTMLElement, marker: E_DATA_MARKER): string {
+const getFieldName = (element: HTMLElement, marker: E_DATA_MARKER): string => {
     const injectionName = getAttr(element, marker);
     if (!injectionName) return "";
 
     removeAttr(element, marker);
 
     return injectionName;
-}
+};
 
-function detectElementHandlers(rootElement: RootElement, element: HTMLElement): string {
+const detectElementHandlers = (rootElement: RootElement, element: HTMLElement): string => {
     const functionName = getAttr(element, E_DATA_MARKER.ON_HANDLE);
     if (!functionName) return "";
 
     bindElementToMethod(rootElement, functionName, element);
     removeAttr(element, E_DATA_MARKER.ON_HANDLE);
     return "elt ";
-}
+};
 
-function bindElementToMethod(rootElement: RootElement, functionName: string, element: HTMLElement) {
+const bindElementToMethod = (rootElement: RootElement, functionName: string, element: HTMLElement): void => {
     const method = rootElement.ahe_cmt[functionName];
 
     if (!method) return;
@@ -523,9 +636,9 @@ function bindElementToMethod(rootElement: RootElement, functionName: string, ele
     );
 
     method.htmlElements[rootElement.ahe_nmr].push(element);
-}
+};
 
-export function changeNestedValues(rootElement: RootElement): void {
+export const changeNestedValues = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_nVls.length; i++) {
@@ -537,9 +650,9 @@ export function changeNestedValues(rootElement: RootElement): void {
         nestedValue.textElement.innerHTML = nestedData;
         nestedValue.lastData = nestedData;
     }
-}
+};
 
-export function changeBindValues(rootElement: RootElement): void {
+export const changeBindValues = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_bndVls.length; i++) {
@@ -551,9 +664,9 @@ export function changeBindValues(rootElement: RootElement): void {
         nestedValue.textElement.textContent = nestedData;
         nestedValue.lastData = nestedData;
     }
-}
+};
 
-export function changeSource(rootElement: RootElement): void {
+export const changeSource = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_srcCms.length; i++) {
@@ -566,9 +679,9 @@ export function changeSource(rootElement: RootElement): void {
         (<any>nestedValue.textElement).src = value;
         nestedValue.lastData = value;
     }
-}
+};
 
-export function changeSourceFunctions(rootElement: RootElement): void {
+export const changeSourceFunctions = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_srcCmsFns.length; i++) {
@@ -581,9 +694,9 @@ export function changeSourceFunctions(rootElement: RootElement): void {
         (<any>nestedValue.textElement).src = value;
         nestedValue.lastData = value;
     }
-}
+};
 
-export function changeNestedFunctions(rootElement: RootElement): void {
+export const changeNestedFunctions = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_nFns.length; i++) {
@@ -595,9 +708,9 @@ export function changeNestedFunctions(rootElement: RootElement): void {
         nestedValue.textElement.innerHTML = nestedData;
         nestedValue.lastData = nestedData;
     }
-}
+};
 
-export function changeBindFunctions(rootElement: RootElement): void {
+export const changeBindFunctions = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_bndFns.length; i++) {
@@ -609,9 +722,9 @@ export function changeBindFunctions(rootElement: RootElement): void {
         nestedValue.textElement.textContent = nestedData;
         nestedValue.lastData = nestedData;
     }
-}
+};
 
-export function changeIfConditions(rootElement: RootElement) {
+export const changeIfConditions = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_IfLst.length; i++) {
@@ -630,9 +743,9 @@ export function changeIfConditions(rootElement: RootElement) {
             if (isContains) removeElement(onIf.ifElement);
         }
     }
-}
+};
 
-export function changeClsConditions(rootElement: RootElement) {
+export const changeClsConditions = (rootElement: RootElement): void => {
     const handler = rootElement.ahe_cmt;
 
     for (let i = 0; i < rootElement.ahe_ClsIfLst.length; i++) {
@@ -680,9 +793,9 @@ export function changeClsConditions(rootElement: RootElement) {
             addClasses(element, [firstClassName]);
         }
     }
-}
+};
 
-export function changeForOf(rootElement: RootElement) {
+export const changeForOf = (rootElement: RootElement): void => {
     const list = rootElement.ahe_ForOfLst;
     const handler = rootElement.ahe_cmt;
 
@@ -696,9 +809,9 @@ export function changeForOf(rootElement: RootElement) {
             forOf.template);
         handleInjections(rootElement, elements);
     }
-}
+};
 
-export function clearProperties(rootElement: RootElement & HTMLElement): void {
+export const clearProperties = (rootElement: RootElement & HTMLElement): void => {
     rootElement.ahe_nFns.length = 0;
     rootElement.ahe_srcCmsFns.length = 0;
     rootElement.ahe_srcCms.length = 0;
@@ -709,4 +822,4 @@ export function clearProperties(rootElement: RootElement & HTMLElement): void {
     rootElement.ahe_ClsIfLst.length = 0;
     rootElement.ahe_ForOfLst.length = 0;
     rootElement.innerHTML = "";
-}
+};

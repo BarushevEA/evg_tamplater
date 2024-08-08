@@ -1,5 +1,5 @@
 // Import the Observable library
-import {Observable} from "evg_observable";
+import {Observable} from "../../../libs/Observables";
 
 // Constants representing different hair colors
 
