@@ -1,7 +1,6 @@
 import {ERROR, EState} from "./Env";
 import {ICallback, ISubscriptionLike} from "../Observables/Types";
 
-
 export type milliseconds = number;
 
 export type Status = {
@@ -35,14 +34,6 @@ export type IRequestAnimationFrame = {
     set60fps(): Status;
     set30fps(): Status;
     setDefault(): Status;
-};
-
-export type ITickCounter = ILifeCircle & {
-    getTicksPerPeriod(): number;
-    getTicksSum(): number;
-    setPeriod(period: number): Status;
-    resetPeriod(): Status;
-    subscribe(callback: ICallback<number>): ISubscriptionLike | undefined;
 };
 
 export type IUserMeterData = {

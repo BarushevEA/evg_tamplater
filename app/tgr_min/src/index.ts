@@ -5,8 +5,7 @@ import {
     GIntervalOrdered,
     GMeter,
     GTimeout,
-    GTimeoutOrdered,
-    TickCounter
+    GTimeoutOrdered
 } from "../../../libs/TickGenerator";
 
 const parent = (<any>window);
@@ -19,5 +18,4 @@ parent.GIntervalOrdered = GIntervalOrdered;
 parent.GAnimationFrame = GAnimationFrame;
 parent.GAnimationFrameOrdered = GAnimationFrameOrdered;
 
-parent.TickCounter = TickCounter;
 parent.GMeter = GMeter;

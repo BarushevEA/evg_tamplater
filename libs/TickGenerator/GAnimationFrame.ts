@@ -1,25 +1,25 @@
 import {ERROR, EState} from "./Env";
-import {getNegativeStatus, getPositiveStatus} from "./Utils";
+import {getNegative, getPositive} from "./Utils";
 import {IRequestAnimationFrame, Status} from "./Types";
 import {AbstractGenerator} from "./AbstractGenerator";
 
 export class GAnimationFrame extends AbstractGenerator implements IRequestAnimationFrame {
-    private rafId: number | null;
+    private id: number | null;
     private fps: number;
 
     constructor() {
         super();
         this.fps = 60;
-        this.rafId = null;
+        this.id = null;
     }
 
     setFPS(num: number): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
-        if (this.rafId) return getNegativeStatus(EState.STARTED);
-        if (num < 1) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
+        if (this.isDestroyed()) return getNegative(EState.DESTROYED);
+        if (this.id) return getNegative(EState.STARTED);
+        if (num < 1) return getNegative(ERROR.NEGATIVE_DELAY);
 
         this.fps = num;
-        return getPositiveStatus(this.state);
+        return getPositive(this.state);
     }
 
     set60fps(): Status {
@@ -35,14 +35,14 @@ export class GAnimationFrame extends AbstractGenerator implements IRequestAnimat
     }
 
     startProcess(): Status {
-        if (this.rafId) return getNegativeStatus(EState.STARTED);
+        if (this.id) return getNegative(EState.STARTED);
 
         let lastUpdate = Math.floor(performance.now());
         const frameInterval = Math.floor(1000 / this.fps);
 
         const animateFrame = (currentTimestamp: number) => {
             currentTimestamp = Math.floor(currentTimestamp);
-            this.rafId = requestAnimationFrame(animateFrame);
+            this.id = requestAnimationFrame(animateFrame);
             const timeElapsed = currentTimestamp - lastUpdate;
 
             if (timeElapsed >= frameInterval) {
@@ -51,18 +51,18 @@ export class GAnimationFrame extends AbstractGenerator implements IRequestAnimat
             }
         };
 
-        this.rafId = requestAnimationFrame(animateFrame);
+        this.id = requestAnimationFrame(animateFrame);
 
         this.state$.next(EState.STARTED);
-        return getPositiveStatus(EState.STARTED);
+        return getPositive(EState.STARTED);
     }
 
     stopProcess(): Status {
-        if (!this.rafId) return getNegativeStatus(ERROR.NEGATIVE_DELAY);
-        cancelAnimationFrame(this.rafId);
-        this.rafId = null;
+        if (!this.id) return getNegative(ERROR.NEGATIVE_DELAY);
+        cancelAnimationFrame(this.id);
+        this.id = null;
 
         this.state$.next(EState.STOPPED);
-        return getPositiveStatus(EState.STOPPED)
+        return getPositive(EState.STOPPED)
     }
 }

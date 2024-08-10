@@ -1,9 +1,8 @@
 import {IGenerator, Status} from "./Types";
 import {EState} from "./Env";
-import {getNegativeStatus, getPositiveStatus} from "./Utils";
+import {getNegative, getPositive} from "./Utils";
 import {Observable} from "../Observables";
 import {ICallback, ISubscriptionLike} from "../Observables/Types";
-
 
 export abstract class AbstractGenerator implements IGenerator {
     protected state$ = new Observable<EState>(EState.UNDEFINED);
@@ -15,23 +14,23 @@ export abstract class AbstractGenerator implements IGenerator {
     }
 
     start(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
+        if (this.isDestroyed()) return getNegative(EState.DESTROYED);
 
         const status = this.startProcess();
         if (!status.isApplied) return status;
 
-        return getPositiveStatus(<EState><any>status.state);
+        return getPositive(<EState><any>status.state);
     }
 
     abstract startProcess(): Status;
 
     stop(): Status {
-        if (this.isDestroyed()) return getNegativeStatus(EState.DESTROYED);
+        if (this.isDestroyed()) return getNegative(EState.DESTROYED);
 
         const status = this.stopProcess();
         if (!status.isApplied) return status;
 
-        return getPositiveStatus(<EState><any>status.state);
+        return getPositive(<EState><any>status.state);
     }
 
     abstract stopProcess(): Status;
@@ -40,7 +39,7 @@ export abstract class AbstractGenerator implements IGenerator {
         this.stop();
         this.state$.next(EState.DESTROYED);
         this.state$.destroy();
-        return getPositiveStatus(EState.DESTROYED);
+        return getPositive(EState.DESTROYED);
     }
 
     subscribeOnState(callback: ICallback<EState>): ISubscriptionLike | undefined {
