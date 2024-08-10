@@ -25,8 +25,8 @@ export class OrderedObservable<T>
     }
 
     sortByOrder(): boolean {
-        if (this.isKilled) return false;
-        this.listeners.sort(this.sortDirection);
+        if (this.killed) return false;
+        this.subs.sort(this.sortDirection);
         return true;
     }
 
@@ -38,18 +38,18 @@ export class OrderedObservable<T>
     }
 
     pipe(): IOrderedSetup<T> | undefined {
-        if (this.isKilled) return undefined;
+        if (this.killed) return undefined;
         const subscribeObject = new OrderedSubscribeObject(this, true);
-        this.listeners.push(<any>subscribeObject);
+        this.subs.push(<any>subscribeObject);
         return subscribeObject;
     }
 
     public unSubscribe(listener: ISubscriptionLike): void {
-        if (this.isKilled) return;
-        if (this.isProcess && listener) {
+        if (this.killed) return;
+        if (this.process && listener) {
             this.trash.push(listener);
             return;
         }
-        this.listeners && !deleteFromArray(this.listeners, listener);
+        this.subs && !deleteFromArray(this.subs, listener);
     }
 }

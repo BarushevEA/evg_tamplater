@@ -21,18 +21,16 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
         return !this.chain.length;
     }
 
+    filter(condition: ICallback<any>): IFilterSetup<T> {
+        return this.push(
+            (data: IFilterPayload): void => condition(data.payload) && (data.isAvailable = true) as any
+        );
+    }
+
     pushFilters(conditions: ICallback<any>[]): IFilterSetup<T> {
         if (!Array.isArray(conditions)) return this;
         for (let i = 0; i < conditions.length; i++) this.filter(conditions[i]);
         return this;
-    }
-
-    filter(condition: ICallback<any>): IFilterSetup<T> {
-        return this.push(
-            (data: IFilterPayload): void => {
-                if (condition(data.payload)) data.isAvailable = true;
-            }
-        );
     }
 
     private push(callback: IFilterChainCallback): IFilterSetup<T> {
@@ -56,7 +54,6 @@ export class FilterCollection<T> implements IFilter<T>, IFilterSwitch<T> {
         try {
             for (let i = 0; i < chain.length; i++) {
                 data.isAvailable = false;
-
                 chain[i](data);
                 if (!data.isAvailable) return response;
                 if (data.isBreak) break;

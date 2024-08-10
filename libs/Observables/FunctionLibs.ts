@@ -1,24 +1,25 @@
 import {IListener, ISetObservableValue, ISubscribeGroup, ISubscribeObject} from "./Types";
 
-export const sortAscending = (a: ISubscribeObject<any>, b: ISubscribeObject<any>) => {
+export function sortAscending(a: ISubscribeObject<any>, b: ISubscribeObject<any>): number {
     if (a.order > b.order) return 1;
     if (a.order < b.order) return -1;
     return 0;
-};
-export const sortDescending = (a: ISubscribeObject<any>, b: ISubscribeObject<any>) => {
+}
+
+export function sortDescending(a: ISubscribeObject<any>, b: ISubscribeObject<any>): number {
     if (a.order > b.order) return -1;
     if (a.order < b.order) return 1;
     return 0;
-};
+}
 
-export const deleteFromArray = <T>(arr: T[], component: T): boolean => {
+export function deleteFromArray<T>(arr: T[], component: T): boolean {
     const index = arr.indexOf(component);
     if (index === -1) return false;
     arr.splice(index, 1);
     return true;
 }
 
-export const quickDeleteFromArray = <T>(arr: T[], component: T): boolean => {
+export function quickDeleteFromArray<T>(arr: T[], component: T): boolean {
     const index = arr.indexOf(component);
     if (index === -1) return false;
     arr[index] = arr[arr.length - 1];
@@ -26,13 +27,11 @@ export const quickDeleteFromArray = <T>(arr: T[], component: T): boolean => {
     return true;
 }
 
-export const getListener = <T>(listener: ISubscribeGroup<T>): IListener<T> => {
+export function getListener<T>(listener: ISubscribeGroup<T>): IListener<T> {
     if (Array.isArray(listener)) {
         const group: IListener<T>[] = [];
 
-        for (let i = 0; i < listener.length; i++) {
-            group.push(wrapListener(<any>listener[i]));
-        }
+        for (let i = 0; i < listener.length; i++) group.push(wrapListener(<any>listener[i]));
 
         return (data?: T) => {
             for (let i = 0; i < group.length; i++) group[i](data);
@@ -42,7 +41,7 @@ export const getListener = <T>(listener: ISubscribeGroup<T>): IListener<T> => {
     return wrapListener(<any>listener);
 }
 
-const wrapListener = <T>(listener: IListener<T> | ISetObservableValue) => {
+function wrapListener<T>(listener: IListener<T> | ISetObservableValue): IListener<T> {
     if ("next" in listener) return (value?: T): any => listener.next(value);
     return <any>listener;
 }

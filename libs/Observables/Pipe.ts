@@ -18,20 +18,10 @@ export abstract class Pipe<T> implements ISubscribe<T> {
 
     abstract subscribe(listener: IListener<T> | ISetObservableValue, errorHandler?: IErrorCallback): ISubscriptionLike | undefined;
 
-    processChain(listener: IListener<T>): void {
-        const chain = this.chain;
-        const data = this.flow;
-        for (let i = 0; i < chain.length; i++) {
-            data.isUnsubscribe = false;
-            data.isAvailable = false;
-
-            chain[i](data);
-            if (data.isUnsubscribe) return (<any>this).unsubscribe();
-            if (!data.isAvailable) return;
-            if (data.isBreak) break;
-        }
-
-        return listener(data.payload);
+    refine(condition: ICallback<T>): ISetup<T> {
+        return this.push(
+            (data: IPipePayload): void => condition(data.payload) && (data.isAvailable = true) as any
+        );
     }
 
     setOnce(): ISubscribe<T> {
@@ -52,12 +42,20 @@ export abstract class Pipe<T> implements ISubscribe<T> {
         );
     }
 
-    refine(condition: ICallback<T>): ISetup<T> {
-        return this.push(
-            (data: IPipePayload): void => {
-                if (condition(data.payload)) data.isAvailable = true;
-            }
-        );
+    processChain(listener: IListener<T>): void {
+        const chain = this.chain;
+        const data = this.flow;
+        for (let i = 0; i < chain.length; i++) {
+            data.isUnsubscribe = false;
+            data.isAvailable = false;
+
+            chain[i](data);
+            if (data.isUnsubscribe) return (<any>this).unsubscribe();
+            if (!data.isAvailable) return;
+            if (data.isBreak) break;
+        }
+
+        return listener(data.payload);
     }
 
     pushRefiners(conditions: ICallback<any>[]): ISetup<T> {

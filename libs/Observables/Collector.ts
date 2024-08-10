@@ -2,37 +2,37 @@ import {ICollector, ISubscriptionLike} from "./Types";
 import {quickDeleteFromArray} from "./FunctionLibs";
 
 export class Collector implements ICollector {
-    protected list: ISubscriptionLike[] = [];
-    private isKilled = false;
+    protected arr: ISubscriptionLike[] = [];
+    private killed = false;
+
+    get isDestroyed(): boolean {
+        return this.killed;
+    }
 
     collect(...subscriptionLikeList: ISubscriptionLike[]): void {
-        if (!this.isKilled) this.list.push(...subscriptionLikeList);
+        if (!this.killed) this.arr.push(...subscriptionLikeList);
     }
 
     unsubscribe(subscriptionLike: ISubscriptionLike | undefined): void {
-        if (this.isKilled) return;
+        if (this.killed) return;
         subscriptionLike?.unsubscribe();
-        quickDeleteFromArray(this.list, subscriptionLike);
+        quickDeleteFromArray(this.arr, subscriptionLike);
     }
 
     unsubscribeAll(): void | null {
-        if (this.isKilled) return;
-        while (this.list.length > 0) this.unsubscribe(this.list.pop());
+        if (this.killed) return;
+        while (this.arr.length > 0) this.unsubscribe(this.arr.pop());
     }
 
     size(): number {
-        if (this.isKilled) return 0;
-        return this.list.length;
+        if (this.killed) return 0;
+        return this.arr.length;
     }
 
     destroy(): void {
         this.unsubscribeAll();
-        this.list.length = 0;
-        this.list = <any>0;
-        this.isKilled = true;
-    }
-
-    get isDestroyed(): boolean {
-        return this.isKilled;
+        this.arr.length = 0;
+        this.arr = <any>0;
+        this.killed = true;
     }
 }

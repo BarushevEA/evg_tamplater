@@ -22,13 +22,13 @@ export class OrderedSubscribeObject<T> extends SubscribeObject<T> implements IOr
     }
 
     set order(value: number) {
-        if (!this.observable ||
-            (this.observable && this.observable.isDestroyed)) {
+        if (!this.observer ||
+            (this.observer && this.observer.isDestroyed)) {
             this._order = <any>undefined;
             return
         }
         this._order = value;
-        (<IOrderedObservable><any>this.observable).sortByOrder();
+        (<IOrderedObservable><any>this.observer).sortByOrder();
     }
 
     subscribe(observer: IListener<T> | ISetObservableValue, errorHandler?: IErrorCallback): IOrderedSubscriptionLike {
