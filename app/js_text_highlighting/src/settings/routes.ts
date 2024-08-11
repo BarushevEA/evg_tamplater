@@ -20,8 +20,8 @@ REGISTER_ROUTES(
     ROUTE_COMMAND.MAIN,
     [
         makeRoute(ROUTE_COMMAND.MAIN, "/main", Main),
-        makeRoute(ROUTE_COMMAND.MAIN, "/about", About),
-        makeRoute(ROUTE_COMMAND.MAIN, "/contacts", Contacts),
+        makeRoute(ROUTE_COMMAND.ABOUT, "/about", About),
+        makeRoute(ROUTE_COMMAND.CONTACTS, "/contacts", Contacts),
     ]
 );
 
