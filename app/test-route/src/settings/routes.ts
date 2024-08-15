@@ -11,22 +11,6 @@ import {Page3} from "../modules/elements/page3/page3";
 
 export const START_ROUTES_REGISTRATION = () => true;
 
-/**
- * If you are implementing routing, please register your routes following the commented examples below.
- *
- * export enum ROUTE_COMMAND {
- *     MAIN = "MAIN",
- * }
- *
- * REGISTER_ROUTES(
- * ROUTE_COMMAND.MAIN,
- *   [
- *     makeRoute(ROUTE_COMMAND.MAIN, "/main", Main)
- *   ]
- * );
- *
- */
-
 export enum ROUTE_COMMAND {
     MAIN = "MAIN",
     PAGE1 = "PAGE1",
