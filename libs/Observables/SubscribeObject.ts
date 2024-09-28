@@ -7,16 +7,16 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
     listener: IListener<T> | undefined;
     paused = false;
     _order = 0;
+
+    get order(): number {
+        return this._order;
+    }
     piped = false;
 
     constructor(observable?: IObserver<T>, isPipe?: boolean) {
         super();
         this.observer = observable;
         this.piped = !!isPipe;
-    }
-
-    get order(): number {
-        return this._order;
     }
 
     subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike {
@@ -39,20 +39,20 @@ export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
         }
     }
 
-    public unsubscribe(): void {
-        if (!this.observer) return;
-        this.observer.unSubscribe(this);
-        this.observer = <any>null;
-        this.listener = <any>null;
-        this.chain.length = 0;
-    }
-
     resume(): void {
         this.paused = false;
     }
 
     pause(): void {
         this.paused = true;
+    }
+
+    public unsubscribe(): void {
+        if (!this.observer) return;
+        this.observer.unSubscribe(this);
+        this.observer = <any>null;
+        this.listener = <any>null;
+        this.chain.length = 0;
     }
 
     set order(value: number) {

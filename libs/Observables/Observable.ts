@@ -15,21 +15,13 @@ import {FilterCollection} from "./FilterCollection";
 
 export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     protected subs: ISubscribeObject<T>[] = [];
+    private enabled: boolean = true;
     protected killed = false;
     protected process = false;
-    private stop: boolean = true;
     protected trash: ISubscriptionLike[] = [];
     private filters = new FilterCollection<T>();
 
     constructor(private value: T) {
-    }
-
-    get isEnable(): boolean {
-        return this.stop;
-    }
-
-    get isDestroyed(): boolean {
-        return this.killed;
     }
 
     addFilter(errorHandler?: IErrorCallback): IFilterSetup<T> {
@@ -37,17 +29,25 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         return this.filters;
     }
 
+    get isEnable(): boolean {
+        return this.enabled;
+    }
+
+    get isDestroyed(): boolean {
+        return this.killed;
+    }
+
     disable(): void {
-        this.stop = false;
+        this.enabled = false;
     }
 
     enable(): void {
-        this.stop = true;
+        this.enabled = true;
     }
 
     public next(value: T): void {
         if (this.killed) return;
-        if (!this.stop) return;
+        if (!this.enabled) return;
         if (!this.filters.isEmpty && !this.filters.processChain(value).isOK) return;
 
         this.process = true;
@@ -61,7 +61,7 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
 
     stream(values: T[]): void {
         if (this.killed) return;
-        if (!this.stop) return;
+        if (!this.enabled) return;
 
         for (let i = 0; i < values.length; i++) this.next(values[i]);
     }
@@ -76,10 +76,24 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     }
 
     public destroy(): void {
-        this.value = <any>null;
-        this.unsubscribeAll();
-        this.subs = <any>null;
+        if (this.killed) return;
         this.killed = true;
+
+        if (!this.process) {
+            this.value = <any>null;
+            this.unsubscribeAll();
+            this.subs.length = 0;
+            return;
+        }
+
+        const timer = setInterval(() => {
+            if (this.process) return;
+
+            clearInterval(timer);
+            this.value = <any>null;
+            this.unsubscribeAll();
+            this.subs.length = 0;
+        }, 10);
     }
 
     public unsubscribeAll(): void {
@@ -104,13 +118,6 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         return subscribeObject;
     }
 
-    pipe(): ISetup<T> | undefined {
-        if (this.killed) return undefined;
-        const subscribeObject = new SubscribeObject(this, true);
-        this.subs.push(subscribeObject);
-        return subscribeObject;
-    }
-
     protected addObserver(subscribeObject: SubscribeObject<T>, observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback) {
         subscribeObject.subscribe(observer, errorHandler);
         this.subs.push(subscribeObject);
@@ -119,6 +126,13 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     protected isListener(listener: ISubscribeGroup<T>): boolean {
         if (this.killed) return false;
         return !!listener;
+    }
+
+    pipe(): ISetup<T> | undefined {
+        if (this.killed) return undefined;
+        const subscribeObject = new SubscribeObject(this, true);
+        this.subs.push(subscribeObject);
+        return subscribeObject;
     }
 
     private clearTrash(): void {
