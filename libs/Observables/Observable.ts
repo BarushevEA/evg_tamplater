@@ -29,20 +29,16 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         return this.filters;
     }
 
-    get isEnable(): boolean {
-        return this.enabled;
-    }
-
-    get isDestroyed(): boolean {
-        return this.killed;
-    }
-
     disable(): void {
         this.enabled = false;
     }
 
     enable(): void {
         this.enabled = true;
+    }
+
+    get isEnable(): boolean {
+        return this.enabled;
     }
 
     public next(value: T): void {
@@ -66,6 +62,10 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
         for (let i = 0; i < values.length; i++) this.next(values[i]);
     }
 
+    get isDestroyed(): boolean {
+        return this.killed;
+    }
+
     public unSubscribe(listener: ISubscriptionLike): void {
         if (this.killed) return;
         if (this.process && listener) {
@@ -81,7 +81,6 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
 
         if (!this.process) {
             this.value = <any>null;
-            this.unsubscribeAll();
             this.subs.length = 0;
             return;
         }
@@ -91,7 +90,6 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
 
             clearInterval(timer);
             this.value = <any>null;
-            this.unsubscribeAll();
             this.subs.length = 0;
         }, 10);
     }
@@ -112,6 +110,7 @@ export class Observable<T> implements IObserver<T>, IStream<T>, IAddFilter<T> {
     }
 
     public subscribe(observer: ISubscribeGroup<T>, errorHandler?: IErrorCallback): ISubscriptionLike | undefined {
+        if (this.killed) return undefined;
         if (!this.isListener(observer)) return undefined;
         const subscribeObject = new SubscribeObject(this, false);
         this.addObserver(subscribeObject, observer, errorHandler);

@@ -5,12 +5,12 @@ import {getListener} from "./FunctionLibs";
 export class SubscribeObject<T> extends Pipe<T> implements ISubscribeObject<T> {
     observer: IObserver<T> | undefined;
     listener: IListener<T> | undefined;
-    paused = false;
     _order = 0;
 
     get order(): number {
         return this._order;
     }
+    paused = false;
     piped = false;
 
     constructor(observable?: IObserver<T>, isPipe?: boolean) {
