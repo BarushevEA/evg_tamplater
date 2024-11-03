@@ -1,3 +1,4 @@
+import {Footer} from "../modules/elements/footer/footer";
 import {Header} from "../modules/elements/header/header";
 import {Page3} from "../modules/elements/page3/page3";
 import {Page2} from "../modules/elements/page2/page2";
@@ -15,6 +16,7 @@ export const MODULES: REG_OPTIONS = [
     getOption(Page2, "app-page2", "APP_EXAMPLE_____MARKER_PAGE2"),
     getOption(Page3, "app-page3", "APP_EXAMPLE_____MARKER_PAGE3"),
     getOption(Header, "app-header", "APP_EXAMPLE_____MARKER_HEADER"),
+    getOption(Footer, "app-footer", "APP_EXAMPLE_____MARKER_FOOTER"),
 ];
 
 START_ROUTES_REGISTRATION();

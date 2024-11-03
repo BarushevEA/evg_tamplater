@@ -9,4 +9,5 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_PAGE2": "page2/page2.html",
     "APP_EXAMPLE_____MARKER_PAGE3": "page3/page3.html",
     "APP_EXAMPLE_____MARKER_HEADER": "header/header.html",
+    "APP_EXAMPLE_____MARKER_FOOTER": "footer/footer.html",
 };
