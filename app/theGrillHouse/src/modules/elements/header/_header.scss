@@ -1,0 +1,11 @@
+@import "../../css/mixins";
+
+@mixin header() {
+  .header {
+    position: static;
+    @include setWidthHeight(100%, 100px);
+
+    background-color: #062c46;
+  }
+}
+        
