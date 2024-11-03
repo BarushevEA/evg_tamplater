@@ -1,5 +1,27 @@
 @import "mixins";
+@import "../elements/header/header";
+@import "../elements/footer/footer";
 
 .app {
+  width: 100%;
+  height: 99vh;
+  background: #0294f9;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
 
+  .main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    background: bisque;
+  }
+
+  @include header();
+  @include footer();
 }
