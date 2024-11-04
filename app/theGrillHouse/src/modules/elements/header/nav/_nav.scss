@@ -1,4 +1,15 @@
+@import "../../../css/mixins";
+@import "navelement/navelement";
 
 @mixin nav() {
+  .nav{
+    @include setWidthHeight(fit-content, 40px);
+    @include flexRowNowrap();
+    align-items: center;
+    justify-content: space-between;
+    top: 100px;
+
+    @include navelement();
+  }
 }
         

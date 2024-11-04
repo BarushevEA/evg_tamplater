@@ -1,3 +1,98 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
 
+body {
+  overflow: hidden;
+}
+
+.app {
+  min-width: 100vw;
+  min-height: 100vh;
+  max-width: fit-content;
+  background: #4A4A4A;
+}
+.app .header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+  height: 110px;
+  position: absolute;
+  background-color: #010101;
+  align-items: center;
+}
+.app .header .logotype {
+  margin-left: 15px;
+  display: flex;
+  flex-flow: row nowrap;
+  width: fit-content;
+  height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-family: "Rubik", "Verdana", Tahoma, serif;
+  font-weight: bold;
+  color: #e0e0e0;
+  text-shadow: 0 0 5px #f84e0f;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.app .header .logotype .logo {
+  width: 70px;
+  height: 70px;
+  margin-right: 15px;
+  background-image: url("assets/images/logo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 100%;
+}
+.app .header .bookmark {
+  width: 70px;
+  height: 70px;
+  margin-left: 15px;
+  background-image: url("https://cdn-icons-png.flaticon.com/512/7093/7093762.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.app .header .nav {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  top: 100px;
+}
+.app .header .nav .navElement {
+  text-transform: uppercase;
+  background: linear-gradient(0, #ff2f00 33%, #ff5b09 66%, #f1bd54);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 7.5px;
+  border-bottom: 1px solid transparent;
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+.app .header .nav .navElement:hover {
+  border-color: #ff2f00;
+}
+.app .header .search {
+  width: 40px;
+  height: 40px;
+  background: #e0e0e0;
+  cursor: pointer;
+}
+.app .header .search .hidden {
+  display: none;
+}
+.app .header .search .searchField {
+  display: inline;
+  width: 300px;
+  height: 20px;
+}
 
 /*# sourceMappingURL=style.css.map */

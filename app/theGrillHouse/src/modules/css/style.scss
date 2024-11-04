@@ -1,4 +1,11 @@
 @import "mixins";
+@import "../elements/header/header";
+
+@include globalNormalize();
 
 .app {
+  @include header();
+  @include setMinWidthHeight(100vw, 100vh);
+  max-width: fit-content;
+  background: #4A4A4A;
 }

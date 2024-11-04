@@ -1,11 +1,56 @@
 @import "../../css/mixins";
+@import "nav/nav";
+@import "search/search";
 
 @mixin header() {
   .header {
-    position: static;
-    @include setWidthHeight(100%, 100px);
+    @include flexRowNowrap();
+    justify-content: space-between;
 
-    background-color: #062c46;
+    @include setWidthHeight(100%, 110px);
+    position: absolute;
+    background-color: #010101;
+    align-items: center;
+
+    .logotype{
+      margin-left: 15px;
+      @include flexRowNowrap();
+      width: fit-content;
+      height: 80px;
+      align-items: center;
+      justify-content: space-between;
+
+      .logo{
+        @include setWidthHeight(70px, 70px);
+        margin-right: 15px;
+        background-image: url("assets/images/logo.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        border-radius: 100%;
+      }
+
+      font-size: 2rem;
+      font-family: 'Rubik','Verdana', $global-font-family;
+      font-weight: bold;
+      color: #e0e0e0;
+      text-shadow: 0 0 5px #f84e0f;
+      text-transform: uppercase;
+
+      cursor: pointer;
+    }
+
+    .bookmark{
+      @include setWidthHeight(70px, 70px);
+      margin-left: 15px;
+
+      background-image: url("https://cdn-icons-png.flaticon.com/512/7093/7093762.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    @include nav();
+    @include search();
   }
 }
         

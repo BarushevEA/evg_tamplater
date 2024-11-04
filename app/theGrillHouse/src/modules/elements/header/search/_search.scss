@@ -1,4 +1,20 @@
+@import "../../../css/mixins";
 
 @mixin search() {
+  .search{
+    @include setWidthHeight(40px, 40px);
+    background: #e0e0e0;
+
+    .hidden{
+      display: none;
+    }
+
+    .searchField{
+      display: inline;
+      width: 300px;
+      height: 20px;
+    }
+    cursor: pointer;
+  }
 }
         

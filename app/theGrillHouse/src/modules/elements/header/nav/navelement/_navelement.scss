@@ -1,4 +1,18 @@
-
+@import "../../../../css/mixins";
 @mixin navelement() {
+  .navElement {
+    text-transform: uppercase;
+    background: linear-gradient(0, #ff2f00 33%, #ff5b09 66%, #f1bd54);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 7.5px;
+    border-bottom: 1px solid transparent;
+    transition-duration: 200ms;
+    cursor: pointer;
+  }
+
+  .navElement:hover {
+    border-color: #ff2f00;
+  }
 }
         
