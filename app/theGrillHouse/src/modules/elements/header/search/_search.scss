@@ -2,19 +2,64 @@
 
 @mixin search() {
   .search{
-    @include setWidthHeight(40px, 40px);
-    background: #e0e0e0;
+    @include setWidthHeight(fit-content, 80px);
+    @include flexRowNowrap();
+    align-items: center;
 
-    .hidden{
-      display: none;
+    .search-icon {
+      margin-left: 10px;
+      @include setWidthHeight(70px, 70px);
+      background-image: url("https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-lupa-ikonka-png-30.png");
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
-    .searchField{
-      display: inline;
-      width: 300px;
-      height: 20px;
+    &-show{
+      animation: search-field-show 0.5s forwards;
+    }
+
+    &-hidden{
+      animation: search-field-hidden 0.5s forwards;
+    }
+
+    .search-field{
+      height: 30px;
+      background: transparent;
+      border: 0;
+      padding: 5px;
+
+      color: #ffffff;
+      font-size: 1.2rem;
+      text-shadow: 0 0 2px #f84e0f;
+    }
+
+    .search-field:hover{
+      border-bottom: solid 1px #ffffff;
     }
     cursor: pointer;
   }
 }
+
+@keyframes search-field-show {
+  0% {
+    display: none;
+    width: 0;
+  }
+
+  100% {
+    display: flex;
+    width: 9vw;
+  }
+}
+@keyframes search-field-hidden {
+  0% {
+    display: flex;
+    width: 9vw;
+  }
+  100% {
+    display: none;
+    width: 0;
+  }
+}
+
         

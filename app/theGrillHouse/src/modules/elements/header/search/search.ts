@@ -25,5 +25,6 @@ export class Search implements OnInit, OnCreate, OnDestroy, OnMessage {
 
     public search() {
         this.isShowed = !this.isShowed;
+        this.root.detectChanges();
     }
 }

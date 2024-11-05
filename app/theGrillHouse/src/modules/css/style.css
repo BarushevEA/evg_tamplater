@@ -1,3 +1,23 @@
+@keyframes search-field-show {
+  0% {
+    display: none;
+    width: 0;
+  }
+  100% {
+    display: flex;
+    width: 9vw;
+  }
+}
+@keyframes search-field-hidden {
+  0% {
+    display: flex;
+    width: 9vw;
+  }
+  100% {
+    display: none;
+    width: 0;
+  }
+}
 * {
   padding: 0;
   margin: 0;
@@ -10,8 +30,11 @@ body {
 }
 
 .app {
+  display: flex;
+  flex-flow: column nowrap;
   min-width: 100vw;
   min-height: 100vh;
+  align-items: center;
   max-width: fit-content;
   background: #4A4A4A;
 }
@@ -21,8 +44,8 @@ body {
   justify-content: space-between;
   width: 100%;
   height: 110px;
-  position: absolute;
-  background-color: #010101;
+  position: relative;
+  background-color: #171717;
   align-items: center;
 }
 .app .header .logotype {
@@ -36,8 +59,8 @@ body {
   font-size: 2rem;
   font-family: "Rubik", "Verdana", Tahoma, serif;
   font-weight: bold;
-  color: #e0e0e0;
-  text-shadow: 0 0 5px #f84e0f;
+  color: #ffffff;
+  text-shadow: 0 0 2px #f84e0f;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -68,6 +91,8 @@ body {
   top: 100px;
 }
 .app .header .nav .navElement {
+  font-size: 1.5rem;
+  font-weight: bold;
   text-transform: uppercase;
   background: linear-gradient(0, #ff2f00 33%, #ff5b09 66%, #f1bd54);
   -webkit-background-clip: text;
@@ -81,18 +106,54 @@ body {
   border-color: #ff2f00;
 }
 .app .header .search {
-  width: 40px;
-  height: 40px;
-  background: #e0e0e0;
+  width: fit-content;
+  height: 80px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   cursor: pointer;
 }
-.app .header .search .hidden {
-  display: none;
+.app .header .search .search-icon {
+  margin-left: 10px;
+  width: 70px;
+  height: 70px;
+  background-image: url("https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-lupa-ikonka-png-30.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-.app .header .search .searchField {
-  display: inline;
-  width: 300px;
-  height: 20px;
+.app .header .search-show {
+  animation: search-field-show 0.5s forwards;
+}
+.app .header .search-hidden {
+  animation: search-field-hidden 0.5s forwards;
+}
+.app .header .search .search-field {
+  height: 30px;
+  background: transparent;
+  border: 0;
+  padding: 5px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-shadow: 0 0 2px #f84e0f;
+}
+.app .header .search .search-field:hover {
+  border-bottom: solid 1px #ffffff;
+}
+.app .footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 15px;
+  width: 100%;
+  min-height: 70px;
+  max-height: fit-content;
+  background-color: #242424;
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  font-weight: bolder;
+}
+.app .contact-data {
+  text-align: right;
 }
 
 /*# sourceMappingURL=style.css.map */
