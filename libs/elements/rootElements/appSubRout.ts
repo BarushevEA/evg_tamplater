@@ -90,23 +90,21 @@ export class QSI_APP_ROOT_SubRoute implements OnInit, OnDestroy, ISubRoute {
     }
 }
 
-SUB_ROUTE_COMMAND$.subscribe(command => {
-    if (!command) return;
-
-    const registered = subRoutesRegistry[command.name];
-    if (!registered || !registered.subRoute) {
-        console.error(`Subroute "${command.name}" is not registered or does not have an active instance.`);
-        return;
-    }
-
-    registered.subRoute.setPage(command.page);
-});
-
-export function subRoute(subRouteName: string): { showPage(pageName: string) } {
-    return {
-        showPage: (pageName: string) => {
-            SUB_ROUTE_COMMAND$.next({name: subRouteName, page: pageName});
+SUB_ROUTE_COMMAND$.pipe()
+    .refine(command => command)
+    .subscribe(command => {
+        const registered = subRoutesRegistry[command.name];
+        if (!registered || !registered.subRoute) {
+            console.log("ERROR:", `Subroute "${command.name}" is not registered or does not have an active instance.`);
+            return;
         }
+
+        registered.subRoute.setPage(command.page);
+    });
+
+export function subRoute(subRouteName: string): { showPage: (pageName: string) => void } {
+    return {
+        showPage: (pageName: string) => SUB_ROUTE_COMMAND$.next({name: subRouteName, page: pageName})
     };
 }
 
