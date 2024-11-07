@@ -1,7 +1,9 @@
 @import "mixins";
 @import "../elements/header/header";
+@import "../elements/additional_header/additional_header";
 
 @include header();
+@include additional_header();
 .app {
 
 }

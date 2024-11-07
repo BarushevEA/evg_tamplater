@@ -5,7 +5,7 @@ import {ROUTE_COMMAND} from "../../../settings/routes";
 import {subRoute} from "../../../../../../libs/elements/rootElements/appSubRout";
 import {SUB_ROUTE, SUB_ROUTE_PAGE} from "../../../settings/subRoutesEnums";
 
-export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
+export class Additional_header implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
 
     constructor(readonly root: RootBehavior) {
@@ -42,6 +42,6 @@ export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     clickPage4() {
-        subRoute(SUB_ROUTE.HEADER).showPage(SUB_ROUTE_PAGE.AdditionalHeader);
+        subRoute(SUB_ROUTE.HEADER).showPage(SUB_ROUTE_PAGE.Header);
     }
 }
