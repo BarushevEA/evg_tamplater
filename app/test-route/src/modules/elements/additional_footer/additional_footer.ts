@@ -1,7 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
-import {subRoute} from "../../../../../../libs/elements/rootElements/appSubRout";
-import {SUB_ROUTE, SUB_ROUTE_PAGE} from "../../../settings/subRoutesEnums";
+import {SUB_ROUTE} from "../../../../../../libs/elements/rootElements/appSubRout";
+import {E_SUB_ROUTE, SUB_ROUTE_PAGE} from "../../../settings/subRoutesEnums";
 
 export class Additional_footer implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
@@ -24,6 +24,6 @@ export class Additional_footer implements OnInit, OnCreate, OnDestroy, OnMessage
     }
 
     setMain() {
-        subRoute(SUB_ROUTE.FOOTER).showPage(SUB_ROUTE_PAGE.MainFooter);
+        SUB_ROUTE(E_SUB_ROUTE.FOOTER).SHOW_PAGE(SUB_ROUTE_PAGE.MainFooter);
     }
 }

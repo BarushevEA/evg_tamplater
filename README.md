@@ -68,6 +68,8 @@ We've added routing functionality in our project for smoother transitions betwee
 ### Setting Up Routing
 
 Routing settings are located in the <projectName>/src/settings/routes.ts file.
+SubRouting settings are located in the <projectName>/src/settings/subRoutes.ts file.
+SubRouting additional settings are located in the <projectName>/src/settings/subRoutesEnums.ts file.
 
 ### User-friendly Route Management
 
@@ -97,6 +99,9 @@ Choose the routing mode with the setBrowserRoutingMode function. This mode can b
 ### Navigation Between Views
 
 To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN);.
+Or alternative ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN);
+
+To navigate by subRoute use SUB_ROUTE(E_SUB_ROUTE.NAME).SHOW_PAGE(SUB_ROUTE_PAGE.NAME).
 
 ### Example of the routes settings file:
 
@@ -116,6 +121,16 @@ REGISTER_ROUTES(
 );
 
 setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+```
+
+```typescript
+import {REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSubRout";
+
+export const START_SUB_ROUTES_REGISTRATION = () => true;
+
+REGISTER_SUB_ROUTES(
+
+);
 ```
 
 Configured look:
@@ -152,4 +167,60 @@ REGISTER_ROUTES(
 );
 
 setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+```
+
+```typescript
+export enum E_SUB_ROUTE {
+    HEADER = "header",
+    FOOTER = "footer"
+}
+
+export enum SUB_ROUTE_PAGE {
+    Header = "Header",
+    AdditionalHeader = "AdditionalHeader",
+    MainFooter = "MainFooter",
+    AdditionalFooter = "AdditionalFooter"
+}
+```
+
+```typescript
+import {REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSubRout";
+import {Header} from "../modules/elements/header/header";
+import {Additional_header} from "../modules/elements/additional_header/additional_header";
+import {E_SUB_ROUTE, SUB_ROUTE_PAGE} from "./subRoutesEnums";
+import {Main_footer} from "../modules/elements/main_footer/main_footer";
+import {Additional_footer} from "../modules/elements/additional_footer/additional_footer";
+
+export const START_SUB_ROUTES_REGISTRATION = () => true;
+
+REGISTER_SUB_ROUTES(
+    {
+        name: E_SUB_ROUTE.HEADER,
+        defaultPage: SUB_ROUTE_PAGE.Header,
+        pages: [
+            {
+                name: SUB_ROUTE_PAGE.Header,
+                page: Header
+            },
+            {
+                name: SUB_ROUTE_PAGE.AdditionalHeader,
+                page: Additional_header
+            }
+        ]
+    },
+    {
+        name: E_SUB_ROUTE.FOOTER,
+        defaultPage: SUB_ROUTE_PAGE.MainFooter,
+        pages: [
+            {
+                name: SUB_ROUTE_PAGE.MainFooter,
+                page: Main_footer
+            },
+            {
+                name: SUB_ROUTE_PAGE.AdditionalFooter,
+                page: Additional_footer
+            }
+        ]
+    },
+);
 ```

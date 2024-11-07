@@ -1,7 +1,7 @@
 import {REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSubRout";
 import {Header} from "../modules/elements/header/header";
 import {Additional_header} from "../modules/elements/additional_header/additional_header";
-import {SUB_ROUTE, SUB_ROUTE_PAGE} from "./subRoutesEnums";
+import {E_SUB_ROUTE, SUB_ROUTE_PAGE} from "./subRoutesEnums";
 import {Main_footer} from "../modules/elements/main_footer/main_footer";
 import {Additional_footer} from "../modules/elements/additional_footer/additional_footer";
 
@@ -9,7 +9,7 @@ export const START_SUB_ROUTES_REGISTRATION = () => true;
 
 REGISTER_SUB_ROUTES(
     {
-        name: SUB_ROUTE.HEADER,
+        name: E_SUB_ROUTE.HEADER,
         defaultPage: SUB_ROUTE_PAGE.Header,
         pages: [
             {
@@ -23,7 +23,7 @@ REGISTER_SUB_ROUTES(
         ]
     },
     {
-        name: SUB_ROUTE.FOOTER,
+        name: E_SUB_ROUTE.FOOTER,
         defaultPage: SUB_ROUTE_PAGE.MainFooter,
         pages: [
             {

@@ -1,9 +1,9 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
-import {ROUTE_COMMAND$} from "../../../../../../libs/elements/rootElements/appRoute";
+import {ROUTE} from "../../../../../../libs/elements/rootElements/appRoute";
 import {ROUTE_COMMAND} from "../../../settings/routes";
-import {subRoute} from "../../../../../../libs/elements/rootElements/appSubRout";
-import {SUB_ROUTE, SUB_ROUTE_PAGE} from "../../../settings/subRoutesEnums";
+import {E_SUB_ROUTE, SUB_ROUTE_PAGE} from "../../../settings/subRoutesEnums";
+import {SUB_ROUTE} from "../../../../../../libs/elements/rootElements/appSubRout";
 
 export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
@@ -26,22 +26,22 @@ export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     clickMain() {
-        ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN);
+        ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN);
     }
 
     clickPage1() {
-        ROUTE_COMMAND$.next(ROUTE_COMMAND.PAGE1);
+        ROUTE().SHOW_PAGE(ROUTE_COMMAND.PAGE1);
     }
 
     clickPage2() {
-        ROUTE_COMMAND$.next(ROUTE_COMMAND.PAGE2);
+        ROUTE().SHOW_PAGE(ROUTE_COMMAND.PAGE2);
     }
 
     clickPage3() {
-        ROUTE_COMMAND$.next(ROUTE_COMMAND.PAGE3);
+        ROUTE().SHOW_PAGE(ROUTE_COMMAND.PAGE3);
     }
 
     clickPage4() {
-        subRoute(SUB_ROUTE.HEADER).showPage(SUB_ROUTE_PAGE.AdditionalHeader);
+        SUB_ROUTE(E_SUB_ROUTE.HEADER).SHOW_PAGE(SUB_ROUTE_PAGE.AdditionalHeader);
     }
 }

@@ -102,9 +102,9 @@ SUB_ROUTE_COMMAND$.pipe()
         registered.subRoute.setPage(command.page);
     });
 
-export function subRoute(subRouteName: string): { showPage: (pageName: string) => void } {
+export function SUB_ROUTE(subRouteName: string): { SHOW_PAGE: (pageName: string) => void } {
     return {
-        showPage: (pageName: string) => SUB_ROUTE_COMMAND$.next({name: subRouteName, page: pageName})
+        SHOW_PAGE: (pageName: string) => SUB_ROUTE_COMMAND$.next({name: subRouteName, page: pageName})
     };
 }
 

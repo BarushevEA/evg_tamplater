@@ -106,3 +106,9 @@ export class QSI_APP_ROOT_AppRoute implements OnInit, OnDestroy {
         this.root.innerHTML = `<${tagName}></${tagName}>`;
     }
 }
+
+export function ROUTE(): { SHOW_PAGE: (pageName: string) => void } {
+    return {
+        SHOW_PAGE: (pageName: string) => ROUTE_COMMAND$.next(pageName)
+    };
+}

@@ -1,4 +1,4 @@
-export enum SUB_ROUTE {
+export enum E_SUB_ROUTE {
     HEADER = "header",
     FOOTER = "footer"
 }
