@@ -1,4 +1,7 @@
-
+@import "../../css/mixins";
 @mixin main() {
+  .main{
+    @include setMinWidthHeight(100vw, 78vh)
+  }
 }
         

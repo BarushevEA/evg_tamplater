@@ -155,5 +155,9 @@ body {
 .app .contact-data {
   text-align: right;
 }
+.app .main {
+  min-width: 100vw;
+  min-height: 78vh;
+}
 
 /*# sourceMappingURL=style.css.map */
