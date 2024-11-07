@@ -2,6 +2,8 @@ import {REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSub
 import {Header} from "../modules/elements/header/header";
 import {Additional_header} from "../modules/elements/additional_header/additional_header";
 import {SUB_ROUTE, SUB_ROUTE_PAGE} from "./subRoutesEnums";
+import {Main_footer} from "../modules/elements/main_footer/main_footer";
+import {Additional_footer} from "../modules/elements/additional_footer/additional_footer";
 
 export const START_SUB_ROUTES_REGISTRATION = () => true;
 
@@ -19,7 +21,21 @@ REGISTER_SUB_ROUTES(
                 page: Additional_header
             }
         ]
-    }
+    },
+    {
+        name: SUB_ROUTE.FOOTER,
+        defaultPage: SUB_ROUTE_PAGE.MainFooter,
+        pages: [
+            {
+                name: SUB_ROUTE_PAGE.MainFooter,
+                page: Main_footer
+            },
+            {
+                name: SUB_ROUTE_PAGE.AdditionalFooter,
+                page: Additional_footer
+            }
+        ]
+    },
 );
 
 // <qsi-subroute name="SubRoute1"></qsi-subroute>

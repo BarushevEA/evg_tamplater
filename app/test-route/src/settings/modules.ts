@@ -1,3 +1,5 @@
+import {Additional_footer} from "../modules/elements/additional_footer/additional_footer";
+import {Main_footer} from "../modules/elements/main_footer/main_footer";
 import {Additional_header} from "../modules/elements/additional_header/additional_header";
 import {Header} from "../modules/elements/header/header";
 import {Page3} from "../modules/elements/page3/page3";
@@ -18,6 +20,8 @@ export const MODULES: REG_OPTIONS = [
     getOption(Page3, "app-page3", "APP_EXAMPLE_____MARKER_PAGE3"),
     getOption(Header, "app-header", "APP_EXAMPLE_____MARKER_HEADER"),
     getOption(Additional_header, "app-additional_header", "APP_EXAMPLE_____MARKER_ADDITIONAL_HEADER"),
+    getOption(Main_footer, "app-main_footer", "APP_EXAMPLE_____MARKER_MAIN_FOOTER"),
+    getOption(Additional_footer, "app-additional_footer", "APP_EXAMPLE_____MARKER_ADDITIONAL_FOOTER"),
 ];
 
 START_ROUTES_REGISTRATION();
