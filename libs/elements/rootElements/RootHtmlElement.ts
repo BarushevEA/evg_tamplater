@@ -70,6 +70,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             this.ahe_opts = options;
             this.ahe_cmt = new options.element(this);
             if (this.tagName === E_ROOT_TAG.APP_ROUTE) return;
+            if (this.tagName === E_ROOT_TAG.APP_SUB_ROUTE) return;
 
             this.ahe_nmr = ahe_Counter;
             ahe_Counter++;
@@ -134,7 +135,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
         connectedCallback() {
             if (this.tagName === E_ROOT_TAG.TEXT_VALUE) return;
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
-            if (this.tagName === E_ROOT_TAG.APP_ROUTE) {
+            if (this.tagName === E_ROOT_TAG.APP_ROUTE
+                || this.tagName === E_ROOT_TAG.APP_SUB_ROUTE) {
                 this.ahe_cmt.onInit();
                 return;
             }
@@ -167,6 +169,7 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             }
             if (this.tagName === E_ROOT_TAG.QSI_BIND) return;
             if (this.tagName === E_ROOT_TAG.APP_ROUTE) return;
+            if (this.tagName === E_ROOT_TAG.APP_SUB_ROUTE) return;
             if (getAttr(this, E_DATA_MARKER.ON_IF)) {
                 if (!this.ahe_cmt[ifDoubleInitVar]) {
                     this.ahe_cmt[ifDoubleInitVar] = true;

@@ -2,6 +2,7 @@ import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
+    isHeader: boolean = true;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;

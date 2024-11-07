@@ -28,4 +28,4 @@ REGISTER_ROUTES(
     ]
 );
 
-setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+setBrowserRoutingMode(BROWSER_ROUTING.HIDDEN);

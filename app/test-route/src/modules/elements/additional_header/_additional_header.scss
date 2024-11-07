@@ -1,0 +1,48 @@
+@import "../../css/mixins";
+
+@mixin additional_header() {
+  .additional_buttons_bar {
+    @include setWidthHeight(600px, 100px);
+
+    display: flex;
+    @include flexCenter();
+
+    background: #ffffff;
+
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    margin: 5px;
+
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .thin_black {
+    height: 50px;
+    background: #000;
+  }
+
+  .gray {
+    color: #9f9f9f;
+    font-weight: bold;
+  }
+
+  .additional_button {
+    @include setWidthHeight(100px, 40px);
+
+    display: flex;
+    @include flexCenter();
+
+    background: #ffffff;
+    margin: 5px;
+
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+  }
+}
