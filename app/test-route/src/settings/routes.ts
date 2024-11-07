@@ -8,6 +8,7 @@ import {Main} from "../modules/elements/main/main";
 import {Page1} from "../modules/elements/page1/page1";
 import {Page2} from "../modules/elements/page2/page2";
 import {Page3} from "../modules/elements/page3/page3";
+import {START_SUB_ROUTES_REGISTRATION} from "./subRoutes";
 
 export const START_ROUTES_REGISTRATION = () => true;
 
@@ -29,3 +30,5 @@ REGISTER_ROUTES(
 );
 
 setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+
+START_SUB_ROUTES_REGISTRATION()
