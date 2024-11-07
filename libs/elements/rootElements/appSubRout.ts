@@ -56,7 +56,7 @@ export function REGISTER_SUB_ROUTES(...options: SubRouteOption[]): void {
 export class QSI_APP_ROOT_SubRoute implements OnInit, OnDestroy, ISubRoute {
     name: string;
     registered: SubRouteRegistered;
-    isDestoryed: boolean = true;
+    isDestroyed: boolean = true;
 
     constructor(private readonly root: RootBehavior) {
         this.name = root.getAttribute('name') || '';
@@ -69,16 +69,16 @@ export class QSI_APP_ROOT_SubRoute implements OnInit, OnDestroy, ISubRoute {
     }
 
     onInit(): void {
-        this.isDestoryed = false;
+        this.isDestroyed = false;
         this.setPage(this.registered.defaultPage);
     }
 
     onDestroy(): void {
-        this.isDestoryed = true;
+        this.isDestroyed = true;
     }
 
     setPage(pageName: string): void {
-        if (this.isDestoryed) return;
+        if (this.isDestroyed) return;
 
         const page = this.registered.pages[pageName];
         if (!page) {
