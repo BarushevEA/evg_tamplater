@@ -3,9 +3,12 @@ export enum E_SUB_ROUTE {
     FOOTER = "footer"
 }
 
-export enum SUB_ROUTE_PAGE {
+export enum SUB_HEADER {
     Header = "Header",
     AdditionalHeader = "AdditionalHeader",
+}
+
+export enum SUB_FOOTER {
     MainFooter = "MainFooter",
     AdditionalFooter = "AdditionalFooter"
 }
