@@ -90,6 +90,8 @@ export function REGISTER_ROUTES(defaultCommand?: string, routes?: IRouteModel[])
         defaultCmd: defaultCommand,
         routes: routes,
     });
+
+    ROUTE_COMMAND$.next(defaultCommand);
 }
 
 const collector = new Collector();

@@ -1,0 +1,10 @@
+@import "../../../css/mixins";
+
+@mixin sidebar_button() {
+  &_button {
+    @include button(95%, 40px);
+    font-size: 20px;
+    background: #69b2e4;
+    margin: 2px;
+  }
+}

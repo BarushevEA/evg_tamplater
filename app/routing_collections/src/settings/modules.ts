@@ -1,3 +1,5 @@
+import {Contentelement} from "../modules/elements/main/contentelement/contentelement";
+import {Button} from "../modules/elements/left_sidebar/button/button";
 import {Left_sidebar} from "../modules/elements/left_sidebar/left_sidebar";
 import {Footer} from "../modules/elements/footer/footer";
 import {Header} from "../modules/elements/header/header";
@@ -24,6 +26,8 @@ export const MODULES: REG_OPTIONS = [
     getOption(Header, "app-header", "APP_EXAMPLE_____MARKER_HEADER"),
     getOption(Footer, "app-footer", "APP_EXAMPLE_____MARKER_FOOTER"),
     getOption(Left_sidebar, "app-left_sidebar", "APP_EXAMPLE_____MARKER_LEFT_SIDEBAR"),
+    getOption(Button, "app-button", "APP_EXAMPLE_____MARKER_BUTTON"),
+    getOption(Contentelement, "app-contentelement", "APP_EXAMPLE_____MARKER_CONTENTELEMENT"),
 ];
 
 START_ROUTES_REGISTRATION();

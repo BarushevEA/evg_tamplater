@@ -1,2 +1,14 @@
+@import "../../css/mixins";
+@import "./button/button";
+
 @mixin left_sidebar() {
+  .left-sidebar {
+    @include setWidthHeight(200px, 100%);
+    @include setMinWidthHeight(200px, 100%);
+    @include sidebar_button();
+
+    @include flexColumnNowrap();
+    justify-content: flex-start;
+    align-items: center;
+  }
 }

@@ -13,4 +13,6 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_HEADER": "header/header.html",
     "APP_EXAMPLE_____MARKER_FOOTER": "footer/footer.html",
     "APP_EXAMPLE_____MARKER_LEFT_SIDEBAR": "left_sidebar/left_sidebar.html",
+    "APP_EXAMPLE_____MARKER_BUTTON": "left_sidebar/button/button.html",
+    "APP_EXAMPLE_____MARKER_CONTENTELEMENT": "main/contentelement/contentelement.html",
 };

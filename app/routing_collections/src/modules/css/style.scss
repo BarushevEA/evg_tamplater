@@ -1,4 +1,21 @@
 @import "mixins";
+@import "../elements/header/header";
+@import "../elements/footer/footer";
+@import "../elements/left_sidebar/left_sidebar";
+
+@import "../elements/cars/new_cars/new_cars";
+@import "../elements/cars/old_cars/old_cars";
+@import "../elements/cars/popular_cars/popular_cars";
+
+@import "../elements/main/about/about";
+@import "../elements/main/home/home";
+@import "../elements/main/contact/contact";
+
+* {
+  @include devBorder();
+  @include normalizeSpace();
+  @include devHighlighting();
+}
 
 .app {
 

@@ -26,4 +26,4 @@ cars.add(makeRoute(CARS_ROUTES.NEW_CARS, "/new", New_cars))
 
 REGISTER_ROUTES(MAIN_ROUTES.HOME, mergeRouteCollections(main, cars));
 
-setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
+setBrowserRoutingMode(BROWSER_ROUTING.HIDDEN);
