@@ -1,4 +1,13 @@
 @import "../../css/mixins";
 
 @mixin footer() {
+  .footer {
+    @include setWidthHeight(100%, 50px);
+
+    background: #979797;
+    border: 1px solid black;
+
+    color: white;
+    text-align: center;
+  }
 }

@@ -22,4 +22,12 @@ export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
 
     onDestroy(): void {
     }
+
+    goHome(): void {
+        ROUTE().SHOW_PAGE(MAIN_ROUTES.HOME);
+    }
+
+    goCars(): void {
+        ROUTE().SHOW_PAGE(CARS_ROUTES.POPULAR_CARS);
+    }
 }

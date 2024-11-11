@@ -18,5 +18,30 @@
 }
 
 .app {
+  @include setWidthHeight(100vw, 100vh);
 
+  @include header();
+  @include footer();
+  @include left_sidebar();
+
+
+  @include flexColumnNowrap();
+  justify-content: space-between;
+
+  &_container {
+    @include setWidthHeight(100%, 100%);
+    @include flexRowNowrap();
+
+    &_view {
+      @include setWidthHeight(100%, 100%);
+
+      @include new_cars();
+      @include old_cars();
+      @include popular_cars();
+
+      @include home();
+      @include about();
+      @include contact();
+    }
+  }
 }
