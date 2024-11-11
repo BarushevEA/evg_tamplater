@@ -27,6 +27,63 @@ export function makeRoute(command: string, path: string, component: any): IRoute
     };
 }
 
+export type IAddRoute = (route: IRouteModel) => IAddRoute;
+export type IAddRouteCollection = (collection: ROUTE_COLLECTION) => IAddRouteCollection;
+
+export class ROUTE_COLLECTION {
+    private routes: IRouteModel[] = [];
+
+    constructor(private rootRoute: IRouteModel) {
+        this.validateRoute(rootRoute, true);
+    }
+
+    add(route: IRouteModel): IAddRoute {
+        this.validateRoute(route);
+
+        route.path = this.rootRoute.path + route.path;
+        this.routes.push(route);
+        return this.add;
+    }
+
+    addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection {
+        const routes = collection.getRoutes();
+        for (let i = 0; i < routes.length; i++) {
+            this.add(routes[i]);
+        }
+
+        return this.addCollection;
+    }
+
+    getRoutes(): IRouteModel[] {
+        return this.routes;
+    }
+
+    private validateRoute(route: IRouteModel, isRoot?: boolean): void {
+        const prefix = isRoot ? "Root route" : "Route";
+
+        if (!route) {
+            throw new Error(`${prefix} is not defined`);
+        }
+        if (!route.path) {
+            throw new Error(`${prefix} path is not defined`);
+        }
+        if (!route.command) {
+            throw new Error(`${prefix} command is not defined`);
+        }
+        if (!route.component) {
+            throw new Error(`${prefix} component is not defined`);
+        }
+    }
+}
+
+export function mergeRouteCollections(...collections: ROUTE_COLLECTION[]): IRouteModel[] {
+    const routes: IRouteModel[] = [];
+    for (let i = 0; i < collections.length; i++) {
+        routes.push(...collections[i].getRoutes());
+    }
+    return routes;
+}
+
 export function REGISTER_ROUTES(defaultCommand?: string, routes?: IRouteModel[]): void {
     routes$.next({
         defaultCmd: defaultCommand,
