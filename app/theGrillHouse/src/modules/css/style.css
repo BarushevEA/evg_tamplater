@@ -158,6 +158,18 @@ body {
 .app .main {
   min-width: 100vw;
   min-height: 78vh;
+  max-height: fit-content;
+}
+.app .main .banner {
+  width: 100%;
+  height: 800px;
+}
+.app .main .banner .banner-img {
+  width: 100%;
+  height: 100%;
+  background-image: url("https://posudamart.ru/collection/52/04/720452.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,7 +1,10 @@
 @import "../../css/mixins";
+@import "mainpage/mainpage";
 @mixin main() {
   .main{
-    @include setMinWidthHeight(100vw, 78vh)
+    @include mainpage();
+    @include setMinWidthHeight(100vw, 78vh);
+    max-height: fit-content;
   }
 }
         

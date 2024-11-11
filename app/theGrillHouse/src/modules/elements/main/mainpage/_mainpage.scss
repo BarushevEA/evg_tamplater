@@ -1,4 +1,15 @@
-
+@import "../../../css/mixins";
 @mixin mainpage() {
+  .banner{
+    @include setWidthHeight(100%, 800px);
+
+    .banner-img{
+      @include setWidthHeight(100%, 100%);
+
+      background-image: url("https://posudamart.ru/collection/52/04/720452.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
 }
         
