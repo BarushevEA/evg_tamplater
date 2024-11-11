@@ -2,7 +2,7 @@ import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../
 import {log} from "../../../../../../libs/utils/utils";
 import {ROUTE} from "../../../../../../libs/elements/rootElements/appRoute";
 import {ROUTE_COMMAND} from "../../../settings/routes";
-import {E_SUB_ROUTE, SUB_ROUTE_PAGE} from "../../../settings/subRoutesEnums";
+import {E_SUB_ROUTE, SUB_HEADER} from "../../../settings/subRoutesEnums";
 import {SUB_ROUTE} from "../../../../../../libs/elements/rootElements/appSubRout";
 
 export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
@@ -42,6 +42,6 @@ export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     clickPage4() {
-        SUB_ROUTE(E_SUB_ROUTE.HEADER).SHOW_PAGE(SUB_ROUTE_PAGE.AdditionalHeader);
+        SUB_ROUTE(E_SUB_ROUTE.HEADER).SHOW_PAGE(SUB_HEADER.AdditionalHeader);
     }
 }
