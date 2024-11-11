@@ -27,7 +27,7 @@ export function makeRoute(command: string, path: string, component: any): IRoute
     };
 }
 
-export type IAddRoute = { add(route: IRouteModel): IAddRoute };
+export type IAddRoute = { add(route: IRouteModel, isRoot?: boolean): IAddRoute };
 export type IAddRouteCollection = { addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection };
 
 export class ROUTE_COLLECTION implements IAddRouteCollection, IAddRoute {
@@ -35,12 +35,13 @@ export class ROUTE_COLLECTION implements IAddRouteCollection, IAddRoute {
 
     constructor(private rootRoute: IRouteModel) {
         this.validateRoute(rootRoute, true);
+        this.add(rootRoute, true);
     }
 
-    add(route: IRouteModel): IAddRoute {
+    add(route: IRouteModel, isRoot?: boolean): IAddRoute {
         this.validateRoute(route);
 
-        route.path = this.rootRoute.path + route.path;
+        !isRoot && (route.path = this.rootRoute.path + route.path);
         this.routes.push(route);
         return this;
     }
