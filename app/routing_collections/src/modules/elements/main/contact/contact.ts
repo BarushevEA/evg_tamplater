@@ -1,5 +1,5 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../../libs/env/types";
-import {log} from "../../../../../../libs/utils/utils";
+import {log} from "../../../../../../../libs/utils/utils";
 
 export class Contact implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;

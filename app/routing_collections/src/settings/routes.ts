@@ -20,7 +20,7 @@ const main = new ROUTE_COLLECTION(makeRoute(MAIN_ROUTES.HOME, "/main", Home));
 main.add(makeRoute(MAIN_ROUTES.ABOUT, "/about", About))
     .add(makeRoute(MAIN_ROUTES.CONTACT, "/contact", Contact));
 
-const cars = new ROUTE_COLLECTION(makeRoute(CARS_ROUTES, "/cars", Popular_cars));
+const cars = new ROUTE_COLLECTION(makeRoute(CARS_ROUTES.POPULAR_CARS, "/cars", Popular_cars));
 cars.add(makeRoute(CARS_ROUTES.NEW_CARS, "/new", New_cars))
     .add(makeRoute(CARS_ROUTES.OLD_CARS, "/old", Old_cars));
 
