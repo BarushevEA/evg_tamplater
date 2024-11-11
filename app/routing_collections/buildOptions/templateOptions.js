@@ -10,4 +10,7 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_OLD_CARS": "cars/old_cars/old_cars.html",
     "APP_EXAMPLE_____MARKER_NEW_CARS": "cars/new_cars/new_cars.html",
     "APP_EXAMPLE_____MARKER_POPULAR_CARS": "cars/popular_cars/popular_cars.html",
+    "APP_EXAMPLE_____MARKER_HEADER": "header/header.html",
+    "APP_EXAMPLE_____MARKER_FOOTER": "footer/footer.html",
+    "APP_EXAMPLE_____MARKER_LEFT_SIDEBAR": "left_sidebar/left_sidebar.html",
 };

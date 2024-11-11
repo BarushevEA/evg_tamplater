@@ -27,10 +27,10 @@ export function makeRoute(command: string, path: string, component: any): IRoute
     };
 }
 
-export type IAddRoute = (route: IRouteModel) => IAddRoute;
-export type IAddRouteCollection = (collection: ROUTE_COLLECTION) => IAddRouteCollection;
+export type IAddRoute = { add(route: IRouteModel): IAddRoute };
+export type IAddRouteCollection = { addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection };
 
-export class ROUTE_COLLECTION {
+export class ROUTE_COLLECTION implements IAddRouteCollection, IAddRoute {
     private routes: IRouteModel[] = [];
 
     constructor(private rootRoute: IRouteModel) {
@@ -42,7 +42,7 @@ export class ROUTE_COLLECTION {
 
         route.path = this.rootRoute.path + route.path;
         this.routes.push(route);
-        return this.add;
+        return this;
     }
 
     addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection {
@@ -51,7 +51,7 @@ export class ROUTE_COLLECTION {
             this.add(routes[i]);
         }
 
-        return this.addCollection;
+        return this;
     }
 
     getRoutes(): IRouteModel[] {

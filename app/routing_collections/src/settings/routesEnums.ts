@@ -1,8 +1,3 @@
-export enum ROOT_ROUTES {
-    MAIN = "MAIN",
-    CARS = "CARS",
-}
-
 export enum MAIN_ROUTES {
     HOME = "HOME",
     ABOUT = "ABOUT",

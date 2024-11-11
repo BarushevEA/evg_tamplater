@@ -1,3 +1,6 @@
+import {Left_sidebar} from "../modules/elements/left_sidebar/left_sidebar";
+import {Footer} from "../modules/elements/footer/footer";
+import {Header} from "../modules/elements/header/header";
 import {Popular_cars} from "../modules/elements/cars/popular_cars/popular_cars";
 import {New_cars} from "../modules/elements/cars/new_cars/new_cars";
 import {Old_cars} from "../modules/elements/cars/old_cars/old_cars";
@@ -18,6 +21,9 @@ export const MODULES: REG_OPTIONS = [
     getOption(Old_cars, "app-old_cars", "APP_EXAMPLE_____MARKER_OLD_CARS"),
     getOption(New_cars, "app-new_cars", "APP_EXAMPLE_____MARKER_NEW_CARS"),
     getOption(Popular_cars, "app-popular_cars", "APP_EXAMPLE_____MARKER_POPULAR_CARS"),
+    getOption(Header, "app-header", "APP_EXAMPLE_____MARKER_HEADER"),
+    getOption(Footer, "app-footer", "APP_EXAMPLE_____MARKER_FOOTER"),
+    getOption(Left_sidebar, "app-left_sidebar", "APP_EXAMPLE_____MARKER_LEFT_SIDEBAR"),
 ];
 
 START_ROUTES_REGISTRATION();
