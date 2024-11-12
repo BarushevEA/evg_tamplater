@@ -4,14 +4,22 @@
 
 1. Open your terminal.
 2. Navigate to the `pm.js` directory.
-3. Run the command: `node pm.js p <YourProjectName>`
+3. Run the command:
+
+```Sh
+node pm.js p <YourProjectName>
+```
     * Replace `<YourProjectName>` with the name of your project.
 
 ### Creating a Component
 
 1. Open your terminal.
 2. Navigate to the `cm.js` directory.
-3. Run the command: `node cm.js c <YourComponentName> [d <ComponentDirectory>]`
+3. Run the command:
+
+```Sh
+node cm.js c <YourComponentName> [d <ComponentDirectory>]
+```
     * Replace `<YourComponentName>` with the name of your component and `<ComponentDirectory>` with the directory of
       your component.
     * The `[d <ComponentDirectory>]` argument is optional.
@@ -37,7 +45,12 @@
 * `qsi-mouseup="functionName"` - Serving a qsi-mouseup action using function name.
 * `qsi-mousedown="functionName"` - Serving a qsi-mousedown action using function name.
 * `qsi-cls="classCondition"` - Serving classes based on conditions using variable name or function name.
-### !!! IMPORTANT !!! if you want to use css encryption - className != conditionName
+
+## CSS Encryption Note
+
+If you want to use CSS encryption, ensure that className is not equal to conditionName.
+
+### Examples
 ```js
 <div qsi-cls="class1">=== div.classList.add("class1")
     <div qsi-cls="class1:true">=== div.classList.add("class1")
@@ -53,10 +66,10 @@
 <div class="class0" qsi-cls="class1:condition1 class2:condition2 class3:condition3"></div>
 <div qsi-cls="condition?class1:class2"></div>
 ```
-
 * `qsi-for="arrName"` - This attribute contains the name of iterated array.
 * `qsi-src="urlLink"` - This attribute contains the name of url source field.
 
+### Bindings
 * `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
 * `{{fieldName}}` - This is the same as qsi-bind.
 * `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
@@ -66,7 +79,7 @@
 We've added routing functionality in our project for smoother transitions between views.
 
 * `<qsi-route></qsi-route>` - This tag implements routing.
-* `<qsi-subroute name="yourSubRoutName"></qsi-subroute>` - This tag implements subrouting and contains the name of
+* `<qsi-subroute name="yourSubRoutName"></qsi-subroute>` - This tag implements subrouting and contains the name of the
   subroute.
 
 ### Setting Up Routing
@@ -77,8 +90,9 @@ SubRouting additional settings are located in the <projectName>/src/settings/sub
 
 ### User-friendly Route Management
 
-For a more user-friendly way of managing routing, we recommend using the ROUTE_COMMAND enum. Its values are set
-according to the names of views, which makes scoping and navigating through your views easier and more intuitive.
+For a more user-friendly way of managing routing, we recommend using the ROUTE_COMMAND enum.
+Its values are set according to the names of views, which makes scoping and navigating through your views easier and
+more intuitive.
 
 ### Registering Routes
 
@@ -102,8 +116,8 @@ Choose the routing mode with the setBrowserRoutingMode function. This mode can b
 
 ### Navigation Between Views
 
-To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN);.
-Or alternative ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN);
+To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN).
+Or alternatively, use ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN).
 
 To navigate by subRoute use SUB_ROUTE(E_SUB_ROUTE.NAME).SHOW_PAGE(SUB_ROUTE_PAGE.NAME).
 
@@ -213,6 +227,7 @@ REGISTER_SUB_ROUTES(header, footer);
 
 ### Routing Collections example
 
+Define Enums
 ```typescript
 export enum MAIN_ROUTES {
     HOME = "HOME",
@@ -232,6 +247,7 @@ export enum POPULAR_CARS_ROUTES {
 }
 ```
 
+Configure Routes
 ```typescript
 import {
     BROWSER_ROUTING,
