@@ -6,6 +6,8 @@
 @import "../elements/cars/new_cars/new_cars";
 @import "../elements/cars/old_cars/old_cars";
 @import "../elements/cars/popular_cars/popular_cars";
+@import "../elements/cars/popular_cars/popular_cars_list/popular_cars_list";
+@import "../elements/cars/popular_cars/popular_cars_details/popular_cars_details";
 
 @import "../elements/main/about/about";
 @import "../elements/main/home/home";
@@ -38,6 +40,8 @@
       @include new_cars();
       @include old_cars();
       @include popular_cars();
+      @include popular_cars_list();
+      @include popular_cars_details();
 
       @include home();
       @include about();

@@ -15,4 +15,6 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_LEFT_SIDEBAR": "left_sidebar/left_sidebar.html",
     "APP_EXAMPLE_____MARKER_BUTTON": "left_sidebar/button/button.html",
     "APP_EXAMPLE_____MARKER_CONTENTELEMENT": "main/contentelement/contentelement.html",
+    "APP_EXAMPLE_____MARKER_POPULAR_CARS_LIST": "cars/popular_cars/popular_cars_list/popular_cars_list.html",
+    "APP_EXAMPLE_____MARKER_POPULAR_CARS_DETAILS": "cars/popular_cars/popular_cars_details/popular_cars_details.html",
 };

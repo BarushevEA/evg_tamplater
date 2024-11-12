@@ -79,6 +79,57 @@
   width: 100%;
   height: 100%;
 }
+
+.app_container_view .popular_cars-button {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: #ffc5c5;
+}
+
+.app_container_view .popular_cars-button:hover {
+    opacity: 0.5;
+}
+
+.app_container_view .popular_cars_list-button {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: #ffc5c5;
+}
+
+.app_container_view .popular_cars_list-button:hover {
+    opacity: 0.5;
+}
+
+.app_container_view .popular_cars_details-button {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: #ffc5c5;
+}
+
+.app_container_view .popular_cars_details-button:hover {
+    opacity: 0.5;
+}
 .app_container_view .main-home {
   display: flex;
   flex-flow: column nowrap;
