@@ -65,6 +65,10 @@
 
 We've added routing functionality in our project for smoother transitions between views.
 
+* `<qsi-route></qsi-route>` - This tag implements routing.
+* `<qsi-subroute name="yourSubRoutName"></qsi-subroute>` - This tag implements subrouting and contains the name of
+  subroute.
+
 ### Setting Up Routing
 
 Routing settings are located in the <projectName>/src/settings/routes.ts file.
