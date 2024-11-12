@@ -1,5 +1,4 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../../libs/env/types";
-import {log} from "../../../../../../../libs/utils/utils";
 import {ROUTE} from "../../../../../../../libs/elements/rootElements/appRoute";
 
 export class Button implements OnInit, OnCreate, OnDestroy, OnMessage {
@@ -10,7 +9,7 @@ export class Button implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onMessage(message: any): void {
-        log(this.root.tagName, "message:", message);
+        // log(this.root.tagName, "message:", message);
         this.name = message;
         this.root.detectChanges();
     }

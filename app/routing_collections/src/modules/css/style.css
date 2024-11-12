@@ -60,7 +60,6 @@ body::before {
   color: white;
   font-size: 1.2rem;
 }
-
 .app .header-button:hover {
   opacity: 0.5;
 }
@@ -92,7 +91,7 @@ body::before {
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  font-size: 20px;
+  font-size: 14px;
   background: #69b2e4;
   margin: 2px;
 }
