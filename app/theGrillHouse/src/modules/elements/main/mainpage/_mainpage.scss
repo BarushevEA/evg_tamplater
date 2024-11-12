@@ -1,4 +1,6 @@
 @import "../../../css/mixins";
+@import "../../../css/images";
+
 @mixin mainpage() {
   .banner{
     position: relative;
@@ -8,7 +10,7 @@
       position: relative;
       @include setWidthHeight(100%, 800px);
 
-      background-image: url("https://posudamart.ru/collection/52/04/720452.jpg");
+      background-image: url($main_grill_banner_link);
       background-size: cover;
       background-repeat: no-repeat;
 
@@ -36,7 +38,7 @@
 
       &-element{
         position: relative;
-        @include setWidthHeight(500px, 325px);
+        @include setWidthHeight(800px, 500px);
         background-size: cover;
         background-repeat: no-repeat;
 
@@ -45,9 +47,8 @@
       }
 
       &-element:hover{
-        @include setWidthHeight(525px,350px);
+        @include setWidthHeight(825px, 525px);
       }
     }
   }
 }
-        
