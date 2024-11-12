@@ -1,6 +1,5 @@
 import {
     BROWSER_ROUTING,
-    makeRoute,
     mergeRouteCollections,
     REGISTER_ROUTES,
     ROUTE_COLLECTION,
@@ -18,19 +17,19 @@ import {Popular_cars_details} from "../modules/elements/cars/popular_cars/popula
 
 export const START_ROUTES_REGISTRATION = () => true;
 
-const main = new ROUTE_COLLECTION(makeRoute(MAIN_ROUTES.HOME, "/main", Home));
-main.add(makeRoute(MAIN_ROUTES.ABOUT, "/about", About))
-    .add(makeRoute(MAIN_ROUTES.CONTACT, "/contact", Contact));
+const main = new ROUTE_COLLECTION(MAIN_ROUTES.HOME, "/main", Home);
+main.add(MAIN_ROUTES.ABOUT, "/about", About)
+    .add(MAIN_ROUTES.CONTACT, "/contact", Contact);
 
-const cars = new ROUTE_COLLECTION(makeRoute(CARS_ROUTES.POPULAR_CARS, "/cars", Popular_cars));
-cars.add(makeRoute(CARS_ROUTES.NEW_CARS, "/new", New_cars))
-    .add(makeRoute(CARS_ROUTES.OLD_CARS, "/old", Old_cars));
+const cars = new ROUTE_COLLECTION(CARS_ROUTES.POPULAR_CARS, "/cars", Popular_cars);
+cars.add(CARS_ROUTES.NEW_CARS, "/new", New_cars)
+    .add(CARS_ROUTES.OLD_CARS, "/old", Old_cars);
 
-const popular_cars = new ROUTE_COLLECTION(makeRoute(POPULAR_CARS_ROUTES.POPULAR_CARS_LIST, "/popular/list", Popular_cars_list));
-popular_cars.add(makeRoute(POPULAR_CARS_ROUTES.POPULAR_CARS_DETAILS, "/popular/details", Popular_cars_details));
+const popular_cars = new ROUTE_COLLECTION(POPULAR_CARS_ROUTES.POPULAR_CARS_LIST, "/popular/list", Popular_cars_list);
+popular_cars.add(POPULAR_CARS_ROUTES.POPULAR_CARS_DETAILS, "/popular/details", Popular_cars_details);
 
 cars.addCollection(popular_cars);
 
 REGISTER_ROUTES(MAIN_ROUTES.HOME, mergeRouteCollections(main, cars));
 
-setBrowserRoutingMode(BROWSER_ROUTING.HIDDEN);
+setBrowserRoutingMode(BROWSER_ROUTING.SHOW);

@@ -27,18 +27,21 @@ export function makeRoute(command: string, path: string, component: any): IRoute
     };
 }
 
-export type IAddRoute = { add(route: IRouteModel, isRoot?: boolean): IAddRoute };
+export type IAddRoute = { add(command: string, path: string, component: any, isRoot?: boolean): IAddRoute };
 export type IAddRouteCollection = { addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection };
 
 export class ROUTE_COLLECTION implements IAddRouteCollection, IAddRoute {
     private routes: IRouteModel[] = [];
+    private rootRoute: IRouteModel
 
-    constructor(private rootRoute: IRouteModel) {
-        this.validateRoute(rootRoute, true);
-        this.add(rootRoute, true);
+    constructor(command: string, path: string, component: any) {
+        this.rootRoute = makeRoute(command, path, component);
+        this.validateRoute(this.rootRoute, true);
+        this.add(command, path, component, true);
     }
 
-    add(route: IRouteModel, isRoot?: boolean): IAddRoute {
+    add(command: string, path: string, component: any, isRoot?: boolean): IAddRoute {
+        const route = makeRoute(command, path, component);
         this.validateRoute(route);
 
         !isRoot && (route.path = this.rootRoute.path + route.path);
@@ -49,10 +52,17 @@ export class ROUTE_COLLECTION implements IAddRouteCollection, IAddRoute {
     addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection {
         const routes = collection.getRoutes();
         for (let i = 0; i < routes.length; i++) {
-            this.add(routes[i]);
+            this.addRouteModel(routes[i]);
         }
 
         return this;
+    }
+
+    private addRouteModel(route: IRouteModel): void {
+        this.validateRoute(route);
+
+        route.path = this.rootRoute.path + route.path;
+        this.routes.push(route);
     }
 
     getRoutes(): IRouteModel[] {
