@@ -1,14 +1,52 @@
 @import "../../../css/mixins";
 @mixin mainpage() {
   .banner{
-    @include setWidthHeight(100%, 800px);
+    position: relative;
+    @include setWidthHeight(100%, 1150px);
 
     .banner-img{
-      @include setWidthHeight(100%, 100%);
+      position: relative;
+      @include setWidthHeight(100%, 800px);
 
       background-image: url("https://posudamart.ru/collection/52/04/720452.jpg");
       background-size: cover;
       background-repeat: no-repeat;
+
+      padding-left: 50px;
+      padding-top: 100px;
+      font-family: $global-font-family;
+      color: #ffffff;
+      text-shadow: 0 0 10px #171717;
+
+      .banner-text{
+        font-size: 4rem;
+        font-weight: 700;
+      }
+
+      .banner-subtext{
+        font-size: 1.5rem;
+      }
+    }
+    .sub-banner{
+      position: relative;
+      @include setWidthHeight(100%, fit-content);
+      @include flexRowNowrap();
+      justify-content: space-around;
+      margin-top: -50px;
+
+      &-element{
+        position: relative;
+        @include setWidthHeight(500px, 325px);
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        box-shadow: 0 0 6px;
+        transition-duration: 0.7s;
+      }
+
+      &-element:hover{
+        @include setWidthHeight(525px,350px);
+      }
     }
   }
 }

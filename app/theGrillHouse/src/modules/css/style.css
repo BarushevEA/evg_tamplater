@@ -161,15 +161,51 @@ body {
   max-height: fit-content;
 }
 .app .main .banner {
+  position: relative;
   width: 100%;
-  height: 800px;
+  height: 1150px;
 }
 .app .main .banner .banner-img {
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 800px;
   background-image: url("https://posudamart.ru/collection/52/04/720452.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  padding-left: 50px;
+  padding-top: 100px;
+  font-family: Tahoma, serif;
+  color: #ffffff;
+  text-shadow: 0 0 10px #171717;
+}
+.app .main .banner .banner-img .banner-text {
+  font-size: 4rem;
+  font-weight: 700;
+}
+.app .main .banner .banner-img .banner-subtext {
+  font-size: 1.5rem;
+}
+.app .main .banner .sub-banner {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  margin-top: -50px;
+}
+.app .main .banner .sub-banner-element {
+  position: relative;
+  width: 500px;
+  height: 325px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 6px;
+  transition-duration: 0.7s;
+}
+.app .main .banner .sub-banner-element:hover {
+  width: 525px;
+  height: 350px;
 }
 
 /*# sourceMappingURL=style.css.map */
