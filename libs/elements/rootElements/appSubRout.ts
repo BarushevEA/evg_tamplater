@@ -29,9 +29,36 @@ export type SubRouteRegistered = {
     subRoute: ISubRoute | null;
 };
 
-export const SUB_ROUTE_COMMAND$ = new Observable<SubRouteCommand>(null);
+export type IAddSubRoutePage = {
+    addPage(name: string, page: any): IAddSubRoutePage;
+};
 
+export const SUB_ROUTE_COMMAND$ = new Observable<SubRouteCommand>(null);
 const subRoutesRegistry: { [subRouteName: string]: SubRouteRegistered } = {};
+
+export class APP_SUB_ROUTE implements SubRouteOption, IAddSubRoutePage {
+    name: string;
+    defaultPage: string;
+    pages: SubRoutePageOption[] = [];
+
+    constructor(name: string, defaultPage: string) {
+        this.name = name;
+        this.defaultPage = defaultPage;
+    }
+
+    addPage(name: string, page: any): IAddSubRoutePage {
+        this.pages.push({name, page});
+        return this;
+    }
+
+    getOptions(): SubRouteOption {
+        return {
+            name: this.name,
+            defaultPage: this.defaultPage,
+            pages: this.pages
+        };
+    }
+}
 
 export function REGISTER_SUB_ROUTES(...options: SubRouteOption[]): void {
     for (let i = 0; i < options.length; i++) {

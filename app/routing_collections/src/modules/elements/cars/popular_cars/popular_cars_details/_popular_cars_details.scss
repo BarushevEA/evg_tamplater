@@ -1,0 +1,8 @@
+@import "../../../../css/mixins";
+
+@mixin popular_cars_details() {
+  .popular_cars_details-button {
+    @include button(200px, 40px);
+    background: #ffc5c5;
+  }
+}

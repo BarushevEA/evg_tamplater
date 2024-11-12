@@ -1,0 +1,197 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("assets/sota.png");
+  background-repeat: repeat;
+  background-size: contain;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  max-width: 1730px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.app .header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-flow: row nowrap;
+  background: #ffc5c5;
+  justify-content: space-around;
+  align-items: center;
+}
+.app .header-button {
+  width: 400px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #e85415;
+  color: white;
+  font-size: 1.2rem;
+}
+.app .header-button:hover {
+  opacity: 0.5;
+}
+.app .footer {
+  width: 100%;
+  height: 50px;
+  background: #979797;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+}
+.app .left-sidebar {
+  width: 200px;
+  height: 100%;
+  min-width: 200px;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.app .left-sidebar_button {
+  width: 95%;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  font-size: 14px;
+  background: #69b2e4;
+  margin: 2px;
+}
+.app .left-sidebar_button:hover {
+  opacity: 0.5;
+}
+.app_container {
+  width: 98%;
+  height: 98%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.app_container_view {
+  width: 100%;
+  height: 100%;
+}
+.app_container_view .popular_cars-button {
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #ffc5c5;
+}
+.app_container_view .popular_cars-button:hover {
+  opacity: 0.5;
+}
+.app_container_view .popular_cars_list-button {
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #ffc5c5;
+}
+.app_container_view .popular_cars_list-button:hover {
+  opacity: 0.5;
+}
+.app_container_view .popular_cars_details-button {
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #ffc5c5;
+}
+.app_container_view .popular_cars_details-button:hover {
+  opacity: 0.5;
+}
+.app_container_view .main-home {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.app_container_view .main-home-banner {
+  font-size: 2.1rem;
+  color: white;
+  width: 100%;
+}
+.app_container_view .main-home-banner-img {
+  width: 100%;
+  height: 700px;
+  background-image: url("https://b-cache.pl/video/astonmartin/2024/vantage/vantage_header.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  padding-top: 100px;
+}
+.app_container_view .main-home-content {
+  width: 90%;
+  height: fit-content;
+  padding: 3px;
+}
+.app_container_view .main-home-content-element {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: fit-content;
+  justify-content: space-around;
+  align-items: center;
+}
+.app_container_view .main-home-content-element-our_photo {
+  width: 200px;
+  height: 200px;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+}
+
+/*# sourceMappingURL=style.css.map */

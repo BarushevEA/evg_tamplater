@@ -1,0 +1,21 @@
+@import "../../css/mixins";
+
+@mixin header() {
+  .header {
+    @include setWidthHeight(100%, 80px);
+    @include flexRowNowrap();
+    background: #ffc5c5;
+
+    justify-content: space-around;
+    align-items: center;
+
+    &-button {
+      @include button(400px, 40px);
+
+      background: #e85415;
+
+      color: white;
+      font-size: 1.2rem;
+    }
+  }
+}

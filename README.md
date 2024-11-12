@@ -4,14 +4,22 @@
 
 1. Open your terminal.
 2. Navigate to the `pm.js` directory.
-3. Run the command: `node pm.js p <YourProjectName>`
+3. Run the command:
+
+```Sh
+node pm.js p <YourProjectName>
+```
     * Replace `<YourProjectName>` with the name of your project.
 
 ### Creating a Component
 
 1. Open your terminal.
 2. Navigate to the `cm.js` directory.
-3. Run the command: `node cm.js c <YourComponentName> [d <ComponentDirectory>]`
+3. Run the command:
+
+```Sh
+node cm.js c <YourComponentName> [d <ComponentDirectory>]
+```
     * Replace `<YourComponentName>` with the name of your component and `<ComponentDirectory>` with the directory of
       your component.
     * The `[d <ComponentDirectory>]` argument is optional.
@@ -37,7 +45,12 @@
 * `qsi-mouseup="functionName"` - Serving a qsi-mouseup action using function name.
 * `qsi-mousedown="functionName"` - Serving a qsi-mousedown action using function name.
 * `qsi-cls="classCondition"` - Serving classes based on conditions using variable name or function name.
-### !!! IMPORTANT !!! if you want to use css encryption - className != conditionName
+
+## CSS Encryption Note
+
+If you want to use CSS encryption, ensure that className is not equal to conditionName.
+
+### Examples
 ```js
 <div qsi-cls="class1">=== div.classList.add("class1")
     <div qsi-cls="class1:true">=== div.classList.add("class1")
@@ -53,17 +66,21 @@
 <div class="class0" qsi-cls="class1:condition1 class2:condition2 class3:condition3"></div>
 <div qsi-cls="condition?class1:class2"></div>
 ```
-
 * `qsi-for="arrName"` - This attribute contains the name of iterated array.
 * `qsi-src="urlLink"` - This attribute contains the name of url source field.
 
+### Bindings
 * `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
-* `{{fieldName}}` - This the same of qsi-bind.
+* `{{fieldName}}` - This is the same as qsi-bind.
 * `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
 
 ## Routing Functionality
 
 We've added routing functionality in our project for smoother transitions between views.
+
+* `<qsi-route></qsi-route>` - This tag implements routing.
+* `<qsi-subroute name="yourSubRoutName"></qsi-subroute>` - This tag implements subrouting and contains the name of the
+  subroute.
 
 ### Setting Up Routing
 
@@ -73,8 +90,9 @@ SubRouting additional settings are located in the <projectName>/src/settings/sub
 
 ### User-friendly Route Management
 
-For a more user-friendly way of managing routing, we recommend using the ROUTE_COMMAND enum. Its values are set
-according to the names of views, which makes scoping and navigating through your views easier and more intuitive.
+For a more user-friendly way of managing routing, we recommend using the ROUTE_COMMAND enum.
+Its values are set according to the names of views, which makes scoping and navigating through your views easier and
+more intuitive.
 
 ### Registering Routes
 
@@ -98,8 +116,8 @@ Choose the routing mode with the setBrowserRoutingMode function. This mode can b
 
 ### Navigation Between Views
 
-To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN);.
-Or alternative ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN);
+To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN).
+Or alternatively, use ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN).
 
 To navigate by subRoute use SUB_ROUTE(E_SUB_ROUTE.NAME).SHOW_PAGE(SUB_ROUTE_PAGE.NAME).
 
@@ -168,7 +186,6 @@ REGISTER_ROUTES(
 
 setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
 ```
-
 ```typescript
 export enum E_SUB_ROUTE {
     HEADER = "header",
@@ -182,7 +199,6 @@ export enum SUB_ROUTE_PAGE {
     AdditionalFooter = "AdditionalFooter"
 }
 ```
-
 ```typescript
 import {REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSubRout";
 import {Header} from "../modules/elements/header/header";
@@ -193,34 +209,79 @@ import {Additional_footer} from "../modules/elements/additional_footer/additiona
 
 export const START_SUB_ROUTES_REGISTRATION = () => true;
 
-REGISTER_SUB_ROUTES(
-    {
-        name: E_SUB_ROUTE.HEADER,
-        defaultPage: SUB_ROUTE_PAGE.Header,
-        pages: [
-            {
-                name: SUB_ROUTE_PAGE.Header,
-                page: Header
-            },
-            {
-                name: SUB_ROUTE_PAGE.AdditionalHeader,
-                page: Additional_header
-            }
-        ]
-    },
-    {
-        name: E_SUB_ROUTE.FOOTER,
-        defaultPage: SUB_ROUTE_PAGE.MainFooter,
-        pages: [
-            {
-                name: SUB_ROUTE_PAGE.MainFooter,
-                page: Main_footer
-            },
-            {
-                name: SUB_ROUTE_PAGE.AdditionalFooter,
-                page: Additional_footer
-            }
-        ]
-    },
-);
+const header = new APP_SUB_ROUTE(E_SUB_ROUTE.HEADER, SUB_ROUTE_PAGE.Header);
+header
+    .addPage(SUB_ROUTE_PAGE.Header, Header)
+    .addPage(SUB_ROUTE_PAGE.AdditionalHeader, Additional_header);
+
+const footer = new APP_SUB_ROUTE(E_SUB_ROUTE.FOOTER, SUB_ROUTE_PAGE.MainFooter);
+footer
+    .addPage(SUB_ROUTE_PAGE.MainFooter, Main_footer)
+    .addPage(SUB_ROUTE_PAGE.AdditionalFooter, Additional_footer);
+
+REGISTER_SUB_ROUTES(header, footer);
+
+// <qsi-subroute name="header"></qsi-subroute>
+// <qsi-subroute name="footer"></qsi-subroute>
+```
+
+### Routing Collections example
+
+Define Enums
+```typescript
+export enum MAIN_ROUTES {
+    HOME = "HOME",
+    ABOUT = "ABOUT",
+    CONTACT = "CONTACT",
+}
+
+export enum CARS_ROUTES {
+    OLD_CARS = "OLD_CARS",
+    NEW_CARS = "NEW_CARS",
+    POPULAR_CARS = "POPULAR_CARS",
+}
+
+export enum POPULAR_CARS_ROUTES {
+    POPULAR_CARS_LIST = "POPULAR_CARS_LIST",
+    POPULAR_CARS_DETAILS = "POPULAR_CARS_DETAILS",
+}
+```
+
+Configure Routes
+```typescript
+import {
+    BROWSER_ROUTING,
+    mergeRouteCollections,
+    REGISTER_ROUTES,
+    ROUTE_COLLECTION,
+    setBrowserRoutingMode
+} from "../../../../libs/elements/rootElements/appRoute";
+import {CARS_ROUTES, MAIN_ROUTES, POPULAR_CARS_ROUTES} from "./routesEnums";
+import {Home} from "../modules/elements/main/home/home";
+import {About} from "../modules/elements/main/about/about";
+import {Contact} from "../modules/elements/main/contact/contact";
+import {Popular_cars} from "../modules/elements/cars/popular_cars/popular_cars";
+import {New_cars} from "../modules/elements/cars/new_cars/new_cars";
+import {Old_cars} from "../modules/elements/cars/old_cars/old_cars";
+import {Popular_cars_list} from "../modules/elements/cars/popular_cars/popular_cars_list/popular_cars_list";
+import {Popular_cars_details} from "../modules/elements/cars/popular_cars/popular_cars_details/popular_cars_details";
+
+export const START_ROUTES_REGISTRATION = () => true;
+
+const main = new ROUTE_COLLECTION(MAIN_ROUTES.HOME, "/main", Home);
+main.add(MAIN_ROUTES.ABOUT, "/about", About)
+    .add(MAIN_ROUTES.CONTACT, "/contact", Contact);
+
+const cars = new ROUTE_COLLECTION(CARS_ROUTES.POPULAR_CARS, "/cars", Popular_cars);
+cars.add(CARS_ROUTES.NEW_CARS, "/new", New_cars)
+    .add(CARS_ROUTES.OLD_CARS, "/old", Old_cars);
+
+const popular_cars = new ROUTE_COLLECTION(POPULAR_CARS_ROUTES.POPULAR_CARS_LIST, "/popular/list", Popular_cars_list);
+popular_cars.add(POPULAR_CARS_ROUTES.POPULAR_CARS_DETAILS, "/popular/details", Popular_cars_details);
+
+cars.addCollection(popular_cars);
+
+REGISTER_ROUTES(MAIN_ROUTES.HOME, mergeRouteCollections(main, cars));
+
+setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
 ```

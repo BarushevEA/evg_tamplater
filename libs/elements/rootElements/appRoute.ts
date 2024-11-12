@@ -27,11 +27,81 @@ export function makeRoute(command: string, path: string, component: any): IRoute
     };
 }
 
+export type IAddRoute = { add(command: string, path: string, component: any, isRoot?: boolean): IAddRoute };
+export type IAddRouteCollection = { addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection };
+
+export class ROUTE_COLLECTION implements IAddRouteCollection, IAddRoute {
+    private routes: IRouteModel[] = [];
+    private rootRoute: IRouteModel
+
+    constructor(command: string, path: string, component: any) {
+        this.rootRoute = makeRoute(command, path, component);
+        this.validateRoute(this.rootRoute, true);
+        this.add(command, path, component, true);
+    }
+
+    add(command: string, path: string, component: any, isRoot?: boolean): IAddRoute {
+        const route = makeRoute(command, path, component);
+        this.validateRoute(route);
+
+        !isRoot && (route.path = this.rootRoute.path + route.path);
+        this.routes.push(route);
+        return this;
+    }
+
+    addCollection(collection: ROUTE_COLLECTION): IAddRouteCollection {
+        const routes = collection.getRoutes();
+        for (let i = 0; i < routes.length; i++) {
+            this.addRouteModel(routes[i]);
+        }
+
+        return this;
+    }
+
+    private addRouteModel(route: IRouteModel): void {
+        this.validateRoute(route);
+
+        route.path = this.rootRoute.path + route.path;
+        this.routes.push(route);
+    }
+
+    getRoutes(): IRouteModel[] {
+        return this.routes;
+    }
+
+    private validateRoute(route: IRouteModel, isRoot?: boolean): void {
+        const prefix = isRoot ? "Root route" : "Route";
+
+        if (!route) {
+            throw new Error(`${prefix} is not defined`);
+        }
+        if (!route.path) {
+            throw new Error(`${prefix} path is not defined`);
+        }
+        if (!route.command) {
+            throw new Error(`${prefix} command is not defined`);
+        }
+        if (!route.component) {
+            throw new Error(`${prefix} component is not defined`);
+        }
+    }
+}
+
+export function mergeRouteCollections(...collections: ROUTE_COLLECTION[]): IRouteModel[] {
+    const routes: IRouteModel[] = [];
+    for (let i = 0; i < collections.length; i++) {
+        routes.push(...collections[i].getRoutes());
+    }
+    return routes;
+}
+
 export function REGISTER_ROUTES(defaultCommand?: string, routes?: IRouteModel[]): void {
     routes$.next({
         defaultCmd: defaultCommand,
         routes: routes,
     });
+
+    ROUTE_COMMAND$.next(defaultCommand);
 }
 
 const collector = new Collector();
@@ -109,6 +179,9 @@ export class QSI_APP_ROOT_AppRoute implements OnInit, OnDestroy {
 
 export function ROUTE(): { SHOW_PAGE: (pageName: string) => void } {
     return {
-        SHOW_PAGE: (pageName: string) => ROUTE_COMMAND$.next(pageName)
+        SHOW_PAGE: (pageName: string) => {
+            const currentPageName = ROUTE_COMMAND$.getValue();
+            (currentPageName != pageName) && ROUTE_COMMAND$.next(pageName);
+        }
     };
 }

@@ -1,0 +1,32 @@
+@import "../../../css/mixins";
+@import "../contentelement/contentelement";
+
+@mixin home() {
+  .main-home {
+    @include flexColumnNowrap;
+    align-items: center;
+
+    &-banner {
+      font-size: 2.1rem;
+      color: white;
+      width: 100%;
+
+      &-img {
+        @include setWidthHeight(100%, 700px);
+
+        background-image: url("https://b-cache.pl/video/astonmartin/2024/vantage/vantage_header.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        padding-left: 50px;
+        padding-top: 100px;
+      }
+    }
+
+    &-content {
+      @include setWidthHeight(90%, fit-content);
+      padding: 3px;
+      @include contentelement();
+    }
+  }
+}
