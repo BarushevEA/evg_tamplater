@@ -58,7 +58,7 @@
 * `qsi-src="urlLink"` - This attribute contains the name of url source field.
 
 * `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
-* `{{fieldName}}` - This the same of qsi-bind.
+* `{{fieldName}}` - This is the same as qsi-bind.
 * `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
 
 ## Routing Functionality
