@@ -1,7 +1,6 @@
 import {
-    BROWSER_ROUTING,
-    makeRoute,
-    REGISTER_ROUTES,
+    BROWSER_ROUTING, mergeRouteCollections,
+    REGISTER_ROUTES, ROUTE_COLLECTION,
     setBrowserRoutingMode
 } from "../../../../libs/elements/rootElements/appRoute";
 import {Mainpage} from "../modules/elements/main/mainpage/mainpage";
@@ -21,13 +20,7 @@ const vegetable = new ROUTE_COLLECTION(ROUTE_COMMAND.VEGETABLE, "/vegetable", Ve
 
 REGISTER_ROUTES(
     ROUTE_COMMAND.MAIN,
-    [
-        makeRoute(ROUTE_COMMAND.MAIN, "/main", Mainpage),
-        makeRoute(ROUTE_COMMAND.FISH, "/fish", Fish),
-        makeRoute(ROUTE_COMMAND.MEAT, "/meat", Meat),
-        makeRoute(ROUTE_COMMAND.MUSHROOM, "/mushroom", Mushroom),
-        makeRoute(ROUTE_COMMAND.VEGETABLE, "/vegetable", Vegetable),
-    ]
+    mergeRouteCollections(main, fish, meat, mushroom, vegetable)
 );
 
 setBrowserRoutingMode(BROWSER_ROUTING.HIDDEN);
