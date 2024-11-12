@@ -1,4 +1,4 @@
-import {REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSubRout";
+import {APP_SUB_ROUTE, REGISTER_SUB_ROUTES} from "../../../../libs/elements/rootElements/appSubRout";
 import {Header} from "../modules/elements/header/header";
 import {Additional_header} from "../modules/elements/additional_header/additional_header";
 import {E_SUB_ROUTE, SUB_ROUTE_PAGE} from "./subRoutesEnums";
@@ -7,36 +7,17 @@ import {Additional_footer} from "../modules/elements/additional_footer/additiona
 
 export const START_SUB_ROUTES_REGISTRATION = () => true;
 
-REGISTER_SUB_ROUTES(
-    {
-        name: E_SUB_ROUTE.HEADER,
-        defaultPage: SUB_ROUTE_PAGE.Header,
-        pages: [
-            {
-                name: SUB_ROUTE_PAGE.Header,
-                page: Header
-            },
-            {
-                name: SUB_ROUTE_PAGE.AdditionalHeader,
-                page: Additional_header
-            }
-        ]
-    },
-    {
-        name: E_SUB_ROUTE.FOOTER,
-        defaultPage: SUB_ROUTE_PAGE.MainFooter,
-        pages: [
-            {
-                name: SUB_ROUTE_PAGE.MainFooter,
-                page: Main_footer
-            },
-            {
-                name: SUB_ROUTE_PAGE.AdditionalFooter,
-                page: Additional_footer
-            }
-        ]
-    },
-);
+const header = new APP_SUB_ROUTE(E_SUB_ROUTE.HEADER, SUB_ROUTE_PAGE.Header);
+header
+    .addPage(SUB_ROUTE_PAGE.Header, Header)
+    .addPage(SUB_ROUTE_PAGE.AdditionalHeader, Additional_header);
 
-// <qsi-subroute name="SubRoute1"></qsi-subroute>
-// <qsi-subroute name="SubRoute2"></qsi-subroute>
+const footer = new APP_SUB_ROUTE(E_SUB_ROUTE.FOOTER, SUB_ROUTE_PAGE.MainFooter);
+footer
+    .addPage(SUB_ROUTE_PAGE.MainFooter, Main_footer)
+    .addPage(SUB_ROUTE_PAGE.AdditionalFooter, Additional_footer);
+
+REGISTER_SUB_ROUTES(header, footer);
+
+// <qsi-subroute name="header"></qsi-subroute>
+// <qsi-subroute name="footer"></qsi-subroute>
