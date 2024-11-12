@@ -14,13 +14,20 @@
 @import "../elements/main/contact/contact";
 
 * {
-  @include devBorder();
   @include normalizeSpace();
-  @include devHighlighting();
+}
+
+body {
+  @include setWidthHeight(100vw, 100vh);
 }
 
 .app {
-  @include setWidthHeight(100vw, 100vh);
+  * {
+    @include devBorder();
+    @include devHighlighting();
+  }
+
+  @include setWidthHeight(100%, 100%);
 
   @include header();
   @include footer();
@@ -29,9 +36,10 @@
 
   @include flexColumnNowrap();
   justify-content: space-between;
+  align-items: center;
 
   &_container {
-    @include setWidthHeight(100%, 100%);
+    @include setWidthHeight(98%, 98%);
     @include flexRowNowrap();
 
     &_view {

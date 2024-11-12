@@ -4,19 +4,27 @@
   box-sizing: border-box;
   overflow: auto;
 }
-* * {
-  border: 1px solid rgba(0, 250, 250, 0.5);
-}
-* * {
-  background: rgba(0, 250, 250, 0.2);
+
+body {
+  width: 100vw;
+  height: 100vh;
 }
 
 .app {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+  align-items: center;
+}
+
+.app * * {
+  border: 1px solid rgba(0, 250, 250, 0.5);
+}
+
+.app * * {
+  background: rgba(0, 250, 250, 0.2);
 }
 .app .header {
   width: 100%;
@@ -70,8 +78,8 @@
   opacity: 0.5;
 }
 .app_container {
-  width: 100%;
-  height: 100%;
+  width: 98%;
+  height: 98%;
   display: flex;
   flex-flow: row nowrap;
 }
@@ -79,56 +87,50 @@
   width: 100%;
   height: 100%;
 }
-
 .app_container_view .popular_cars-button {
-    width: 200px;
-    height: 40px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    background: #ffc5c5;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #ffc5c5;
 }
-
 .app_container_view .popular_cars-button:hover {
-    opacity: 0.5;
+  opacity: 0.5;
 }
-
 .app_container_view .popular_cars_list-button {
-    width: 200px;
-    height: 40px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    background: #ffc5c5;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #ffc5c5;
 }
-
 .app_container_view .popular_cars_list-button:hover {
-    opacity: 0.5;
+  opacity: 0.5;
 }
-
 .app_container_view .popular_cars_details-button {
-    width: 200px;
-    height: 40px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    background: #ffc5c5;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #ffc5c5;
 }
-
 .app_container_view .popular_cars_details-button:hover {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 .app_container_view .main-home {
   display: flex;
