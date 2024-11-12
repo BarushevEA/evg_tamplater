@@ -202,6 +202,9 @@ footer
     .addPage(SUB_ROUTE_PAGE.AdditionalFooter, Additional_footer);
 
 REGISTER_SUB_ROUTES(header, footer);
+
+// <qsi-subroute name="header"></qsi-subroute>
+// <qsi-subroute name="footer"></qsi-subroute>
 ```
 
 ### Routing Collections example
