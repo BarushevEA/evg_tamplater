@@ -2,7 +2,7 @@
 import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
 import {ROUTE_COMMAND$} from "../../../../../../libs/elements/rootElements/appRoute";
-import {ROUTE_COMMAND} from "../../../settings/routes";
+import {ROUTE_COMMAND} from "../../../settings/routeEnum";
 
 export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;

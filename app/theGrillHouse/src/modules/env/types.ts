@@ -1,4 +1,4 @@
-import {ROUTE_COMMAND} from "../../settings/routes";
+import {ROUTE_COMMAND} from "../../settings/routeEnum";
 
 export type ILink = Required<{
     name: string,

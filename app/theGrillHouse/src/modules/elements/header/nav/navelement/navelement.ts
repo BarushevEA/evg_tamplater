@@ -3,7 +3,7 @@ import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../
 import {log} from "../../../../../../../../libs/utils/utils";
 import {ILink} from "../../../../env/types";
 import {ROUTE_COMMAND$} from "../../../../../../../../libs/elements/rootElements/appRoute";
-import {ROUTE_COMMAND} from "../../../../../settings/routes";
+import {ROUTE_COMMAND} from "../../../../../settings/routeEnum";
 
 export class Navelement implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
