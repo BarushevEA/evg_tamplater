@@ -10,7 +10,8 @@
     align-items: center;
 
     &-button {
-      @include setWidthHeight(400px, 40px);
+      @include button(400px, 40px);
+
       background: #e85415;
 
       color: white;

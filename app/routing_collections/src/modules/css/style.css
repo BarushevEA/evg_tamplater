@@ -14,7 +14,6 @@ body {
   align-items: center;
   position: relative;
 }
-
 body::before {
   content: "";
   position: absolute;
@@ -50,9 +49,20 @@ body::before {
 .app .header-button {
   width: 400px;
   height: 40px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
   background: #e85415;
   color: white;
   font-size: 1.2rem;
+}
+
+.app .header-button:hover {
+  opacity: 0.5;
 }
 .app .footer {
   width: 100%;
