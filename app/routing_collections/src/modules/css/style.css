@@ -8,23 +8,35 @@
 body {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("assets/sota.png");
+  background-repeat: repeat;
+  background-size: contain;
+  opacity: 0.2;
+  z-index: -1;
 }
 
 .app {
   width: 100%;
   height: 100%;
+  max-width: 1730px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: center;
-}
-
-.app * * {
-  border: 1px solid rgba(0, 250, 250, 0.5);
-}
-
-.app * * {
-  background: rgba(0, 250, 250, 0.2);
 }
 .app .header {
   width: 100%;
