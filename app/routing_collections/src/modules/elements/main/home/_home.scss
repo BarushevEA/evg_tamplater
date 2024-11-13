@@ -16,10 +16,11 @@
       &-img {
         @include setWidthHeight(100%, 700px);
 
-        background-image: url("https://b-cache.pl/video/astonmartin/2024/vantage/vantage_header.jpg");
+        background-image: url("assets/car-min.png");
         background-size: cover;
         background-repeat: no-repeat;
 
+        opacity: 0.8;
         padding-left: 50px;
         padding-top: 100px;
       }
