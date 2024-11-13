@@ -1,4 +1,5 @@
 @import "../../css/mixins";
+@import "../../css/imagepath";
 @import "nav/nav";
 @import "search/search";
 
@@ -23,7 +24,7 @@
       .logo{
         @include setWidthHeight(70px, 70px);
         margin-right: 15px;
-        background-image: url("assets/images/logo.jpg");
+        background-image: url($app-header-logo);
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -31,7 +32,6 @@
       }
 
       font-size: 2rem;
-      font-family: 'Rubik','Verdana', $global-font-family;
       font-weight: bold;
       color: #ffffff;
       text-shadow: 0 0 2px #f84e0f;
@@ -44,7 +44,7 @@
       @include setWidthHeight(70px, 70px);
       margin-left: 15px;
 
-      background-image: url("https://cdn-icons-png.flaticon.com/512/7093/7093762.png");
+      background-image: url($app-header-favorite);
       background-size: cover;
       background-repeat: no-repeat;
     }

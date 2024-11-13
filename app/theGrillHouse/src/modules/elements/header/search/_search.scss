@@ -1,4 +1,5 @@
 @import "../../../css/mixins";
+@import "../../../css/imagepath";
 
 @mixin search() {
   .search{
@@ -9,7 +10,7 @@
     .search-icon {
       margin-left: 10px;
       @include setWidthHeight(70px, 70px);
-      background-image: url("https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-lupa-ikonka-png-30.png");
+      background-image: url($app-header-search);
       background-size: cover;
       background-repeat: no-repeat;
     }

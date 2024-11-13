@@ -57,7 +57,6 @@ body {
   align-items: center;
   justify-content: space-between;
   font-size: 2rem;
-  font-family: "Rubik", "Verdana", Tahoma, serif;
   font-weight: bold;
   color: #ffffff;
   text-shadow: 0 0 2px #f84e0f;
@@ -77,7 +76,7 @@ body {
   width: 70px;
   height: 70px;
   margin-left: 15px;
-  background-image: url("https://cdn-icons-png.flaticon.com/512/7093/7093762.png");
+  background-image: url("assets/images/book.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -117,7 +116,7 @@ body {
   margin-left: 10px;
   width: 70px;
   height: 70px;
-  background-image: url("https://png.klev.club/uploads/posts/2024-03/png-klev-club-p-lupa-ikonka-png-30.png");
+  background-image: url("assets/images/search.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -156,56 +155,83 @@ body {
   text-align: right;
 }
 .app .main {
-  min-width: 100vw;
-  min-height: 78vh;
-  max-height: fit-content;
+  width: 100vw;
+  height: fit-content;
+  max-width: 1400px;
 }
 .app .main .banner {
   position: relative;
+  overflow: hidden;
   width: 100%;
-  height: 1150px;
+  height: fit-content;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 .app .main .banner .banner-img {
   position: relative;
   width: 100%;
   height: 800px;
-  background-image: url("https://posudamart.ru/collection/52/04/720452.jpg");
+  background-image: url("assets/images/banner.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  z-index: 0;
   padding-left: 50px;
   padding-top: 100px;
-  font-family: Tahoma, serif;
   color: #ffffff;
   text-shadow: 0 0 10px #171717;
 }
+.app .main .banner .banner-img-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0rad, rgba(25, 25, 25, 0.9), rgba(25, 25, 25, 0.5));
+  z-index: 1;
+}
 .app .main .banner .banner-img .banner-text {
-  font-size: 4rem;
+  position: relative;
+  font-size: 3rem;
   font-weight: 700;
+  text-transform: uppercase;
+  z-index: 2;
 }
 .app .main .banner .banner-img .banner-subtext {
-  font-size: 1.5rem;
-}
-.app .main .banner .sub-banner {
   position: relative;
+  font-size: 1.5rem;
+  z-index: 2;
+}
+.app .main .recipes-section {
   width: 100%;
-  height: fit-content;
+  height: 300px;
+  background: #4d4d4d;
+  margin-top: 10px;
+  padding: 15px;
+  color: white;
+}
+.app .main .recipes-section-title {
+  font-size: 2rem;
+  margin-left: 20px;
+  text-transform: uppercase;
+}
+.app .main .recipes-section-slider {
+  width: 100%;
+  height: 200px;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
-  margin-top: -50px;
+  justify-content: center;
+  margin-top: 20px;
 }
-.app .main .banner .sub-banner-element {
-  position: relative;
-  width: 500px;
-  height: 325px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: 0 0 6px;
-  transition-duration: 0.7s;
+.app .main .recipes-section-recipe {
+  width: 200px;
+  height: 200px;
+  margin: 0 20px;
+  background: #9f9f9f;
 }
-.app .main .banner .sub-banner-element:hover {
-  width: 525px;
-  height: 350px;
+
+* {
+  font-family: "Rubik", "Verdana", Tahoma, serif;
 }
 
 /*# sourceMappingURL=style.css.map */
