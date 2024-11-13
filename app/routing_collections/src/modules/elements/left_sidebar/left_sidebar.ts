@@ -1,6 +1,5 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
-import {leftSideBar$} from "../../services/service";
 import {ROUTE_COMMAND$} from "../../../../../../libs/elements/rootElements/appRoute";
 import {CARS_ROUTES, MAIN_ROUTES, POPULAR_CARS_ROUTES} from "../../../settings/routesEnums";
 
@@ -17,32 +16,21 @@ export class Left_sidebar implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onCreate(): void {
-        leftSideBar$.pipe()
-            .refine(pages => pages && pages.length > 0)
-            .subscribe((pages) => {
-                this.pages.length = 0;
-                this.pages.push(...pages);
-                log(this.root.tagName, "pages:", this.pages);
-                this.root.detectChanges();
-            });
     }
 
     onInit(): void {
-        this.pages.push(...leftSideBar$.getValue());
-        this.setButtons();
+        this.setButtons(ROUTE_COMMAND$.getValue());
 
-        // log(this.root.tagName, "command:", ROUTE_COMMAND$.getValue());
-
-        ROUTE_COMMAND$.subscribe(() => {
-            this.setButtons();
+        ROUTE_COMMAND$.subscribe(command => {
+            this.setButtons(command);
         })
     }
 
     onDestroy(): void {
     }
 
-    setButtons(): void {
-        switch (ROUTE_COMMAND$.getValue()) {
+    setButtons(command: string): void {
+        switch (command) {
             case MAIN_ROUTES.HOME:
             case MAIN_ROUTES.ABOUT:
             case MAIN_ROUTES.CONTACT:

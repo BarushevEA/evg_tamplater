@@ -5,22 +5,25 @@ import {IContent} from "../../../env/types";
 export class Home implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
 
-    content: IContent[] = [{
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg",
-        label: "My krutyje Kabachki!"
-    },
+    content: IContent[] = [
         {
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg",
-            label: "My krutyje Kabachki!"
+            image: "assets/car-min.png",
+            label: "AX-7F8 EXTRA"
         },
         {
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg",
-            label: "My krutyje Kabachki!"
+            image: "assets/car-min.png",
+            label: "AX-7F8 EXTRA"
         },
         {
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg",
-            label: "My krutyje Kabachki!"
+            image: "assets/car-min.png",
+            label: "AX-7F8 EXTRA"
+        },
+        {
+            image: "assets/car-min.png",
+            label: "AX-7F8 EXTRA"
         }];
+
+    // content: IContent[] = [];
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
@@ -34,6 +37,7 @@ export class Home implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
+        // this.root.detectChanges();
     }
 
     onDestroy(): void {

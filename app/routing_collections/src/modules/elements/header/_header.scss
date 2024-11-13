@@ -4,7 +4,12 @@
   .header {
     @include setWidthHeight(100%, 80px);
     @include flexRowNowrap();
-    background: #ffc5c5;
+
+    background: rgba(255, 255, 255, 0.3);
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
     justify-content: space-around;
     align-items: center;
@@ -12,9 +17,13 @@
     &-button {
       @include button(400px, 40px);
 
-      background: #e85415;
+      background: rgba(255, 255, 255, 0.8);
+      border-top: none;
+      border-left: none;
+      border-right: 1px solid rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
-      color: white;
+      font-weight: bold;
       font-size: 1.2rem;
     }
   }
