@@ -32,4 +32,4 @@ cars.addCollection(popular_cars);
 
 REGISTER_ROUTES(MAIN_ROUTES.HOME, mergeRouteCollections(main, cars));
 
-setBrowserRoutingMode(BROWSER_ROUTING.HIDDEN);
+setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
