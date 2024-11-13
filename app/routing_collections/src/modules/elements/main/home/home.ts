@@ -37,6 +37,7 @@ export class Home implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
+        // this.root.detectChanges();
     }
 
     onDestroy(): void {
