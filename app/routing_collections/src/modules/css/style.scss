@@ -73,6 +73,9 @@ body {
       @include home();
       @include about();
       @include contact();
+
+      background: rgba(255, 255, 255, 0.5);
+      padding: 10px;
     }
   }
 }

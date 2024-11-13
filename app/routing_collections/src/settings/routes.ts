@@ -25,8 +25,8 @@ const cars = new ROUTE_COLLECTION(CARS_ROUTES.POPULAR_CARS, "/cars", Popular_car
 cars.add(CARS_ROUTES.NEW_CARS, "/new", New_cars)
     .add(CARS_ROUTES.OLD_CARS, "/old", Old_cars);
 
-const popular_cars = new ROUTE_COLLECTION(POPULAR_CARS_ROUTES.POPULAR_CARS_LIST, "/popular/list", Popular_cars_list);
-popular_cars.add(POPULAR_CARS_ROUTES.POPULAR_CARS_DETAILS, "/popular/details", Popular_cars_details);
+const popular_cars = new ROUTE_COLLECTION(POPULAR_CARS_ROUTES.POPULAR_CARS_LIST, "/popular", Popular_cars_list);
+popular_cars.add(POPULAR_CARS_ROUTES.POPULAR_CARS_DETAILS, "/details", Popular_cars_details);
 
 cars.addCollection(popular_cars);
 
