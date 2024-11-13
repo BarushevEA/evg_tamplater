@@ -253,17 +253,14 @@ body::before {
   margin: 10px;
   border-radius: 20px;
 }
-
 .app_container_view::-webkit-scrollbar {
   width: 5px !important;
   height: 5px !important;
 }
-
 .app_container_view::-webkit-scrollbar-thumb {
   background-color: #888 !important;
   border-radius: 10px !important;
 }
-
 .app_container_view::-webkit-scrollbar-track {
   background: #f1f1f1 !important;
 }
