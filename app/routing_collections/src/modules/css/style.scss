@@ -13,6 +13,8 @@
 @import "../elements/main/home/home";
 @import "../elements/main/contact/contact";
 
+@import "../elements/main/contentelement/contentelement";
+
 * {
   @include normalizeSpace();
 }
@@ -56,6 +58,8 @@ body {
   @include flexColumnNowrap();
   justify-content: space-between;
   align-items: center;
+
+  @include contentelement();
 
   &_container {
     @include setWidthHeight(98%, 98%);
