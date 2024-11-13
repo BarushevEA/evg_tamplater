@@ -155,7 +155,8 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
             }
             if ("onInit" in this.ahe_cmt) this.ahe_cmt.onInit();
 
-            this.detectChanges(true);
+            // this.detectChanges(true);
+            this.detectChanges();
         }
 
         disconnectedCallback() {

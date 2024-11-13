@@ -1,5 +1,4 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../../libs/env/types";
-import {log} from "../../../../../../../libs/utils/utils";
 import {IContent} from "../../../env/types";
 
 export class Contentelement implements OnInit, OnCreate, OnDestroy, OnMessage {
@@ -12,18 +11,10 @@ export class Contentelement implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onMessage(message: any): void {
-        log(this.root.tagName, "message:", message);
+        this.setContent(message);
     }
 
     onCreate(): void {
-        this.root.collect(
-            this.root.onMessage$<IContent>()
-                .pipe()
-                .refine(msg => !!msg)
-                .subscribe(msg => {
-                    this.setContent(msg);
-                })
-        )
     }
 
     onInit(): void {
@@ -35,5 +26,6 @@ export class Contentelement implements OnInit, OnCreate, OnDestroy, OnMessage {
     setContent(content: IContent): void {
         this.label = content.label;
         this.photo = content.image;
+        this.root.detectChanges();
     }
 }

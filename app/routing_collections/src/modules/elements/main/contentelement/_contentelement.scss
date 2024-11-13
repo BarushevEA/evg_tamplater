@@ -1,19 +1,25 @@
 @import "../../../css/mixins";
 
 @mixin contentelement() {
-  &-element {
+  .element {
     @include flexRowNowrap;
     @include setWidthHeight(100%, fit-content);
-    justify-content: space-around;
+    //@include setMaxWidthHeight(200px, 200px);
+    justify-content: center;
     align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
 
     &-our_photo {
-      @include setWidthHeight(200px, 200px);
+      @include setWidthHeight(300px, 200px);
+      @include setMaxWidthHeight(300px, 200px);
 
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
+      //background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cukety_%282%29.jpg/275px-Cukety_%282%29.jpg");
+      //background-size: 100% 100%;
+      //background-repeat: no-repeat;
+      opacity: 0.8;
 
+      margin: 10px;
       border-radius: 20px;
     }
   }
