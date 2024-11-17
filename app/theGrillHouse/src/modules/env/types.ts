@@ -9,3 +9,11 @@ export type IRecipeLink = Required<{
     recipeName: string,
     url: string
 }>
+
+export type IRecipe = {
+    name: string,
+    ingredients: string[],
+    steps: string[],
+    time: string,
+    image: string,
+};

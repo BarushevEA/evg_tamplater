@@ -1,5 +1,4 @@
-
-import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../../../libs/env/types";
+import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../../../libs/env/types";
 import {log} from "../../../../../../../../libs/utils/utils";
 import {ILink} from "../../../../env/types";
 import {ROUTE_COMMAND$} from "../../../../../../../../libs/elements/rootElements/appRoute";
@@ -15,17 +14,18 @@ export class Navelement implements OnInit, OnCreate, OnDestroy, OnMessage {
     
     onMessage(message: any): void {
         log(this.root.tagName, "message:", message);
+        this.setProperties(message);
     }
 
     onCreate(): void {
-        this.root.collect(
-            this.root.onMessage$<ILink>()
-                .pipe()
-                .refine(msg => !!msg)
-                .subscribe(msg => {
-                    this.setProperties(msg);
-                })
-        )
+        // this.root.collect(
+        //     this.root.onMessage$<ILink>()
+        //         .pipe()
+        //         .refine(msg => !!msg)
+        //         .subscribe(msg => {
+        //             this.setProperties(msg);
+        //         })
+        // )
     }
 
     onInit(): void {

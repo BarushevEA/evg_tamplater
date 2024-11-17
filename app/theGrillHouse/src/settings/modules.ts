@@ -1,3 +1,5 @@
+import {Recipe} from "../modules/elements/recipe/recipe";
+import {Page_recipe} from "../modules/elements/page_recipe/page_recipe";
 import {Recipelink} from "../modules/elements/main/recipelink/recipelink";
 import {Mainpage} from "../modules/elements/main/mainpage/mainpage";
 import {Fish} from "../modules/elements/main/fish/fish";
@@ -29,6 +31,8 @@ export const MODULES: REG_OPTIONS = [
     getOption(Fish, "app-fish", "APP_EXAMPLE_____MARKER_FISH"),
     getOption(Mainpage, "app-mainpage", "APP_EXAMPLE_____MARKER_MAINPAGE"),
     getOption(Recipelink, "app-recipelink", "APP_EXAMPLE_____MARKER_RECIPELINK"),
+    getOption(Page_recipe, "app-page_recipe", "APP_EXAMPLE_____MARKER_PAGE_RECIPE"),
+    getOption(Recipe, "app-recipe", "APP_EXAMPLE_____MARKER_RECIPE"),
 ];
 
 START_ROUTES_REGISTRATION();
