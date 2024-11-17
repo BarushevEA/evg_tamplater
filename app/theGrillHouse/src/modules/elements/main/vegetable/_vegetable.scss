@@ -1,4 +1,7 @@
-
+@import "../../../css/variables";
 @mixin vegetable() {
+  .vegetable-img{
+    background-image: url($app-main-vegetable_page-banner);
+  }
 }
         

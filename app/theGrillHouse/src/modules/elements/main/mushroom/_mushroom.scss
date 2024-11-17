@@ -1,4 +1,7 @@
-
+@import "../../../css/variables";
 @mixin mushroom() {
+  .mushroom-img{
+    background-image: url($app-main-mushroom_page-banner);
+  }
 }
         

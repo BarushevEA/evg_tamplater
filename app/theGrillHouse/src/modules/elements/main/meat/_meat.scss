@@ -1,4 +1,7 @@
-
+@import "../../../css/variables";
 @mixin meat() {
+  .meat-img{
+    background-image: url($app-main-meat_page-banner);
+  }
 }
         
