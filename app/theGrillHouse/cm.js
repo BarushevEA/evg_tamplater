@@ -136,7 +136,7 @@ class Maker {
         this.htmlTemplate = `<div>Hello ${this.htmlFileName}</div>`;
         this.tsTemplate = `
 import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../${levels}libs/env/types";
-import {log} from "../../../../../../libs/utils/utils";
+import {log} from "../../../../../../${levels}libs/utils/utils";
 
 export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;

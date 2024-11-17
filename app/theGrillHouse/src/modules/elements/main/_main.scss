@@ -13,9 +13,35 @@
         @include setWidthHeight(100%, 400px);
 
         &-img{
+          position: relative;
+          @include setWidthHeight(100%, 100%);
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center center;
+          z-index: 0;
+
+          &-wrapper{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background: linear-gradient(0rad, rgba(25, 25, 25, 0.9), rgba(25, 25, 25, 0.5));
+            z-index: 1;
+          }
+        }
+
+        &-text{
+          margin-left: 50px;
+          margin-top: 75px;
+          position: relative;
+
+          color: white;
+          font-size: 3rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          z-index: 2;
         }
       }
     }
