@@ -164,9 +164,6 @@ body {
   overflow: hidden;
   width: 100%;
   height: fit-content;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
 }
 .app .main .banner .banner-img {
   position: relative;
@@ -202,7 +199,7 @@ body {
   font-size: 1.5rem;
   z-index: 2;
 }
-.app .main .recipes-section {
+.app .main .section {
   width: 100%;
   height: 300px;
   background: #4d4d4d;
@@ -210,12 +207,12 @@ body {
   padding: 15px;
   color: white;
 }
-.app .main .recipes-section-title {
+.app .main .section-title {
   font-size: 2rem;
   margin-left: 20px;
   text-transform: uppercase;
 }
-.app .main .recipes-section-slider {
+.app .main .section-slider {
   width: 100%;
   height: 200px;
   display: flex;
@@ -223,11 +220,56 @@ body {
   justify-content: center;
   margin-top: 20px;
 }
-.app .main .recipes-section-recipe {
+.app .main .section-recipe {
   width: 200px;
   height: 200px;
   margin: 0 20px;
   background: #9f9f9f;
+}
+.app .main .about-me {
+  width: 100%;
+  height: fit-content;
+}
+.app .main .about-me-content {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 10px;
+}
+.app .main .about-me-content-photo-wrapper {
+  width: 400px;
+  height: 500px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.app .main .about-me-content-photo-wrapper-photo {
+  width: 100%;
+  height: 100%;
+  background-image: url("assets/images/Papa.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.app .main .about-me-content-text {
+  max-width: 60%;
+  max-height: 100%;
+  margin: 20px;
+  font-size: 1.2rem;
+}
+.app .main .fish-img {
+  background-image: url("assets/images/fish.jpg");
+}
+.app .main-recipe-page-banner {
+  width: 100%;
+  height: 400px;
+}
+.app .main-recipe-page-banner-img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 * {

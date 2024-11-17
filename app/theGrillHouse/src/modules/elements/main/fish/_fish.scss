@@ -1,4 +1,8 @@
+@import "../../../css/imagepath";
 
 @mixin fish() {
+  .fish-img{
+    background-image: url($app-main-fish_page-banner);
+  }
 }
         

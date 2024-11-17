@@ -1,10 +1,24 @@
 @import "../../css/mixins";
 @import "mainpage/mainpage";
+@import "fish/fish";
 @mixin main() {
   .main{
     @include mainpage();
+    @include fish();
     @include setWidthHeight(100vw, fit-content);
     max-width: 1400px;
+
+    &-recipe-page{
+      &-banner{
+        @include setWidthHeight(100%, 400px);
+
+        &-img{
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      }
+    }
   }
 }
         

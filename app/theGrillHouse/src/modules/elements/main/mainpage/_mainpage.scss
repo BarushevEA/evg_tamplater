@@ -5,8 +5,6 @@
     position: relative;
     overflow: hidden;
     @include setWidthHeight(100%, fit-content);
-    @include flexColumnNowrap();
-    align-items: center;
 
     .banner-img{
       position: relative;
@@ -49,7 +47,7 @@
     }
   }
 
-  .recipes-section{
+  .section{
     @include setWidthHeight(100%, 300px);
     background: #4d4d4d;
     margin-top: 10px;
@@ -76,6 +74,41 @@
       margin: 0 20px;
 
       background: #9f9f9f;
+    }
+  }
+
+  .about-me{
+    @include setWidthHeight(100%, fit-content);
+
+    &-content{
+      @include flexRowNowrap();
+      padding: 10px;
+
+      &-photo-wrapper{
+        @include setWidthHeight(400px, 500px);
+        @include flexRowNowrap();
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 5px;
+
+        overflow: hidden;
+
+        &-photo{
+          @include setWidthHeight(100%, 100%);
+          background-image: url($app-main-main_page-content-about_me-photo);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      }
+
+      &-text{
+        @include setMaxWidthHeight(60%, 100%);
+        margin: 20px;
+
+        font-size: 1.2rem;
+      }
     }
   }
 }
