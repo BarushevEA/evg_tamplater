@@ -1,0 +1,97 @@
+@import "variables";
+
+@mixin flexColumnNowrap() {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+@mixin flexStart() {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+@mixin flexCenter() {
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexEnd() {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+@mixin flexRowNowrap() {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+@mixin setWidthHeight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin setMaxWidthHeight($width, $height) {
+  max-width: $width;
+  max-height: $height;
+}
+
+@mixin setMinWidthHeight($width, $height) {
+  min-width: $width;
+  min-height: $height;
+}
+
+@mixin devHighlighting {
+  * {
+    background: $dev-highlight-color;
+  }
+}
+
+@mixin devBorder {
+  * {
+    border: 1px solid $dev-border-color;
+  }
+}
+
+@mixin normalizeSpace {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+@mixin globalNormalize() {
+  * {
+    @include normalizeSpace();
+  }
+  body {
+    overflow: hidden;
+  }
+}
+
+@mixin centered_rectangle($width, $height) {
+  @include setWidthHeight($width, $height);
+
+  @include flexColumnNowrap();
+  @include flexCenter();
+}
+
+@mixin globalRules() {
+  @include centered_rectangle($global-width, $global-height);
+  @include setMinWidthHeight($global-width, $global-height);
+
+  font-family: $global-font-family;
+  font-size: $global-font-size;
+}
+
+@mixin button($width, $height) {
+  @include centered_rectangle($width, $height);
+
+  position: relative;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
