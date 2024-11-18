@@ -4,10 +4,10 @@ import {IRecipeLink} from "../../../env/types";
 import {log} from "../../../../../../../libs/utils/utils";
 import {ROUTE_COMMAND$} from "../../../../../../../libs/elements/rootElements/appRoute";
 import {ROUTE_COMMAND} from "../../../../settings/routeEnum";
+import {serviceRecipe$} from "../../../services/service";
 
 export class Recipelink implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
-
     recipeName: string;
     photo: string;
     ingredients: string[];
@@ -39,5 +39,13 @@ export class Recipelink implements OnInit, OnCreate, OnDestroy, OnMessage {
 
     goRecipe() {
         ROUTE_COMMAND$.next(ROUTE_COMMAND.RECIPEPAGE);
+        serviceRecipe$.next(
+            {
+                recipeName: this.recipeName,
+                url: this.photo,
+                steps: ["1","2","3","4","5"],
+                ingredients: this.ingredients,
+            }
+        );
     }
 }
