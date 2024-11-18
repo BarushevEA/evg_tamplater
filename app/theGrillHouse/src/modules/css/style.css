@@ -160,6 +160,43 @@ body {
   height: fit-content;
   max-width: 1400px;
 }
+.app .main .recipelink-card {
+  width: 470px;
+  height: 250px;
+  display: flex;
+  flex-flow: column nowrap;
+  background: #5e5e5e;
+  margin: 10px;
+  font-family: "Rubik", "Verdana", Tahoma, serif;
+  color: #171717;
+}
+.app .main .recipelink-card-title {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 1.5rem;
+  font-weight: bolder;
+}
+.app .main .recipelink-card-content {
+  width: 100%;
+  height: 220px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 1.3rem;
+}
+.app .main .recipelink-card-content-image {
+  width: 200px;
+  height: 200px;
+  margin: 0 10px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 .app .main .banner {
   position: relative;
   overflow: hidden;
@@ -202,10 +239,10 @@ body {
 }
 .app .main .section {
   width: 100%;
-  height: 300px;
+  height: 360px;
   background: #4d4d4d;
   margin-top: 10px;
-  padding: 15px;
+  padding: 10px;
   color: white;
 }
 .app .main .section-title {
@@ -215,17 +252,11 @@ body {
 }
 .app .main .section-slider {
   width: 100%;
-  height: 200px;
+  height: 270px;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: space-around;
   margin-top: 20px;
-}
-.app .main .section-recipe {
-  width: 200px;
-  height: 200px;
-  margin: 0 20px;
-  background: #9f9f9f;
 }
 .app .main .about-me {
   width: 100%;

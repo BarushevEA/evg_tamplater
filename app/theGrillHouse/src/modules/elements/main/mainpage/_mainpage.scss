@@ -48,10 +48,10 @@
   }
 
   .section{
-    @include setWidthHeight(100%, 300px);
+    @include setWidthHeight(100%, 360px);
     background: #4d4d4d;
     margin-top: 10px;
-    padding: 15px;
+    padding: 10px;
 
     color: white;
 
@@ -62,18 +62,11 @@
     }
 
     &-slider{
-      @include setWidthHeight(100%, 200px);
+      @include setWidthHeight(100%, 270px);
       @include flexRowNowrap();
-      justify-content: center;
+      justify-content: space-around;
 
       margin-top: 20px;
-    }
-
-    &-recipe{
-      @include setWidthHeight(200px, 200px);
-      margin: 0 20px;
-
-      background: #9f9f9f;
     }
   }
 

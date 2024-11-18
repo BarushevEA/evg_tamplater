@@ -4,8 +4,10 @@
 @import "meat/meat";
 @import "vegetable/vegetable";
 @import "mushroom/mushroom";
+@import "recipelink/recipelink";
 @mixin main() {
   .main{
+    @include recipelink();
     @include mainpage();
     @include fish();
     @include meat();

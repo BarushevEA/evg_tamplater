@@ -4,4 +4,5 @@ export enum ROUTE_COMMAND {
     MEAT = 'MEAT',
     MUSHROOM = 'MUSHROOM',
     VEGETABLE = 'VEGETABLE',
+    RECIPEPAGE = 'RECIPEPAGE',
 }

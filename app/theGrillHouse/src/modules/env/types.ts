@@ -7,5 +7,6 @@ export type ILink = Required<{
 
 export type IRecipeLink = Required<{
     recipeName: string,
-    url: string
+    url: string,
+    ingredients: string[],
 }>

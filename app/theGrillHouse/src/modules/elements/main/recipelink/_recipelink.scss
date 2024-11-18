@@ -1,4 +1,43 @@
-
+@import "../../../css/mixins";
 @mixin recipelink() {
+  .recipelink-card{
+    @include setWidthHeight(470px, 250px);
+    @include flexColumnNowrap();
+    background: #5e5e5e;
+    margin: 10px;
+
+    font-family: "Rubik", "Verdana", Tahoma, serif;
+    color: #171717;
+
+    &-title{
+      @include setWidthHeight(100%, 30px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-left: 20px;
+
+      font-size: 1.5rem;
+      font-weight: bolder;
+    }
+
+    &-content {
+      @include setWidthHeight(100%, 220px);
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      display: flex;
+      flex-flow: row wrap;
+
+      &-image{
+        @include setWidthHeight(200px, 200px);
+        margin: 0 10px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+      }
+
+      font-size: 1.3rem;
+    }
+  }
 }
         

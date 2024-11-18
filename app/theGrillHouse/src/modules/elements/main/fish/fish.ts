@@ -7,8 +7,27 @@ export class Fish implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
     bannerText:string = "Fish recipes";
     recipes: IRecipeLink[] = [
-        {recipeName: "", url: ""},{recipeName: "", url: ""},
-        {recipeName: "", url: ""},{recipeName: "", url: ""}];
+        {
+            recipeName: "Smoked Salmon",
+            url: "assets/images/main/recipes/fish/grilledFish0.jpg",
+            ingredients: ['Salmon']
+        },
+        {
+            recipeName: "Smoked Perch",
+            url: "assets/images/main/recipes/fish/grilledFish1.jpg",
+            ingredients: ['Perch']
+        },
+        {
+            recipeName: "Smoked Shark",
+            url: "assets/images/main/recipes/fish/grilledFish2.png",
+            ingredients: ['Shark']
+        },
+        {
+            recipeName: "Smoked Tuna",
+            url: "assets/images/main/recipes/fish/grilledFish3.JPG",
+            ingredients: ['Tuna']
+        }
+        ];
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
     }

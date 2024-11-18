@@ -7,8 +7,27 @@ export class Mushroom implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
     bannerText:string = "Mushrooms recipes";
     recipes: IRecipeLink[] = [
-        {recipeName: "", url: ""},{recipeName: "", url: ""},
-        {recipeName: "", url: ""},{recipeName: "", url: ""}];
+        {
+            recipeName: "Mushrooms Shashlyk",
+            url: "assets/images/main/recipes/mushrooms/grilledMushrooms0.jpg",
+            ingredients: ['Mushrooms']
+        },
+        {
+            recipeName: "Chanterelles on a skewer",
+            url: "assets/images/main/recipes/mushrooms/grilledMushrooms1.jpg",
+            ingredients: ['Chanterelles']
+        },
+        {
+            recipeName: "Mushrooms on a skewer",
+            url: "assets/images/main/recipes/mushrooms/grilledMushrooms2.jpg",
+            ingredients: ['Mushrooms']
+        },
+        {
+            recipeName: "Stuffed mushrooms",
+            url: "assets/images/main/recipes/mushrooms/grilledMushrooms3.jpg",
+            ingredients: ['Mushrooms']
+        }
+        ];
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
