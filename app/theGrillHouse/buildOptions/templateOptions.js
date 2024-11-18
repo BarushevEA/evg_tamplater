@@ -16,5 +16,4 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_FISH": "main/fish/fish.html",
     "APP_EXAMPLE_____MARKER_MAINPAGE": "main/mainpage/mainpage.html",
     "APP_EXAMPLE_____MARKER_RECIPELINK": "main/recipelink/recipelink.html",
-    "APP_EXAMPLE_____MARKER_RECIPEPAGE": "main/recipepage/recipepage.html",
 };
