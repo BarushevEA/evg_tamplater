@@ -5,6 +5,7 @@
 @import "vegetable/vegetable";
 @import "mushroom/mushroom";
 @import "recipelink/recipelink";
+@import "recipepage/recipepage";
 @mixin main() {
   .main{
     @include recipelink();

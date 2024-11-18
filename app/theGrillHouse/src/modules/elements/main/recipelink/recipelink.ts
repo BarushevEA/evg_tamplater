@@ -38,7 +38,6 @@ export class Recipelink implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     goRecipe() {
-        ROUTE_COMMAND$.next(ROUTE_COMMAND.RECIPEPAGE);
         serviceRecipe$.next(
             {
                 recipeName: this.recipeName,
@@ -47,5 +46,6 @@ export class Recipelink implements OnInit, OnCreate, OnDestroy, OnMessage {
                 ingredients: this.ingredients,
             }
         );
+        ROUTE_COMMAND$.next(ROUTE_COMMAND.RECIPEPAGE);
     }
 }
