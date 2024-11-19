@@ -1,4 +1,47 @@
 @import "../../../css/mixins";
 @mixin recipepage() {
+  .recipe-page{
+    @include setWidthHeight(100%, fit-content);
+    @include flexColumnNowrap;
+
+    font-family: "Rubik", "Verdana", Tahoma, serif;
+    color: white;
+
+    &-header{
+      @include setWidthHeight(100%, 400px);
+      @include flexRowNowrap();
+
+      &-name{
+        @include setWidthHeight(30%, 400px);
+        background: #3d3d3d;
+        padding: 30px;
+
+        font-size: 2rem;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      &-image{
+        @include setWidthHeight(70%, 400px);
+        background-size: cover;
+        background-position: center center;
+      }
+    }
+
+    &-content{
+      @include setWidthHeight(100%, fit-content);
+      @include flexColumnNowrap();
+      padding: 15px;
+      font-size: 1.4rem;
+
+      &-ingredients{
+        margin: 10px;
+      }
+
+      &-steps{
+        margin: 10px;
+      }
+    }
+  }
 }
         
