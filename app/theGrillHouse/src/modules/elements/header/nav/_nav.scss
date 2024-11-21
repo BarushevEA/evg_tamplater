@@ -5,9 +5,11 @@
   .nav{
     @include setWidthHeight(fit-content, 40px);
     @include flexRowNowrap();
+    position: absolute;
+    top: 39px;
+    left: 415px;
     align-items: center;
     justify-content: space-between;
-    top: 100px;
 
     @include navelement();
   }

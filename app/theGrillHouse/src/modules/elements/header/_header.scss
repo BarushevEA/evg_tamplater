@@ -2,20 +2,23 @@
 @import "../../css/imagepath";
 @import "nav/nav";
 @import "search/search";
+@import "menu/menu";
 
 @mixin header() {
   .header {
     @include flexRowNowrap();
-    justify-content: space-between;
-
     @include setWidthHeight(100%, 110px);
+
+    justify-content: flex-end;
     position: relative;
     background-color: #171717;
     align-items: center;
 
     .logotype{
-      margin-left: 15px;
       @include flexRowNowrap();
+      position: absolute;
+      top: 15px;
+      left: 15px;
       width: fit-content;
       height: 80px;
       align-items: center;
@@ -51,6 +54,13 @@
 
     @include nav();
     @include search();
+    @include menu();
+  }
+  
+  @media (max-width: 1200px) {
+    .title{
+      display: none;
+    }
   }
 }
         
