@@ -8,7 +8,6 @@
     align-items: center;
 
     .search-icon {
-      margin-left: 10px;
       @include setWidthHeight(70px, 70px);
       background-image: url($app-header-search);
       background-size: cover;
@@ -27,7 +26,7 @@
       height: 30px;
       background: transparent;
       border: 0;
-      padding: 5px;
+      text-align: center;
 
       color: #ffffff;
       font-size: 1.2rem;
@@ -39,6 +38,18 @@
     }
     cursor: pointer;
   }
+
+  @media (max-width: 1200px) {
+    .search{
+      display: none;
+    }
+  }
+  
+  @media (min-width: 1201px) {
+    .search-icon{
+      margin-left: 10px;
+    }
+  }
 }
 
 @keyframes search-field-show {
@@ -49,13 +60,13 @@
 
   100% {
     display: flex;
-    width: 9vw;
+    width: 200px;
   }
 }
 @keyframes search-field-hidden {
   0% {
     display: flex;
-    width: 9vw;
+    width: 200px;
   }
   100% {
     display: none;

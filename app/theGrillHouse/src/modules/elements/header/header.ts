@@ -6,6 +6,7 @@ import {ROUTE_COMMAND} from "../../../settings/routeEnum";
 
 export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
+    title: string = "The Grill House";
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
@@ -19,6 +20,10 @@ export class Header implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
+        if (window.innerWidth < 1201){
+            this.title = "TGH";
+            this.root.detectChanges();
+        }
     }
 
     onDestroy(): void {

@@ -1,6 +1,5 @@
 
 import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../../../libs/env/types";
-import {log} from "../../../../../../../../libs/utils/utils";
 import {ILink} from "../../../../env/types";
 import {ROUTE_COMMAND$} from "../../../../../../../../libs/elements/rootElements/appRoute";
 import {ROUTE_COMMAND} from "../../../../../settings/routeEnum";
@@ -14,7 +13,6 @@ export class Navelement implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
     
     onMessage(message: ILink): void {
-        log(this.root.tagName, "message:", message);
         this.setProperties(message)
     }
 

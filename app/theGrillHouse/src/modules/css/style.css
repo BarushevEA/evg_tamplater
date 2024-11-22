@@ -5,13 +5,13 @@
   }
   100% {
     display: flex;
-    width: 9vw;
+    width: 200px;
   }
 }
 @keyframes search-field-hidden {
   0% {
     display: flex;
-    width: 9vw;
+    width: 200px;
   }
   100% {
     display: none;
@@ -78,7 +78,6 @@ body {
 .app .header .bookmark {
   width: 70px;
   height: 70px;
-  margin-left: 15px;
   background-image: url("assets/images/header/book.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -109,6 +108,11 @@ body {
 .app .header .nav .navElement:hover {
   border-color: #ff2f00;
 }
+@media (max-width: 1200px) {
+  .app .header .nav {
+    display: none;
+  }
+}
 .app .header .search {
   width: fit-content;
   height: 80px;
@@ -118,7 +122,6 @@ body {
   cursor: pointer;
 }
 .app .header .search .search-icon {
-  margin-left: 10px;
   width: 70px;
   height: 70px;
   background-image: url("assets/images/header/search.png");
@@ -135,7 +138,7 @@ body {
   height: 30px;
   background: transparent;
   border: 0;
-  padding: 5px;
+  text-align: center;
   color: #ffffff;
   font-size: 1.2rem;
   text-shadow: 0 0 2px #f84e0f;
@@ -143,12 +146,49 @@ body {
 .app .header .search .search-field:hover {
   border-bottom: solid 1px #ffffff;
 }
+@media (max-width: 1200px) {
+  .app .header .search {
+    display: none;
+  }
+}
+@media (min-width: 1201px) {
+  .app .header .search-icon {
+    margin-left: 10px;
+  }
+}
 .app .header .menu {
-  display: none;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-right: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+.app .header .menu .line {
+  width: 100%;
+  height: 7px;
+  background: #9f9f9f;
+  border-radius: 5px;
 }
 @media (max-width: 1200px) {
-  .app .title {
+  .app .header .menu {
+    display: flex;
+  }
+}
+@media (min-width: 1201px) {
+  .app .header .menu {
     display: none;
+  }
+}
+@media (max-width: 1200px) {
+  .app .bookmark {
+    display: none;
+  }
+}
+@media (min-width: 1201px) {
+  .app .bookmark {
+    margin-left: 10px;
   }
 }
 .app .footer {

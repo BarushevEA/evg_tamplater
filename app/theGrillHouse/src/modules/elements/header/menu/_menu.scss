@@ -1,7 +1,29 @@
 @import "../../../css/mixins";
 @mixin menu() {
-  .menu{
-    display: none;
+  .menu {
+    @include setWidthHeight(70px, 70px);
+    @include flexColumnNowrap();
+
+    margin-right: 10px;
+
+    justify-content: space-around;
+    align-items: center;
+
+    .line {
+      @include setWidthHeight(100%, 7px);
+      background: #9f9f9f;
+      border-radius: 5px;
+    }
+  }
+  @media (max-width: 1200px) {
+    .menu {
+      display: flex;
+    }
+  }
+  @media (min-width: 1201px) {
+    .menu{
+      display: none;
+    }
   }
 }
         

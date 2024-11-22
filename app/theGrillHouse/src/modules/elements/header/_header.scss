@@ -45,7 +45,6 @@
 
     .bookmark{
       @include setWidthHeight(70px, 70px);
-      margin-left: 15px;
 
       background-image: url($app-header-favorite);
       background-size: cover;
@@ -58,8 +57,14 @@
   }
   
   @media (max-width: 1200px) {
-    .title{
+    .bookmark{
       display: none;
+    }
+  }
+
+  @media (min-width: 1201px) {
+    .bookmark{
+      margin-left: 10px;
     }
   }
 }
