@@ -9,3 +9,5 @@ export const serviceRecipe$ = new Observable<IRecipe>(
         ingredients: [""],
     }
 )
+
+export const isShowMenu$ = new Observable(false);

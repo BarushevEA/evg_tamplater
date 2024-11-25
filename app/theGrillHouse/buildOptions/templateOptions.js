@@ -18,4 +18,5 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_RECIPELINK": "main/recipelink/recipelink.html",
     "APP_EXAMPLE_____MARKER_RECIPEPAGE": "main/recipepage/recipepage.html",
     "APP_EXAMPLE_____MARKER_MENU": "header/menu/menu.html",
+    "APP_EXAMPLE_____MARKER_MENUCONTENT": "header/menu/menucontent/menucontent.html",
 };

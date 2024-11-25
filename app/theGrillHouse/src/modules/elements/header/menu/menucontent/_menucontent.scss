@@ -1,0 +1,13 @@
+@import "../../../../css/mixins";
+
+@mixin menucontent() {
+  .menu-content{
+    @include setWidthHeight(320, fit-content);
+
+  }
+
+  .menu-content_hidden{
+    display: none;
+  }
+}
+        

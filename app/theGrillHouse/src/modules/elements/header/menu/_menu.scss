@@ -1,4 +1,5 @@
 @import "../../../css/mixins";
+@import "menucontent/menucontent";
 @mixin menu() {
   .menu {
     @include setWidthHeight(70px, 70px);
@@ -14,6 +15,8 @@
       background: #9f9f9f;
       border-radius: 5px;
     }
+
+    cursor: pointer;
   }
   @media (max-width: 1200px) {
     .menu {
@@ -25,5 +28,6 @@
       display: none;
     }
   }
+  @include menucontent();
 }
         

@@ -2,20 +2,24 @@
   0% {
     display: none;
     width: 0;
+    border: 1px solid rgba(159, 159, 159, 0);
   }
   100% {
     display: flex;
     width: 200px;
+    border: 1px solid #9f9f9f;
   }
 }
 @keyframes search-field-hidden {
   0% {
     display: flex;
     width: 200px;
+    border: 1px solid #9f9f9f;
   }
   100% {
     display: none;
     width: 0;
+    border: 1px solid rgba(159, 159, 159, 0);
   }
 }
 * {
@@ -40,6 +44,10 @@ body {
   justify-content: space-between;
 }
 .app .header {
+  width: 100%;
+  height: fit-content;
+}
+.app .header .header-top-container {
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
@@ -49,7 +57,7 @@ body {
   background-color: #171717;
   align-items: center;
 }
-.app .header .logotype {
+.app .header .header-top-container .logotype {
   display: flex;
   flex-flow: row nowrap;
   position: absolute;
@@ -66,23 +74,24 @@ body {
   text-transform: uppercase;
   cursor: pointer;
 }
-.app .header .logotype .logo {
+.app .header .header-top-container .logotype .logo {
   width: 70px;
   height: 70px;
   margin-right: 15px;
   background-image: url("assets/images/header/logo.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center;
   border-radius: 100%;
 }
-.app .header .bookmark {
+.app .header .header-top-container .bookmark {
   width: 70px;
   height: 70px;
   background-image: url("assets/images/header/book.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
-.app .header .nav {
+.app .header .header-top-container .nav {
   width: fit-content;
   height: 40px;
   display: flex;
@@ -93,7 +102,7 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-.app .header .nav .navElement {
+.app .header .header-top-container .nav .navElement {
   font-size: 1.5rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -105,15 +114,15 @@ body {
   transition-duration: 200ms;
   cursor: pointer;
 }
-.app .header .nav .navElement:hover {
+.app .header .header-top-container .nav .navElement:hover {
   border-color: #ff2f00;
 }
 @media (max-width: 1200px) {
-  .app .header .nav {
+  .app .header .header-top-container .nav {
     display: none;
   }
 }
-.app .header .search {
+.app .header .header-top-container .search {
   width: fit-content;
   height: 80px;
   display: flex;
@@ -121,42 +130,42 @@ body {
   align-items: center;
   cursor: pointer;
 }
-.app .header .search .search-icon {
+.app .header .header-top-container .search .search-icon {
   width: 70px;
   height: 70px;
   background-image: url("assets/images/header/search.png");
   background-size: cover;
   background-repeat: no-repeat;
 }
-.app .header .search-show {
+.app .header .header-top-container .search-show {
   animation: search-field-show 0.5s forwards;
 }
-.app .header .search-hidden {
+.app .header .header-top-container .search-hidden {
   animation: search-field-hidden 0.5s forwards;
 }
-.app .header .search .search-field {
+.app .header .header-top-container .search .search-field {
   height: 30px;
-  background: transparent;
-  border: 0;
+  background: #171717;
   text-align: center;
+  border-radius: 15px;
   color: #ffffff;
   font-size: 1.2rem;
-  text-shadow: 0 0 2px #f84e0f;
+  text-shadow: 0 0 2px #fff9f7;
 }
-.app .header .search .search-field:hover {
+.app .header .header-top-container .search .search-field:hover {
   border-bottom: solid 1px #ffffff;
 }
 @media (max-width: 1200px) {
-  .app .header .search {
+  .app .header .header-top-container .search-icon {
     display: none;
   }
 }
 @media (min-width: 1201px) {
-  .app .header .search-icon {
-    margin-left: 10px;
+  .app .header .header-top-container .search-icon {
+    display: flex;
   }
 }
-.app .header .menu {
+.app .header .header-top-container .menu {
   width: 70px;
   height: 70px;
   display: flex;
@@ -164,30 +173,38 @@ body {
   margin-right: 10px;
   justify-content: space-around;
   align-items: center;
+  cursor: pointer;
 }
-.app .header .menu .line {
+.app .header .header-top-container .menu .line {
   width: 100%;
   height: 7px;
   background: #9f9f9f;
   border-radius: 5px;
 }
 @media (max-width: 1200px) {
-  .app .header .menu {
+  .app .header .header-top-container .menu {
     display: flex;
   }
 }
 @media (min-width: 1201px) {
-  .app .header .menu {
+  .app .header .header-top-container .menu {
     display: none;
   }
 }
+.app .header .header-top-container .menu-content {
+  width: 320;
+  height: fit-content;
+}
+.app .header .header-top-container .menu-content_hidden {
+  display: none;
+}
 @media (max-width: 1200px) {
-  .app .bookmark {
+  .app .header .bookmark {
     display: none;
   }
 }
 @media (min-width: 1201px) {
-  .app .bookmark {
+  .app .header .bookmark {
     margin-left: 10px;
   }
 }

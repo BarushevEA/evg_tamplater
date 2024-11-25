@@ -5,66 +5,71 @@
 @import "menu/menu";
 
 @mixin header() {
-  .header {
-    @include flexRowNowrap();
-    @include setWidthHeight(100%, 110px);
+  .header{
+    @include setWidthHeight(100%, fit-content);
 
-    justify-content: flex-end;
-    position: relative;
-    background-color: #171717;
-    align-items: center;
-
-    .logotype{
+    .header-top-container {
       @include flexRowNowrap();
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: fit-content;
-      height: 80px;
+      @include setWidthHeight(100%, 110px);
+
+      justify-content: flex-end;
+      position: relative;
+      background-color: #171717;
       align-items: center;
-      justify-content: space-between;
 
-      .logo{
-        @include setWidthHeight(70px, 70px);
-        margin-right: 15px;
-        background-image: url($app-header-logo);
-        background-repeat: no-repeat;
-        background-size: cover;
+      .logotype{
+        @include flexRowNowrap();
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: fit-content;
+        height: 80px;
+        align-items: center;
+        justify-content: space-between;
 
-        border-radius: 100%;
+        .logo{
+          @include setWidthHeight(70px, 70px);
+          margin-right: 15px;
+          background-image: url($app-header-logo);
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center center;
+
+          border-radius: 100%;
+        }
+
+        font-size: 2rem;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 0 0 2px #f84e0f;
+        text-transform: uppercase;
+
+        cursor: pointer;
       }
 
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ffffff;
-      text-shadow: 0 0 2px #f84e0f;
-      text-transform: uppercase;
+      .bookmark{
+        @include setWidthHeight(70px, 70px);
 
-      cursor: pointer;
+        background-image: url($app-header-favorite);
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      @include nav();
+      @include search();
+      @include menu();
     }
 
-    .bookmark{
-      @include setWidthHeight(70px, 70px);
-
-      background-image: url($app-header-favorite);
-      background-size: cover;
-      background-repeat: no-repeat;
+    @media (max-width: 1200px) {
+      .bookmark{
+        display: none;
+      }
     }
 
-    @include nav();
-    @include search();
-    @include menu();
-  }
-  
-  @media (max-width: 1200px) {
-    .bookmark{
-      display: none;
-    }
-  }
-
-  @media (min-width: 1201px) {
-    .bookmark{
-      margin-left: 10px;
+    @media (min-width: 1201px) {
+      .bookmark{
+        margin-left: 10px;
+      }
     }
   }
 }

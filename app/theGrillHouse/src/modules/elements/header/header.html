@@ -1,10 +1,12 @@
 <div class="header">
-    <div class="logotype" qsi-click="goMainPage">
-        <div class="logo"></div>
-        <div class="title">{{title}}</div>
+    <div class="header-top-container">
+        <div class="logotype" qsi-click="goMainPage">
+            <div class="logo"></div>
+            <div class="title">{{title}}</div>
+        </div>
+        <app-nav></app-nav>
+        <app-search qsi-if="isShowSearchField"></app-search>
+        <div class="bookmark"></div>
+        <app-menu></app-menu>
     </div>
-    <app-nav></app-nav>
-    <app-search></app-search>
-    <div class="bookmark"></div>
-    <app-menu></app-menu>
 </div>

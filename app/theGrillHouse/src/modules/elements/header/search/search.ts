@@ -4,7 +4,7 @@ import {log} from "../../../../../../../libs/utils/utils";
 
 export class Search implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
-    isShowed: boolean = false;
+    isShowed: boolean = true;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;

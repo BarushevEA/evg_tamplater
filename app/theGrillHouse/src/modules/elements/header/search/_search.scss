@@ -24,13 +24,13 @@
 
     .search-field{
       height: 30px;
-      background: transparent;
-      border: 0;
+      background: #171717;
       text-align: center;
+      border-radius: 15px;
 
       color: #ffffff;
       font-size: 1.2rem;
-      text-shadow: 0 0 2px #f84e0f;
+      text-shadow: 0 0 2px #fff9f7;
     }
 
     .search-field:hover{
@@ -40,14 +40,14 @@
   }
 
   @media (max-width: 1200px) {
-    .search{
+    .search-icon{
       display: none;
     }
   }
   
   @media (min-width: 1201px) {
     .search-icon{
-      margin-left: 10px;
+      display: flex;
     }
   }
 }
@@ -56,21 +56,25 @@
   0% {
     display: none;
     width: 0;
+    border: 1px solid rgba(159, 159, 159, 0);
   }
 
   100% {
     display: flex;
     width: 200px;
+    border: 1px solid #9f9f9f;
   }
 }
 @keyframes search-field-hidden {
   0% {
     display: flex;
     width: 200px;
+    border: 1px solid #9f9f9f;
   }
   100% {
     display: none;
     width: 0;
+    border: 1px solid rgba(159, 159, 159, 0);
   }
 }
 

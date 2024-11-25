@@ -1,3 +1,4 @@
+import {Menucontent} from "../modules/elements/header/menu/menucontent/menucontent";
 import {Menu} from "../modules/elements/header/menu/menu";
 import {Recipepage} from "../modules/elements/main/recipepage/recipepage";
 import {Recipelink} from "../modules/elements/main/recipelink/recipelink";
@@ -33,6 +34,7 @@ export const MODULES: REG_OPTIONS = [
     getOption(Recipelink, "app-recipelink", "APP_EXAMPLE_____MARKER_RECIPELINK"),
     getOption(Recipepage, "app-recipepage", "APP_EXAMPLE_____MARKER_RECIPEPAGE"),
     getOption(Menu, "app-menu", "APP_EXAMPLE_____MARKER_MENU"),
+    getOption(Menucontent, "app-menucontent", "APP_EXAMPLE_____MARKER_MENUCONTENT"),
 ];
 
 START_ROUTES_REGISTRATION();
