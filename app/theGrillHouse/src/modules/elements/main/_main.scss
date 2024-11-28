@@ -6,6 +6,7 @@
 @import "mushroom/mushroom";
 @import "recipelink/recipelink";
 @import "recipepage/recipepage";
+@import "../header/menu/menucontent/menucontent";
 @mixin main() {
   .main{
     @include recipelink();
@@ -15,6 +16,7 @@
     @include vegetable();
     @include mushroom();
     @include recipepage();
+    @include menucontent();
 
     @include setWidthHeight(100vw, fit-content);
     max-width: 1400px;

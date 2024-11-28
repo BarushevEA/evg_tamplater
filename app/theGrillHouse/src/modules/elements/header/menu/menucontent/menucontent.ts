@@ -20,8 +20,6 @@ export class Menucontent implements OnInit, OnCreate, OnDestroy, OnMessage {
     onInit(): void {
         this.root.collect(
             isShowMenu$
-                .pipe()
-                .refine(msg=>msg)
                 .subscribe(msg=>{
                     log(msg," message");
                     this.isHidden = !msg;

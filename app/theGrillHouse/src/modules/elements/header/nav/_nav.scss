@@ -3,11 +3,6 @@
 
 @mixin nav() {
   .nav{
-    @include setWidthHeight(fit-content, 40px);
-    @include flexRowNowrap();
-    position: absolute;
-    top: 39px;
-    left: 415px;
     align-items: center;
     justify-content: space-between;
 
@@ -16,7 +11,19 @@
 
   @media (max-width: 1200px) {
     .nav{
-      display: none;
+      position: relative;
+      @include setWidthHeight(320px, fit-content);
+      @include flexColumnNowrap();
+    }
+  }
+
+  @media (min-width: 1201px) {
+    .nav{
+      position: absolute;
+      top: 39px;
+      left: 415px;
+      @include setWidthHeight(fit-content, 40px);
+      @include flexRowNowrap();
     }
   }
 }

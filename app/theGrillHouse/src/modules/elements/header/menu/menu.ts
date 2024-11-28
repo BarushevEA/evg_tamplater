@@ -27,6 +27,6 @@ export class Menu implements OnInit, OnCreate, OnDestroy, OnMessage {
         if (!isShowMenu$.getValue()){
             return isShowMenu$.next(true);
         }
-        isShowMenu$.next(false);
+         return isShowMenu$.next(false);
     }
 }

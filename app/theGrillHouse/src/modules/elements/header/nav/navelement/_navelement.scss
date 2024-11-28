@@ -1,20 +1,50 @@
 @import "../../../../css/mixins";
 @mixin navelement() {
   .navElement {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    background: linear-gradient(0, #ff2f00 33%, #ff5b09 66%, #f1bd54);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-align: center;
     margin: 0 7.5px;
-    border-bottom: 1px solid transparent;
     transition-duration: 200ms;
     cursor: pointer;
   }
 
-  .navElement:hover {
-    border-color: #ff2f00;
+
+
+  @media (min-width: 1201px) {
+    .navElement {
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: linear-gradient(0, #ff2f00 33%, #ff5b09 66%, #f1bd54);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+    }
+
+    .navElement:hover {
+      color: #f1bd54;
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .navElement {
+      @include setWidthHeight(99%, 40px);
+      font-size: 1.1rem;
+      background: linear-gradient(0, #919191 33%, #b5b4b4 66%, #d4d4d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      box-shadow: 0 0 3px #3a3a3a;
+      border-radius: 7px;
+      margin: 2.5px 0;
+    }
+
+    .navElement::first-letter{
+      text-transform: uppercase;
+    }
+
+    .navElement:hover {
+      color: white;
+      text-decoration: underline;
+    }
   }
 }
         
