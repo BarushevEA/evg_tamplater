@@ -48,7 +48,7 @@
   }
 
   .section{
-    @include setWidthHeight(100%, 360px);
+    @include setWidthHeight(100%, fit-content);
     background: #4d4d4d;
     margin-top: 10px;
     padding: 10px;
@@ -62,7 +62,7 @@
     }
 
     &-slider{
-      @include setWidthHeight(100%, 270px);
+      @include setWidthHeight(100%, 400px);
       @include flexRowNowrap();
       justify-content: space-around;
 
@@ -74,7 +74,8 @@
     @include setWidthHeight(100%, fit-content);
 
     &-content{
-      @include flexRowNowrap();
+      display: flex;
+      flex-wrap: wrap;
       padding: 10px;
 
       &-photo-wrapper{

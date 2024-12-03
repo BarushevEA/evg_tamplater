@@ -417,41 +417,48 @@ body {
   max-width: 1400px;
 }
 .app .main .recipelink-card {
-  width: 470px;
-  height: 250px;
-  display: flex;
-  flex-flow: column nowrap;
+  position: relative;
+  width: 320px;
+  height: 320px;
   background: #5e5e5e;
   margin: 10px;
   font-family: "Rubik", "Verdana", Tahoma, serif;
   color: #171717;
 }
 .app .main .recipelink-card-title {
-  width: 100%;
-  height: 30px;
+  position: relative;
+  top: 15px;
+  left: 15px;
+  width: fit-content;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 20px;
   font-size: 1.5rem;
   font-weight: bolder;
+  color: white;
+  text-shadow: 0 0 10px black;
+  z-index: 2;
 }
-.app .main .recipelink-card-content {
+.app .main .recipelink-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 220px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-flow: row wrap;
-  font-size: 1.3rem;
-}
-.app .main .recipelink-card-content-image {
-  width: 200px;
-  height: 200px;
-  margin: 0 10px;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  z-index: 0;
+}
+.app .main .recipelink-card-img_wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.76);
+  z-index: 1;
 }
 .app .main .banner {
   position: relative;
@@ -495,7 +502,7 @@ body {
 }
 .app .main .section {
   width: 100%;
-  height: 360px;
+  height: fit-content;
   background: #4d4d4d;
   margin-top: 10px;
   padding: 10px;
@@ -508,7 +515,7 @@ body {
 }
 .app .main .section-slider {
   width: 100%;
-  height: 270px;
+  height: 400px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
@@ -520,7 +527,7 @@ body {
 }
 .app .main .about-me-content {
   display: flex;
-  flex-flow: row nowrap;
+  flex-wrap: wrap;
   padding: 10px;
 }
 .app .main .about-me-content-photo-wrapper {
@@ -536,7 +543,7 @@ body {
 .app .main .about-me-content-photo-wrapper-photo {
   width: 100%;
   height: 100%;
-  background-image: url("assets/images/main/Papa.jpg");
+  background-image: url("assets/images/main/JA.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -661,12 +668,12 @@ body {
   justify-content: center;
 }
 .app .main-recipe-page-content-recipe_box {
-  width: 70%;
+  width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 * {

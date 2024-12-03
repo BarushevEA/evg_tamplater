@@ -65,12 +65,12 @@
         justify-content: center;
 
         &-recipe_box{
-          @include setWidthHeight(70%, fit-content);
+          @include setWidthHeight(100%, fit-content);
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
 
-          justify-content: space-between;
+          justify-content: space-around;
         }
       }
     }
