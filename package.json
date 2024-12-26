@@ -7,6 +7,9 @@
   "bin": {
     "create-qusi": "./pm.js"
   },
+  "scripts": {
+    "create_projest": "node pm.js"
+  },
   "author": "Barushev Evgeny",
   "dependencies": {
     "@babel/core": "^7.24.0",
