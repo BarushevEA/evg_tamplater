@@ -12,6 +12,7 @@ const fs = require("fs");
  */
 const COMMAND = {
     CREATE_PROJECT: "p",
+    CREATE_CUSTOM_ELEMENT: "cstm",
 };
 
 /**
@@ -47,7 +48,19 @@ const emptyProjectPath = path.join(__dirname, "storage", emptyProjectName);
  *
  * @type {string}
  */
-const destinationProjectPath = path.join(process.cwd(), "app", newProjectName);
+const destinationProjectPath = getDestinationProjectPath();
+
+function getDestinationProjectPath() {
+    switch (cmdCommand) {
+        case COMMAND.CREATE_PROJECT:
+            return path.join(process.cwd(), "app", newProjectName);
+        case COMMAND.CREATE_CUSTOM_ELEMENT:
+            return path.join(process.cwd(), "custom_elements", newProjectName);
+        default:
+            return path.join(process.cwd(), "app", newProjectName);
+    }
+}
+
 /**
  * The buildOptionsProjectPath represents the file path of the 'appPath.js' within
  * the 'buildOptions' directory of a destination project.
@@ -59,7 +72,7 @@ const destinationProjectPath = path.join(process.cwd(), "app", newProjectName);
  * // Usage
  * const buildOptionsProjectPath = path.join(destinationProjectPath,"buildOptions","appPath.js");
  */
-const buildOptionsProjectPath = path.join(destinationProjectPath,"buildOptions","appPath.js");
+const buildOptionsProjectPath = path.join(destinationProjectPath, "buildOptions", "appPath.js");
 /**
  * Represents the path to the `package.json` file in a project
  *
@@ -69,13 +82,13 @@ const buildOptionsProjectPath = path.join(destinationProjectPath,"buildOptions",
  *
  * @returns {string} The complete path to the `package.json` file
  */
-const packageJsonProjectPath = path.join(destinationProjectPath,"package.json");
+const packageJsonProjectPath = path.join(destinationProjectPath, "package.json");
 /**
  * Represents the path to the settings info file of a project.
  *
  * @type {string}
  */
-const settingsProjectPath = path.join(destinationProjectPath,"src","settings","info.ts");
+const settingsProjectPath = path.join(destinationProjectPath, "src", "settings", "info.ts");
 
 handleArguments();
 
@@ -90,7 +103,17 @@ handleArguments();
  * @return {void} This method does not return anything.
  */
 function handleArguments() {
-    if (cmdCommand !== COMMAND.CREATE_PROJECT) return;
+    let isProcessing = false;
+    switch (cmdCommand) {
+        case COMMAND.CREATE_PROJECT:
+        case COMMAND.CREATE_CUSTOM_ELEMENT:
+            isProcessing = true;
+            break;
+        default:
+            isProcessing = false;
+    }
+
+    if (!isProcessing) return;
     if (!newProjectName) return;
     console.log("START");
 
@@ -110,7 +133,7 @@ function handleArguments() {
  *
  * @returns {void}
  */
-function handleBuildOptions(){
+function handleBuildOptions() {
     fs.readFile(buildOptionsProjectPath, (error, data) => {
         handleError(error);
 
@@ -128,7 +151,7 @@ function handleBuildOptions(){
  *
  * @returns {void}
  */
-function handlePackageJson(){
+function handlePackageJson() {
     fs.readFile(packageJsonProjectPath, (error, data) => {
         handleError(error);
 
@@ -147,7 +170,7 @@ function handlePackageJson(){
  *
  * @returns {void}
  */
-function handleProjectSettings(){
+function handleProjectSettings() {
     fs.readFile(settingsProjectPath, (error, data) => {
         handleError(error);
 
