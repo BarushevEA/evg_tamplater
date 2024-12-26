@@ -5,11 +5,15 @@
   "main": "pm.js",
   "license": "MIT",
   "bin": {
+    "qusi": "./pm.js",
     "create-qusi": "./pm.js"
   },
   "scripts": {
-    "create_projest": "node pm.js"
+    "qusi": "node pm.js",
+    "create-qusi": "node pm.js",
+    "create_project": "node pm.js"
   },
+  "keywords": ["cli", "tool", "qusi", "project-automation"],
   "author": "Barushev Evgeny",
   "dependencies": {
     "@babel/core": "^7.24.0",
