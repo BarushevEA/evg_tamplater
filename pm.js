@@ -74,6 +74,8 @@ async function handleCommand() {
             newProjectName = normalizeName(newProjectName);
             newProjectName = `custom_${newProjectName}`;
         }
+
+        console.log("PROJECT NAME:", newProjectName);
     } catch (error) {
         console.log("ERROR:", error);
     } finally {
