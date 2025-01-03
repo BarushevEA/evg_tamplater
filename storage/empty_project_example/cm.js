@@ -1,6 +1,7 @@
 const path = require("path");
 const {getTemplatePath, getModulesPath} = require("./buildTemplateHandler/utils");
 const fs = require("fs");
+const {askQuestionClose, askQuestion, normalizeName, normalizeComponentName} = require("../../consoleHelper");
 /**
  * Enum representing possible commands.
  * @enum {string}
@@ -8,6 +9,7 @@ const fs = require("fs");
 const COMMAND = {
     CREATE_COMPONENT: "c",
     COMPONENT_DIR: "d",
+    CREATE_STEP_BY_STEP: "sbs",
 };
 
 /**
@@ -43,13 +45,13 @@ const modulesPath = getModulesPath();
  *
  * @type {string}
  */
-const cmdCommand = process.argv[2];
+let cmdCommand = process.argv[2];
 /**
  * Represents the name of a new component.
  *
  * @type {string}
  */
-const newComponentName = process.argv[3];
+let newComponentName = process.argv[3];
 
 /**
  * Represents the directory path provided as a command line argument.
@@ -59,13 +61,13 @@ const newComponentName = process.argv[3];
  * @description The value of this variable is extracted from the command line arguments list using process.argv[4].
  *              It should be a string representing the directory path passed as a command line argument.
  */
-const cmdDir = process.argv[4];
+let cmdDir = process.argv[4];
 /**
  * Represents the command line argument for the new directory.
  *
  * @type {string}
  */
-const newDir = process.argv[5];
+let newDir = process.argv[5];
 
 /**
  * Custom directory path.
@@ -73,6 +75,78 @@ const newDir = process.argv[5];
  * @type {string}
  */
 let customDir = "";
+
+async function handleCommand() {
+    const handleCmd = async () => {
+        let isDir = false;
+
+        let action = await askQuestion(
+            "Choose action:\n1. Enter component name\n2. Enter component name with dir\n3. Exit\n"
+        );
+
+        switch (action) {
+            case "":
+                cmdCommand = COMMAND.CREATE_COMPONENT;
+                newComponentName = normalizeComponentName("")
+                break
+            case "1":
+                action = await askQuestion("Component name:\n");
+                cmdCommand = COMMAND.CREATE_COMPONENT;
+                newComponentName = normalizeComponentName(newComponentName)
+                break;
+            case "2":
+                action = await askQuestion("Component name:\n");
+                cmdCommand = COMMAND.CREATE_COMPONENT;
+                newComponentName = normalizeComponentName(newComponentName)
+                isDir = true
+                break;
+            case "3":
+                process.exit(0);
+                break
+            default:
+        }
+
+        return isDir
+    }
+    const handleDir = async () => {
+        let action = await askQuestion(
+            "Choose action:\n1. Default component dir\n2. Enter component dir\n3. Exit\n"
+        );
+
+        switch (action) {
+            case "":
+                cmdDir = ""
+                newDir = ""
+                break
+            case "1":
+                cmdDir = ""
+                newDir = ""
+                break;
+            case "2":
+                action = await askQuestion("component dir:\n");
+                cmdDir = COMMAND.COMPONENT_DIR;
+                newDir = normalizeName(action)
+                break;
+            case "3":
+                process.exit(0);
+                break
+            default:
+        }
+    }
+
+    try {
+        if (cmdCommand == COMMAND.CREATE_STEP_BY_STEP || !cmdCommand) {
+            if (await handleCmd()) await handleDir();
+        }
+    } catch (error) {
+        console.log("ERROR:", error);
+    } finally {
+        askQuestionClose();
+        handleArguments();
+    }
+}
+
+handleCommand();
 
 /**
  * Represents a Maker object which is responsible for creating component templates and registering them in the module.
@@ -207,8 +281,6 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, 
         });
     }
 }
-
-handleArguments();
 
 /**
  * Handles the arguments passed to a command.

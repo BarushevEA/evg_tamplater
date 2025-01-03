@@ -3,18 +3,7 @@
 const path = require("path");
 const {cpSync} = require("fs");
 const fs = require("fs");
-const readline = require('readline');
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-const askQuestion = (question) => {
-    return new Promise((resolve) => {
-        rl.question(question, (answer) => {
-            resolve(answer);
-        });
-    });
-};
+const {askQuestion, askQuestionClose, normalizeName} = require("./consoleHelper");
 
 /**
  * Represents a command used in the application.
@@ -58,13 +47,6 @@ const emptyProjectName = "empty_project_example";
 const emptyProjectPath = path.join(__dirname, "storage", emptyProjectName);
 
 async function handleCommand() {
-    function normalizeProjectName(newProjectName) {
-        newProjectName = newProjectName ? newProjectName.trim() : "awesome_project" + Date.now();
-        newProjectName = newProjectName.replace(/ /g, "_");
-        newProjectName = newProjectName.replace(/-/g, "_");
-        return newProjectName
-    }
-
     try {
         let isStep2 = false;
 
@@ -86,16 +68,16 @@ async function handleCommand() {
 
         if (isStep2 && cmdCommand == COMMAND.CREATE_PROJECT) {
             newProjectName = await askQuestion("Enter project name: ");
-            newProjectName = normalizeProjectName(newProjectName);
+            newProjectName = normalizeName(newProjectName);
         } else if (isStep2 && cmdCommand == COMMAND.CREATE_CUSTOM_ELEMENT) {
             newProjectName = await askQuestion("Enter custom element name: ");
-            newProjectName = normalizeProjectName(newProjectName);
+            newProjectName = normalizeName(newProjectName);
             newProjectName = `custom_${newProjectName}`;
         }
     } catch (error) {
         console.log("ERROR:", error);
     } finally {
-        rl.close();
+        askQuestionClose();
         createProject();
     }
 }

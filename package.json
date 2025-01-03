@@ -13,7 +13,12 @@
     "create-qusi": "node pm.js",
     "create_project": "node pm.js"
   },
-  "keywords": ["cli", "tool", "qusi", "project-automation"],
+  "keywords": [
+    "cli",
+    "tool",
+    "qusi",
+    "project-automation"
+  ],
   "author": "Barushev Evgeny",
   "dependencies": {
     "@babel/core": "^7.24.0",
@@ -30,5 +35,6 @@
   },
   "resolutions": {
     "terser": "3.14.1"
-  }
+  },
+  "type": "commonjs"
 }
