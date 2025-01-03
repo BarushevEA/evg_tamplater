@@ -86,18 +86,19 @@ async function handleCommand() {
 
         switch (action) {
             case "":
+                action = await askQuestion("Component name:\n");
                 cmdCommand = COMMAND.CREATE_COMPONENT;
-                newComponentName = normalizeComponentName("")
+                newComponentName = normalizeComponentName(action)
                 break
             case "1":
                 action = await askQuestion("Component name:\n");
                 cmdCommand = COMMAND.CREATE_COMPONENT;
-                newComponentName = normalizeComponentName(newComponentName)
+                newComponentName = normalizeComponentName(action)
                 break;
             case "2":
                 action = await askQuestion("Component name:\n");
                 cmdCommand = COMMAND.CREATE_COMPONENT;
-                newComponentName = normalizeComponentName(newComponentName)
+                newComponentName = normalizeComponentName(action)
                 isDir = true
                 break;
             case "3":
