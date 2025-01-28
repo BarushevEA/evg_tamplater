@@ -72,7 +72,7 @@ async function handleCommand() {
         } else if (isStep2 && cmdCommand == COMMAND.CREATE_CUSTOM_ELEMENT) {
             newProjectName = await askQuestion("Enter custom element name: ");
             newProjectName = normalizeName(newProjectName);
-            newProjectName = `custom_${newProjectName}`;
+            newProjectName = `${newProjectName}`;
         }
 
         console.log("PROJECT NAME:", newProjectName);
