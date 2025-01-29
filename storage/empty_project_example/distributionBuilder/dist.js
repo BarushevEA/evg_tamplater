@@ -43,6 +43,6 @@ deleteFileSync(indexTs);
 registerCustomElement({
     name: customElementTagName,
     version: customElementVersion,
-    destination: `../../../../custom_elements/${customElementName}/distribution/settings/modules.ts`,
+    destination: `../../../../custom_elements/${customElementName}/distribution/settings/modules`,
     description: "Custom element for sharing"
 });

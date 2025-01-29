@@ -1,5 +1,5 @@
 const fs = require("fs");
-const path = require("path");
+const {csmRegPath} = require("./env");
 
 /**
  * Adds or updates the registration of a custom element in the csmReg.json file.
@@ -12,7 +12,7 @@ const path = require("path");
  * }
  */
 exports.registerCustomElement = (meta) => {
-    const filePath = path.join(__dirname, "../../../custom_elements/", "csmReg.json");
+    const filePath = csmRegPath
 
     console.log("registerCustomElement",filePath);
 
