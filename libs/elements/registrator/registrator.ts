@@ -38,12 +38,13 @@ export const getRootStyles = (): string => {
     return ROOT_STYLES.join("");
 };
 
-export const getOption = (element: any, tagName: string, template: TEMPLATE): ELEMENT_REG_OPTION => {
+export const getOption = (element: any, tagName: string, template: TEMPLATE, isShadow?: boolean): ELEMENT_REG_OPTION => {
     return {
         tagName: tagName,
         target: getCustomElement({
             template: template,
             element: element,
+            isShadow: isShadow,
         }),
         element: element as QSI_APP_COMPONENT
     };

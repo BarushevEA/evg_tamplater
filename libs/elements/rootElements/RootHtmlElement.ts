@@ -146,7 +146,12 @@ export function getCustomElement(options: ELEMENT_OPTIONS): CustomElementConstru
 
             this.ahe_bfrIni$.next(true);
 
-            if (this.ahe_opts.template) this.innerHTML = this.ahe_opts.template;
+            if (this.ahe_opts.isShadow && this.ahe_opts.template) {
+                const shadowRoot = this.attachShadow({mode: "open"});
+                shadowRoot.innerHTML = this.ahe_opts.template;
+            } else if (this.ahe_opts.template) {
+                this.innerHTML = this.ahe_opts.template;
+            }
 
             detectInjectedData(this);
 

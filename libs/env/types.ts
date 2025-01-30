@@ -101,6 +101,7 @@ export type OnMessage = { onMessage: (message: any) => void };
 export type ELEMENT_OPTIONS = {
     template: string;
     element: any;
+    isShadow?: boolean;
 };
 
 export type IRouteModel = {
