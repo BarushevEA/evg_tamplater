@@ -6,6 +6,7 @@ const {replaceInFile} = require("../../../libs/js/custom_element/replaceInFile")
 const {deleteFileSync} = require("../../../libs/js/custom_element/deleteFileSync");
 const {deleteFileLineBy} = require("../../../libs/js/custom_element/deleteFileLineBy");
 const {registerCustomElement} = require("../../../libs/js/custom_element/registerCustomElement");
+const {addFileLineAfter} = require("../../../libs/js/custom_element/addFileLineAfter");
 
 // Paths to the directories
 const distributionPath = path.join(__dirname, "../distribution");
@@ -28,14 +29,23 @@ console.log(`Custom element tag name: ${customElementTagName}`);
 deleteFileLineBy(modulesPath, [
     "import {APP_TAG_NAME}",
     "import {START_ROUTES_REGISTRATION}",
-    "START_ROUTES_REGISTRATION()"
+    "START_ROUTES_REGISTRATION()",
+    "APP_TAG_NAME",
 ]);
+
+addFileLineAfter(
+    modulesPath,
+    [
+        {
+            target:"export const MODULES:",
+            line: `    getOption(AppRoot, "${customElementTagName}", "APP_EXAMPLE_____ROOT", true),`,
+        }
+    ])
 
 replaceInFile(
     modulesPath,
     [
         {target: "MODULES", replacer: `CSM_${customElementName.toUpperCase()}`},
-        {target: "APP_TAG_NAME", replacer: `"${customElementTagName}"`}
     ]);
 
 deleteFileSync(indexTs);
