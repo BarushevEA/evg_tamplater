@@ -7,6 +7,8 @@ const {deleteFileSync} = require("../../../libs/js/custom_element/deleteFileSync
 const {deleteFileLineBy} = require("../../../libs/js/custom_element/deleteFileLineBy");
 const {registerCustomElement} = require("../../../libs/js/custom_element/registerCustomElement");
 const {addFileLineAfter} = require("../../../libs/js/custom_element/addFileLineAfter");
+const {getCSSPath} = require("../buildTemplateHandler/utils");
+const processCssFileSync = require("../../../libs/js/custom_element/processCssFileSync");
 
 // Paths to the directories
 const distributionPath = path.join(__dirname, "../distribution");
@@ -33,14 +35,15 @@ deleteFileLineBy(modulesPath, [
     "APP_TAG_NAME",
 ]);
 
+const cssTag = processCssFileSync(getCSSPath());
 addFileLineAfter(
     modulesPath,
     [
         {
-            target:"export const MODULES:",
-            line: `    getOption(AppRoot, "${customElementTagName}", "APP_EXAMPLE_____ROOT", true),`,
+            target: "export const MODULES:",
+            line: `    getOption(AppRoot, "${customElementTagName}", "${cssTag} APP_EXAMPLE_____ROOT", true),`,
         }
-    ])
+    ]);
 
 replaceInFile(
     modulesPath,
