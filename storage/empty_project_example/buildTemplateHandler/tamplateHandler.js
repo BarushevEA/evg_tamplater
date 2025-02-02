@@ -2,6 +2,7 @@ const fs = require('fs');
 const env = require('./utils');
 const options = require('../buildOptions/templateOptions');
 const {cpSync} = require("fs");
+const {getStringFromFile} = require("../../../libs/js/custom_element/getStringFromFile");
 
 const buildFilePath = env.getBuildFilePath();
 const htmlTemplates = options.htmlTemplates;
@@ -12,20 +13,6 @@ fs.mkdirSync(assetsPath);
 cpSync(env.getAssetsDirPath(), assetsPath, {recursive: true, force: true});
 
 console.log(buildFilePath);
-
-function getStringFromFile(filePath) {
-    const body = fs.readFileSync(filePath);
-    let bodyStr = body.toString();
-    bodyStr = bodyStr.replaceAll('"', "'");
-    bodyStr = bodyStr.replaceAll("\r", "");
-    bodyStr = bodyStr.replaceAll("\n", "");
-    for (; bodyStr.indexOf("  ") > -1;) bodyStr = bodyStr.replaceAll("  ", " ");
-    bodyStr = bodyStr.replaceAll("> <", "><");
-    bodyStr = bodyStr.replaceAll("{{", "<qsi-bind>");
-    bodyStr = bodyStr.replaceAll("}}", "</qsi-bind>");
-
-    return bodyStr;
-}
 
 fs.readFile(buildFilePath, (error, data) => {
     handleError(error);
