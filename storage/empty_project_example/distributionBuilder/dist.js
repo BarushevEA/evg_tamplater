@@ -39,6 +39,13 @@ deleteFileLineBy(modulesPath, [
     "APP_TAG_NAME",
 ]);
 
+const tagLines = getSubstringFromFile(modulesPath, "getOption(", "),")
+const tagReplacements = getTagReplacements(tagLines);
+replaceInFile(
+    modulesPath,
+    tagReplacements
+);
+
 const cssTag = processCssFileSync(getCSSPath());
 addFileLineAfter(
     modulesPath,
@@ -65,14 +72,14 @@ registerCustomElement({
 });
 
 function fillModuleTemplates() {
-    const replacements = [];
+    const templateReplacements = [];
 
     for (const templateMarker in templatesMarkers) {
         const fileNamePath = templatesMarkers[templateMarker];
         const templatePath = path.join(HTMLTemplatesDirPath, fileNamePath);
         let bodyStr = getStringFromFile(templatePath);
 
-        replacements.push({
+        templateReplacements.push({
             target: templateMarker,
             replacer: bodyStr
         });
@@ -80,8 +87,57 @@ function fillModuleTemplates() {
 
     replaceInFile(
         modulesPath,
-        replacements
+        templateReplacements
     );
 }
 
+function getTagNameFromLine(line) {
+    const words = line.split(",");
+    if (words.length < 2) return "";
+    return line.split(",")[1].trim().split('"').join("").split("'").join("");
+}
+
+function getTagReplacements(tagLines) {
+    const replacements = [];
+    const prefix = customElementTagName.split("-").join("");
+    replacements.push(
+        {target: "CSM", replacer: prefix},
+    );
+
+    for (const tagLine of tagLines) {
+        const tagName = getTagNameFromLine(tagLine);
+
+        const suffix = tagName.split("app-").join("").split("-").join("");
+        replacements.push({
+            target: tagName,
+            replacer: `${prefix}-${suffix}`
+        });
+    }
+    return replacements;
+}
+
+function updateTagReplacements() {
+    const len = tagReplacements.length;
+    const newReplacements = [];
+    for (let i = 0; i < len; i++) {
+        const replacement = tagReplacements.pop();
+        newReplacements.push({
+            target: `<${replacement.target}`,
+            replacer: `<${replacement.replacer}`
+        });
+        newReplacements.push({
+            target: `</${replacement.target}`,
+            replacer: `</${replacement.replacer}`
+        });
+    }
+
+    tagReplacements.push(...newReplacements);
+}
+
 fillModuleTemplates();
+updateTagReplacements();
+
+replaceInFile(
+    modulesPath,
+    tagReplacements
+);
