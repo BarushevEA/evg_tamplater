@@ -16,6 +16,7 @@ function processCssFileSync(filePath) {
             .replaceAll("\r", "")
             .replaceAll("\n", "")
             .replaceAll("  ", "")
+            .replaceAll(" {", "{")
             .replaceAll("\"", "'");
 
         return `<style>${result}</style>`;
