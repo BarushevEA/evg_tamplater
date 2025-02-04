@@ -4,6 +4,7 @@ const path = require("node:path");
 const {deleteFileLineBy} = require("../../libs/js/custom_element/deleteFileLineBy");
 const {copyFolderSync} = require("../../libs/js/custom_element/copyFolderSync");
 const {isFileContained} = require("../../libs/js/custom_element/isFileContained");
+const {addFileLineBefore} = require("../../libs/js/custom_element/addFileLineBefore");
 
 const flagsJsPath = path.join(__dirname, "buildOptions/flags.js");
 deleteFileLineBy(flagsJsPath, [
@@ -68,6 +69,16 @@ async function addCustomElement() {
             }
         ]
     );
+
+    addFileLineBefore(
+        modulesPath,
+        [
+            {
+                target: "export const MODULES:",
+                line: `// <${element.name}></${element.name}> ${element.description}`,
+            }
+        ]
+    )
 
     copyFolderSync(distributionAssetsPath, assetsPath);
 }
