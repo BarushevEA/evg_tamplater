@@ -5,6 +5,7 @@ const {cpSync} = require("fs");
 const fs = require("fs");
 const {askQuestion, askQuestionClose, normalizeName} = require("./consoleHelper");
 const {deleteFolderSync} = require("./libs/js/custom_element/deleteFolderSync");
+const {deleteFileLineBy} = require("./libs/js/custom_element/deleteFileLineBy");
 
 /**
  * Represents a command used in the application.
@@ -51,15 +52,15 @@ async function handleCommand() {
     try {
         let isStep2 = false;
 
-        if (cmdCommand == COMMAND.CREATE_STEP_BY_STEP || !cmdCommand) {
+        if (cmdCommand === COMMAND.CREATE_STEP_BY_STEP || !cmdCommand) {
             const mode = await askQuestion("Choose mode: \n1. Create project\n2. Create custom element\n3. Exit\n");
-            if (mode == "1" || !mode) {
+            if (mode === "1" || !mode) {
                 cmdCommand = COMMAND.CREATE_PROJECT;
                 isStep2 = true;
-            } else if (mode == "2") {
+            } else if (mode === "2") {
                 cmdCommand = COMMAND.CREATE_CUSTOM_ELEMENT;
                 isStep2 = true;
-            } else if (mode == "3") {
+            } else if (mode === "3") {
                 process.exit(0);
             } else {
                 console.log("Invalid mode");
@@ -67,10 +68,10 @@ async function handleCommand() {
             }
         }
 
-        if (isStep2 && cmdCommand == COMMAND.CREATE_PROJECT) {
+        if (isStep2 && cmdCommand === COMMAND.CREATE_PROJECT) {
             newProjectName = await askQuestion("Enter project name: ");
             newProjectName = normalizeName(newProjectName);
-        } else if (isStep2 && cmdCommand == COMMAND.CREATE_CUSTOM_ELEMENT) {
+        } else if (isStep2 && cmdCommand === COMMAND.CREATE_CUSTOM_ELEMENT) {
             newProjectName = await askQuestion("Enter custom element name: ");
             newProjectName = normalizeName(newProjectName);
             newProjectName = `${newProjectName}`;
@@ -235,8 +236,11 @@ function createProject() {
         if (error) throw error;
     }
 
-    if (cmdCommand == COMMAND.CREATE_PROJECT) {
+    if (cmdCommand === COMMAND.CREATE_PROJECT) {
         const distributionBuilderPath = path.join(destinationProjectPath, "distributionBuilder");
         deleteFolderSync(distributionBuilderPath);
+
+        const packageJsonPath = path.join(destinationProjectPath, "package.json");
+        deleteFileLineBy(packageJsonPath, ['"customElementDist"']);
     }
 }
