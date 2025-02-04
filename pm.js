@@ -4,6 +4,7 @@ const path = require("path");
 const {cpSync} = require("fs");
 const fs = require("fs");
 const {askQuestion, askQuestionClose, normalizeName} = require("./consoleHelper");
+const {deleteFolderSync} = require("./libs/js/custom_element/deleteFolderSync");
 
 /**
  * Represents a command used in the application.
@@ -232,5 +233,10 @@ function createProject() {
      */
     function handleError(error) {
         if (error) throw error;
+    }
+
+    if (cmdCommand == COMMAND.CREATE_PROJECT) {
+        const distributionBuilderPath = path.join(destinationProjectPath, "distributionBuilder");
+        deleteFolderSync(distributionBuilderPath);
     }
 }
