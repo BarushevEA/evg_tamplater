@@ -2,6 +2,7 @@ const {selectCustomElement} = require("../../libs/js/custom_element/selectCustom
 const {addFileLineAfter} = require("../../libs/js/custom_element/addFileLineAfter");
 const path = require("node:path");
 const {deleteFileLineBy} = require("../../libs/js/custom_element/deleteFileLineBy");
+const {copyFolderSync} = require("../../libs/js/custom_element/copyFolderSync");
 
 const flagsJsPath = path.join(__dirname, "buildOptions/flags.js");
 deleteFileLineBy(flagsJsPath, [
@@ -23,13 +24,31 @@ addFileLineAfter(flagsJsPath, [
     },
 ]);
 
+function removePathPart(fullPath, partToRemove) {
+    const normalizedPath = path.normalize(fullPath); // Normalize the path for consistency
+    const index = normalizedPath.indexOf(partToRemove);
+
+    if (index !== -1) {
+        // Remove the specified portion starting from its index
+        return normalizedPath.slice(0, index).replace(/[\\/]$/, ''); // Remove trailing "/" or "\" if present
+    }
+
+    // Return the original path if the part to remove is not found
+    return normalizedPath;
+}
+
+
 async function addCustomElement() {
     const element = await selectCustomElement()
 
     if (!element) return;
 
-    const modulesPath = path.join(__dirname, "src/settings/modules.ts");
     const moduleName = getModuleName(element.name);
+    const assetsPath = path.join(__dirname, "src/modules/css/assets");
+    const modulesPath = path.join(__dirname, "src/settings/modules.ts");
+    const distributionPathDirty = removePathPart(element.destination, "settings/modules");
+    const distributionPath = path.normalize("../../" + distributionPathDirty.split("../../../../").join(""));
+    const distributionAssetsPath = path.join(distributionPath, "/modules/css/assets");
 
     addFileLineAfter(
         modulesPath,
@@ -43,6 +62,8 @@ async function addCustomElement() {
             }
         ]
     );
+
+    copyFolderSync(distributionAssetsPath, assetsPath);
 }
 
 function getModuleName(tagName) {
