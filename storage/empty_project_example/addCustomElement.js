@@ -3,6 +3,7 @@ const {addFileLineAfter} = require("../../libs/js/custom_element/addFileLineAfte
 const path = require("node:path");
 const {deleteFileLineBy} = require("../../libs/js/custom_element/deleteFileLineBy");
 const {copyFolderSync} = require("../../libs/js/custom_element/copyFolderSync");
+const {isFileContained} = require("../../libs/js/custom_element/isFileContained");
 
 const flagsJsPath = path.join(__dirname, "buildOptions/flags.js");
 deleteFileLineBy(flagsJsPath, [
@@ -49,6 +50,11 @@ async function addCustomElement() {
     const distributionPathDirty = removePathPart(element.destination, "settings/modules");
     const distributionPath = path.normalize("../../" + distributionPathDirty.split("../../../../").join(""));
     const distributionAssetsPath = path.join(distributionPath, "/modules/css/assets");
+
+    if (isFileContained(modulesPath, moduleName)) {
+        console.log(`Module ${moduleName} already exists.`);
+        return;
+    }
 
     addFileLineAfter(
         modulesPath,
