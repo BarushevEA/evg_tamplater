@@ -213,6 +213,7 @@ class Maker {
 import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../${levels}libs/env/types";
 import {log} from "../../../../../../${levels}libs/utils/utils";
 
+// Component tag example: <${this.tag}></${this.tag}>
 export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
 
