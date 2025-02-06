@@ -2,27 +2,77 @@
 
 ### Creating a Project
 
+#### Method 1: Command-Line Arguments
+
 1. Open your terminal.
 2. Navigate to the `pm.js` directory.
 3. Run the command:
 
-```Sh
+```sh
 node pm.js p <YourProjectName>
 ```
-    * Replace `<YourProjectName>` with the name of your project.
+
+- Replace `<YourProjectName>` with the name of your project.
+- This method allows you to create a project directly by providing its name.
+
+#### Method 2: Step-by-Step Guide
+
+If you run `pm.js` **without any parameters**, an interactive step-by-step guide will be activated to help you set up the project.
+
+1. Open your terminal.
+2. Navigate to the `pm.js` directory.
+3. Run the command:
+
+```sh
+node pm.js
+```
+
+4. Follow the displayed instructions:
+    - Choose the mode:
+        - `1` – to create a new project.
+        - `2` – to create a new custom element.
+        - `3` – to exit.
+    - Enter the project name when prompted.
 
 ### Creating a Component
+
+#### Method 1: Command-Line Arguments
 
 1. Open your terminal.
 2. Navigate to the `cm.js` directory.
 3. Run the command:
 
-```Sh
+```sh
 node cm.js c <YourComponentName> [d <ComponentDirectory>]
 ```
-    * Replace `<YourComponentName>` with the name of your component and `<ComponentDirectory>` with the directory of
-      your component.
-    * The `[d <ComponentDirectory>]` argument is optional.
+
+- Replace `<YourComponentName>` with the name of your component.
+- Replace `<ComponentDirectory>` with the directory for your component.
+- The `[d <ComponentDirectory>]` argument is optional. If not specified, the component will be placed in the default directory.
+
+#### Method 2: Step-by-Step Guide
+
+If you run `cm.js` **without any parameters**, an interactive step-by-step guide will be activated to help you set up the component.
+
+1. Open your terminal.
+2. Navigate to the `cm.js` directory.
+3. Run the command:
+
+```sh
+node cm.js
+```
+
+4. Follow these steps displayed in the terminal:
+    - Choose an action for the component:
+        - `1` – Enter the component name.
+        - `2` – Enter the component name and directory.
+        - `3` – Exit.
+    - In case of selecting `2`, you'll be prompted to:
+        - Specify the component directory.
+            - You can choose between the default directory or define a custom one.
+
+5. Once all required inputs are provided, the component will be created automatically with proper registration in the templates and styles.
+
 
 ## Instruction for Actions
 
