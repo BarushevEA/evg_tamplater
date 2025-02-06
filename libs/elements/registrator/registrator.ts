@@ -7,6 +7,7 @@ export type QSI_APP_COMPONENT = {
 }
 
 export type ELEMENT_REG_OPTION = {
+    isCustomElement?: boolean;
     tagName: string;
     target: CustomElementConstructor;
     element: QSI_APP_COMPONENT;
@@ -24,8 +25,10 @@ export const IS_ELEMENTS_REGISTERED$ = new Observable<boolean>(false);
 
 export const registerElements = (opts: REG_OPTIONS, isUsersElements?: boolean): void => {
     for (let i = 0; i < opts.length; i++) {
-        ROOT_STYLES.push(`${opts[i].tagName} ${ignoreElement}`);
         opts[i].element.qsi_app_tag_name = opts[i].tagName;
+
+        if (opts[i].isCustomElement) continue;
+        ROOT_STYLES.push(`${opts[i].tagName}${ignoreElement}`);
     }
 
     runWhenDocumentReady(() => {
@@ -38,8 +41,9 @@ export const getRootStyles = (): string => {
     return ROOT_STYLES.join("");
 };
 
-export const getOption = (element: any, tagName: string, template: TEMPLATE, isShadow?: boolean): ELEMENT_REG_OPTION => {
+export const getOption = (element: any, tagName: string, template: TEMPLATE, isCustomElement?: boolean, isShadow?: boolean): ELEMENT_REG_OPTION => {
     return {
+        isCustomElement: isCustomElement,
         tagName: tagName,
         target: getCustomElement({
             template: template,

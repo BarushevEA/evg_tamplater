@@ -19,7 +19,7 @@ const srcPath = path.join(__dirname, "../src");
 const settingsDirPath = path.join(distributionPath, "/settings");
 const infoFilePath = path.join(settingsDirPath, "/info.ts");
 const modulesPath = path.join(settingsDirPath, "/modules.ts");
-const HTMLTemplatesDirPath = path.join(distributionPath,"/modules/elements");
+const HTMLTemplatesDirPath = path.join(distributionPath, "/modules/elements");
 const templatesMarkers = htmlTemplates;
 
 copySrcToDistribution(srcPath, distributionPath);
@@ -39,20 +39,33 @@ deleteFileLineBy(modulesPath, [
     "APP_TAG_NAME",
 ]);
 
-const tagLines = getSubstringFromFile(modulesPath, "getOption(", "),")
+const tagLines = getSubstringFromFile(modulesPath, "getOption(", "),");
+const tagLinesWithCustomIdentifier = [];
+for (const tagLine of tagLines) {
+    tagLinesWithCustomIdentifier.push({
+        target: tagLine,
+        replacer: `${tagLine}, true, false`
+    });
+}
+
+replaceInFile(
+    modulesPath,
+    tagLinesWithCustomIdentifier
+);
+
 const tagReplacements = getTagReplacements(tagLines);
 replaceInFile(
     modulesPath,
     tagReplacements
 );
 
-const cssTag = processCssFileSync(getCSSPath(),tagReplacements);
+const cssTag = processCssFileSync(getCSSPath(), tagReplacements);
 addFileLineAfter(
     modulesPath,
     [
         {
             target: "export const MODULES:",
-            line: `    getOption(AppRoot, "${customElementTagName}", "${cssTag} APP_EXAMPLE_____ROOT", true),`,
+            line: `    getOption(AppRoot, "${customElementTagName}", "${cssTag} APP_EXAMPLE_____ROOT", false, true),`,
         }
     ]);
 
