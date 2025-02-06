@@ -1,0 +1,7 @@
+{
+  "csm-subroute-test": {
+    "version": "1, 0, 0",
+    "destination": "../../../../custom_elements/subroute_test/distribution/settings/modules",
+    "description": "Custom element for sharing"
+  }
+}
