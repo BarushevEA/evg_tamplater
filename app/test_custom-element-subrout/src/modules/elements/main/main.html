@@ -1,4 +1,17 @@
-<div qsi-cls="main">Hello main.html</div>
-<div style="height: 300px; width: 500px;">
-    <csm-subroute-test></csm-subroute-test>
+<div qsi-cls="main">
+    Hello main.html
+    <div qsi-cls="buttons_panel">
+        <div qsi-cls="button"
+             qsi-click="clickMain">Main
+        </div>
+        <div qsi-cls="button"
+             qsi-click="clickHeader">Header
+        </div>
+        <div qsi-cls="button"
+             qsi-click="clickFooter">Footer
+        </div>
+    </div>
+    <div style="height: 300px; width: 500px;">
+        <csm-subroute-test qsi-channel="customElementChannel"></csm-subroute-test>
+    </div>
 </div>
