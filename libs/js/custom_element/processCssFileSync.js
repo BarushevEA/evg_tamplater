@@ -6,8 +6,16 @@ const path = require('path');
  * @param {string} filePath - Path to the CSS file
  * @returns {string} - Transformed CSS file content
  */
-function processCssFileSync(filePath) {
+function processCssFileSync(filePath, tagReplacements) {
     try {
+        const cssIgnoreElement = "{display: contents !important;}";
+        let cssIgnore = "txt-val{display: contents !important;}qsi-bind{display: contents !important;}qsi-subroute{display: contents !important;}";
+
+        for (let i = 0; i < tagReplacements.length; i++) {
+            const tagReplacement = tagReplacements[i];
+            cssIgnore += `${tagReplacement.replacer}${cssIgnoreElement}`;
+        }
+
         // Synchronously read the file content
         const cssFileStr = fs.readFileSync(path.resolve(filePath), 'utf-8');
 
@@ -19,7 +27,7 @@ function processCssFileSync(filePath) {
             .replaceAll(" {", "{")
             .replaceAll("\"", "'");
 
-        return `<style>${result}</style>`;
+        return `<style>${cssIgnore}${result}</style>`;
     } catch (error) {
         console.error("Error processing the file:", error.message);
         return "";

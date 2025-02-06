@@ -46,7 +46,7 @@ replaceInFile(
     tagReplacements
 );
 
-const cssTag = processCssFileSync(getCSSPath());
+const cssTag = processCssFileSync(getCSSPath(),tagReplacements);
 addFileLineAfter(
     modulesPath,
     [
