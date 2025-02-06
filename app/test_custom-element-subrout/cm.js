@@ -1,7 +1,8 @@
 const path = require("path");
-const {getTemplatePath, getModulesPath} = require("./buildTemplateHandler/utils");
+const {getTemplatePath, getModulesPath, getSCSSPath} = require("./buildTemplateHandler/utils");
 const fs = require("fs");
 const {askQuestionClose, askQuestion, normalizeName, normalizeComponentName} = require("../../consoleHelper");
+const {addFileLineAfter} = require("../../libs/js/custom_element/addFileLineAfter");
 /**
  * Enum representing possible commands.
  * @enum {string}
@@ -160,10 +161,12 @@ class Maker {
     absoluteDirPath
     tsFileName
     htmlFileName
+    scssStyleFilePath
     scssMixinFileName
     componentTsPath
     componentHtmlPath
     componentScssMixinPath
+    componentScssImportMixinPath
     absoluteComponentTsPath
     absoluteComponentHtmlPath
     absoluteComponentScssMixinPath
@@ -182,10 +185,12 @@ class Maker {
         this.dir = path.join(customDir, this.pathPart);
         this.tsFileName = `${this.pathPart}.ts`;
         this.htmlFileName = `${this.pathPart}.html`;
+        this.scssStyleFilePath = getSCSSPath();
         this.scssMixinFileName = `_${this.pathPart}.scss`;
         this.componentTsPath = path.join(this.dir, this.tsFileName);
         this.componentHtmlPath = path.join(this.dir, this.htmlFileName);
         this.componentScssMixinPath = path.join(this.dir, this.scssMixinFileName);
+        this.componentScssImportMixinPath = path.join(this.dir,this.pathPart);
         this.absoluteDirPath = getTemplatePath(this.dir);
         this.absoluteComponentTsPath = getTemplatePath(this.componentTsPath);
         this.absoluteComponentHtmlPath = getTemplatePath(this.componentHtmlPath);
@@ -263,7 +268,21 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, 
 
             this.createTemplates();
             this.registerOnModules();
+
         });
+
+        addFileLineAfter(
+            this.scssStyleFilePath,
+            [
+                {
+                    line: `@import "../elements/${this.componentScssImportMixinPath}";`,
+                },
+                {
+                    target: ".app {",
+                    line: `  @include ${this.pathPart}();`,
+                }
+            ]
+        );
     }
 
     registerOnModules() {
