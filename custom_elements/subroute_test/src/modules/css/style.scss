@@ -1,5 +1,16 @@
+@import "../elements/container/container";
+@import "../elements/header/header";
+@import "../elements/footer/footer";
+@import "../elements/main/main";
 @import "mixins";
 
 .app {
+  @include container();
+  @include header();
+  @include footer();
+  @include main();
 
+  @include normalizeSpace();
+  @include centered_rectangle(100%, 100%);
+  @include setMinWidthHeight(200px, 200px);
 }

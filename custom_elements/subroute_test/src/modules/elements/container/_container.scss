@@ -1,0 +1,30 @@
+@import "../../css/mixins";
+
+@mixin container() {
+  .buttons_panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    @include setWidthHeight(200px, 50px);
+
+    @include flexRowNowrap();
+    align-items: center;
+    justify-content: flex-start;
+
+    .button {
+      @include button(60px, 30px);
+    }
+  }
+  .container {
+    @include setWidthHeight(100%, 100%);
+    @include setMinWidthHeight(100%, 200px);
+
+    @include flexColumnNowrap();
+    @include flexCenter();
+
+    position: relative;
+    background: #ebd0b1;
+  }
+}
+        
