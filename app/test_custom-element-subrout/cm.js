@@ -235,6 +235,8 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, 
     }
 }`;
         this.scssMixinTemplate = `
+@import "${levels}css/mixins";
+
 @mixin ${this.pathPart}() {
 }
         `;
