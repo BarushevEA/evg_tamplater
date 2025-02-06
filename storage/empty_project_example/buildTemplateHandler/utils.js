@@ -16,6 +16,10 @@ exports.getTemplatePath = (fileName) => {
 exports.getCSSPath = () => {
     return path.join(__dirname, appPath.CSSDirPath, "style.css");
 };
+// App SCSS style full path
+exports.getSCSSPath = () => {
+    return path.join(__dirname, appPath.CSSDirPath, "style.scss");
+};
 
 exports.getAssetsPath = () => {
     return path.join(exports.getBuildDirPath(), "assets");
