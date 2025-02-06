@@ -1,4 +1,8 @@
+@import "../../css/mixins";
 
 @mixin footer() {
+  .footer {
+    @include centered_rectangle(100%, 100px);
+  }
 }
         

@@ -1,4 +1,8 @@
+@import "../../css/mixins";
 
 @mixin header() {
+  .header {
+    @include centered_rectangle(100%, 100px);
+  }
 }
         

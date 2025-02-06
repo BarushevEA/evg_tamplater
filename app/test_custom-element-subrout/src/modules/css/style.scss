@@ -1,5 +1,23 @@
 @import "mixins";
+@import "../elements/main/main";
+@import "../elements/header/header";
+@import "../elements/footer/footer";
+
+@include globalNormalize();
+@include devHighlighting();
+@include devBorder();
+
+body {
+  @include setWidthHeight(100%, 99vh);
+}
 
 .app {
+  @include header();
+  @include main();
+  @include footer();
 
+  @include setWidthHeight(100%, 100%);
+  @include flexColumnNowrap();
+  align-items: center;
+  justify-content: space-between;
 }
