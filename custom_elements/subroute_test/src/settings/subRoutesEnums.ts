@@ -1,9 +1,9 @@
 export enum E_SUB_ROUTE {
-    TEST = "test"
+    TEST = "subroute_test_test"
 }
 
 export enum E_SUB_ROUTE_PAGE {
-    MAIN = "MAIN",
-    FOOTER = "FOOTER",
-    HEADER = "HEADER"
+    MAIN = "subroute_test_MAIN",
+    FOOTER = "subroute_test_FOOTER",
+    HEADER = "subroute_test_HEADER"
 }

@@ -11,7 +11,7 @@ export const CSM_SUBROUTE_TEST: REG_OPTIONS = [
     getOption(Main, "csmsubroutetest-main", "<div>Hello main.html</div>"),
     getOption(Footer, "csmsubroutetest-footer", "<div>Hello footer.html</div>"),
     getOption(Header, "csmsubroutetest-header", "<div>Hello header.html</div>"),
-    getOption(Container, "csmsubroutetest-container", "<div class='app'><div qsi-cls='container'><div qsi-cls='buttons_panel'><div qsi-cls='button' qsi-click='clickMain'>Main </div><div qsi-cls='button' qsi-click='clickHeader'>Header </div><div qsi-cls='button' qsi-click='clickFooter'>Footer </div></div><qsi-subroute name='test'></qsi-subroute></div></div>"),
+    getOption(Container, "csmsubroutetest-container", "<div class='app'><div qsi-cls='container'><div qsi-cls='buttons_panel'><div qsi-cls='button' qsi-click='clickMain'>Main </div><div qsi-cls='button' qsi-click='clickHeader'>Header </div><div qsi-cls='button' qsi-click='clickFooter'>Footer </div></div><qsi-subroute name='subroute_test_test'></qsi-subroute></div></div>"),
 ];
 
 START_SUB_ROUTES_REGISTRATION();
