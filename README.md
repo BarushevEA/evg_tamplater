@@ -5,34 +5,32 @@
 #### Method 1: Command-Line Arguments
 
 1. Open your terminal.
-2. Navigate to the `pm.js` directory.
-3. Run the command:
+2. Navigate to the directory containing `pm.js`.
+3. Run one of the following commands:
 
 ```sh
-node pm.js p <YourProjectName>
+# For creating a standard project:
+node pm.js p <ProjectName>
+
+# For creating a custom reusable component:
+node pm.js cstm <CustomComponentName>
 ```
 
-- Replace `<YourProjectName>` with the name of your project.
-- This method allows you to create a project directly by providing its name.
+- Replace `<ProjectName>` or `<CustomComponentName>` with the desired name for your project or custom component.
 
-#### Method 2: Step-by-Step Guide
+#### Method 2: Interactive Step-by-Step Mode
 
-If you run `pm.js` **without any parameters**, an interactive step-by-step guide will be activated to help you set up the project.
+If you run the `pm.js` script **without any arguments**, an interactive mode will guide you through the steps of project creation:
 
-1. Open your terminal.
-2. Navigate to the `pm.js` directory.
-3. Run the command:
+1. Choose the project type:
+    - `1`: Create a standard project.
+    - `2`: Create a reusable custom component project.
+    - `3`: Exit.
 
-```sh
-node pm.js
-```
+2. After selecting the project type, enter the **name of the new project** or custom component when prompted.
 
-4. Follow the displayed instructions:
-    - Choose the mode:
-        - `1` – to create a new project.
-        - `2` – to create a new custom element.
-        - `3` – to exit.
-    - Enter the project name when prompted.
+3. The script will automatically generate the project structure, replacing placeholders with the project/component name.
+
 
 ### Creating a Component
 
@@ -73,7 +71,7 @@ node cm.js
 
 5. Once all required inputs are provided, the component will be created automatically with proper registration in the templates and styles.
 
-
+---
 ## Instruction for Actions
 
 * `qsi-click="functionName"` - The attribute contains the function name of this component, which will handle click
@@ -123,7 +121,7 @@ If you want to use CSS encryption, ensure that className is not equal to conditi
 * `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
 * `{{fieldName}}` - This is the same as qsi-bind.
 * `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
-
+---
 ## Routing Functionality
 
 We've added routing functionality in our project for smoother transitions between views.
@@ -335,3 +333,138 @@ REGISTER_ROUTES(MAIN_ROUTES.HOME, mergeRouteCollections(main, cars));
 
 setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
 ```
+---
+## Custom Component Development as Separate Projects
+
+Custom components are standalone projects that can be developed, tested, and distributed independently. They are reusable modules that can be integrated into other projects as external dependencies.
+
+### Two Main Modes of Custom Component Development
+
+Custom component development revolves around the following two main modes:
+
+1. **Development Mode**:
+    - Focused on actively developing and editing the custom component.
+    - Allows iterating over features and functionality.
+    - Includes the option to test and validate the component in isolation before preparing it for external use.
+
+2. **Distribution Mode**:
+    - Prepares the project into a **distribution package** for integration into other projects.
+    - Ensures the resulting module contains only the required files and avoids potential conflicts.
+---
+### Key Considerations for Custom Components
+
+When developing custom components as separate projects, the following aspects are crucial to ensure compatibility and ease of integration:
+
+#### 1. Shadow DOM and Interaction
+- Custom components are isolated inside a `Shadow DOM` created by the `AppRoot` container.
+- Interaction with the component's Shadow DOM content is not allowed.
+- Use indirect methods (e.g., services or emitted messages) for communication.
+
+#### 2. Routing
+- Standard routing is disabled for custom components to avoid potential conflicts during integration with host applications.
+- Subrouting is permitted but requires a unique naming convention:
+    - Use the full name of the custom component as the base name and add descriptive suffixes for each subroute.
+    - For example:
+      ```html
+      <qsi-subroute name="custom_component_example_view"></qsi-subroute>
+      <qsi-subroute name="custom_component_example_settings"></qsi-subroute>
+      ```
+---
+### Preparing the Custom Component for Distribution
+
+Once the development process is complete, and functionality is tested, you can prepare the custom component for sharing with other projects by following these steps:
+
+1. Open the terminal.
+2. Navigate to the root of the custom component project.
+3. Run the `dist.js` script:
+
+```sh
+node dist.js
+```
+---
+
+### Adding a Custom Component to Another Project
+
+Once your custom component has been prepared as a distribution package, you can integrate it into another project using the **automated script** `addCustomElement.js`. Follow these steps:
+
+1. Place the **custom component's distribution folder** in the appropriate directory.
+    - Typically, the folder structure is handled through automation.
+
+2. Run the `addCustomElement.js` script:
+
+```sh
+node addCustomElement.js
+```
+
+What this script does:
+- Prompts you to **select the custom component** to be added to your project using `selectCustomElement`.
+- Automatically updates the `flags.js` file to:
+    - Disable CSS encryption (`isCssEncrypt: false`).
+    - Disable JS and CSS processing (`isJsCssProcess: false`).
+- Writes the component’s configuration into `modules.ts`:
+    - Adds an import statement for the custom component.
+    - Updates the `MODULES` export to include the new custom component.
+    - Inserts metadata with a descriptor comment for the custom component.
+- Copies necessary assets from the custom component’s distribution package to the host project.
+
+This eliminates the need for manual integration steps and ensures consistency.
+
+---
+
+### Example Workflow for Developing a Custom Component
+
+#### Step 1: Create a New Custom Component
+Run the following command to create a new custom component project:
+```sh
+node pm.js cstm custom_example
+```
+
+The project is created in the directory:
+```plaintext
+custom_elements/custom_example
+```
+
+#### Step 2: Develop the Component
+Add functionality and logic to the `src` directory of the new project.
+
+#### Step 3: Prepare the Component for Distribution
+After the development process, run:
+```sh
+node dist.js
+```
+
+The ready-to-use distribution package is generated.
+
+#### Step 4: Add the Component to Another Project
+Transfer the distribution package to the host project. Then, run:
+```sh
+node addCustomElement.js
+```
+
+The `addCustomElement.js` script will handle all steps of integration automatically.
+
+---
+
+### Key Features of the `addCustomElement.js` Script
+
+1. **Automated Selection**:
+    - Uses `selectCustomElement` to prompt you with a list of available custom components for integration.
+
+2. **CSS Encryption Disabled**:
+    - Updates the `flags.js` file to disable CSS encryption (`isCssEncrypt: false`) and CSS/JS post-processing (`isJsCssProcess: false`).
+
+3. **Tag and Module Additions**:
+    - Adds a descriptive tag for the custom component in `modules.ts`.
+    - Imports the custom component module into the host project.
+
+4. **Asset Management**:
+    - Ensures all required assets (e.g., styles) are copied from the custom component's distribution package to the appropriate directories in the host project.
+
+---
+
+### Final Notes
+
+- The process of adding a custom component to a project is fully automated, minimizing errors and reducing manual steps.
+- Always use the `dist.js` script in your custom component project to prepare it for integration.
+- Run the `addCustomElement.js` script in the **host project** to add the component effortlessly.
+- Safeguarding measures such as the automatic disabling of CSS encryption ensure smooth integration without conflicts.
