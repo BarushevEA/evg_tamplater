@@ -1,173 +1,163 @@
+## Introduction
+
+This document describes a lightweight web application framework inspired by Angular but focused on performance and minimal final code size. The framework automates many routine development tasks, from project creation to building the final application.
+
+**Key Features:**
+
+* **Component Architecture:** Applications are built from components, each consisting of a JS/TS module, an HTML template, and an SCSS style file.
+* **Native Rendering:** Unlike frameworks using a virtual DOM, this framework employs native rendering for optimized performance. Components establish connections during the rendering process, starting from the deepest nodes.
+* **Small Size:** The framework ensures a minimal size for the final binary file, which contains compressed JS, HTML, and CSS.
+* **Automation:** Scripts like `pm.js`, `cm.js`, `dist.js`, and `addCustomElement.js` automate project creation, component management, and application building.
+* **Routing:** A built-in routing system supports primary and nested routes.
+* **Data Binding and Conditional Rendering:** Special attributes (`qsi-*`) simplify dynamic component management.
+* **Custom Components:**  Supports the development and integration of custom components as standalone projects.
+
+The following sections of this document detail all aspects of working with the framework: creating projects and components, using attributes, configuring routing, and managing custom components.
+
 ## Project Instructions
 
-### Creating a Project
+### Creating Projects and Components
 
-#### Method 1: Command-Line Arguments
+This section explains how to create new projects and components using command-line arguments or an interactive guided mode.
 
-1. Open your terminal.
-2. Navigate to the directory containing `pm.js`.
-3. Run one of the following commands:
+#### Creating a Project
 
-```sh
-# For creating a standard project:
-node pm.js p <ProjectName>
-
-# For creating a custom reusable component:
-node pm.js cstm <CustomComponentName>
-```
-
-- Replace `<ProjectName>` or `<CustomComponentName>` with the desired name for your project or custom component.
-
-#### Method 2: Interactive Step-by-Step Mode
-
-If you run the `pm.js` script **without any arguments**, an interactive mode will guide you through the steps of project creation:
-
-1. Choose the project type:
-    - `1`: Create a standard project.
-    - `2`: Create a reusable custom component project.
-    - `3`: Exit.
-
-2. After selecting the project type, enter the **name of the new project** or custom component when prompted.
-
-3. The script will automatically generate the project structure, replacing placeholders with the project/component name.
-
-
-### Creating a Component
-
-#### Method 1: Command-Line Arguments
-
-1. Open your terminal.
-2. Navigate to the `cm.js` directory.
-3. Run the command:
+To create a project, use the `pm.js` script:
 
 ```sh
-node cm.js c <YourComponentName> [d <ComponentDirectory>]
+node pm.js [options] <Name>
 ```
 
-- Replace `<YourComponentName>` with the name of your component.
-- Replace `<ComponentDirectory>` with the directory for your component.
-- The `[d <ComponentDirectory>]` argument is optional. If not specified, the component will be placed in the default directory.
+* `<Name>`: The name of your project or component.
+* `[options]`:
+    * `p`: Creates a standard project.  This is the default option if no other option is provided.
+    * `cstm`: Creates a custom reusable component.
 
-#### Method 2: Step-by-Step Guide
+If you run `node pm.js` without any arguments, you'll enter an interactive mode where you can choose the project type and enter the name.
 
-If you run `cm.js` **without any parameters**, an interactive step-by-step guide will be activated to help you set up the component.
+#### Creating a Component
 
-1. Open your terminal.
-2. Navigate to the `cm.js` directory.
-3. Run the command:
+To create a component, use the `cm.js` script:
 
 ```sh
-node cm.js
+node cm.js c <ComponentName> [d <ComponentDirectory>]
 ```
 
-4. Follow these steps displayed in the terminal:
-    - Choose an action for the component:
-        - `1` – Enter the component name.
-        - `2` – Enter the component name and directory.
-        - `3` – Exit.
-    - In case of selecting `2`, you'll be prompted to:
-        - Specify the component directory.
-            - You can choose between the default directory or define a custom one.
+* `<ComponentName>`: The name of your component.
+* `[d <ComponentDirectory>]`:  (Optional) The directory for your component. If omitted, the component will be placed in the default directory.
 
-5. Once all required inputs are provided, the component will be created automatically with proper registration in the templates and styles.
+
+Running `node cm.js` without any arguments starts an interactive mode to guide you through component creation. You can choose to specify only the component name or both the name and directory.
 
 ---
-## Instruction for Actions
+## Attribute Instructions
 
-* `qsi-click="functionName"` - The attribute contains the function name of this component, which will handle click
-  events on the element.
-* `qsi-if="variableName or functionName" ` - The attribute contains the field name of this component, if value of field
-  equals true element will show.
-* `qsi-handle="functionName" ` The - attribute contains function name of this component. When function is calling, you
-  can get related elements and process them.
-* `qsi-inject_to="variableName"`- Injection HTML element to the variable.
-* `qsi-channel="variableName"`- Injection IChildChannel element to the variable.
-* `qsi-change="functionName"` - Serving a qsi-change action using function name.
-* `qsi-keydown="functionName"` - Serving a qsi-keydown action using function name.
-* `qsi-keyup="functionName"` - Serving a qsi-keyup action using function name.
-* `qsi-dblclick="functionName"` - Serving a qsi-dblclick action using function name.
-* `qsi-scroll="functionName"` - Serving a qsi-scroll action using function name.
-* `qsi-wheel="functionName"` - Serving a qsi-wheel action using function name.
-* `qsi-mouseleave="functionName"` - Serving a qsi-mouseleave action using function name.
-* `qsi-mouseenter="functionName"` - Serving a qsi-mouseenter action using function name.
-* `qsi-mouseup="functionName"` - Serving a qsi-mouseup action using function name.
-* `qsi-mousedown="functionName"` - Serving a qsi-mousedown action using function name.
-* `qsi-cls="classCondition"` - Serving classes based on conditions using variable name or function name.
+This section describes the available attributes and their usage.
 
-## CSS Encryption Note
+### Event Handling
 
-If you want to use CSS encryption, ensure that className is not equal to conditionName.
+* `qsi-click="functionName"`: Calls `functionName` when the element is clicked.
+* `qsi-dblclick="functionName"`: Calls `functionName` when the element is double-clicked.
+* `qsi-mousedown="functionName"`: Calls `functionName` when the mouse button is pressed down on the element.
+* `qsi-mouseup="functionName"`: Calls `functionName` when the mouse button is released over the element.
+* `qsi-mouseenter="functionName"`: Calls `functionName` when the mouse pointer enters the element.
+* `qsi-mouseleave="functionName"`: Calls `functionName` when the mouse pointer leaves the element.
+* `qsi-scroll="functionName"`: Calls `functionName` when the element is scrolled.
+* `qsi-wheel="functionName"`: Calls `functionName` when the mouse wheel is rolled over the element.
+* `qsi-keydown="functionName"`: Calls `functionName` when a key is pressed down on the element.
+* `qsi-keyup="functionName"`: Calls `functionName` when a key is released over the element.
+* `qsi-change="functionName"`: Calls `functionName` when the element's value changes.
 
-### Examples
-```js
-<div qsi-cls="class1">=== div.classList.add("class1")
-    <div qsi-cls="class1:true">=== div.classList.add("class1")
-        <div qsi-cls="class1:false">=== div.classList.remove("class1")
-            <div qsi-cls="true?class1:class2">=== div.classList.add("class1") & div.classList.remove("class2")
-                <div qsi-cls="false?class1:class2">=== div.classList.add("class2") & div.classList.remove("class1")
-```
+### Conditional Rendering and Data Binding
+
+* `qsi-if="variableName or functionName"`: Shows the element if the value of `variableName` or the result of `functionName` is true.
+* `qsi-for="arrName"`: Iterates over the array `arrName`.
+* `qsi-bind` or `{{...}}`:  Binds the element's content to the specified field name. For example:  `<qsi-bind>fieldName</qsi-bind>` or `{{fieldName}}`.
+* `<txt-val>fieldName</txt-val>`: Binds the value of `fieldName` to an HTML text field.
+* `qsi-src="urlLink"`: Sets the `src` attribute of the element to the value of `urlLink`.
+
+###  Other Attributes
+
+* `qsi-handle="functionName"`: Calls `functionName` and allows access to related elements for processing.
+* `qsi-inject_to="variableName"`: Injects the HTML element into the specified variable.
+* `qsi-channel="variableName"`: Injects the `IChildChannel` element into the specified variable.
+
+
+### Class Manipulation (qsi-cls)
+
+The `qsi-cls` attribute allows dynamic class manipulation based on conditions.
+
+* **Simple Class Toggle:** `qsi-cls="class1"` adds `class1` to the element's class list.
+* **Conditional Class Toggle:** `qsi-cls="class1:condition"` adds `class1` if `condition` is true, and removes it if false.  Multiple conditions can be chained: `qsi-cls="class1:condition1 class2:condition2 class3:condition3"`.
+* **Ternary Class Toggle:** `qsi-cls="condition?class1:class2"` adds `class1` if `condition` is true and `class2` if false.  The opposing class is removed.
+
 ```html
-
 <div qsi-cls="class1"></div>
 <div qsi-cls="class1:condition class2:condition class3:condition"></div>
 <div qsi-cls="class1:condition1 class2:condition2 class3:condition3"></div>
 <div class="class0" qsi-cls="class1:condition1 class2:condition2 class3:condition3"></div>
 <div qsi-cls="condition?class1:class2"></div>
 ```
-* `qsi-for="arrName"` - This attribute contains the name of iterated array.
-* `qsi-src="urlLink"` - This attribute contains the name of url source field.
 
-### Bindings
-* `<qsi-bind>fieldName</qsi-bind>` - This tag contains the name of text field.
-* `{{fieldName}}` - This is the same as qsi-bind.
-* `<txt-val>fieldName</txt-val>` - This tag contains the name of HTML text field.
+#### CSS Encryption Note
+If using CSS encryption, ensure that `className` is not equal to `conditionName`.
+
 ---
 ## Routing Functionality
 
-We've added routing functionality in our project for smoother transitions between views.
+This document explains how to implement routing and sub-routing in your project.
 
-* `<qsi-route></qsi-route>` - This tag implements routing.
-* `<qsi-subroute name="yourSubRoutName"></qsi-subroute>` - This tag implements subrouting and contains the name of the
-  subroute.
+### Core Concepts
 
-### Setting Up Routing
+* `<qsi-route></qsi-route>`:  The main tag that enables routing within your application.
+* `<qsi-subroute name="yourSubRoutName"></qsi-subroute>`: Enables nested routing within a specific section of your application.  The `name` attribute corresponds to a defined sub-route name.
 
-Routing settings are located in the <projectName>/src/settings/routes.ts file.
-SubRouting settings are located in the <projectName>/src/settings/subRoutes.ts file.
-SubRouting additional settings are located in the <projectName>/src/settings/subRoutesEnums.ts file.
+### Configuration Files
 
-### User-friendly Route Management
+* **routes.ts:**  (<projectName>/src/settings/routes.ts) - Defines the main application routes.
+* **subRoutes.ts:** (<projectName>/src/settings/subRoutes.ts) - Defines sub-routes.
+* **subRoutesEnums.ts:** (<projectName>/src/settings/subRoutesEnums.ts) -  Defines enums used for sub-routing configuration.
 
-For a more user-friendly way of managing routing, we recommend using the ROUTE_COMMAND enum.
-Its values are set according to the names of views, which makes scoping and navigating through your views easier and
-more intuitive.
 
-### Registering Routes
+### Routing Setup
 
-To register routes, use the REGISTER_ROUTES function, which accepts two arguments:
+1. **ROUTE_COMMAND Enum:** Define an enum in `routes.ts`  (e.g., `ROUTE_COMMAND`) to represent your main routes.  This provides a user-friendly way to manage and reference your routes.
 
-1. Setup of the route, used as a starting point.
-2. An array with the registered routes. Routes are specified following the format: label/route/component.
+2. **REGISTER_ROUTES Function:** Use the `REGISTER_ROUTES` function to register your routes. This function takes two arguments:
+    * The starting route (a value from your `ROUTE_COMMAND` enum).
+    * An array of routes, each defined using `makeRoute(routeCommand, path, component)`.  `routeCommand` is a value from the `ROUTE_COMMAND` enum, `path` is the URL path, and `component` is the component to render for that route.
 
-### Routing Mode
+3. **setBrowserRoutingMode Function:**  Set the routing mode using `setBrowserRoutingMode()`.  Available modes:
+    * `BROWSER_ROUTING.SHOW`: Routes are displayed in the browser's address bar, and browser history (back/forward buttons) works as expected.
+    * `BROWSER_ROUTING.SHOW_WITHOUT_HISTORY`: Routes are displayed in the address bar, but browser history is disabled for routing.
+    * `BROWSER_ROUTING.HIDDEN`: Routing is internal; the address bar only reflects the initial route.
 
-Choose the routing mode with the setBrowserRoutingMode function. This mode can be in one of three states:
 
-1. BROWSER_ROUTING.SHOW - routes are displayed in the browser line. When navigating in the browser using history arrows,
-   the route will be indicated according to history, and a command to display the view corresponding to this route will
-   be generated.
-2. BROWSER_ROUTING.SHOW_WITHOUT_HISTORY - history arrows won't work, but routes will be displayed in the browser line
-   when navigating to the registered views through routing.
-3. BROWSER_ROUTING.HIDDEN - you can navigate through views using routing and command labels, but the browser line will
-   only indicate the route with which the application was loaded. The application will react to history arrows according
-   to the default browser settings.
+### Sub-Routing Setup
 
-### Navigation Between Views
+1. **Sub-Route Enums:** Define enums in `subRoutesEnums.ts` to represent your sub-routes and their parent sections (e.g., `E_SUB_ROUTE` for parent sections and `SUB_ROUTE_PAGE` for routes within those sections).
 
-To navigate to the relevant view, use ROUTE_COMMAND$.next, e.g., ROUTE_COMMAND$.next(ROUTE_COMMAND.MAIN).
-Or alternatively, use ROUTE().SHOW_PAGE(ROUTE_COMMAND.MAIN).
+2. **APP_SUB_ROUTE Class:**  Create instances of `APP_SUB_ROUTE` for each parent section, providing the parent section name (`E_SUB_ROUTE` value) and the default sub-route (`SUB_ROUTE_PAGE` value).
 
-To navigate by subRoute use SUB_ROUTE(E_SUB_ROUTE.NAME).SHOW_PAGE(SUB_ROUTE_PAGE.NAME).
+3. **addPage Method:** Use the `addPage()` method on `APP_SUB_ROUTE` instances to add sub-routes to each parent section.  Provide the sub-route name (`SUB_ROUTE_PAGE` value) and the corresponding component.
+
+4. **REGISTER_SUB_ROUTES Function:**  Register your sub-routes using the `REGISTER_SUB_ROUTES` function, passing in the `APP_SUB_ROUTE` instances.
+
+
+### Navigation
+
+* **Main Routes:** Use `ROUTE_COMMAND$.next(routeCommand)` or `ROUTE().SHOW_PAGE(routeCommand)` to navigate between main routes.  `routeCommand` is a value from the `ROUTE_COMMAND` enum.
+
+* **Sub-Routes:**  Use `SUB_ROUTE(parentRoute).SHOW_PAGE(subRoute)` to navigate between sub-routes. `parentRoute` is a value from `E_SUB_ROUTE`, and `subRoute` is a value from `SUB_ROUTE_PAGE`.
+
+### Code Examples
+
+See the provided examples for initial and configured versions of `routes.ts`, `subRoutes.ts`, and `subRoutesEnums.ts`.  The examples demonstrate how to set up both basic routing and more complex nested routing using route collections.
+
+
+### Routing Collections
+
+For more complex scenarios, you can organize your routes into collections.  This helps manage large numbers of routes and create hierarchical structures.  See the "Routing Collections Example" for a demonstration of how to define, configure, and merge route collections using the `ROUTE_COLLECTION` class and the `mergeRouteCollections` function.
 
 ### Example of the routes settings file:
 
@@ -334,137 +324,99 @@ REGISTER_ROUTES(MAIN_ROUTES.HOME, mergeRouteCollections(main, cars));
 setBrowserRoutingMode(BROWSER_ROUTING.SHOW);
 ```
 ---
-## Custom Component Development as Separate Projects
+## Developing Custom Components as Standalone Projects
 
-Custom components are standalone projects that can be developed, tested, and distributed independently. They are reusable modules that can be integrated into other projects as external dependencies.
+This document explains how to develop, distribute, and integrate custom components as independent projects. These reusable modules enhance code organization and maintainability.
 
-### Two Main Modes of Custom Component Development
+### Development Modes
 
-Custom component development revolves around the following two main modes:
+Two primary modes govern custom component development:
 
-1. **Development Mode**:
-    - Focused on actively developing and editing the custom component.
-    - Allows iterating over features and functionality.
-    - Includes the option to test and validate the component in isolation before preparing it for external use.
+1. **Development Mode:**  Focuses on building and refining the component's functionality within its own project.  This mode allows for iterative development and testing before distribution.
 
-2. **Distribution Mode**:
-    - Prepares the project into a **distribution package** for integration into other projects.
-    - Ensures the resulting module contains only the required files and avoids potential conflicts.
----
-### Key Considerations for Custom Components
+2. **Distribution Mode:**  Prepares the component for seamless integration into other projects. This involves packaging the component into a distributable format, ensuring only necessary files are included.
 
-When developing custom components as separate projects, the following aspects are crucial to ensure compatibility and ease of integration:
+### Key Considerations
 
-#### 1. Shadow DOM and Interaction
-- Custom components are isolated inside a `Shadow DOM` created by the `AppRoot` container.
-- Interaction with the component's Shadow DOM content is not allowed.
-- Use indirect methods (e.g., services or emitted messages) for communication.
+#### Shadow DOM Encapsulation
 
-#### 2. Routing
-- Standard routing is disabled for custom components to avoid potential conflicts during integration with host applications.
-- Subrouting is permitted but requires a unique naming convention:
-    - Use the full name of the custom component as the base name and add descriptive suffixes for each subroute.
-    - For example:
-      ```html
-      <qsi-subroute name="custom_component_example_view"></qsi-subroute>
-      <qsi-subroute name="custom_component_example_settings"></qsi-subroute>
-      ```
----
-### Preparing the Custom Component for Distribution
+Custom components reside within a Shadow DOM created by the `AppRoot` container.  Direct interaction with the Shadow DOM's contents from the host application is prohibited.  Employ indirect communication methods like services or emitted messages.
 
-Once the development process is complete, and functionality is tested, you can prepare the custom component for sharing with other projects by following these steps:
+#### Routing within Custom Components
 
-1. Open the terminal.
-2. Navigate to the root of the custom component project.
-3. Run the `dist.js` script:
+Standard routing is disabled to prevent conflicts with the host application's routing.  However, *sub-routing* is permitted within the component using a specific naming convention:  Prefix sub-route names with the full component name followed by a descriptive suffix. For example:
 
-```sh
-node dist.js
-```
----
-
-### Adding a Custom Component to Another Project
-
-Once your custom component has been prepared as a distribution package, you can integrate it into another project using the **automated script** `addCustomElement.js`. Follow these steps:
-
-1. Place the **custom component's distribution folder** in the appropriate directory.
-    - Typically, the folder structure is handled through automation.
-
-2. Run the `addCustomElement.js` script:
-
-```sh
-node addCustomElement.js
+```html
+<qsi-subroute name="custom_component_example_view"></qsi-subroute>
+<qsi-subroute name="custom_component_example_settings"></qsi-subroute>
 ```
 
-What this script does:
-- Prompts you to **select the custom component** to be added to your project using `selectCustomElement`.
-- Automatically updates the `flags.js` file to:
-    - Disable CSS encryption (`isCssEncrypt: false`).
-    - Disable JS and CSS processing (`isJsCssProcess: false`).
-- Writes the component’s configuration into `modules.ts`:
-    - Adds an import statement for the custom component.
-    - Updates the `MODULES` export to include the new custom component.
-    - Inserts metadata with a descriptor comment for the custom component.
-- Copies necessary assets from the custom component’s distribution package to the host project.
+### Distribution Process
 
-This eliminates the need for manual integration steps and ensures consistency.
+1. Open your terminal.
+2. Navigate to the custom component project's root directory.
+3. Execute the `dist.js` script:
 
----
+   ```bash
+   node dist.js
+   ```
 
-### Example Workflow for Developing a Custom Component
+### Integration Process
 
-#### Step 1: Create a New Custom Component
-Run the following command to create a new custom component project:
-```sh
-node pm.js cstm custom_example
-```
+Use the `addCustomElement.js` script to integrate the distributed custom component into another project:
 
-The project is created in the directory:
-```plaintext
-custom_elements/custom_example
-```
+1. Place the custom component's distribution folder into your host project (usually handled automatically).
+2. Run the following script from the host project's root directory:
 
-#### Step 2: Develop the Component
-Add functionality and logic to the `src` directory of the new project.
+   ```bash
+   node addCustomElement.js
+   ```
 
-#### Step 3: Prepare the Component for Distribution
-After the development process, run:
-```sh
-node dist.js
-```
+**`addCustomElement.js` Actions:**
 
-The ready-to-use distribution package is generated.
+* Prompts you to select the desired component using `selectCustomElement`.
+* Modifies `flags.js` to disable CSS encryption (`isCssEncrypt: false`) and CSS/JS processing (`isJsCssProcess: false`).
+* Updates `modules.ts`:
+    * Imports the custom component.
+    * Adds the component to the `MODULES` export.
+    * Includes component metadata using a descriptor comment.
+* Copies necessary assets from the distribution package to the host project.
 
-#### Step 4: Add the Component to Another Project
-Transfer the distribution package to the host project. Then, run:
-```sh
-node addCustomElement.js
-```
 
-The `addCustomElement.js` script will handle all steps of integration automatically.
+### Example Workflow
 
----
+1. **Creation:**  Create a new custom component project:
 
-### Key Features of the `addCustomElement.js` Script
+   ```bash
+   node pm.js cstm custom_example
+   ```
 
-1. **Automated Selection**:
-    - Uses `selectCustomElement` to prompt you with a list of available custom components for integration.
+   This generates a project in the `custom_elements/custom_example` directory.
 
-2. **CSS Encryption Disabled**:
-    - Updates the `flags.js` file to disable CSS encryption (`isCssEncrypt: false`) and CSS/JS post-processing (`isJsCssProcess: false`).
+2. **Development:**  Implement the component's logic within the project's `src` directory.
 
-3. **Tag and Module Additions**:
-    - Adds a descriptive tag for the custom component in `modules.ts`.
-    - Imports the custom component module into the host project.
+3. **Distribution:**  Prepare the component for distribution:
 
-4. **Asset Management**:
-    - Ensures all required assets (e.g., styles) are copied from the custom component's distribution package to the appropriate directories in the host project.
+   ```bash
+   node dist.js
+   ```
 
----
+4. **Integration:**  Add the distributed component to your host project:
 
-### Final Notes
+   ```bash
+   node addCustomElement.js
+   ```
 
-- The process of adding a custom component to a project is fully automated, minimizing errors and reducing manual steps.
-- Always use the `dist.js` script in your custom component project to prepare it for integration.
-- Run the `addCustomElement.js` script in the **host project** to add the component effortlessly.
-- Safeguarding measures such as the automatic disabling of CSS encryption ensure smooth integration without conflicts.
+### `addCustomElement.js` Features
+
+* **Automated Selection:** Uses `selectCustomElement` for component selection.
+* **Configuration Updates:** Disables CSS encryption and processing in `flags.js`.
+* **Module Integration:**  Adds necessary imports and exports in `modules.ts`.
+* **Asset Management:**  Handles the copying of required assets.
+
+
+### Important Notes
+
+* Always use `dist.js` to prepare your component for integration.
+* Use `addCustomElement.js` within the *host* project.
+* Automatic disabling of CSS encryption ensures smooth integration.
