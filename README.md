@@ -82,6 +82,39 @@ This section describes the available attributes and their usage.
 * `qsi-inject_to="variableName"`: Injects the HTML element into the specified variable.
 * `qsi-channel="variableName"`: Injects the `IChildChannel` element into the specified variable.
 
+**qsi-handle="functionName"**
+
+This attribute binds an HTML element to the specified function (`functionName`) in the component's controller class. `qsi-handle` provides a way to access all elements associated with this function via the `this.root.getElementsBoundToMethod(this.functionName)` method.
+
+**How it works:**
+
+During component rendering, the framework registers all elements with the `qsi-handle` attribute and links them to the corresponding functions. Calling `this.root.getElementsBoundToMethod(this.functionName)` inside the `functionName` function returns an array of all HTML elements that have `qsi-handle="functionName"`. This allows you to perform operations on a group of elements.
+
+**Example:**
+
+```html
+<div qsi-handle="handleDivs">Div 1</div>
+<div qsi-handle="handleDivs">Div 2</div>
+```
+
+```typescript
+handleDivs(): void {
+    const elements = this.root.getElementsBoundToMethod(this.handleDivs);
+    for (const element of elements) {
+        element.style.color = 'red';
+    }
+}
+```
+
+**When to use:**
+
+`qsi-handle` can be useful for performing group operations on elements, especially if these elements are created dynamically. However, for most scenarios, it is recommended to use `qsi-inject_to`, which provides more direct and convenient access to elements.
+
+**Alternatives:**
+
+* **qsi-inject_to="variableName":** This attribute allows you to directly inject an HTML element into the specified variable (`variableName`) of the controller class.  This is the preferred way to access individual elements, as it provides cleaner and more understandable code.
+
+**Note:** `qsi-handle` is part of the framework's legacy functionality. For new projects, it is recommended to use `qsi-inject_to` and other more modern methods.
 
 ### Class Manipulation (qsi-cls)
 
