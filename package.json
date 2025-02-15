@@ -31,7 +31,9 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "sass": "^1.85.0",
+    "sass-loader": "^16.0.5"
   },
   "resolutions": {
     "terser": "3.14.1"

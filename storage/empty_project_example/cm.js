@@ -137,7 +137,7 @@ async function handleCommand() {
     }
 
     try {
-        if (cmdCommand == COMMAND.CREATE_STEP_BY_STEP || !cmdCommand) {
+        if (cmdCommand === COMMAND.CREATE_STEP_BY_STEP || !cmdCommand) {
             if (await handleCmd()) await handleDir();
         }
     } catch (error) {
@@ -240,7 +240,7 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, 
     }
 }`;
         this.scssMixinTemplate = `
-@import "../../${levels}css/mixins";
+@use "../../${levels}css/mixins";
 
 @mixin ${this.pathPart}() {
 }
@@ -275,11 +275,11 @@ export class ${this.componentClassName} implements OnInit, OnCreate, OnDestroy, 
             this.scssStyleFilePath,
             [
                 {
-                    line: `@import "../elements/${this.componentScssImportMixinPath}";`,
+                    line: `@use "../elements/${this.componentScssImportMixinPath}";`,
                 },
                 {
                     target: ".app {",
-                    line: `  @include ${this.pathPart}();`,
+                    line: `  @include ${this.pathPart}.${this.pathPart}();`,
                 }
             ]
         );
