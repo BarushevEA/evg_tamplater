@@ -15,7 +15,6 @@ function handleCssStr(cssFileStr) {
         .replaceAll("\r", "")
         .replaceAll("\n", "")
         .replaceAll("  ", "")
-        .replaceAll(" {", "{")
         .replaceAll("\"", "'");
 
     fs.readFile(buildFilePath, (error, data) => {
