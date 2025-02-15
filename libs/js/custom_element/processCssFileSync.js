@@ -24,7 +24,6 @@ function processCssFileSync(filePath, tagReplacements) {
             .replaceAll("\r", "")
             .replaceAll("\n", "")
             .replaceAll("  ", "")
-            .replaceAll(" {", "{")
             .replaceAll("\"", "'");
 
         return `<style>${cssIgnore}${result}</style>`;
