@@ -1,12 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const sass = require("sass");
 
 /**
  * Synchronously reads a CSS file, performs transformations, and returns its content as a string
- * @param {string} filePath - Path to the CSS file
+ * @param {string} cssFilePath - Path to the CSS file
  * @returns {string} - Transformed CSS file content
  */
-function processCssFileSync(filePath, tagReplacements) {
+function processCssFileSync(cssFilePath, scssFilePath, tagReplacements) {
     try {
         const cssIgnoreElement = "{display: contents !important;}";
         let cssIgnore = "txt-val{display: contents !important;}qsi-bind{display: contents !important;}qsi-subroute{display: contents !important;}";
@@ -16,8 +17,15 @@ function processCssFileSync(filePath, tagReplacements) {
             cssIgnore += `${tagReplacement.replacer}${cssIgnoreElement}`;
         }
 
+        let cssFileStr = "";
+
         // Synchronously read the file content
-        const cssFileStr = fs.readFileSync(path.resolve(filePath), 'utf-8');
+
+        if (fs.existsSync(cssFilePath)) {
+            cssFileStr = fs.readFileSync(path.resolve(cssFilePath), 'utf-8');
+        } else {
+            cssFileStr = sass.compile(scssFilePath);
+        }
 
         // Perform the required transformations
         let result = cssFileStr.replaceAll("/*# sourceMappingURL=style.css.map */", "")

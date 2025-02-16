@@ -7,7 +7,7 @@ const {deleteFileSync} = require("../../../libs/js/custom_element/deleteFileSync
 const {deleteFileLineBy} = require("../../../libs/js/custom_element/deleteFileLineBy");
 const {registerCustomElement} = require("../../../libs/js/custom_element/registerCustomElement");
 const {addFileLineAfter} = require("../../../libs/js/custom_element/addFileLineAfter");
-const {getCSSPath} = require("../buildTemplateHandler/utils");
+const {getCSSPath, getSCSSPath} = require("../buildTemplateHandler/utils");
 const processCssFileSync = require("../../../libs/js/custom_element/processCssFileSync");
 const {htmlTemplates} = require("../buildOptions/templateOptions");
 const {getStringFromFile} = require("../../../libs/js/custom_element/getStringFromFile");
@@ -59,7 +59,7 @@ replaceInFile(
     tagReplacements
 );
 
-const cssTag = processCssFileSync(getCSSPath(), tagReplacements);
+const cssTag = processCssFileSync(getCSSPath(), getSCSSPath(), tagReplacements);
 addFileLineAfter(
     modulesPath,
     [

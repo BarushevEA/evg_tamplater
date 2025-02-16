@@ -48,6 +48,8 @@ function handleCssStr(cssFileStr) {
 }
 
 if (fs.existsSync(cssPath)) {
+    console.log("CSS compile begin:", cssPath);
+
     fs.readFile(cssPath, (error, data) => {
         handleError(error);
 
@@ -56,21 +58,16 @@ if (fs.existsSync(cssPath)) {
     });
 } else {
     const scssPath = env.getSCSSPath();
-    console.log("SCSS Path:", scssPath);
+    console.log("SCSS compile begin:", scssPath);
 
-    async function compileScss() {
-        try {
-            const result = await sass.compile(scssPath);
-            let cssFileStr = result.css.toString();
+    try {
+        const result = sass.compile(scssPath);
+        let cssFileStr = result.css.toString();
 
-            console.log("cssFileStr:",cssFileStr);
-            handleCssStr(cssFileStr);
-        } catch (error) {
-            handleError(error);
-        }
+        handleCssStr(cssFileStr);
+    } catch (error) {
+        handleError(error);
     }
-
-    compileScss();
 }
 
 function pushToClasses(cls, classes) {

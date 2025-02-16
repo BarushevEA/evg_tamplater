@@ -1,5 +1,6 @@
 const fs = require('fs');
 const env = require('./utils');
+const sass = require('sass');
 const options = require('../buildOptions/templateOptions');
 const encrypt = require('../buildOptions/cssEncryptList');
 const flags = require('../buildOptions/flags');
@@ -9,15 +10,12 @@ const {getSymbols} = require("./utils");
 const cssPath = env.getCSSPath();
 const buildFilePath = env.getBuildFilePath();
 
-fs.readFile(cssPath, (error, data) => {
-    handleError(error);
-
-    let cssFileStr = data.toString();
-    cssFileStr = cssFileStr.replaceAll("/*# sourceMappingURL=style.css.map */", "");
-    cssFileStr = cssFileStr.replaceAll("\r", "");
-    cssFileStr = cssFileStr.replaceAll("\n", "");
-    cssFileStr = cssFileStr.replaceAll("  ", "");
-    cssFileStr = cssFileStr.replaceAll("\"", "'");
+function handleCssStr(cssFileStr) {
+    cssFileStr = cssFileStr.replaceAll("/*# sourceMappingURL=style.css.map */", "")
+        .replaceAll("\r", "")
+        .replaceAll("\n", "")
+        .replaceAll("  ", "")
+        .replaceAll("\"", "'");
 
     fs.readFile(buildFilePath, (error, data) => {
         handleError(error);
@@ -47,7 +45,30 @@ fs.readFile(cssPath, (error, data) => {
 
         console.log("=> CSS INJECTION FINISH", `${Date.now() - start} ms.`);
     });
-});
+}
+
+if (fs.existsSync(cssPath)) {
+    console.log("CSS compile begin:", cssPath);
+
+    fs.readFile(cssPath, (error, data) => {
+        handleError(error);
+
+        let cssFileStr = data.toString();
+        handleCssStr(cssFileStr);
+    });
+} else {
+    const scssPath = env.getSCSSPath();
+    console.log("SCSS compile begin:", scssPath);
+
+    try {
+        const result = sass.compile(scssPath);
+        let cssFileStr = result.css.toString();
+
+        handleCssStr(cssFileStr);
+    } catch (error) {
+        handleError(error);
+    }
+}
 
 function pushToClasses(cls, classes) {
     if (cls && classes.indexOf(cls) === -1) {
