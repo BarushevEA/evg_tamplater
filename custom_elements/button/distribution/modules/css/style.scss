@@ -1,0 +1,11 @@
+@use "../elements/container/container";
+@use "../elements/view_image/view_image";
+@use "../elements/view_button/view_button";
+@use "mixins";
+
+.app {
+  @include container.container();
+  @include view_image.view_image();
+  @include view_button.view_button();
+
+}

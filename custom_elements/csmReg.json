@@ -3,5 +3,10 @@
     "version": "1, 0, 0",
     "destination": "../../../../custom_elements/subroute_test/distribution/settings/modules",
     "description": "Custom element for sharing"
+  },
+  "csm-button": {
+    "version": "1, 0, 0",
+    "destination": "../../../../custom_elements/button/distribution/settings/modules",
+    "description": "Custom element for sharing"
   }
 }
