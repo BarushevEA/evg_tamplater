@@ -4,8 +4,15 @@
 @use "mixins";
 
 .app {
+  @include mixins.normalizeSpace();
+
+  * {
+    @include mixins.normalizeSpace();
+  }
+
+  @include mixins.button(0,0);
+
   @include container.container();
   @include view_image.view_image();
   @include view_button.view_button();
-
 }

@@ -38,14 +38,14 @@ export type ButtonStateStyles = {
 
 export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
     generalStyle: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "60px",
-        height: "30px",
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center",
+        width: "160px",
+        height: "60px",
         border: "1px solid black",
-        borderRadius: "5px",
-        cursor: "pointer",
+        borderRadius: "10px",
+        // cursor: "pointer",
         fontSize: "14px",
         fontWeight: "bold",
         fontFamily: "Arial",
