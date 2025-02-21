@@ -1,5 +1,4 @@
-
-import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../libs/env/types";
+import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
 import {buttonService$} from "../../services/service";
 import {BUTTON_DEFAULT_STYLES, ButtonOptions} from "../../env/types";
@@ -21,7 +20,7 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     init(): void {
         this.generalStyle = BUTTON_DEFAULT_STYLES.generalStyle;
     }
-    
+
     onMessage(message: any): void {
         log(this.root.tagName, "message:", message);
     }
@@ -32,6 +31,7 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     onInit(): void {
         this.setGeneralStyle();
         this.setButtonOption(buttonService$.getValue());
+
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
                 this.setButtonOption(buttonOption);
@@ -42,17 +42,27 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     onDestroy(): void {
     }
 
-    private setGeneralStyle(): void {
-        for (const [key, value] of Object.entries(this.generalStyle)) {
-            this.container.style[<any>key] = value as string;
-        }
-    }
-
     setButtonOption(buttonOption: ButtonOptions<TYPE>): void {
+        if (!BUTTON_DEFAULT_STYLES[buttonOption.state]) {
+            log(`ERROR: ${this.name} - buttonOption.state: ${buttonOption.state} is not defined!`);
+            return;
+        }
+
         this.buttonOption = buttonOption;
+        this.setStyle(BUTTON_DEFAULT_STYLES[buttonOption.state].style);
     }
 
     click(): void {
         this.buttonOption.actionCallback();
+    }
+
+    private setGeneralStyle(): void {
+        this.setStyle(this.generalStyle);
+    }
+
+    private setStyle(style: Partial<CSSStyleDeclaration>): void {
+        for (const [key, value] of Object.entries(style)) {
+            this.container.style[<any>key] = value as string;
+        }
     }
 }

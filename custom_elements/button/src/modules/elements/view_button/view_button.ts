@@ -23,7 +23,6 @@ export class View_button implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
-        console.log(this.root.tagName, "onInit");
     }
 
     onDestroy(): void {

@@ -43,8 +43,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         // justifyContent: "center",
         width: "160px",
         height: "60px",
-        border: "1px solid black",
-        borderRadius: "10px",
+
         // cursor: "pointer",
         fontSize: "14px",
         fontWeight: "bold",
@@ -53,6 +52,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
     },
     [ButtonState.DEFAULT]: {
         style: {
+            border: "1px solid black",
+            borderRadius: "10px",
             backgroundColor: "white",
             color: "black",
         }
