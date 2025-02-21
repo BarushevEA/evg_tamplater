@@ -10,3 +10,8 @@ export enum ButtonState {
     LINK = "link",
     CUSTOM = "custom",
 }
+
+export enum ButtonImageState {
+    DEFAULT = "default",
+    CUSTOM = "custom",
+}
