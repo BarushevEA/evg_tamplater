@@ -27,6 +27,12 @@ function processCssFileSync(cssFilePath, scssFilePath, tagReplacements) {
             cssFileStr = sass.compile(scssFilePath);
         }
 
+        // console.log(`========++> cssFileStr [${JSON.stringify(cssFileStr)}]`);
+
+        if (typeof cssFileStr === "object"){
+            cssFileStr = cssFileStr.css;
+        }
+
         // Perform the required transformations
         let result = cssFileStr.replaceAll("/*# sourceMappingURL=style.css.map */", "")
             .replaceAll("\r", "")
