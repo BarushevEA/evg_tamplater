@@ -17,7 +17,7 @@ export class View_image implements OnInit, OnCreate, OnDestroy, OnMessage {
     onCreate(): void {
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
-                console.log(this.root.tagName, "buttonOption:", buttonOption);
+                log(this.root.tagName, "buttonOption:", buttonOption);
             })
         );
     }
