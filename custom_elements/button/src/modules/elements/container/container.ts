@@ -1,8 +1,9 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
 import {buttonService$} from "../../services/service";
-import {BUTTON_DEFAULT_STYLES, ButtonOptions} from "../../env/types";
+import {ButtonOptions} from "../../env/types";
 import {TYPE} from "../../../settings/subRoutesEnums";
+import {BUTTON_DEFAULT_STYLES} from "../../env/variables";
 
 // Component tag example: <app-container></app-container>
 export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {

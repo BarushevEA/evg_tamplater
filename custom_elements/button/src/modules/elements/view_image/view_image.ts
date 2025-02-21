@@ -1,5 +1,4 @@
-
-import {OnCreate, OnDestroy, OnInit, RootBehavior, OnMessage} from "../../../../../../libs/env/types";
+import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
 import {buttonService$} from "../../services/service";
 
@@ -10,7 +9,7 @@ export class View_image implements OnInit, OnCreate, OnDestroy, OnMessage {
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
     }
-    
+
     onMessage(message: any): void {
         log(this.root.tagName, "message:", message);
     }
