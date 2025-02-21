@@ -11,6 +11,7 @@
   }
 
   @include mixins.button(0,0);
+  user-select: none;
 
   @include container.container();
   @include view_image.view_image();
