@@ -10,7 +10,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             margin: "5px",
         },
         textBlockStyle: {
-            fontSize: "14px",
+            fontSize: "20px",
             fontWeight: "bold",
             fontFamily: "Arial",
         },
@@ -37,15 +37,27 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
     },
     [ButtonState.CLOSE]: {
         textBlockStyle: {
+            display: "none",
         },
         containerStyle: {
+            width: "60px",
+            height: "60px",
+            border: "1px solid black",
+            borderRadius: "10px",
+            flexDirection: "row",
+            flexWrap: "nowrap",
             backgroundColor: "red",
             color: "white",
         },
         imageStyle: {
+            src: "assets/images/csm_button_close-min.png",
             style:{
-                display: "none",
-            }
+                display: "block",
+                height: "24px",
+                width: "24px",
+                margin: "10px",
+            },
+            altText: "Close",
         },
     },
     [ButtonState.MINIMIZE]: {
@@ -147,8 +159,8 @@ export const DEFAULT_BUTTON_OPTIONS: ButtonOptions<TYPE.BUTTON> = {
         console.log("DEFAULT_BUTTON_OPTIONS");
     },
     type: TYPE.BUTTON,
-    state: ButtonState.DEFAULT,
-    text: "Button",
+    state: ButtonState.CLOSE,
+    text: "Close",
 };
 
 export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {

@@ -3,23 +3,16 @@ import {log} from "../../../../../../libs/utils/utils";
 import {buttonService$} from "../../services/service";
 import {ButtonOptions} from "../../env/types";
 import {TYPE} from "../../../settings/subRoutesEnums";
-import {BUTTON_DEFAULT_STYLES} from "../../env/variables";
+import {getDefaultStyles, setStyle} from "../../env/utils";
 
 // Component tag example: <app-container></app-container>
 export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
-    buttonOption: ButtonOptions<TYPE>;
-    generalStyle: Partial<CSSStyleDeclaration>;
     container: HTMLElement;
+    callback: () => void;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
-
-        this.init();
-    }
-
-    init(): void {
-        this.generalStyle = BUTTON_DEFAULT_STYLES.generalStyle;
     }
 
     onMessage(message: any): void {
@@ -44,26 +37,35 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     setButtonOption(buttonOption: ButtonOptions<TYPE>): void {
-        if (!BUTTON_DEFAULT_STYLES[buttonOption.state]) {
-            log(`ERROR: ${this.name} - buttonOption.state: ${buttonOption.state} is not defined!`);
+        const {defaultStyles, error} = getDefaultStyles(<any>this, buttonOption);
+        if (error) {
+            log(error);
             return;
         }
 
-        this.buttonOption = buttonOption;
-        this.setStyle(BUTTON_DEFAULT_STYLES[buttonOption.state].containerStyle);
+        this.callback = buttonOption.actionCallback;
+
+        if (buttonOption.state === "custom") {
+            if (buttonOption.customOptions && buttonOption.customOptions.containerStyle) {
+                setStyle(this.container, buttonOption.customOptions.containerStyle);
+            }
+        } else {
+            setStyle(this.container, defaultStyles[buttonOption.state].containerStyle);
+        }
     }
 
     click(): void {
-        this.buttonOption.actionCallback();
+        this.callback();
     }
 
     private setGeneralStyle(): void {
-        this.setStyle(this.generalStyle);
-    }
-
-    private setStyle(style: Partial<CSSStyleDeclaration>): void {
-        for (const [key, value] of Object.entries(style)) {
-            this.container.style[<any>key] = value as string;
+        const baseOption = buttonService$.getValue();
+        const {defaultStyles, error} = getDefaultStyles(<any>this, baseOption);
+        if (error) {
+            log(error);
+            return;
         }
+
+        setStyle(this.container, defaultStyles.generalStyle.containerStyle);
     }
 }
