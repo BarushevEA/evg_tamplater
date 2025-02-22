@@ -17,13 +17,12 @@ export class View_button implements OnInit, OnCreate, OnDestroy, OnMessage {
     onCreate(): void {
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
-                console.log(this.root.tagName, "buttonOption:", buttonOption);
+                log(this.root.tagName, "buttonOption:", buttonOption);
             })
         );
     }
 
     onInit(): void {
-        console.log(this.root.tagName, "onInit");
     }
 
     onDestroy(): void {

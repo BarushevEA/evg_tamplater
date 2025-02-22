@@ -1,16 +1,21 @@
 import {TYPE} from "../../settings/subRoutesEnums";
 import {ButtonState} from "./enums";
 
-export type ButtonTypeOptions = {
-    style?: Partial<CSSStyleDeclaration>;
-    iconOptions?: ImageTypeOptions;
-};
-
-export type ImageTypeOptions = {
+export type ImageBaseOptions = {
     style?: Partial<CSSStyleDeclaration>;
     altText?: string;
-    src: string;
+    src?: string;
 };
+
+export type BaseOptions = {
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    textBlockStyle?: Partial<CSSStyleDeclaration>;
+    imageStyle?: ImageBaseOptions;
+};
+
+export type ButtonTypeOptions = BaseOptions & {};
+
+export type ImageTypeOptions = BaseOptions & {};
 
 export type ButtonOptions<T extends TYPE> = {
     actionCallback: () => void;
@@ -23,7 +28,7 @@ export type ButtonOptions<T extends TYPE> = {
 };
 
 export type ButtonStateStyles = {
-    generalStyle: Partial<CSSStyleDeclaration>;
+    generalStyle: BaseOptions;
     [ButtonState.DEFAULT]: ButtonTypeOptions;
     [ButtonState.CLOSE]: ButtonTypeOptions;
     [ButtonState.MINIMIZE]: ButtonTypeOptions;
@@ -36,83 +41,3 @@ export type ButtonStateStyles = {
     [ButtonState.CUSTOM]: ButtonTypeOptions;
 };
 
-export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
-    generalStyle: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "60px",
-        height: "30px",
-        border: "1px solid black",
-        borderRadius: "5px",
-        cursor: "pointer",
-        fontSize: "14px",
-        fontWeight: "bold",
-        fontFamily: "Arial",
-        margin: "5px",
-    },
-    [ButtonState.DEFAULT]: {
-        style: {
-            backgroundColor: "white",
-            color: "black",
-        }
-    },
-    [ButtonState.CLOSE]: {
-        style: {
-            backgroundColor: "red",
-            color: "white",
-        }
-    },
-    [ButtonState.MINIMIZE]: {
-        style: {
-            backgroundColor: "green",
-            color: "white",
-        }
-    },
-    [ButtonState.MAXIMIZE]: {
-        style: {
-            backgroundColor: "blue",
-            color: "white",
-        }
-    },
-    [ButtonState.DANGER]: {
-        style: {
-            backgroundColor: "red",
-            color: "white",
-        }
-    },
-    [ButtonState.SUCCESS]: {
-        style: {
-            backgroundColor: "green",
-            color: "white",
-        }
-    },
-    [ButtonState.INFO]: {
-        style: {
-            backgroundColor: "blue",
-            color: "white",
-        }
-    },
-    [ButtonState.WARNING]: {
-        style: {
-            backgroundColor: "yellow",
-            color: "black",
-        }
-    },
-    [ButtonState.LINK]: {
-        style: {
-            backgroundColor: "transparent",
-            color: "blue",
-        }
-    },
-    [ButtonState.CUSTOM]: {},
-};
-
-export const DEFAULT_BUTTON_OPTIONS: ButtonOptions<TYPE.BUTTON> = {
-    actionCallback: () => {
-        console.log("DEFAULT_BUTTON_OPTIONS");
-    },
-    type: TYPE.BUTTON,
-    state: ButtonState.DEFAULT,
-    text: "Button",
-};

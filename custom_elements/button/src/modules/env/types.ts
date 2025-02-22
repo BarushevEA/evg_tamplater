@@ -1,16 +1,21 @@
 import {TYPE} from "../../settings/subRoutesEnums";
 import {ButtonState} from "./enums";
 
-export type ButtonTypeOptions = {
-    style?: Partial<CSSStyleDeclaration>;
-    iconOptions?: ImageTypeOptions;
-};
-
-export type ImageTypeOptions = {
+export type ImageBaseOptions = {
     style?: Partial<CSSStyleDeclaration>;
     altText?: string;
-    src: string;
+    src?: string;
 };
+
+export type BaseOptions = {
+    containerStyle?: Partial<CSSStyleDeclaration>;
+    textBlockStyle?: Partial<CSSStyleDeclaration>;
+    imageStyle?: ImageBaseOptions;
+};
+
+export type ButtonTypeOptions = BaseOptions & {};
+
+export type ImageTypeOptions = BaseOptions & {};
 
 export type ButtonOptions<T extends TYPE> = {
     actionCallback: () => void;
@@ -23,7 +28,7 @@ export type ButtonOptions<T extends TYPE> = {
 };
 
 export type ButtonStateStyles = {
-    generalStyle: Partial<CSSStyleDeclaration>;
+    generalStyle: BaseOptions;
     [ButtonState.DEFAULT]: ButtonTypeOptions;
     [ButtonState.CLOSE]: ButtonTypeOptions;
     [ButtonState.MINIMIZE]: ButtonTypeOptions;

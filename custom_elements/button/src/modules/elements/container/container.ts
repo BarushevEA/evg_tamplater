@@ -19,7 +19,7 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     init(): void {
-        this.generalStyle = BUTTON_DEFAULT_STYLES.generalStyle;
+        this.generalStyle = BUTTON_DEFAULT_STYLES.generalStyle.containerStyle;
     }
 
     onMessage(message: any): void {
@@ -50,7 +50,7 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
         }
 
         this.buttonOption = buttonOption;
-        this.setStyle(BUTTON_DEFAULT_STYLES[buttonOption.state].style);
+        this.setStyle(BUTTON_DEFAULT_STYLES[buttonOption.state].containerStyle);
     }
 
     click(): void {

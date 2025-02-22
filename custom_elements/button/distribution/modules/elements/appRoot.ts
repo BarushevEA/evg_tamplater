@@ -1,8 +1,9 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
-import {ButtonOptions, DEFAULT_BUTTON_OPTIONS} from "../env/types";
+import {ButtonOptions} from "../env/types";
 import {E_SUB_ROUTE, TYPE} from "../../settings/subRoutesEnums";
 import {buttonService$} from "../services/service";
 import {SUB_ROUTE} from "../../../../../libs/elements/rootElements/appSubRout";
+import {DEFAULT_BUTTON_OPTIONS} from "../env/variables";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
