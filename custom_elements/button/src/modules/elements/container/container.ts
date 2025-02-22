@@ -4,6 +4,7 @@ import {buttonService$} from "../../services/service";
 import {ButtonOptions} from "../../env/types";
 import {TYPE} from "../../../settings/subRoutesEnums";
 import {BUTTON_DEFAULT_STYLES} from "../../env/variables";
+import {getDefaultStyles, setStyle} from "../../env/utils";
 
 // Component tag example: <app-container></app-container>
 export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
@@ -44,13 +45,14 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     setButtonOption(buttonOption: ButtonOptions<TYPE>): void {
-        if (!BUTTON_DEFAULT_STYLES[buttonOption.state]) {
-            log(`ERROR: ${this.name} - buttonOption.state: ${buttonOption.state} is not defined!`);
+        const {defaultStyles, error} = getDefaultStyles(this, buttonOption);
+        if (error) {
+            log(error);
             return;
         }
 
         this.buttonOption = buttonOption;
-        this.setStyle(BUTTON_DEFAULT_STYLES[buttonOption.state].containerStyle);
+        setStyle(this.container, defaultStyles[buttonOption.state].containerStyle);
     }
 
     click(): void {
@@ -58,12 +60,6 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     private setGeneralStyle(): void {
-        this.setStyle(this.generalStyle);
-    }
-
-    private setStyle(style: Partial<CSSStyleDeclaration>): void {
-        for (const [key, value] of Object.entries(style)) {
-            this.container.style[<any>key] = value as string;
-        }
+        setStyle(this.container, this.generalStyle);
     }
 }

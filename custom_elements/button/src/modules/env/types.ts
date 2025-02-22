@@ -1,5 +1,5 @@
 import {TYPE} from "../../settings/subRoutesEnums";
-import {ButtonState} from "./enums";
+import {ButtonImageState, ButtonState} from "./enums";
 
 export type ImageBaseOptions = {
     style?: Partial<CSSStyleDeclaration>;
@@ -20,11 +20,14 @@ export type ImageTypeOptions = BaseOptions & {};
 export type ButtonOptions<T extends TYPE> = {
     actionCallback: () => void;
     type: T;
-    typeOptionsBeforeClick?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
-    typeOptionsAfterClick?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
-    typeOptionsOnClick?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
-    state: ButtonState;
+    customOptions?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
+    state: ButtonState | ButtonImageState;
     text?: string; // Text может быть опциональным для иконок
+};
+
+export type ButtonBaseStateStyles = {
+    generalStyle: BaseOptions;
+    [key: string]: ButtonTypeOptions;
 };
 
 export type ButtonStateStyles = {
@@ -39,5 +42,11 @@ export type ButtonStateStyles = {
     [ButtonState.WARNING]: ButtonTypeOptions;
     [ButtonState.LINK]: ButtonTypeOptions;
     [ButtonState.CUSTOM]: ButtonTypeOptions;
+};
+
+export type ImageStateStyles = {
+    generalStyle: BaseOptions;
+    [ButtonImageState.DEFAULT]: ButtonTypeOptions;
+    [ButtonImageState.CUSTOM]: ButtonTypeOptions;
 };
 
