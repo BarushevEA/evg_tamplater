@@ -1,6 +1,14 @@
 import {TYPE} from "../../settings/subRoutesEnums";
 import {ButtonImageState, ButtonState} from "./enums";
 
+export type ButtonComponent = {
+    name: string;
+    text: string;
+    textElement: HTMLElement;
+    image: string;
+    imageElement: HTMLImageElement;
+};
+
 export type ImageBaseOptions = {
     style?: Partial<CSSStyleDeclaration>;
     altText?: string;

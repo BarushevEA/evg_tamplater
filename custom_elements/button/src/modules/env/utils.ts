@@ -1,5 +1,5 @@
 import {log} from "../../../../../libs/utils/utils";
-import {ButtonBaseStateStyles, ButtonOptions} from "./types";
+import {ButtonBaseStateStyles, ButtonComponent, ButtonOptions} from "./types";
 import {TYPE} from "../../settings/subRoutesEnums";
 import {BUTTON_DEFAULT_STYLES, IMAGE_DEFAULT_STYLES} from "./variables";
 
@@ -18,7 +18,7 @@ export function setStyle(element: HTMLElement, style: Partial<CSSStyleDeclaratio
     }
 }
 
-export function getDefaultStyles(component: any, buttonOption: ButtonOptions<TYPE>): {
+export function getDefaultStyles(component: ButtonComponent, buttonOption: ButtonOptions<TYPE>): {
     defaultStyles: ButtonBaseStateStyles,
     error: string
 } {
@@ -32,4 +32,36 @@ export function getDefaultStyles(component: any, buttonOption: ButtonOptions<TYP
     }
 
     return response;
+}
+
+export function setImage(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+    const imageOption = isGeneralStyle ? defaultStyles.generalStyle.imageStyle : defaultStyles[buttonOption.state].imageStyle;
+    if (!imageOption) {
+        log(`ERROR: ${component.name} - imageOption is not defined!`);
+        return;
+    }
+
+    if (imageOption.style) {
+        setStyle(component.imageElement, defaultStyles[buttonOption.state].imageStyle.style);
+    }
+
+    if (imageOption.src) {
+        component.image = imageOption.src;
+    }
+
+    if (imageOption.altText) {
+        component.imageElement.alt = imageOption.altText;
+    }
+}
+
+export function  setText(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+    if (isGeneralStyle) {
+        setStyle(component.textElement, defaultStyles.generalStyle.textBlockStyle);
+    } else {
+        setStyle(component.textElement, defaultStyles[buttonOption.state].textBlockStyle);
+    }
+
+    if (typeof buttonOption.text === "string") {
+        component.text = buttonOption.text;
+    }
 }

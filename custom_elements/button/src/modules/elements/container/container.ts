@@ -45,7 +45,7 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     setButtonOption(buttonOption: ButtonOptions<TYPE>): void {
-        const {defaultStyles, error} = getDefaultStyles(this, buttonOption);
+        const {defaultStyles, error} = getDefaultStyles(<any>this, buttonOption);
         if (error) {
             log(error);
             return;

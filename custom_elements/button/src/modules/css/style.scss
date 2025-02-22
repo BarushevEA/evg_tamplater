@@ -12,6 +12,7 @@
 
   @include mixins.button(0,0);
   user-select: none;
+  box-sizing: border-box;
 
   @include container.container();
   @include view_image.view_image();

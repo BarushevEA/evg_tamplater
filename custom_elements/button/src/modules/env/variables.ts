@@ -21,6 +21,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.DEFAULT]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             border: "1px solid black",
             borderRadius: "10px",
@@ -34,6 +36,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.CLOSE]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "red",
             color: "white",
@@ -45,6 +49,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.MINIMIZE]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "green",
             color: "white",
@@ -56,6 +62,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.MAXIMIZE]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "blue",
             color: "white",
@@ -67,6 +75,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.DANGER]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "red",
             color: "white",
@@ -78,6 +88,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.SUCCESS]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "green",
             color: "white",
@@ -89,6 +101,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.INFO]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "blue",
             color: "white",
@@ -100,6 +114,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.WARNING]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "yellow",
             color: "black",
@@ -111,6 +127,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.LINK]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             backgroundColor: "transparent",
             color: "blue",
@@ -152,6 +170,8 @@ export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {
         },
     },
     [ButtonImageState.DEFAULT]: {
+        textBlockStyle: {
+        },
         containerStyle: {
             border: "1px solid black",
             borderRadius: "10px",
@@ -165,6 +185,10 @@ export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {
         },
     },
     [ButtonImageState.CUSTOM]: {
+        textBlockStyle: {
+        },
+        containerStyle: {
+        },
         imageStyle: {
             style:{
                 display: "block",
