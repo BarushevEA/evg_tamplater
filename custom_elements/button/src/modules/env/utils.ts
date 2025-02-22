@@ -35,7 +35,13 @@ export function getDefaultStyles(component: ButtonComponent, buttonOption: Butto
 }
 
 export function setImage(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
-    const imageOption = isGeneralStyle ? defaultStyles.generalStyle.imageStyle : defaultStyles[buttonOption.state].imageStyle;
+    let imageOption = isGeneralStyle ? defaultStyles.generalStyle.imageStyle : defaultStyles[buttonOption.state].imageStyle;
+    if (buttonOption.state === "custom") {
+        if (buttonOption.customOptions && buttonOption.customOptions.imageStyle) {
+            imageOption = buttonOption.customOptions.imageStyle;
+        }
+    }
+
     if (!imageOption) {
         log(`ERROR: ${component.name} - imageOption is not defined!`);
         return;
@@ -54,11 +60,19 @@ export function setImage(component: ButtonComponent, defaultStyles: ButtonBaseSt
     }
 }
 
-export function  setText(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
-    if (isGeneralStyle) {
-        setStyle(component.textElement, defaultStyles.generalStyle.textBlockStyle);
-    } else {
-        setStyle(component.textElement, defaultStyles[buttonOption.state].textBlockStyle);
+export function setText(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+    switch (true) {
+        case isGeneralStyle:
+            setStyle(component.textElement, defaultStyles.generalStyle.textBlockStyle);
+            break;
+        case buttonOption.state === "custom":
+            if (buttonOption.customOptions && buttonOption.customOptions.textBlockStyle) {
+                setStyle(component.textElement, buttonOption.customOptions.textBlockStyle);
+            }
+            break;
+        case buttonOption.state !== "custom":
+            setStyle(component.textElement, defaultStyles[buttonOption.state].textBlockStyle);
+            break;
     }
 
     if (typeof buttonOption.text === "string") {
