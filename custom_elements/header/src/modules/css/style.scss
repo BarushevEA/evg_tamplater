@@ -1,0 +1,17 @@
+@use "../elements/container/themes/themes";
+@use "../elements/container/navigation/navigation";
+@use "../elements/container/logo/logo";
+@use "../elements/container/container";
+@use "mixins";
+
+.app {
+  @include themes.themes();
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  @include navigation.navigation();
+  @include logo.logo();
+  @include container.container();
+}
