@@ -1,7 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
 import {buttonService$} from "../../services/service";
-import {BaseOptions, ButtonOptions} from "../../env/types";
+import {ButtonBaseStateStyles, ButtonOptions} from "../../env/types";
 import {TYPE} from "../../../settings/subRoutesEnums";
 import {BUTTON_DEFAULT_STYLES} from "../../env/variables";
 import {getDefaultStyles, setStyle} from "../../env/utils";
@@ -13,16 +13,9 @@ export class View_button implements OnInit, OnCreate, OnDestroy, OnMessage {
     textElement: HTMLElement;
     image: string;
     imageElement: HTMLImageElement;
-    generalStyle: BaseOptions;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
-
-        this.init();
-    }
-
-    init(): void {
-        this.generalStyle = BUTTON_DEFAULT_STYLES.generalStyle;
     }
 
     onMessage(message: any): void {
@@ -55,24 +48,48 @@ export class View_button implements OnInit, OnCreate, OnDestroy, OnMessage {
             return;
         }
 
-        setStyle(this.textElement, defaultStyles[buttonOption.state].textBlockStyle);
-        setStyle(this.imageElement, defaultStyles[buttonOption.state].imageStyle.style);
-
-        if (buttonOption.text) {
-            this.text = buttonOption.text;
-        }
-        if (defaultStyles[buttonOption.state].imageStyle.src) {
-            this.image = defaultStyles[buttonOption.state].imageStyle.src;
-        }
-        if (defaultStyles[buttonOption.state].imageStyle.altText) {
-            this.imageElement.alt = defaultStyles[buttonOption.state].imageStyle.altText;
-        }
+        this.setText(defaultStyles, buttonOption);
+        this.setImage(defaultStyles, buttonOption);
 
         this.root.detectChanges();
     }
 
+    private setImage(defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+        const imageOption = isGeneralStyle ? defaultStyles.generalStyle.imageStyle : defaultStyles[buttonOption.state].imageStyle;
+        if (!imageOption) {
+            log(`ERROR: ${this.name} - imageOption is not defined!`);
+            return;
+        }
+
+        if (imageOption.style) {
+            setStyle(this.imageElement, defaultStyles[buttonOption.state].imageStyle.style);
+        }
+
+        if (imageOption.src) {
+            this.image = imageOption.src;
+        }
+
+        if (imageOption.altText) {
+            this.imageElement.alt = imageOption.altText;
+        }
+    }
+
+    private setText(defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+        if (isGeneralStyle) {
+            setStyle(this.textElement, defaultStyles.generalStyle.textBlockStyle);
+        } else {
+            setStyle(this.textElement, defaultStyles[buttonOption.state].textBlockStyle);
+        }
+
+        if (typeof buttonOption.text === "string") {
+            this.text = buttonOption.text;
+        }
+    }
+
     private setGeneralStyle(): void {
-        setStyle(this.textElement, this.generalStyle.textBlockStyle);
-        setStyle(this.imageElement, this.generalStyle.imageStyle.style);
+        const baseOption = buttonService$.getValue();
+        log(this.name, "baseOption:", baseOption);
+        this.setText(BUTTON_DEFAULT_STYLES, baseOption, true);
+        this.setImage(BUTTON_DEFAULT_STYLES, baseOption, true);
     }
 }
