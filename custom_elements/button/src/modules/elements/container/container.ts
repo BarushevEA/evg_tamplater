@@ -9,6 +9,7 @@ import {getDefaultStyles, setStyle} from "../../env/utils";
 export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
     container: HTMLElement;
+    id: string;
     callback: () => void;
 
     constructor(readonly root: RootBehavior) {
@@ -24,10 +25,17 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
 
     onInit(): void {
         this.setGeneralStyle();
-        this.setButtonOption(buttonService$.getValue());
+        // this.setButtonOption(buttonService$.getValue());
 
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
+                const parentShadow = this.root.getRootNode() as ShadowRoot;
+                const div = parentShadow.getElementById('shadowId');
+                this.id = div.innerText;
+                if (this.id !== buttonOption.id) {
+                    return;
+                }
+
                 this.setButtonOption(buttonOption);
             })
         );

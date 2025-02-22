@@ -35,7 +35,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             },
             type: TYPE.BUTTON,
             state: ButtonState.DEFAULT,
-            text: "CLICK ME"
+            text: "CLICK ME",
         });
     }
 
