@@ -205,7 +205,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             borderRight: "none",
             borderLeft: "none",
             borderBottom: "1px solid black",
-            backgroundColor: "white",
             color: "black",
         },
         imageStyle: {
