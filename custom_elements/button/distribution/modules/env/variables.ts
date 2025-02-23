@@ -5,8 +5,6 @@ import {TYPE} from "../../settings/subRoutesEnums";
 export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
     generalStyle: {
         containerStyle: {
-            width: "160px",
-            height: "60px",
             margin: "5px",
         },
         textBlockStyle: {
@@ -15,22 +13,23 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             fontFamily: "Arial",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.DEFAULT]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
+            width: "160px",
+            height: "60px",
             border: "1px solid black",
             borderRadius: "10px",
             backgroundColor: "white",
             color: "black",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
@@ -51,7 +50,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
         imageStyle: {
             src: "assets/images/csm_button_close-min.png",
-            style:{
+            style: {
                 display: "block",
                 height: "24px",
                 width: "24px",
@@ -61,92 +60,85 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.MINIMIZE]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "green",
             color: "white",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.MAXIMIZE]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "blue",
             color: "white",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.DANGER]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "red",
             color: "white",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.SUCCESS]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "green",
             color: "white",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.INFO]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "blue",
             color: "white",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.WARNING]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "yellow",
             color: "black",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
     },
     [ButtonState.LINK]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             backgroundColor: "transparent",
             color: "blue",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "none",
             }
         },
@@ -176,14 +168,13 @@ export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {
             fontFamily: "Arial",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "block",
             }
         },
     },
     [ButtonImageState.DEFAULT]: {
-        textBlockStyle: {
-        },
+        textBlockStyle: {},
         containerStyle: {
             border: "1px solid black",
             borderRadius: "10px",
@@ -191,18 +182,16 @@ export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {
             color: "black",
         },
         imageStyle: {
-            style:{
+            style: {
                 display: "block",
             }
         },
     },
     [ButtonImageState.CUSTOM]: {
-        textBlockStyle: {
-        },
-        containerStyle: {
-        },
+        textBlockStyle: {},
+        containerStyle: {},
         imageStyle: {
-            style:{
+            style: {
                 display: "block",
             }
         },

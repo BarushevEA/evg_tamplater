@@ -28,14 +28,12 @@ export class View_button implements OnInit, OnCreate, OnDestroy, OnMessage, Butt
 
     onInit(): void {
         this.setGeneralStyle();
-        // this.setButtonOption(buttonService$.getValue());
 
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
                 const parentShadow = this.root.getRootNode() as ShadowRoot;
-                const div = parentShadow.getElementById('shadowId');
-                log(this.root.tagName, "[\"shadowId\"]:", div.innerText, buttonOption.id);
-                this.id = div.innerText;
+                this.id = (parentShadow as any)["shadowId"];
+
                 if (this.id !== buttonOption.id) {
                     return;
                 }

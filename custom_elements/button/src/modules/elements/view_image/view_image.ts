@@ -13,6 +13,7 @@ export class View_image implements OnInit, OnCreate, OnDestroy, OnMessage, Butto
     textElement: HTMLElement;
     image: string;
     imageElement: HTMLImageElement;
+    id: string;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
@@ -27,11 +28,18 @@ export class View_image implements OnInit, OnCreate, OnDestroy, OnMessage, Butto
 
     onInit(): void {
         this.setGeneralStyle();
-        this.setButtonOption(buttonService$.getValue());
 
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
-                // log(this.root.tagName, "buttonOption:", buttonOption);
+                const parentShadow = this.root.getRootNode() as ShadowRoot;
+                this.id = (parentShadow as any)["shadowId"];
+
+                if (this.id !== buttonOption.id) {
+                    return;
+                }
+
+                this.setButtonOption(buttonOption);
+
                 this.text = buttonOption.text;
                 this.root.detectChanges();
             })

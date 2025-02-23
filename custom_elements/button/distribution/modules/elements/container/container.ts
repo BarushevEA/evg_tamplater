@@ -25,13 +25,12 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
 
     onInit(): void {
         this.setGeneralStyle();
-        // this.setButtonOption(buttonService$.getValue());
 
         this.root.collect(
             buttonService$.subscribe(buttonOption => {
                 const parentShadow = this.root.getRootNode() as ShadowRoot;
-                const div = parentShadow.getElementById('shadowId');
-                this.id = div.innerText;
+                this.id = (parentShadow as any)["shadowId"];
+
                 if (this.id !== buttonOption.id) {
                     return;
                 }
