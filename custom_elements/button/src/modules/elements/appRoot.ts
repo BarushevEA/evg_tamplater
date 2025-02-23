@@ -49,17 +49,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
-        // const div = document.createElement("div");
-        // div.id = "shadowId";
-        // div.style.width = "0";
-        // div.style.height = "0";
-        // div.style.opacity = "0";
-        // div.style.display = "none";
-        // div.innerText = this.id;
-        // this.root.shadowRoot.append(div);
-
-        // @ts-ignore
-        this.root.shadowRoot["shadowId"] = this.id;
+        (this.root.shadowRoot as any)["shadowId"] = this.id;
     }
 
     onDestroy(): void {
