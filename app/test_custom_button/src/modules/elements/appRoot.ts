@@ -26,6 +26,33 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             },
             {
                 actionCallback: () => {
+                    log("CLOSE MINI");
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.CLOSE,
+                extension: {
+                    containerStyle: {
+                        width: "48px",
+                        height: "48px",
+                    }
+                }
+            },
+            {
+                actionCallback: () => {
+                    log("CLOSE MICRO");
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.CLOSE,
+                extension: {
+                    containerStyle: {
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "5px",
+                    }
+                }
+            },
+            {
+                actionCallback: () => {
                     log("CLICK ME 1");
                 },
                 type: TYPE.BUTTON,
@@ -108,6 +135,29 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
                 type: TYPE.BUTTON,
                 state: ButtonState.INFO,
                 text: "INFO",
+            },
+            {
+                actionCallback: () => {
+                    log("INFO MINI");
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.INFO,
+                text: "i",
+                extension: {
+                    containerStyle: parseCssBlock(`
+    width: 32px;
+    height: 32px;
+                    `),
+                    textBlockStyle: {
+                        display: "block",
+                        fontSize: "28px",
+                    },
+                    imageStyle: {
+                        style: {
+                            display: "none"
+                        }
+                    }
+                }
             },
             {
                 actionCallback: () => {
