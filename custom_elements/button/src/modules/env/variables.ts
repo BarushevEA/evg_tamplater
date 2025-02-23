@@ -199,8 +199,14 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
     [ButtonState.LINK]: {
         textBlockStyle: {},
         containerStyle: {
-            backgroundColor: "transparent",
-            color: "blue",
+            width: "160px",
+            height: "60px",
+            borderTop: "none",
+            borderRight: "none",
+            borderLeft: "none",
+            borderBottom: "1px solid black",
+            backgroundColor: "white",
+            color: "black",
         },
         imageStyle: {
             style: {
