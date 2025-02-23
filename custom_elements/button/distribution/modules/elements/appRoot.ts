@@ -28,7 +28,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             .pushFilters([
                 (buttonOption: ButtonOptions<TYPE>) => !!buttonOption,
                 (buttonOption: ButtonOptions<TYPE>) => !!buttonOption.type,
-                (buttonOption: ButtonOptions<TYPE>) => !!buttonOption.actionCallback,
+                (buttonOption: ButtonOptions<TYPE>) => !!buttonOption.state,
                 (buttonOption: ButtonOptions<TYPE>) => {
                     return buttonOption.type === TYPE.BUTTON || buttonOption.type === TYPE.IMAGE;
                 },

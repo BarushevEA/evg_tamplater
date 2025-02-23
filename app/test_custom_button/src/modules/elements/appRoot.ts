@@ -1,13 +1,14 @@
 import {ButtonState} from "../../../../../custom_elements/button/distribution/modules/env/enums";
 import {ButtonOptions} from "../../../../../custom_elements/button/distribution/modules/env/types";
 import {TYPE} from "../../../../../custom_elements/button/distribution/settings/subRoutesEnums";
-import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
+import {IChannel, OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
 import {log} from "../../../../../libs/utils/utils";
 import {parseCssBlock} from "../../../../../libs/utils/cssParser";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
     buttons: ButtonOptions<TYPE.BUTTON>[];
+    separateButton: IChannel;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
@@ -159,9 +160,19 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
-
+        this.separateButton.sendMessage<ButtonOptions<TYPE.BUTTON>>(
+            {
+                type: TYPE.BUTTON,
+                state: ButtonState.DEFAULT,
+                text: "Separate Button",
+            }
+        );
     }
 
     onDestroy(): void {
+    }
+
+    separateButtonClick(): void {
+        log("separateButtonClick");
     }
 }
