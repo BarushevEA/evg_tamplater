@@ -107,15 +107,27 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.INFO]: {
-        textBlockStyle: {},
+        textBlockStyle: {
+            display: "none",
+        },
         containerStyle: {
-            backgroundColor: "blue",
+            width: "60px",
+            height: "60px",
+            border: "1px solid black",
+            borderRadius: "10px",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            backgroundColor: "#546eff",
             color: "white",
         },
         imageStyle: {
+            src: "assets/images/csm_button_info-min.png",
             style: {
-                display: "none",
-            }
+                display: "block",
+                height: "65%",
+                width: "65%",
+            },
+            altText: "Close",
         },
     },
     [ButtonState.WARNING]: {
