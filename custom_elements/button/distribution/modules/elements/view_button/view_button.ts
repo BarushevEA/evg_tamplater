@@ -30,19 +30,21 @@ export class View_button implements OnInit, OnCreate, OnDestroy, OnMessage, Butt
         this.setGeneralStyle();
 
         this.root.collect(
-            buttonService$.subscribe(buttonOption => {
-                const parentShadow = this.root.getRootNode() as ShadowRoot;
-                this.id = (parentShadow as any)["shadowId"];
+            buttonService$
+                .pipe()
+                .refine(buttonOption => {
+                    if (!this.id) {
+                        const parentShadow = this.root.getRootNode() as ShadowRoot;
+                        this.id = (parentShadow as any)["shadowId"];
+                    }
+                    return this.id === buttonOption.id;
+                })
+                .subscribe(buttonOption => {
+                    this.setButtonOption(buttonOption);
 
-                if (this.id !== buttonOption.id) {
-                    return;
-                }
-
-                this.setButtonOption(buttonOption);
-
-                this.text = buttonOption.text;
-                this.root.detectChanges();
-            })
+                    this.text = buttonOption.text;
+                    this.root.detectChanges();
+                })
         );
     }
 

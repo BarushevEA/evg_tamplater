@@ -27,16 +27,18 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
         this.setGeneralStyle();
 
         this.root.collect(
-            buttonService$.subscribe(buttonOption => {
-                const parentShadow = this.root.getRootNode() as ShadowRoot;
-                this.id = (parentShadow as any)["shadowId"];
-
-                if (this.id !== buttonOption.id) {
-                    return;
-                }
-
-                this.setButtonOption(buttonOption);
-            })
+            buttonService$
+                .pipe()
+                .refine(buttonOption => {
+                    if (!this.id) {
+                        const parentShadow = this.root.getRootNode() as ShadowRoot;
+                        this.id = (parentShadow as any)["shadowId"];
+                    }
+                    return this.id === buttonOption.id;
+                })
+                .subscribe(buttonOption => {
+                    this.setButtonOption(buttonOption);
+                })
         );
     }
 
