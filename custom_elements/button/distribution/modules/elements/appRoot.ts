@@ -38,10 +38,8 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             buttonService$
                 .pipe()
                 .refine(buttonOption => buttonOption.type !== this.currentPage)
+                .refine(buttonOption => buttonOption.id === this.id)
                 .subscribe(buttonOption => {
-                    if (buttonOption.id !== this.id) {
-                        return;
-                    }
                     SUB_ROUTE(E_SUB_ROUTE.VIEW).SHOW_PAGE(buttonOption.type);
                     this.currentPage = buttonOption.type;
                 })
@@ -49,17 +47,7 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
     onInit(): void {
-        // const div = document.createElement("div");
-        // div.id = "shadowId";
-        // div.style.width = "0";
-        // div.style.height = "0";
-        // div.style.opacity = "0";
-        // div.style.display = "none";
-        // div.innerText = this.id;
-        // this.root.shadowRoot.append(div);
-
-        // @ts-ignore
-        this.root.shadowRoot["shadowId"] = this.id;
+        (this.root.shadowRoot as any)["shadowId"] = this.id;
     }
 
     onDestroy(): void {

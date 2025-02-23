@@ -38,10 +38,8 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             buttonService$
                 .pipe()
                 .refine(buttonOption => buttonOption.type !== this.currentPage)
+                .refine(buttonOption => buttonOption.id === this.id)
                 .subscribe(buttonOption => {
-                    if (buttonOption.id !== this.id) {
-                        return;
-                    }
                     SUB_ROUTE(E_SUB_ROUTE.VIEW).SHOW_PAGE(buttonOption.type);
                     this.currentPage = buttonOption.type;
                 })
