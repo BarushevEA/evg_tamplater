@@ -8,4 +8,5 @@ exports.htmlTemplates = {
     "APP_EXAMPLE_____MARKER_LOGO": "container/logo/logo.html",
     "APP_EXAMPLE_____MARKER_NAVIGATION": "container/navigation/navigation.html",
     "APP_EXAMPLE_____MARKER_THEMES": "container/themes/themes.html",
+    "APP_EXAMPLE_____MARKER_LANGUAGE": "container/language/language.html",
 };

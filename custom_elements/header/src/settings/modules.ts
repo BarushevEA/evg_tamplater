@@ -1,3 +1,4 @@
+import {Language} from "../modules/elements/container/language/language";
 import {Themes} from "../modules/elements/container/themes/themes";
 import {Navigation} from "../modules/elements/container/navigation/navigation";
 import {Logo} from "../modules/elements/container/logo/logo";
@@ -14,6 +15,7 @@ export const MODULES: REG_OPTIONS = [
     getOption(Logo, "app-logo", "APP_EXAMPLE_____MARKER_LOGO"),
     getOption(Navigation, "app-navigation", "APP_EXAMPLE_____MARKER_NAVIGATION"),
     getOption(Themes, "app-themes", "APP_EXAMPLE_____MARKER_THEMES"),
+    getOption(Language, "app-language", "APP_EXAMPLE_____MARKER_LANGUAGE"),
 ];
 
 START_ROUTES_REGISTRATION();
