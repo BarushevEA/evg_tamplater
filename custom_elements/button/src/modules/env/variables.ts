@@ -59,27 +59,49 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.MINIMIZE]: {
-        textBlockStyle: {},
+        textBlockStyle: {
+            display: "none",
+        },
         containerStyle: {
-            backgroundColor: "green",
-            color: "white",
+            width: "60px",
+            height: "60px",
+            border: "1px solid black",
+            borderRadius: "10px",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            backgroundColor: "rgb(255,255,255)",
         },
         imageStyle: {
+            src: "assets/images/csm_button_minimize-min.png",
             style: {
-                display: "none",
-            }
+                display: "block",
+                height: "50%",
+                width: "50%",
+            },
+            altText: "Close",
         },
     },
     [ButtonState.MAXIMIZE]: {
-        textBlockStyle: {},
+        textBlockStyle: {
+            display: "none",
+        },
         containerStyle: {
-            backgroundColor: "blue",
-            color: "white",
+            width: "60px",
+            height: "60px",
+            border: "1px solid black",
+            borderRadius: "10px",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            backgroundColor: "rgb(255,255,255)",
         },
         imageStyle: {
+            src: "assets/images/csm_button_maximize-min.png",
             style: {
-                display: "none",
-            }
+                display: "block",
+                height: "50%",
+                width: "50%",
+            },
+            altText: "Close",
         },
     },
     [ButtonState.DANGER]: {
@@ -94,7 +116,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             flexDirection: "row",
             flexWrap: "nowrap",
             backgroundColor: "rgb(255 56 56)",
-            color: "white",
         },
         imageStyle: {
             src: "assets/images/csm_button_danger-min.png",
@@ -118,7 +139,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             flexDirection: "row",
             flexWrap: "nowrap",
             backgroundColor: "rgb(94 190 122)",
-            color: "white",
         },
         imageStyle: {
             src: "assets/images/csm_button_succes-min.png",
@@ -142,7 +162,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             flexDirection: "row",
             flexWrap: "nowrap",
             backgroundColor: "#546eff",
-            color: "white",
         },
         imageStyle: {
             src: "assets/images/csm_button_info-min.png",
@@ -166,7 +185,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             flexDirection: "row",
             flexWrap: "nowrap",
             backgroundColor: "orange",
-            color: "white",
         },
         imageStyle: {
             src: "assets/images/csm_button_warning-min.png",

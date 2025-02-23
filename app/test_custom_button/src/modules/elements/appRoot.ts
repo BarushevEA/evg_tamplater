@@ -61,6 +61,22 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
                 type: TYPE.BUTTON,
                 state: ButtonState.DANGER,
                 text: "DANGER",
+            },
+            {
+                actionCallback: () => {
+                    log("MINIMIZE");
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.MINIMIZE,
+                text: "MINIMIZE",
+            },
+            {
+                actionCallback: () => {
+                    log("MAXIMIZE");
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.MAXIMIZE,
+                text: "MAXIMIZE",
             }
         ];
     }
