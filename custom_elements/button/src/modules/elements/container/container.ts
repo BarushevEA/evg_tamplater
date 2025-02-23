@@ -60,7 +60,9 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
 
 
     click(): void {
-        this.callback();
+        if (this.callback) {
+            this.callback();
+        }
     }
 
     private setBaseOptions(buttonOption: ButtonOptions<TYPE>, defaultStyles: ButtonBaseStateStyles) {

@@ -27,7 +27,7 @@ export type ImageTypeOptions = BaseOptions & {};
 
 export type ButtonOptions<T extends TYPE> = {
     id?: string;
-    actionCallback: () => void;
+    actionCallback?: () => void;
     type: T;
     extension?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
     customOptions?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;

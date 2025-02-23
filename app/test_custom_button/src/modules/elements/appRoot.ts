@@ -37,14 +37,60 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
                 },
                 extension: {
                     containerStyle: parseCssBlock(`
-                  .extension-container {
-                  background: rgb(255 56 56);
-                  }
+.extension-container {
+    background: rgb(255 56 56);
+}
                   `)
                 },
                 type: TYPE.BUTTON,
                 state: ButtonState.DEFAULT,
                 text: "CLICK ME 2",
+            },
+            {
+                actionCallback: () => {
+                    log("CLICK ME 3");
+                },
+                extension: {
+                    containerStyle: parseCssBlock(`
+.extension-container {
+    margin: 5px;
+    width: 160px;
+    height: 60px;
+    border: none;
+    border-radius: 7px;
+    background: rgb(56 165 255);
+}
+                  `)
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.DEFAULT,
+                text: "CLICK ME 3",
+            },
+            {
+                actionCallback: () => {
+                    log("CLICK ME 4");
+                },
+                extension: {
+                    containerStyle: parseCssBlock(`
+.extension-container {
+    margin: 5px;
+    width: 160px;
+    height: 60px;
+    border: none;
+    border-radius: 7px;
+    background: rgb(13 12 148);
+}
+                  `),
+                    textBlockStyle: parseCssBlock(`
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial;
+    color: #afafaf;
+                    `)
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.DEFAULT,
+                text: "CLICK ME 4",
             },
             {
                 actionCallback: () => {
