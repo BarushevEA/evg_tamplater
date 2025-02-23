@@ -19,14 +19,15 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.DEFAULT]: {
-        textBlockStyle: {},
+        textBlockStyle: {
+            color: "black",
+        },
         containerStyle: {
             width: "160px",
             height: "60px",
             border: "1px solid black",
             borderRadius: "10px",
             backgroundColor: "white",
-            color: "black",
         },
         imageStyle: {
             style: {
@@ -46,7 +47,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             flexDirection: "row",
             flexWrap: "nowrap",
             backgroundColor: "rgb(255 56 56)",
-            color: "white",
         },
         imageStyle: {
             src: "assets/images/csm_button_close-min.png",
@@ -197,7 +197,9 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.LINK]: {
-        textBlockStyle: {},
+        textBlockStyle: {
+            color: "black",
+        },
         containerStyle: {
             width: "160px",
             height: "60px",
@@ -205,7 +207,6 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             borderRight: "none",
             borderLeft: "none",
             borderBottom: "1px solid black",
-            color: "black",
         },
         imageStyle: {
             style: {

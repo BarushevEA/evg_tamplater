@@ -3,6 +3,7 @@ import {ButtonOptions} from "../../../../../custom_elements/button/distribution/
 import {TYPE} from "../../../../../custom_elements/button/distribution/settings/subRoutesEnums";
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
 import {log} from "../../../../../libs/utils/utils";
+import {parseCssBlock} from "../../../../../libs/utils/cssParser";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
@@ -24,11 +25,26 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             },
             {
                 actionCallback: () => {
-                    log("CLICK ME");
+                    log("CLICK ME 1");
                 },
                 type: TYPE.BUTTON,
                 state: ButtonState.DEFAULT,
-                text: "CLICK ME",
+                text: "CLICK ME 1",
+            },
+            {
+                actionCallback: () => {
+                    log("CLICK ME 2");
+                },
+                extension: {
+                    containerStyle: parseCssBlock(`
+                  .extension-container {
+                  background: rgb(255 56 56);
+                  }
+                  `)
+                },
+                type: TYPE.BUTTON,
+                state: ButtonState.DEFAULT,
+                text: "CLICK ME 2",
             },
             {
                 actionCallback: () => {

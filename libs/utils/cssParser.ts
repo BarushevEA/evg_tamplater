@@ -20,7 +20,7 @@ export function parseCssBlock(cssString: string): Partial<CSSStyleDeclaration> {
             const [property, value] = trimmedRule.split(':');
             if (property && value) {
                 const camelCaseProperty = property.trim().replace(/-\w/g, (match) => match[1].toUpperCase());
-                style[camelCaseProperty] = value.trim();
+                style[(camelCaseProperty as any)] = value.trim();
             }
         }
     }
