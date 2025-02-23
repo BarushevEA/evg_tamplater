@@ -52,9 +52,8 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             src: "assets/images/csm_button_close-min.png",
             style: {
                 display: "block",
-                height: "24px",
-                width: "24px",
-                margin: "10px",
+                height: "50%",
+                width: "50%",
             },
             altText: "Close",
         },
@@ -120,15 +119,27 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         },
     },
     [ButtonState.WARNING]: {
-        textBlockStyle: {},
+        textBlockStyle: {
+            display: "none",
+        },
         containerStyle: {
-            backgroundColor: "yellow",
-            color: "black",
+            width: "60px",
+            height: "60px",
+            border: "1px solid black",
+            borderRadius: "10px",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            backgroundColor: "orange",
+            color: "white",
         },
         imageStyle: {
+            src: "assets/images/csm_button_warning-min.png",
             style: {
-                display: "none",
-            }
+                display: "block",
+                height: "65%",
+                width: "65%",
+            },
+            altText: "Close",
         },
     },
     [ButtonState.LINK]: {
