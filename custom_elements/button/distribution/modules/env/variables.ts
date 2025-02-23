@@ -45,7 +45,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
-            backgroundColor: "red",
+            backgroundColor: "rgb(255 56 56)",
             color: "white",
         },
         imageStyle: {
