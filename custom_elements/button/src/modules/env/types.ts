@@ -29,6 +29,7 @@ export type ButtonOptions<T extends TYPE> = {
     id?: string;
     actionCallback: () => void;
     type: T;
+    extension?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
     customOptions?: T extends TYPE.BUTTON ? ButtonTypeOptions : ImageTypeOptions;
     state: ButtonState | ButtonImageState;
     text?: string; // Text может быть опциональным для иконок

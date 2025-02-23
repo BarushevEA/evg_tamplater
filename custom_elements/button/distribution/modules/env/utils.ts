@@ -35,6 +35,11 @@ export function getDefaultStyles(component: ButtonComponent, buttonOption: Butto
 }
 
 export function setImage(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+    setBaseImageOptions(isGeneralStyle, defaultStyles, buttonOption, component);
+    setImageExtension(component, buttonOption);
+}
+
+function setBaseImageOptions(isGeneralStyle: boolean, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, component: ButtonComponent) {
     let imageOption = isGeneralStyle ? defaultStyles.generalStyle.imageStyle : defaultStyles[buttonOption.state].imageStyle;
     if (buttonOption.state === "custom") {
         if (buttonOption.customOptions && buttonOption.customOptions.imageStyle) {
@@ -60,7 +65,28 @@ export function setImage(component: ButtonComponent, defaultStyles: ButtonBaseSt
     }
 }
 
+function setImageExtension(component: ButtonComponent, buttonOption: ButtonOptions<TYPE>) {
+    if (!buttonOption.extension) return;
+    if (!buttonOption.extension.imageStyle) return;
+
+    const imageOptions = buttonOption.extension.imageStyle;
+    if (imageOptions.style) {
+        setStyle(component.imageElement, imageOptions.style);
+    }
+    if (imageOptions.src) {
+        component.image = imageOptions.src;
+    }
+    if (imageOptions.altText) {
+        component.imageElement.alt = imageOptions.altText;
+    }
+}
+
 export function setText(component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, isGeneralStyle: boolean = false) {
+    setBaseOptions(isGeneralStyle, component, defaultStyles, buttonOption);
+    setExtension(component, buttonOption);
+}
+
+function setBaseOptions(isGeneralStyle: boolean, component: ButtonComponent, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>) {
     switch (true) {
         case isGeneralStyle:
             setStyle(component.textElement, defaultStyles.generalStyle.textBlockStyle);
@@ -78,4 +104,11 @@ export function setText(component: ButtonComponent, defaultStyles: ButtonBaseSta
     if (typeof buttonOption.text === "string") {
         component.text = buttonOption.text;
     }
+}
+
+function setExtension(component: ButtonComponent, buttonOption: ButtonOptions<TYPE>) {
+    if (!buttonOption.extension) return;
+    if (!buttonOption.extension.textBlockStyle) return;
+
+    setStyle(component.textElement, buttonOption.extension.textBlockStyle);
 }

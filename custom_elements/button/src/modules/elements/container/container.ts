@@ -1,7 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../../libs/env/types";
 import {log} from "../../../../../../libs/utils/utils";
 import {buttonService$} from "../../services/service";
-import {ButtonOptions} from "../../env/types";
+import {ButtonBaseStateStyles, ButtonOptions} from "../../env/types";
 import {TYPE} from "../../../settings/subRoutesEnums";
 import {getDefaultStyles, setStyle} from "../../env/utils";
 
@@ -54,6 +54,16 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
 
         this.callback = buttonOption.actionCallback;
 
+        this.setBaseOptions(buttonOption, defaultStyles);
+        this.setExtension(buttonOption);
+    }
+
+
+    click(): void {
+        this.callback();
+    }
+
+    private setBaseOptions(buttonOption: ButtonOptions<TYPE>, defaultStyles: ButtonBaseStateStyles) {
         if (buttonOption.state === "custom") {
             if (buttonOption.customOptions && buttonOption.customOptions.containerStyle) {
                 setStyle(this.container, buttonOption.customOptions.containerStyle);
@@ -63,8 +73,11 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
         }
     }
 
-    click(): void {
-        this.callback();
+    private setExtension(buttonOption: ButtonOptions<TYPE>) {
+        if (!buttonOption.extension) return;
+        if (!buttonOption.extension.containerStyle) return;
+
+        setStyle(this.container, buttonOption.extension.containerStyle);
     }
 
     private setGeneralStyle(): void {
