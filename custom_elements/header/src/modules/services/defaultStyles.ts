@@ -16,9 +16,6 @@ export const defaultStyles = <ICustomHeaderStyles>{
     logoFontWeight: `bold`,
     logoFontColor: `rgb(50,50,50)`,
     logoFontSize: 1.5,
-    logoIcon: 'assets/images/logo.png',
     logoText: 'LogoText',
-
-    themeIcon: 'assets/images/theme.png',
-    localization: ['EN', 'RU'],
+    logoIcon: 'assets/images/logo.png',
 }

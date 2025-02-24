@@ -15,9 +15,8 @@ export type ICustomHeaderStyles = {
     logoFontWeight: string;
     logoFontColor: string;
     logoFontSize: number;
-    logoIcon: string;
     logoText: string;
-
-    themeIcon: string;
-    localization: string[];
+    logoIcon: string;
 }
+
+
