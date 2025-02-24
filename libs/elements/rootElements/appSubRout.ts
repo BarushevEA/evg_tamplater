@@ -1,6 +1,7 @@
-import {Observable} from "../../Observables";
+import {Observable, quickDeleteFromArray} from "../../Observables";
 import {OnDestroy, OnInit, RootBehavior} from "../../env/types";
 import {QSI_APP_COMPONENT} from "../registrator/registrator";
+import {log} from "../../utils/utils";
 
 export type SubRouteCommand = {
     name: string;
@@ -84,6 +85,7 @@ export class QSI_APP_ROOT_SubRoute implements OnInit, OnDestroy, ISubRoute {
     name: string;
     registered: SubRouteRegistered;
     isDestroyed: boolean = true;
+    static names: string[] = [];
 
     constructor(private readonly root: RootBehavior) {
         this.name = root.getAttribute('name') || '';
@@ -98,10 +100,18 @@ export class QSI_APP_ROOT_SubRoute implements OnInit, OnDestroy, ISubRoute {
     onInit(): void {
         this.isDestroyed = false;
         this.setPage(this.registered.defaultPage);
+
+        if (!QSI_APP_ROOT_SubRoute.names.includes(this.name)) {
+            QSI_APP_ROOT_SubRoute.names.push(this.name);
+        } else {
+            log(`WARNING: Subroute with the name "${this.name}" already exists. Valid behavior is not guaranteed.`);
+        }
     }
 
     onDestroy(): void {
         this.isDestroyed = true;
+        quickDeleteFromArray(QSI_APP_ROOT_SubRoute.names, this.name);
+        this.registered.subRoute = null;
     }
 
     setPage(pageName: string): void {

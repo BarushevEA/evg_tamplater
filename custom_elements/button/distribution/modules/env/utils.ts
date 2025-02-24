@@ -40,8 +40,6 @@ export function setImage(component: ButtonComponent, defaultStyles: ButtonBaseSt
 }
 
 function setBaseImageOptions(isGeneralStyle: boolean, defaultStyles: ButtonBaseStateStyles, buttonOption: ButtonOptions<TYPE>, component: ButtonComponent) {
-    // if (isGeneralStyle && (!defaultStyles.generalStyle || !defaultStyles.generalStyle.imageStyle)) return;
-    // if (!isGeneralStyle && (!defaultStyles[buttonOption.state] || !defaultStyles[buttonOption.state].imageStyle)) return;
     let imageOption = isGeneralStyle ? defaultStyles.generalStyle.imageStyle : defaultStyles[buttonOption.state].imageStyle;
     if (buttonOption.state === "custom") {
         if (buttonOption.customOptions && buttonOption.customOptions.imageStyle) {
