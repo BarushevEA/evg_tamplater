@@ -12,7 +12,7 @@ exports.replaceInFile = (filePath, replacements) => {
         let fileContent = fs.readFileSync(filePath, "utf-8");
 
         // Process the replacements array
-        for (const {target, replacer} of replacements) {
+        for (const { target, replacer } of replacements) {
             if (typeof target !== "string" || typeof replacer !== "string") {
                 console.error(`Invalid replacement object: { target: ${target}, replacer: ${replacer} }`);
                 continue;
@@ -21,8 +21,13 @@ exports.replaceInFile = (filePath, replacements) => {
             // Escape target for use in regex
             const escapedTarget = escapeRegExp(target);
 
-            // Replace all occurrences of target with replacer
-            const regex = new RegExp(escapedTarget, "g"); // Global search
+            // Modify regex to avoid replacements in ...CSM_ or {CSM_
+            const regex = new RegExp(
+                `(?<!\\.\\.\\.|\\{)${escapedTarget}(?!CSM_)`, // Avoid occurrences that are preceded by ... or {, and followed by CSM_
+                "g"
+            );
+
+            // Replace all occurrences of target with replacer, except the excluded cases
             fileContent = fileContent.replace(regex, replacer);
         }
 
@@ -33,7 +38,7 @@ exports.replaceInFile = (filePath, replacements) => {
         // Handle errors and log the message
         console.error(`An error occurred while processing the file: ${error.message}`);
     }
-}
+};
 
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
