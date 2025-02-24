@@ -1,5 +1,7 @@
+@use "../elements/container/container";
 @use "mixins";
 
 .app {
+  @include container.container();
 
 }

@@ -1,3 +1,4 @@
+import {Container} from "../modules/elements/container/container";
 import {CSM_BUTTON} from "../../../../custom_elements/button/distribution/settings/modules";
 import {getOption, REG_OPTIONS} from "../../../../libs/elements/registrator/registrator";
 import {AppRoot} from "../modules/elements/appRoot";
@@ -9,6 +10,7 @@ import {START_SUB_ROUTES_REGISTRATION} from "./subRoutes";
 export const MODULES: REG_OPTIONS = [
     ...CSM_BUTTON,
     getOption(AppRoot, APP_TAG_NAME, "APP_EXAMPLE_____ROOT"),
+    getOption(Container, "app-container", "APP_EXAMPLE_____MARKER_CONTAINER"),
 ];
 
 START_ROUTES_REGISTRATION();
