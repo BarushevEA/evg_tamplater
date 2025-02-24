@@ -1,4 +1,4 @@
-import {ButtonState} from "../../../../../custom_elements/button/distribution/modules/env/enums";
+import {ButtonImageState, ButtonState} from "../../../../../custom_elements/button/distribution/modules/env/enums";
 import {ButtonOptions} from "../../../../../custom_elements/button/distribution/modules/env/types";
 import {TYPE} from "../../../../../custom_elements/button/distribution/settings/subRoutesEnums";
 import {IChannel, OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
@@ -8,6 +8,7 @@ import {parseCssBlock} from "../../../../../libs/utils/cssParser";
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     name: string;
     buttons: ButtonOptions<TYPE.BUTTON>[];
+    images: ButtonOptions<TYPE.IMAGE>[];
     separateButton: IChannel;
 
     constructor(readonly root: RootBehavior) {
@@ -200,6 +201,16 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
                 text: "LINK",
             }
         ];
+        this.images = [
+            {
+                actionCallback: () => {
+                    log("IMAGE DEFAULT");
+                },
+                type: TYPE.IMAGE,
+                state: ButtonImageState.DEFAULT,
+                text: "IMAGE DEFAULT",
+            },
+        ]
     }
 
     onMessage(message: any): void {

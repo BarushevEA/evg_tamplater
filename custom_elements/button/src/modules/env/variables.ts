@@ -2,6 +2,8 @@ import {ButtonImageState, ButtonState} from "./enums";
 import {ButtonOptions, ButtonStateStyles, ImageStateStyles} from "./types";
 import {TYPE} from "../../settings/subRoutesEnums";
 
+export const defaultBorderColor = "rgba(0, 0, 0, 0.25)";
+
 export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
     generalStyle: {
         containerStyle: {
@@ -25,7 +27,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "160px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             backgroundColor: "white",
         },
@@ -42,7 +44,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -65,7 +67,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -88,7 +90,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -111,7 +113,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -134,7 +136,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -157,7 +159,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -180,7 +182,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
         containerStyle: {
             width: "60px",
             height: "60px",
-            border: "1px solid black",
+            border: `1px solid ${defaultBorderColor}`,
             borderRadius: "10px",
             flexDirection: "row",
             flexWrap: "nowrap",
@@ -206,7 +208,7 @@ export const BUTTON_DEFAULT_STYLES: ButtonStateStyles = {
             borderTop: "none",
             borderRight: "none",
             borderLeft: "none",
-            borderBottom: "1px solid black",
+            borderBottom: `1px solid ${defaultBorderColor}`,
         },
         imageStyle: {
             style: {
@@ -228,33 +230,40 @@ export const DEFAULT_BUTTON_OPTIONS: ButtonOptions<TYPE.BUTTON> = {
 
 export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {
     generalStyle: {
+        containerStyle: {},
+        textBlockStyle: {},
+        imageStyle: {
+            style: {}
+        },
+    },
+    [ButtonImageState.DEFAULT]: {
         containerStyle: {
-            width: "160px",
-            height: "180px",
+            width: "200px",
+            height: "250px",
             margin: "5px",
+            padding: "10px",
+            border: `1px solid ${defaultBorderColor}`,
+            borderRadius: "10px",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            justifyContent: "center",
+            alignItems: "center",
         },
         textBlockStyle: {
-            fontSize: "14px",
+            fontSize: "20px",
             fontWeight: "bold",
             fontFamily: "Arial",
         },
         imageStyle: {
             style: {
                 display: "block",
-            }
-        },
-    },
-    [ButtonImageState.DEFAULT]: {
-        textBlockStyle: {},
-        containerStyle: {
-            border: "1px solid black",
-            borderRadius: "10px",
-            backgroundColor: "white",
-            color: "black",
-        },
-        imageStyle: {
-            style: {
-                display: "block",
+                width: "100%",
+                height: "90%",
+                backgroundColor: "#f6e8b2",
+                border: `1px solid ${defaultBorderColor}`,
+                borderRadius: "10px",
             }
         },
     },
