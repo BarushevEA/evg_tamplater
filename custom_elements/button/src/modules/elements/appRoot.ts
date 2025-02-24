@@ -1,8 +1,7 @@
 import {OnCreate, OnDestroy, OnInit, OnMessage, RootBehavior} from "../../../../../libs/env/types";
 import {ButtonOptions} from "../env/types";
-import {E_SUB_ROUTE, TYPE} from "../../settings/subRoutesEnums";
+import {TYPE} from "../../settings/subRoutesEnums";
 import {buttonService$} from "../services/service";
-import {SUB_ROUTE} from "../../../../../libs/elements/rootElements/appSubRout";
 import {generateId} from "../../../../../libs/utils/idGenerator";
 
 export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
@@ -17,10 +16,10 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
     onMessage(message: ButtonOptions<TYPE>): void {
         message.id = this.id;
         buttonService$.next(message);
+        this.currentPage = buttonService$.getValue().type;
     }
 
     onCreate(): void {
-        this.currentPage = buttonService$.getValue().type;
         this.id = generateId();
 
         buttonService$
@@ -34,16 +33,16 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
                 },
             ]);
 
-        this.root.collect(
-            buttonService$
-                .pipe()
-                .refine(buttonOption => buttonOption.type !== this.currentPage)
-                .refine(buttonOption => buttonOption.id === this.id)
-                .subscribe(buttonOption => {
-                    SUB_ROUTE(E_SUB_ROUTE.VIEW).SHOW_PAGE(buttonOption.type);
-                    this.currentPage = buttonOption.type;
-                })
-        );
+        // this.root.collect(
+        //     buttonService$
+        //         .pipe()
+        //         .refine(buttonOption => buttonOption.type !== this.currentPage)
+        //         .refine(buttonOption => buttonOption.id === this.id)
+        //         .subscribe(buttonOption => {
+        //             SUB_ROUTE(E_SUB_ROUTE.VIEW).SHOW_PAGE(buttonOption.type);
+        //             this.currentPage = buttonOption.type;
+        //         })
+        // );
     }
 
     onInit(): void {

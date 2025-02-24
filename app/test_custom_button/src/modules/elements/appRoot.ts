@@ -220,11 +220,55 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
             },
             {
                 actionCallback: () => {
-                    log("IMAGE DEFAULT 3");
+                    log("CAT");
+                },
+                extension: {
+                    imageStyle:{
+                        style: {
+                            objectFit: "contain",
+                        },
+                        src: "https://www.cats.org.uk/media/13139/220325case013.jpg",
+                    }
                 },
                 type: TYPE.IMAGE,
                 state: ButtonImageState.DEFAULT,
-                text: "IMAGE 3",
+                text: "CAT",
+            },
+            {
+                actionCallback: () => {
+                    log("DOG");
+                },
+                extension: {
+                    imageStyle:{
+                        style: {
+                            objectFit: "contain",
+                        },
+                        src: "https://cdn.create.vista.com/api/media/small/160958954/stock-photo-cute-beagle-dog",
+                    }
+                },
+                type: TYPE.IMAGE,
+                state: ButtonImageState.DEFAULT,
+                text: "DOG",
+            },
+            {
+                actionCallback: () => {
+                    log("CHICKEN");
+                },
+                extension: {
+                    containerStyle: {
+                        width: "268px",
+                        height: "300px",
+                    },
+                    imageStyle:{
+                        style: {
+                            objectFit: "contain",
+                        },
+                        src: "https://cdn.britannica.com/18/137318-050-29F7072E/rooster-Rhode-Island-Red-roosters-chicken-domestication.jpg",
+                    }
+                },
+                type: TYPE.IMAGE,
+                state: ButtonImageState.DEFAULT,
+                text: "CHICKEN",
             },
         ]
     }

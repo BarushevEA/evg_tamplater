@@ -53,7 +53,7 @@ function setBaseImageOptions(isGeneralStyle: boolean, defaultStyles: ButtonBaseS
     }
 
     if (imageOption.style) {
-        setStyle(component.imageElement, defaultStyles[buttonOption.state].imageStyle.style);
+        setStyle(component.imageElement, imageOption.style);
     }
 
     if (imageOption.src) {

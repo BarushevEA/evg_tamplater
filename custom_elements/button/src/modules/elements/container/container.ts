@@ -11,6 +11,7 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     container: HTMLElement;
     id: string;
     callback: () => void;
+    isButton: boolean;
 
     constructor(readonly root: RootBehavior) {
         this.name = root.tagName;
@@ -37,7 +38,9 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
                     return this.id === buttonOption.id;
                 })
                 .subscribe(buttonOption => {
+                    this.isButton = buttonOption.type === TYPE.BUTTON;
                     this.setButtonOption(buttonOption);
+                    this.root.detectChanges();
                 })
         );
     }

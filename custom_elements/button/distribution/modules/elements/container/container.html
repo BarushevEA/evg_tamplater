@@ -1,3 +1,4 @@
 <div qsi-inject_to="container" class="app" qsi-click="click">
-    <qsi-subroute name="view"></qsi-subroute>
+    <app-view_button qsi-if="isButton"></app-view_button>
+    <app-view_image qsi-if="!isButton"></app-view_image>
 </div>
