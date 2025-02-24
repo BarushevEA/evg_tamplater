@@ -204,11 +204,27 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
         this.images = [
             {
                 actionCallback: () => {
-                    log("IMAGE DEFAULT");
+                    log("IMAGE DEFAULT 1");
                 },
                 type: TYPE.IMAGE,
                 state: ButtonImageState.DEFAULT,
-                text: "IMAGE DEFAULT",
+                text: "IMAGE 1",
+            },
+            {
+                actionCallback: () => {
+                    log("IMAGE DEFAULT 2");
+                },
+                type: TYPE.IMAGE,
+                state: ButtonImageState.DEFAULT,
+                text: "IMAGE 2",
+            },
+            {
+                actionCallback: () => {
+                    log("IMAGE DEFAULT 3");
+                },
+                type: TYPE.IMAGE,
+                state: ButtonImageState.DEFAULT,
+                text: "IMAGE 3",
             },
         ]
     }

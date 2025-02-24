@@ -1,5 +1,12 @@
 @use "mixins";
 
 .app {
+  @include mixins.normalizeSpace();
 
+  @include mixins.flexRowNowrap();
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  height: fit-content;
 }
