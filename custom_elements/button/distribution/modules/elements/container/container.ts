@@ -59,8 +59,10 @@ export class Container implements OnInit, OnCreate, OnDestroy, OnMessage {
     }
 
 
-    click(): void {
+    click(event: MouseEvent): void {
         if (this.callback) {
+            event.preventDefault();
+            event.stopPropagation();
             this.callback();
         }
     }
