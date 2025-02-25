@@ -1,2 +1,0 @@
-exports.cssExcludeList = [];
-exports.cssIncludeList = [];

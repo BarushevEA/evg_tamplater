@@ -8,10 +8,5 @@
     "version": "1, 0, 0",
     "destination": "../../../../custom_elements/button/distribution/settings/modules",
     "description": "Custom element for sharing"
-  },
-  "csm-modal-window": {
-    "version": "1, 0, 0",
-    "destination": "../../../../custom_elements/modal_window/distribution/settings/modules",
-    "description": "Custom element for sharing"
   }
 }
