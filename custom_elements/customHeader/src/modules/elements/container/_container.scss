@@ -1,0 +1,12 @@
+
+@use "../../css/mixins";
+
+@mixin container() {
+  #header {
+    @include mixins.flexRowNowrap();
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px;
+  }
+}
+        

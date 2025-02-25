@@ -1,0 +1,14 @@
+@use "../elements/container/utilitybar/utilitybar";
+@use "../elements/container/navcontainer/navcontainer";
+@use "../elements/container/logocontainer/logocontainer";
+@use "../elements/container/container";
+@use "mixins";
+
+.app {
+  @include utilitybar.utilitybar();
+  @include navcontainer.navcontainer();
+  @include logocontainer.logocontainer();
+  @include mixins.globalNormalize();
+  @include mixins.normalizeSpace();
+  @include container.container();
+}

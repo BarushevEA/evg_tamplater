@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "create_element": "node cm.js",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "webpack --mode=production",
+    "build:ts": "npm run build:types && npm run build:js",
+    "build:customHeader": "npm run build:js && node buildTemplateHandler/tamplateHandler.js && node buildTemplateHandler/cssHandler.js",
+    "customElementDist": "node distributionBuilder/dist.js",
+    "addCustomElement": "node addCustomElement.js"
+  },
+  "type": "commonjs"
+}
