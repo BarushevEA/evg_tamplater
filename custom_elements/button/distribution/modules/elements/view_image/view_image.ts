@@ -41,7 +41,6 @@ export class View_image implements OnInit, OnCreate, OnDestroy, OnMessage, Butto
                 })
                 .subscribe(buttonOption => {
                     this.setButtonOption(buttonOption);
-
                     this.text = buttonOption.text;
                     this.root.detectChanges();
                 })
@@ -60,8 +59,6 @@ export class View_image implements OnInit, OnCreate, OnDestroy, OnMessage, Butto
 
         setText(this, defaultStyles, buttonOption);
         setImage(this, defaultStyles, buttonOption);
-
-        this.root.detectChanges();
     }
 
     private setGeneralStyle(): void {

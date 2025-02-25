@@ -32,17 +32,6 @@ export class AppRoot implements OnInit, OnCreate, OnDestroy, OnMessage {
                     return buttonOption.type === TYPE.BUTTON || buttonOption.type === TYPE.IMAGE;
                 },
             ]);
-
-        // this.root.collect(
-        //     buttonService$
-        //         .pipe()
-        //         .refine(buttonOption => buttonOption.type !== this.currentPage)
-        //         .refine(buttonOption => buttonOption.id === this.id)
-        //         .subscribe(buttonOption => {
-        //             SUB_ROUTE(E_SUB_ROUTE.VIEW).SHOW_PAGE(buttonOption.type);
-        //             this.currentPage = buttonOption.type;
-        //         })
-        // );
     }
 
     onInit(): void {

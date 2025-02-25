@@ -224,8 +224,8 @@ export const DEFAULT_BUTTON_OPTIONS: ButtonOptions<TYPE.BUTTON> = {
         console.log("DEFAULT_BUTTON_OPTIONS");
     },
     type: TYPE.BUTTON,
-    state: ButtonState.CLOSE,
-    text: "Close",
+    state: ButtonState.DEFAULT,
+    text: "DEFAULT",
 };
 
 export const IMAGE_DEFAULT_STYLES: ImageStateStyles = {
